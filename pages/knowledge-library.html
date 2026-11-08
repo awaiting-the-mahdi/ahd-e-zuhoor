@@ -33,7 +33,6 @@ h1{font:clamp(34px,5vw,58px)/1.05 Georgia,"Times New Roman",serif;font-weight:40
 .stage:before{content:"";position:absolute;left:50%;top:43%;width:min(82vw,950px);height:240px;transform:translate(-50%,-50%);background:radial-gradient(ellipse,rgba(192,156,96,.13),transparent 67%);filter:blur(12px);pointer-events:none}
 .shelf{position:absolute;inset:0;transform-style:preserve-3d}
 .book{appearance:none;border:0;padding:0;background:transparent;position:absolute;left:50%;top:43%;width:clamp(132px,17vw,190px);height:clamp(205px,27vw,290px);transform-style:preserve-3d;cursor:pointer;will-change:transform,opacity;transition:transform .62s var(--ease),opacity .45s ease,filter .5s ease;outline:none}
-.book:focus-visible 
 .jacket {
   position:absolute;
   inset:0;
@@ -219,14 +218,29 @@ h1{font:clamp(34px,5vw,58px)/1.05 Georgia,"Times New Roman",serif;font-weight:40
 .detail-book .jacket{border-radius:2px 7px 7px 2px;box-shadow:inset 8px 0 12px rgba(0,0,0,.24),0 2px 0 rgba(255,255,255,.3)}
 .close{position:fixed;right:25px;top:22px;z-index:25;width:44px;height:44px;border:1px solid #8c978e;background:#f2eddf;color:#142c34;border-radius:50%;font-size:23px;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .3s .45s}
 .detail.open~.close{opacity:1;pointer-events:auto}
-@media(max-width:700px){
+@media(max-width:800px){
  .top{height:66px;padding:0 17px}.brand-title{font-size:17px}.brand-sub{font-size:8px}.top-right{gap:13px;font-size:9px}
  main{min-height:calc(100svh - 66px)}.intro{padding-top:30px}.intro p{font-size:13px;max-width:330px}
  .stage{height:47vh;min-height:330px;max-height:450px}.book{width:clamp(118px,36vw,160px);height:clamp(184px,55vw,245px);top:43%}
  .floor{top:70%}.control{top:43%;width:37px;height:37px}.prev{left:7px}.next{right:7px}
  .caption{margin:-3px auto 0;padding-bottom:24px}.selected-desc{font-size:12px;max-width:330px}
- .detail{grid-template-columns:1fr;grid-template-rows:auto 44vh}
- .detail-copy{min-height:auto;padding:75px 27px 32px;order:1}.detail-art{min-height:44vh;order:2}
+.detail{
+  grid-template-columns:1fr;
+  grid-template-rows:auto minmax(360px, 48vh);
+  overflow-y:auto;
+}
+
+.detail-copy{
+  min-height:auto;
+  padding:78px 27px 34px;
+  order:1;
+}
+
+.detail-art{
+  min-height:360px;
+  height:48vh;
+  order:2;
+}
  .detail h2{font-size:40px;margin:12px 0 7px}.detail-author{font-size:13px;margin-bottom:14px}.detail-description{font-size:14px;line-height:1.6}
  .detail-meta{margin:16px 0;padding:11px 0;gap:13px}.detail-actions{margin-top:2px}
  .detail-book{width:clamp(145px,42vw,205px);height:clamp(220px,63vw,310px)}
