@@ -651,6 +651,30 @@ body {
   background: transparent !important;
 }
 
+/* FULL-PAGE ORIGINAL-PALETTE NEBULA BACKGROUND */
+
+html,
+body {
+  background: #020d19 !important;
+}
+
+body {
+  background-image:
+    linear-gradient(
+      rgba(2, 12, 23, .12),
+      rgba(2, 12, 23, .12)
+    ),
+    url("../assets/images/prophetic-blueprint-background.jpg") !important;
+  background-size: 100% auto !important;
+  background-position: center top !important;
+  background-repeat: repeat-y !important;
+}
+
+.page-heading,
+.blueprint {
+  background: transparent !important;
+}
+
 </style>
 </head>
 
@@ -674,7 +698,47 @@ body {
     draggable="false"
   >
 
-<div class="network-light-sweep" aria-hidden="true"></div>
+
+/* No scanning beam */
+.network-light-sweep {
+  display: none !important;
+}
+
+/* Independent star-like shimmer */
+.prophet-node::before {
+  animation: star-twinkle 2.8s ease-in-out infinite !important;
+}
+
+.prophet-node[data-key="adam"]::before { animation-delay: .2s !important; }
+.prophet-node[data-key="nuh"]::before { animation-delay: 1.1s !important; }
+.prophet-node[data-key="ibrahim"]::before { animation-delay: .6s !important; }
+.prophet-node[data-key="musa"]::before { animation-delay: 1.8s !important; }
+.prophet-node[data-key="isa"]::before { animation-delay: .9s !important; }
+.prophet-node[data-key="yusuf"]::before { animation-delay: 2.1s !important; }
+.prophet-node[data-key="khizr"]::before { animation-delay: 1.4s !important; }
+.prophet-node[data-key="muhammad"]::before { animation-delay: .4s !important; }
+
+@keyframes star-twinkle {
+  0%, 100% { opacity: .25; transform: scale(.85); }
+  50% { opacity: 1; transform: scale(1.65); }
+}
+
+/* Gentle radiance across the original constellation */
+.blueprint-art {
+  animation: constellation-radiance 5s ease-in-out infinite;
+}
+
+@keyframes constellation-radiance {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.07); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .prophet-node::before,
+  .blueprint-art {
+    animation: none !important;
+  }
+}
 
   <span class="imam-label">Imam Mahdi (ATFS)</span>
 
