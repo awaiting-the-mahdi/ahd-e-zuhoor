@@ -626,25 +626,34 @@ body {
   }
 }
 
-/* CONTINUOUS MIDNIGHT CONSTELLATION BACKGROUND */
+
+/* FULL-PAGE CONSTELLATION ATMOSPHERE */
 
 html,
 body {
-  background: #061321 !important;
+  background-color: #030b14 !important;
 }
 
 body {
-  background:
+  background-image:
     radial-gradient(
-      ellipse at 50% 48%,
-      rgba(24, 48, 72, .28) 0%,
-      rgba(8, 24, 41, .14) 48%,
-      transparent 78%
+      ellipse 75% 48% at 50% 48%,
+      rgba(26, 48, 68, .62) 0%,
+      rgba(13, 31, 48, .42) 42%,
+      rgba(4, 15, 27, .18) 75%,
+      transparent 100%
     ),
-    #061321 !important;
+    linear-gradient(
+      180deg,
+      #071725 0%,
+      #061321 45%,
+      #030b14 100%
+    ) !important;
+  background-attachment: fixed;
 }
 
-.page-heading {
+.page-heading,
+.blueprint {
   background: transparent !important;
 }
 
