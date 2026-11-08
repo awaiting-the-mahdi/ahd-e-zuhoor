@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#071e2a">
+<meta name="description" content="The Knowledge Library — a considered reading collection on Imam al-Mahdi (atfs).">
+<title>Knowledge Library — Ahd-e-Zuhoor</title>
+<style>
+:root{
+  --night:#071e2a;--night2:#0b2b38;--ivory:#f2eddf;--paper:#e9e0ce;
+  --ink:#182c32;--muted:#aeb9b5;--gold:#c9a66a;--gold2:#e0c38d;
+  --line:rgba(201,166,106,.32);--ease:cubic-bezier(.2,.78,.18,1);
+}
+*{box-sizing:border-box}
+html{min-height:100%;background:var(--night);scroll-behavior:smooth}
+body{margin:0;min-height:100vh;background:
+ radial-gradient(ellipse at 50% 36%,rgba(27,76,86,.52),transparent 52%),
+ linear-gradient(180deg,#071e2a 0%,#081b25 100%);
+ color:var(--ivory);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;overflow-x:hidden}
+a{color:inherit;text-decoration:none}button{font:inherit}
+.top{height:76px;padding:0 clamp(20px,5vw,72px);display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);position:relative;z-index:5;background:rgba(5,22,31,.56);backdrop-filter:blur(14px)}
+.brand{display:flex;align-items:center;gap:12px}.crescent{font:30px Georgia;color:var(--gold)}
+.brand-title{font:20px Georgia,serif;letter-spacing:.01em}.brand-sub{display:block;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:#9eada9;margin-top:2px}
+.top-right{display:flex;align-items:center;gap:24px;font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:#c5cfca}
+.top-right a:hover{color:var(--gold2)}
+main{min-height:calc(100svh - 76px);position:relative;overflow:hidden}
+.intro{text-align:center;padding:34px 20px 0;position:relative;z-index:2}
+.eyebrow{font-size:10px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);font-weight:600}
+h1{font:clamp(34px,5vw,58px)/1.05 Georgia,"Times New Roman",serif;font-weight:400;letter-spacing:-.035em;margin:12px 0 9px}
+.intro p{font:14px/1.6 Georgia,serif;color:#b9c4bd;margin:0 auto;max-width:580px}
+.stage{height:min(56vh,570px);min-height:390px;position:relative;perspective:1400px;overflow:hidden;touch-action:pan-y;user-select:none}
+.stage:before{content:"";position:absolute;left:50%;top:43%;width:min(82vw,950px);height:240px;transform:translate(-50%,-50%);background:radial-gradient(ellipse,rgba(192,156,96,.13),transparent 67%);filter:blur(12px);pointer-events:none}
+.shelf{position:absolute;inset:0;transform-style:preserve-3d}
+.book{appearance:none;border:0;padding:0;background:transparent;position:absolute;left:50%;top:43%;width:clamp(132px,17vw,190px);height:clamp(205px,27vw,290px);transform-style:preserve-3d;cursor:pointer;will-change:transform,opacity;transition:transform .62s var(--ease),opacity .45s ease,filter .5s ease;outline:none}
+.book:focus-visible .jacket{outline:2px solid var(--gold2);outline-offset:6px}
+.jacket{position:absolute;inset:0;overflow:hidden;border:1px solid rgba(225,195,141,.55);border-radius:2px 5px 5px 2px;box-shadow:inset 7px 0 9px rgba(0,0,0,.22),inset -1px 0 0 rgba(255,255,255,.18),0 18px 38px rgba(0,0,0,.42);display:flex;flex-direction:column;align-items:center;justify-content:space-between;text-align:center;padding:19px 14px 16px;color:#f3e5c7;backface-visibility:hidden}
+.jacket:before{content:"";position:absolute;inset:9px;border:1px solid rgba(225,195,141,.35);pointer-events:none}
+.jacket:after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,rgba(255,255,255,.12),transparent 28%,transparent 72%,rgba(0,0,0,.23));pointer-events:none}
+.jacket .mark{font:30px Georgia;color:var(--gold2);position:relative;z-index:1}
+.jacket .cover-title{font:clamp(17px,2vw,23px)/1.18 Georgia,serif;position:relative;z-index:1;max-width:100%}
+.jacket .cover-author{font-size:8px;line-height:1.5;letter-spacing:.15em;text-transform:uppercase;position:relative;z-index:1;color:#dfcfad}
+.spine{position:absolute;left:-13px;top:3px;width:13px;height:calc(100% - 6px);transform:rotateY(-90deg);transform-origin:right;background:linear-gradient(90deg,#091a22,#183944);border:1px solid rgba(225,195,141,.28)}
+.book[data-book="saviour"] .jacket{background:radial-gradient(circle at 50% 40%,#376879,#102f3c 68%,#091c28)}
+.book[data-book="mikyal1"] .jacket{background:radial-gradient(circle at 50% 42%,#5d6048,#243b38 65%,#12262b)}
+.book[data-book="mikyal2"] .jacket{background:radial-gradient(circle at 50% 42%,#5b4a38,#302d2c 65%,#17232a)}
+.book[data-book="kamaluddin"] .jacket{background:radial-gradient(circle at 50% 42%,#5d4d67,#2b2940 65%,#111e2c)}
+.book[data-book="ghaybah"] .jacket{background:radial-gradient(circle at 50% 42%,#45635d,#1e3d3c 65%,#0c252d)}
+.floor{position:absolute;left:50%;top:69%;width:min(88vw,1100px);height:1px;transform:translateX(-50%);background:linear-gradient(90deg,transparent,rgba(201,166,106,.42),transparent);box-shadow:0 16px 32px rgba(0,0,0,.3)}
+.floor:after{content:"";position:absolute;left:10%;right:10%;top:0;height:85px;background:linear-gradient(180deg,rgba(201,166,106,.08),transparent);transform:perspective(250px) rotateX(30deg);transform-origin:top}
+.control{position:absolute;top:43%;transform:translateY(-50%);z-index:3;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:#06192388;color:var(--gold2);font-size:23px;cursor:pointer;backdrop-filter:blur(8px);transition:.2s}
+.control:hover{background:#c9a66a22;border-color:var(--gold)}.prev{left:clamp(12px,4vw,55px)}.next{right:clamp(12px,4vw,55px)}
+.caption{position:relative;z-index:2;text-align:center;margin:-8px auto 0;padding:0 20px 32px}
+.counter{font-size:9px;letter-spacing:.3em;color:var(--gold);text-transform:uppercase}
+.selected-title{font:clamp(25px,3vw,34px)/1.15 Georgia,serif;margin:9px 0 4px}
+.selected-author{font-size:11px;color:#aab9b4;letter-spacing:.04em}
+.selected-desc{max-width:470px;margin:10px auto 0;color:#bdc8c2;font:13px/1.6 Georgia,serif}
+.open-hint{font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-top:16px;display:inline-flex;gap:10px;align-items:center}
+.open-hint:before,.open-hint:after{content:"";width:25px;height:1px;background:var(--line)}
+.timeline{display:flex;justify-content:center;gap:8px;margin:0 auto 26px;padding:0 18px}
+.dot{width:18px;height:2px;background:#64746f;border:0;padding:0;cursor:pointer;transition:.3s}
+.dot.active{width:38px;background:var(--gold)}
+.footer-note{border-top:1px solid rgba(201,166,106,.18);padding:15px 20px 22px;text-align:center;color:#82948e;font-size:9px;letter-spacing:.13em;text-transform:uppercase}
+
+/* Expanding reading detail */
+.detail{position:fixed;inset:0;z-index:20;display:grid;grid-template-columns:1.05fr .95fr;background:var(--ivory);color:var(--ink);clip-path:inset(50% 50% 50% 50% round 4px);visibility:hidden;transition:clip-path .82s cubic-bezier(.77,0,.16,1),visibility 0s linear .82s;overflow:auto}
+.detail.open{clip-path:inset(0 0 0 0 round 0);visibility:visible;transition:clip-path .82s cubic-bezier(.77,0,.16,1),visibility 0s}
+.detail-copy{padding:clamp(34px,7vw,100px);display:flex;flex-direction:column;justify-content:center;min-height:100svh}
+.detail-kicker{font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:#997342}
+.detail h2{font:clamp(36px,5vw,68px)/1.02 Georgia,serif;font-weight:400;letter-spacing:-.04em;margin:18px 0 12px}
+.detail-author{font:15px Georgia,serif;color:#6d7772;margin-bottom:25px}
+.detail-description{max-width:500px;font:17px/1.75 Georgia,serif;color:#384d4d}
+.detail-meta{display:flex;gap:24px;flex-wrap:wrap;border-top:1px solid #c9c2b3;border-bottom:1px solid #c9c2b3;padding:16px 0;margin:28px 0;color:#687570;font-size:10px;letter-spacing:.13em;text-transform:uppercase}
+.detail-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}
+.action-link{padding:13px 19px;border:1px solid #9a7849;color:#263b3d;font-size:11px;letter-spacing:.12em;text-transform:uppercase;transition:.2s}
+.action-link.primary{background:#102f3a;color:#f4ead7;border-color:#102f3a}.action-link:hover{transform:translateY(-2px)}
+.detail-art{background:radial-gradient(ellipse at 50% 45%,#d9d0bd,#b8b09f);display:grid;place-items:center;position:relative;min-height:100svh;overflow:hidden}
+.detail-art:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent 0 3px,rgba(34,43,39,.025) 4px),radial-gradient(circle at 50% 50%,transparent 30%,rgba(25,34,32,.12));pointer-events:none}
+.detail-book{width:clamp(210px,28vw,360px);height:clamp(320px,43vw,490px);position:relative;transform:rotate(-5deg);filter:drop-shadow(24px 28px 22px rgba(0,0,0,.24));transition:transform 1s var(--ease)}
+.detail.open .detail-book{transform:rotate(0deg)}
+.detail-book .jacket{border-radius:2px 7px 7px 2px;box-shadow:inset 8px 0 12px rgba(0,0,0,.24),0 2px 0 rgba(255,255,255,.3)}
+.close{position:fixed;right:25px;top:22px;z-index:25;width:44px;height:44px;border:1px solid #8c978e;background:#f2eddf;color:#142c34;border-radius:50%;font-size:23px;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .3s .45s}
+.detail.open~.close{opacity:1;pointer-events:auto}
+@media(max-width:700px){
+ .top{height:66px;padding:0 17px}.brand-title{font-size:17px}.brand-sub{font-size:8px}.top-right{gap:13px;font-size:9px}
+ main{min-height:calc(100svh - 66px)}.intro{padding-top:30px}.intro p{font-size:13px;max-width:330px}
+ .stage{height:47vh;min-height:330px;max-height:450px}.book{width:clamp(118px,36vw,160px);height:clamp(184px,55vw,245px);top:43%}
+ .floor{top:70%}.control{top:43%;width:37px;height:37px}.prev{left:7px}.next{right:7px}
+ .caption{margin:-3px auto 0;padding-bottom:24px}.selected-desc{font-size:12px;max-width:330px}
+ .detail{grid-template-columns:1fr;grid-template-rows:auto 44vh}
+ .detail-copy{min-height:auto;padding:75px 27px 32px;order:1}.detail-art{min-height:44vh;order:2}
+ .detail h2{font-size:40px;margin:12px 0 7px}.detail-author{font-size:13px;margin-bottom:14px}.detail-description{font-size:14px;line-height:1.6}
+ .detail-meta{margin:16px 0;padding:11px 0;gap:13px}.detail-actions{margin-top:2px}
+ .detail-book{width:clamp(145px,42vw,205px);height:clamp(220px,63vw,310px)}
+ .close{right:15px;top:13px;width:39px;height:39px}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<header class="top">
+ <a class="brand" href="./index.html" aria-label="Ahd-e-Zuhoor home"><span class="crescent">☾</span><span><span class="brand-title">Ahd-e-Zuhoor</span><span class="brand-sub">Knowledge · Love · Preparation</span></span></a>
+ <nav class="top-right" aria-label="Library navigation"><a href="./index.html">Home</a><a href="./book.html">Reading room</a></nav>
+</header>
+<main>
+ <section class="intro">
+  <div class="eyebrow">Ahd-e-Zuhoor · Curated collection</div>
+  <h1>The Knowledge Library</h1>
+  <p>Foundational works for a deeper understanding of Imam al-Mahdi (atfs). Choose a volume and begin your reading journey.</p>
+ </section>
+ <section class="stage" id="stage" aria-label="Interactive curved book archive. Swipe or use the arrow keys to browse.">
+  <div class="floor"></div><div class="shelf" id="shelf"></div>
+  <button class="control prev" id="prev" aria-label="Previous book">‹</button>
+  <button class="control next" id="next" aria-label="Next book">›</button>
+ </section>
+ <section class="caption" aria-live="polite">
+  <div class="counter" id="counter">01 / 05 · SELECTED WORK</div>
+  <div class="selected-title" id="selectedTitle">The Awaited Saviour</div>
+  <div class="selected-author" id="selectedAuthor">Ayatullah Sayyid Muhammad Baqir al-Sadr & Ayatullah Murtadha Mutahhari</div>
+  <p class="selected-desc" id="selectedDesc">An exploration of the Imam's existence, occultation and mission.</p>
+  <div class="open-hint">Select a volume to explore</div>
+ </section>
+ <div class="timeline" id="timeline" aria-label="Choose a book"></div>
+ <div class="footer-note">Read with reflection · Verify every reference against your edition</div>
+</main>
+
+<section class="detail" id="detail" aria-modal="true" role="dialog" aria-labelledby="detailTitle" aria-hidden="true">
+ <div class="detail-copy">
+  <div class="detail-kicker" id="detailKicker">The Ahd-e-Zuhoor collection</div>
+  <h2 id="detailTitle">The Awaited Saviour</h2>
+  <div class="detail-author" id="detailAuthor"></div>
+  <p class="detail-description" id="detailDescription"></p>
+  <div class="detail-meta"><span id="detailType">Foundational work</span><span id="detailTheme">Imam al-Mahdi (atfs)</span></div>
+  <div class="detail-actions">
+   <a class="action-link primary" id="readingLink" href="./book.html">Open study notes ↗</a>
+   <a class="action-link" id="sourceLink" href="#" target="_blank" rel="noopener noreferrer">Read source edition ↗</a>
+  </div>
+ </div>
+ <div class="detail-art"><div class="detail-book" id="detailBook"></div></div>
+</section>
+<button class="close" id="close" aria-label="Close book details">×</button>
+
+<script>
+const books=[
+ {id:"saviour",title:"The Awaited Saviour",author:"Ayatullah Sayyid Muhammad Baqir al-Sadr & Ayatullah Murtadha Mutahhari",short:"An exploration of the Imam's existence, occultation and mission, addressing questions about the awaited saviour.",kind:"Theological study",theme:"The promise of divine justice",source:"https://al-islam.org/awaited-saviour-ayatullah-sayyid-muhammad-baqir-sadr-ayatullah-murtadha-mutahhari",symbol:"۞"},
+ {id:"mikyal1",title:"Mikyal ul Makarim · Volume I",author:"Sayyid Muhammad Taqi al-Musawi al-Isfahani",short:"A work on the merits of praying for the Imam and deepening one's connection with Imam al-Mahdi (atfs).",kind:"Devotional scholarship",theme:"Dua · Love · Wilayah",source:"https://al-islam.org/mikyal-al-makarim-fi-fawaid-al-dua-lil-qaim-vol-1-sayyid-muhammad-taqi-musawi-isfahani",symbol:"✦",reading:"mikyal"},
+ {id:"mikyal2",title:"Mikyal ul Makarim · Volume II",author:"Sayyid Muhammad Taqi al-Musawi al-Isfahani",short:"The second volume in the collection. Explore the text alongside its original edition and record volume-specific references as you read.",kind:"Devotional scholarship",theme:"Dua · Love · Wilayah",source:"",symbol:"✧",reading:"mikyal"},
+ {id:"kamaluddin",title:"Kamaluddin wa Tamamun Ni'ma",author:"Shaykh al-Saduq",short:"A major early Imami work discussing the occultation and arguments concerning the Imam's existence.",kind:"Classical Imami source",theme:"Occultation · Evidence",source:"https://al-islam.org/kamaaluddin-wa-tamaamun-nima-vol-1-shaykh-saduq",symbol:"۞"},
+ {id:"ghaybah",title:"Al-Ghaybah",author:"Shaykh al-Tusi",short:"A classical work collecting reports and discussions concerning the occultation.",kind:"Classical Imami source",theme:"Occultation · Narrations",source:"https://al-islam.org/shaykh-al-tusis-book-occultation-shaykh-tusi",symbol:"✧"}
+];
+const shelf=document.getElementById("shelf"),stage=document.getElementById("stage"),timeline=document.getElementById("timeline");
+const detail=document.getElementById("detail"),detailBook=document.getElementById("detailBook");
+let active=0,dragStart=null,dragDelta=0,animating=false;
+const nodes=[];
+function jacketMarkup(book){return `<div class="spine"></div><div class="jacket"><span class="mark">${book.symbol}</span><span class="cover-title">${book.title.replace(" · ","<br>")}</span><span class="cover-author">${book.author}</span></div>`}
+books.forEach((book,i)=>{
+ const el=document.createElement("button");el.className="book";el.type="button";el.dataset.book=book.id;el.setAttribute("aria-label",`Open ${book.title}`);
+ el.innerHTML=jacketMarkup(book);el.addEventListener("click",()=>{if(Math.abs(dragDelta)>8)return;if(i===active)openDetail();else go(i)});
+ shelf.appendChild(el);nodes.push(el);
+ const dot=document.createElement("button");dot.className="dot";dot.type="button";dot.setAttribute("aria-label",`Show ${book.title}`);dot.addEventListener("click",()=>go(i));timeline.appendChild(dot);
+});
+function wrap(n){return (n+books.length)%books.length}
+function position(){
+ const mobile=innerWidth<700,H=mobile?Math.min(innerHeight*.26,245):Math.min(innerHeight*.31,290);
+ const width=mobile?Math.max(118,Math.min(innerWidth*.36,160)):Math.max(132,Math.min(innerWidth*.17,190));
+ const gap=width*.13;
+ nodes.forEach((el,i)=>{
+  let r=i-active;if(r>books.length/2)r-=books.length;if(r< -books.length/2)r+=books.length;
+  const abs=Math.abs(r),x=r*(width+gap)*.83;
+  const scale=1/(1+Math.pow(abs*.62,1.48));
+  const y=Math.abs(r)*Math.abs(r)* (mobile?12:17);
+  const z=-(Math.abs(r)*Math.abs(r))*42;
+  const rotateY=r===0?0:(r>0?-48:48);
+  el.style.width=width+"px";el.style.height=H+"px";
+  el.style.transform=`translate(-50%,-50%) translate3d(${x}px,${y}px,${z}px) rotateY(${rotateY}deg) scale(${scale})`;
+  el.style.zIndex=String(100-Math.round(abs*10));el.style.opacity=abs>2.4?".12":"1";
+  el.style.filter=abs===0?"brightness(1.08)":"brightness("+Math.max(.43,1-abs*.2)+")";
+  el.style.pointerEvents=abs>2.4?"none":"auto";
+  el.setAttribute("aria-current",i===active?"true":"false");
+ });
+ [...timeline.children].forEach((d,i)=>d.classList.toggle("active",i===active));
+ const b=books[active];document.getElementById("counter").textContent=`${String(active+1).padStart(2,"0")} / ${String(books.length).padStart(2,"0")} · SELECTED WORK`;
+ document.getElementById("selectedTitle").textContent=b.title;
+ document.getElementById("selectedAuthor").textContent=b.author;
+ document.getElementById("selectedDesc").textContent=b.short;
+}
+function go(i){active=wrap(i);position()}
+function step(n){go(active+n)}
+document.getElementById("prev").addEventListener("click",()=>step(-1));
+document.getElementById("next").addEventListener("click",()=>step(1));
+window.addEventListener("resize",position);
+document.addEventListener("keydown",e=>{
+ if(detail.classList.contains("open")){if(e.key==="Escape")closeDetail();return}
+ if(e.key==="ArrowRight")step(1);if(e.key==="ArrowLeft")step(-1);if(e.key==="Enter"&&document.activeElement.classList.contains("book"))openDetail();
+});
+stage.addEventListener("pointerdown",e=>{dragStart=e.clientX;dragDelta=0;stage.setPointerCapture?.(e.pointerId)});
+stage.addEventListener("pointermove",e=>{if(dragStart!==null)dragDelta=e.clientX-dragStart});
+stage.addEventListener("pointerup",()=>{if(dragStart!==null&&Math.abs(dragDelta)>35)step(dragDelta<0?1:-1);dragStart=null;setTimeout(()=>dragDelta=0,80)});
+stage.addEventListener("pointercancel",()=>{dragStart=null;dragDelta=0});
+function openDetail(){
+ const b=books[active];document.getElementById("detailKicker").textContent=b.kind+" · Ahd-e-Zuhoor";
+ document.getElementById("detailTitle").textContent=b.title;document.getElementById("detailAuthor").textContent=b.author;
+ document.getElementById("detailDescription").textContent=b.short;document.getElementById("detailType").textContent=b.kind;document.getElementById("detailTheme").textContent=b.theme;
+ document.getElementById("readingLink").href=`./book.html?id=${b.reading||b.id}`;
+ const sourceLink=document.getElementById("sourceLink");sourceLink.href=b.source;sourceLink.hidden=!b.source;
+ document.getElementById("readingLink").textContent=b.id==="mikyal2"?"Open shared Mikyal notes ↗":"Open study notes ↗";
+ detailBook.innerHTML=jacketMarkup(b);
+ detail.classList.add("open");detail.setAttribute("aria-hidden","false");document.body.style.overflow="hidden";
+ document.getElementById("close").focus();
+}
+function closeDetail(){detail.classList.remove("open");detail.setAttribute("aria-hidden","true");document.body.style.overflow="";nodes[active].focus({preventScroll:true})}
+document.getElementById("close").addEventListener("click",closeDetail);
+detail.addEventListener("click",e=>{if(e.target===detail)closeDetail()});
+position();
+</script>
+</body>
+</html>
