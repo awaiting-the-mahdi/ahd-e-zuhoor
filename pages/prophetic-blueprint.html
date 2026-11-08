@@ -378,6 +378,32 @@ body {
   }
 }
 
+/* Selected Prophet — focused golden illumination */
+.prophet-node.is-selected {
+  z-index: 6;
+  color: #fff2d2;
+  filter: brightness(1.35);
+}
+
+.prophet-node.is-selected::before {
+  opacity: 1;
+  transform: scale(1.8);
+  background: radial-gradient(
+    circle,
+    rgba(255, 230, 177, .55) 0%,
+    rgba(230, 183, 105, .28) 42%,
+    rgba(230, 183, 105, .08) 68%,
+    transparent 78%
+  );
+  filter: blur(7px);
+  animation: selected-glow 1.8s ease-in-out infinite;
+}
+
+@keyframes selected-glow {
+  0%, 100% { opacity: .72; transform: scale(1.45); }
+  50% { opacity: 1; transform: scale(1.95); }
+}
+
 </style>
 </head>
 
@@ -507,7 +533,8 @@ body {
     node.addEventListener("click", () => {
 
       selectedProphet = prophets[node.dataset.key];
-
+nodes.forEach(item => item.classList.remove("is-selected"));
+node.classList.add("is-selected");
       document.getElementById("laqab-question").textContent =
         "Do you know why " + selectedProphet.name +
         " is known by the laqab " + selectedProphet.laqab + "?";
@@ -525,7 +552,9 @@ body {
   document.querySelector(".dialog-close").addEventListener("click", () => {
     dialog.close();
   });
-
+dialog.addEventListener("close", () => {
+  nodes.forEach(item => item.classList.remove("is-selected"));
+});
   dialog.addEventListener("click", event => {
     if (event.target === dialog) {
       dialog.close();
