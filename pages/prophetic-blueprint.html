@@ -9,7 +9,11 @@
   <style>
     * { box-sizing: border-box; }
     html, body { width: 100%; min-height: 100%; margin: 0; background: #061321; }
-    body { min-height: 100svh; display: grid; place-items: center; overflow-x: hidden; }
+    body {
+  min-height: 100svh;
+  display: block;
+  overflow-x: hidden;
+}
     .blueprint { position: relative; width: 100%; max-width: 1920px; line-height: 0; isolation: isolate; }
     .blueprint-art { display: block; width: 100%; height: auto; user-select: none; -webkit-user-drag: none; }
     .hotspot {
