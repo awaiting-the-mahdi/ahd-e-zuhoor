@@ -282,6 +282,102 @@ body {
     font-size: 8px !important;
   }
 }
+
+/* LIVING CONSTELLATION — subtle ambient lighting */
+
+/* Gentle breathing glow around the eight selected nodes */
+.prophet-node {
+  isolation: isolate;
+  animation: node-breathe 4.5s ease-in-out infinite;
+}
+
+.prophet-node::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 2px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 213, 139, 0.28) 0%,
+    rgba(255, 190, 100, 0.12) 42%,
+    transparent 75%
+  );
+  filter: blur(5px);
+  opacity: 0.55;
+  pointer-events: none;
+  animation: node-halo 4.5s ease-in-out infinite;
+}
+
+@keyframes node-breathe {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.18); }
+}
+
+@keyframes node-halo {
+  0%, 100% { opacity: 0.35; transform: scale(.88); }
+  50% { opacity: .85; transform: scale(1.25); }
+}
+
+/* The Imam remains the brightest point */
+.imam-label {
+  isolation: isolate;
+  animation: imam-radiance 4s ease-in-out infinite;
+}
+
+.imam-label::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -15px -22px;
+  border-radius: 50%;
+  background: radial-gradient(
+    ellipse,
+    rgba(255, 211, 135, .32),
+    rgba(255, 190, 100, .10) 48%,
+    transparent 75%
+  );
+  filter: blur(9px);
+  pointer-events: none;
+}
+
+@keyframes imam-radiance {
+  0%, 100% { text-shadow: 0 1px 8px #24180b, 0 0 14px rgba(255,214,142,.75); }
+  50% { text-shadow: 0 1px 10px #24180b, 0 0 22px rgba(255,214,142,1); }
+}
+
+/* Very subtle golden atmosphere, separate from the original image */
+.blueprint::after {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  pointer-events: none;
+  opacity: .16;
+  background-image:
+    radial-gradient(circle at 18% 24%, rgba(255,220,160,.8) 0 1px, transparent 2px),
+    radial-gradient(circle at 82% 31%, rgba(255,220,160,.7) 0 1px, transparent 2px),
+    radial-gradient(circle at 45% 83%, rgba(255,220,160,.7) 0 1px, transparent 2px),
+    radial-gradient(circle at 91% 76%, rgba(255,220,160,.6) 0 1px, transparent 2px);
+  animation: constellation-atmosphere 12s ease-in-out infinite alternate;
+}
+
+@keyframes constellation-atmosphere {
+  from { opacity: .08; }
+  to { opacity: .24; }
+}
+
+/* Respect reduced-motion settings */
+@media (prefers-reduced-motion: reduce) {
+  .prophet-node,
+  .prophet-node::before,
+  .imam-label,
+  .imam-label::before,
+  .blueprint::after {
+    animation: none !important;
+  }
+}
+
 </style>
 </head>
 
