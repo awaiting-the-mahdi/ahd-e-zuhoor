@@ -1,0 +1,733 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#081426">
+
+  <meta name="description" content="Explore the lives and missions of the Prophets and carefully sourced connections to Imam-e-Zamana (ATFS).">
+
+  <title>The Prophetic Blueprint | AHD-E-ZUHOOR</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../assets/css/site.css">
+
+  <style>
+    .site-header {
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+    }
+
+    .blueprint-hero {
+      padding: 100px 22px 65px;
+      text-align: center;
+      background:
+        radial-gradient(ellipse at center, rgba(215,188,128,.10), transparent 65%),
+        var(--navy);
+    }
+
+    .blueprint-hero h1 {
+      max-width: 850px;
+      margin: 22px auto;
+      font-family: var(--serif);
+      font-size: clamp(2.6rem, 7vw, 5.3rem);
+      font-weight: 500;
+      line-height: 1.15;
+    }
+
+    .blueprint-hero h1 span {
+      color: var(--gold);
+    }
+
+    .blueprint-hero p {
+      max-width: 650px;
+      margin: 0 auto;
+      color: var(--muted);
+      line-height: 1.9;
+    }
+
+    .blueprint-intro {
+      width: min(760px, 88%);
+      margin: 0 auto;
+      padding: 45px 0 65px;
+      text-align: center;
+    }
+
+    .blueprint-intro p {
+      color: var(--muted);
+      line-height: 2;
+    }
+
+    .graph-section {
+      padding: 65px 18px 90px;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse at center, rgba(34,53,79,.42), transparent 70%),
+        var(--deep);
+    }
+
+    .graph-heading {
+      margin-bottom: 35px;
+      text-align: center;
+    }
+
+    .graph-heading h2 {
+      margin: 14px 0;
+      font-family: var(--serif);
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 500;
+    }
+
+    .graph-heading p {
+      color: var(--muted);
+      font-size: .85rem;
+    }
+
+    .graph-stage {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      align-items: center;
+      gap: 16px;
+      width: min(850px, 100%);
+      margin: 0 auto;
+      padding: 25px 0;
+    }
+
+    .graph-stage::before {
+      content: "";
+      position: absolute;
+      inset: 8%;
+      border: 1px solid rgba(215,188,128,.15);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .graph-node {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      min-height: 90px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      padding: 12px 5px;
+      border: 1px solid rgba(215,188,128,.25);
+      border-radius: 50%;
+      background: rgba(18,35,59,.9);
+      color: var(--ivory);
+      cursor: pointer;
+      transition: .3s ease;
+    }
+
+    .graph-node:hover,
+    .graph-node[aria-pressed="true"] {
+      border-color: var(--gold);
+      background: #203651;
+      box-shadow: 0 0 28px rgba(215,188,128,.15);
+      transform: translateY(-3px);
+    }
+
+    .graph-node span:first-child {
+      font-family: var(--serif);
+      font-size: .95rem;
+    }
+
+    .graph-node span:last-child {
+      color: var(--gold);
+      font-size: .58rem;
+      letter-spacing: .08em;
+    }
+
+    .graph-centre {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      min-height: 150px;
+      grid-column: 2;
+      grid-row: 2;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 18px 8px;
+      border: 1px solid var(--gold);
+      border-radius: 50%;
+      background: radial-gradient(circle, #263b57, #081426 75%);
+      box-shadow: 0 0 45px rgba(215,188,128,.12);
+      text-align: center;
+    }
+
+    .graph-centre .arabic-centre {
+      color: var(--gold);
+      font-family: Georgia, serif;
+      font-size: 1.6rem;
+    }
+
+    .graph-centre strong {
+      margin-top: 7px;
+      font-family: var(--serif);
+      font-size: .9rem;
+      font-weight: 500;
+    }
+
+    .graph-centre small {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: .57rem;
+      letter-spacing: .1em;
+    }
+
+    .graph-node:nth-of-type(1) { grid-column: 1; grid-row: 1; }
+    .graph-node:nth-of-type(2) { grid-column: 2; grid-row: 1; }
+    .graph-node:nth-of-type(3) { grid-column: 3; grid-row: 1; }
+    .graph-node:nth-of-type(4) { grid-column: 1; grid-row: 2; }
+    .graph-node:nth-of-type(5) { grid-column: 3; grid-row: 2; }
+    .graph-node:nth-of-type(6) { grid-column: 1; grid-row: 3; }
+    .graph-node:nth-of-type(7) { grid-column: 2; grid-row: 3; }
+    .graph-node:nth-of-type(8) { grid-column: 3; grid-row: 3; }
+
+    .graph-caption {
+      max-width: 600px;
+      margin: 25px auto 0;
+      color: var(--muted);
+      font-size: .72rem;
+      line-height: 1.8;
+      text-align: center;
+    }
+
+    .prophet-explorer {
+      width: min(850px, 88%);
+      margin: 0 auto;
+      padding: 85px 0;
+    }
+
+    .prophet-explorer h2 {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 500;
+    }
+
+    .explorer-intro {
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .prophet-search {
+      width: 100%;
+      margin: 25px 0;
+      padding: 15px 17px;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      background: var(--deep);
+      color: var(--ivory);
+      font: inherit;
+    }
+
+    .prophet-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .prophet-list button {
+      padding: 15px;
+      border: 1px solid var(--border);
+      background: rgba(18,35,59,.55);
+      color: var(--ivory);
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .prophet-list button:hover {
+      border-color: var(--gold);
+    }
+
+    .prophet-list button[hidden] {
+      display: none;
+    }
+
+    .prophet-list span {
+      display: block;
+      color: var(--muted);
+      font-size: .68rem;
+    }
+
+    .profile-panel {
+      margin-top: 35px;
+      padding: clamp(22px, 5vw, 40px);
+      border: 1px solid var(--border);
+      background: linear-gradient(145deg, rgba(31,52,79,.75), rgba(8,20,38,.8));
+    }
+
+    .profile-panel h3 {
+      margin: 10px 0;
+      font-family: var(--serif);
+      font-size: 2rem;
+      font-weight: 500;
+    }
+
+    .profile-panel p {
+      color: var(--muted);
+      line-height: 1.9;
+    }
+
+    .profile-reference {
+      padding-top: 18px;
+      border-top: 1px solid var(--border);
+      color: var(--gold) !important;
+      font-size: .78rem;
+    }
+
+    .evidence-note {
+      margin-top: 20px;
+      padding: 17px;
+      border-left: 2px solid var(--gold);
+      background: rgba(215,188,128,.06);
+      color: var(--muted);
+      font-size: .8rem;
+      line-height: 1.8;
+    }
+
+    .source-method {
+      padding: 75px 22px;
+      background: var(--deep);
+      text-align: center;
+    }
+
+    .source-method h2 {
+      font-family: var(--serif);
+      font-size: 2.3rem;
+      font-weight: 500;
+    }
+
+    .source-method p {
+      max-width: 680px;
+      margin: 18px auto;
+      color: var(--muted);
+      line-height: 1.9;
+    }
+
+    .source-books {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 15px;
+      width: min(850px, 90%);
+      margin: 35px auto 0;
+      text-align: left;
+    }
+
+    .source-book {
+      padding: 22px;
+      border: 1px solid var(--border);
+    }
+
+    .source-book h3 {
+      color: var(--gold);
+      font-family: var(--serif);
+      font-size: 1.25rem;
+      font-weight: 500;
+    }
+
+    .source-book p {
+      font-size: .82rem;
+    }
+
+    @media(max-width:600px) {
+      .blueprint-hero {
+        padding-top: 75px;
+      }
+
+      .graph-stage {
+        gap: 8px;
+      }
+
+      .graph-node {
+        min-height: 82px;
+        font-size: .8rem;
+      }
+
+      .graph-node span:first-child {
+        font-size: .78rem;
+      }
+
+      .graph-centre {
+        min-height: 125px;
+      }
+
+      .graph-centre strong {
+        font-size: .75rem;
+      }
+
+      .prophet-list,
+      .source-books {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media(prefers-reduced-motion:reduce) {
+      .graph-node {
+        transition: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="page-shell">
+
+  <header class="site-header is-visible" id="site-header">
+    <a class="wordmark" href="../index.html">
+      AHD-E-ZUHOOR
+      <span>عهد الظهور</span>
+    </a>
+
+    <nav aria-label="Main navigation">
+      <a href="../index.html">Home</a>
+      <a href="../index.html#pathways">Explore</a>
+      <a href="knowledge-library.html">Library</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <section class="blueprint-hero">
+      <span class="eyebrow">THE PROPHETIC LEGACY</span>
+
+      <h1>
+        The Prophetic<br>
+        <span>Blueprint</span>
+      </h1>
+
+      <p>
+        Before the final promise, there were generations of
+        Prophets, divine missions and signs. Explore their lives
+        and discover what authentic sources reveal about their
+        relationship to the Imam of our time.
+      </p>
+    </section>
+
+    <section class="blueprint-intro">
+      <span class="eyebrow">ONE DIVINE STORY</span>
+
+      <p>
+        The Prophets were sent in different eras, to different
+        communities, carrying the message of Allah. Their lives
+        offer lessons in faith, patience, justice, leadership
+        and divine promise.
+
+        This journey studies their stories alongside the
+        narrations concerning Imam-e-Zamana (ATFS) — carefully
+        distinguishing established reports from interpretation.
+      </p>
+    </section>
+
+    <section class="graph-section">
+
+      <div class="graph-heading">
+        <span class="eyebrow">EXPLORE THE CONNECTIONS</span>
+        <h2>A Constellation of Prophets</h2>
+        <p>Select a Prophet to begin exploring their story.</p>
+      </div>
+
+      <div class="graph-stage" id="prophet-graph">
+
+        <button class="graph-node" data-prophet="adam" aria-pressed="true">
+          <span>Adam (AS)</span>
+          <span>THE BEGINNING</span>
+        </button>
+
+        <button class="graph-node" data-prophet="nuh" aria-pressed="false">
+          <span>Nuh (AS)</span>
+          <span>PERSEVERANCE</span>
+        </button>
+
+        <button class="graph-node" data-prophet="ibrahim" aria-pressed="false">
+          <span>Ibrahim (AS)</span>
+          <span>FAITH</span>
+        </button>
+
+        <div class="graph-centre">
+          <span class="arabic-centre" lang="ar">المهدي</span>
+          <strong>Imam-e-Zamana (ATFS)</strong>
+          <small>THE CENTRAL FOCUS</small>
+        </div>
+
+        <button class="graph-node" data-prophet="musa" aria-pressed="false">
+          <span>Musa (AS)</span>
+          <span>DELIVERANCE</span>
+        </button>
+
+        <button class="graph-node" data-prophet="isa" aria-pressed="false">
+          <span>Isa (AS)</span>
+          <span>DIVINE SIGNS</span>
+        </button>
+
+        <button class="graph-node" data-prophet="yusuf" aria-pressed="false">
+          <span>Yusuf (AS)</span>
+          <span>TRUST</span>
+        </button>
+
+        <button class="graph-node" data-prophet="ayyub" aria-pressed="false">
+          <span>Ayyub (AS)</span>
+          <span>PATIENCE</span>
+        </button>
+
+        <button class="graph-node" data-prophet="yunus" aria-pressed="false">
+          <span>Yunus (AS)</span>
+          <span>REPENTANCE</span>
+        </button>
+
+      </div>
+
+      <p class="graph-caption">
+        This is an introductory exploration map, not a claim
+        that every Prophet has a specific narrated resemblance
+        to Imam-e-Zamana (ATFS). Each scholarly connection
+        will require its own source verification.
+      </p>
+
+    </section>
+
+    <section class="prophet-explorer">
+
+      <span class="eyebrow">THE PROPHETS</span>
+      <h2>Explore a Life. Discover a Mission.</h2>
+
+      <p class="explorer-intro">
+        Search or select a Prophet. Each profile will grow
+        into a researched account of their life, mission,
+        Qur'anic references and verified narrations.
+      </p>
+
+      <input
+        class="prophet-search"
+        id="prophet-search"
+        type="search"
+        placeholder="Search the Prophets..."
+        aria-label="Search the Prophets"
+      >
+
+      <div class="prophet-list" id="prophet-list">
+        <button data-prophet="adam">Adam (AS)<span>Beginning of humanity</span></button>
+        <button data-prophet="nuh">Nuh (AS)<span>Patience and the Ark</span></button>
+        <button data-prophet="ibrahim">Ibrahim (AS)<span>Faith and divine trials</span></button>
+        <button data-prophet="musa">Musa (AS)<span>Deliverance and leadership</span></button>
+        <button data-prophet="isa">Isa (AS)<span>Miracles and divine signs</span></button>
+        <button data-prophet="yusuf">Yusuf (AS)<span>Trials and forgiveness</span></button>
+        <button data-prophet="ayyub">Ayyub (AS)<span>Patience through hardship</span></button>
+        <button data-prophet="yunus">Yunus (AS)<span>Repentance and mercy</span></button>
+      </div>
+
+      <article class="profile-panel" id="prophet-profile" aria-live="polite">
+
+        <span class="eyebrow" id="profile-kicker">SELECTED PROPHET</span>
+
+        <h3 id="profile-name">Adam (AS)</h3>
+
+        <p id="profile-description">
+          Prophet Adam (AS) is described in the Qur'an as the
+          first human and a recipient of divine teaching.
+          His story introduces humanity's responsibility,
+          repentance and relationship with Allah.
+        </p>
+
+        <p class="profile-reference" id="profile-reference">
+          Qur'anic starting points: Surah al-Baqarah 2:30–39;
+          Surah Sad 38:71–75.
+        </p>
+
+        <div class="evidence-note">
+          <strong>Research status:</strong>
+          The profile introduces the Prophet's story.
+          A specific resemblance to Imam-e-Zamana (ATFS)
+          will be added only after its narration, source,
+          edition and page have been verified.
+        </div>
+
+      </article>
+
+    </section>
+
+    <section class="source-method">
+
+      <span class="eyebrow">OUR RESEARCH FOUNDATION</span>
+
+      <h2>Every Connection Must Have a Source.</h2>
+
+      <p>
+        We will study the Prophets' lives and the narrations
+        about Imam-e-Zamana (ATFS) through complementary
+        scholarly works. Our aim is not to manufacture
+        similarities, but to understand what the sources
+        actually establish.
+      </p>
+
+      <div class="source-books">
+
+        <div class="source-book">
+          <h3>Hayat ul Quloob</h3>
+          <p>
+            A key foundation for researching the lives,
+            biographies and missions of the Prophets (AS).
+          </p>
+        </div>
+
+        <div class="source-book">
+          <h3>Mikyal ul Makaram</h3>
+          <p>
+            A key source for studying the reported
+            resemblances of Imam-e-Zamana (ATFS) to the Prophets.
+          </p>
+        </div>
+
+      </div>
+
+      <p>
+        References will identify the edition, volume,
+        page and nature of the evidence wherever available.
+      </p>
+
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <a class="wordmark" href="../index.html">
+      AHD-E-ZUHOOR
+      <span>عهد الظهور</span>
+    </a>
+
+    <p>
+      May knowledge deepen recognition,
+      and recognition strengthen our preparation.
+    </p>
+
+    <span class="footer-mark">بسم الله الرحمن الرحيم</span>
+  </footer>
+
+</div>
+
+<script src="../assets/js/site.js" defer></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+  const profiles = {
+    adam: {
+      name: "Adam (AS)",
+      kicker: "THE BEGINNING OF HUMANITY",
+      description:
+        "Prophet Adam (AS) is described in the Qur'an as the first human and a recipient of divine teaching. His story introduces humanity's responsibility, repentance and relationship with Allah.",
+      reference:
+        "Qur'an: Surah al-Baqarah 2:30–39; Surah Sad 38:71–75."
+    },
+    nuh: {
+      name: "Nuh (AS)",
+      kicker: "A LIFE OF PERSEVERANCE",
+      description:
+        "Prophet Nuh (AS) called his people towards Allah with remarkable perseverance. His story includes the Ark, the flood and the consequences of rejecting divine guidance.",
+      reference:
+        "Qur'an: Surah Hud 11:25–49; Surah Nuh 71:1–28."
+    },
+    ibrahim: {
+      name: "Ibrahim (AS)",
+      kicker: "FAITH AND DIVINE TRIALS",
+      description:
+        "Prophet Ibrahim (AS) stands in the Qur'anic account as a model of devotion to Allah. His life includes his rejection of idolatry, his trials and the raising of the foundations of the Ka'bah.",
+      reference:
+        "Qur'an: Surah al-Baqarah 2:124–129; Surah al-Anbiya 21:51–73."
+    },
+    musa: {
+      name: "Musa (AS)",
+      kicker: "DELIVERANCE AND LEADERSHIP",
+      description:
+        "Prophet Musa (AS) was sent to confront Pharaoh and guide the Children of Israel. His story explores divine assistance, courage, leadership and the liberation of an oppressed people.",
+      reference:
+        "Qur'an: Surah Taha 20:9–98; Surah al-Qasas 28:3–46."
+    },
+    isa: {
+      name: "Isa (AS)",
+      kicker: "MIRACLES AND DIVINE SIGNS",
+      description:
+        "Prophet Isa (AS), son of Maryam (AS), was supported by Allah with signs and miracles. The Qur'an recounts his birth, his mission and his message to the Children of Israel.",
+      reference:
+        "Qur'an: Surah Aal Imran 3:42–55; Surah Maryam 19:16–36."
+    },
+    yusuf: {
+      name: "Yusuf (AS)",
+      kicker: "TRIALS AND FORGIVENESS",
+      description:
+        "The Qur'an presents the story of Prophet Yusuf (AS), from the trials of his youth to his eventual authority in Egypt and his forgiveness towards his brothers.",
+      reference:
+        "Qur'an: Surah Yusuf 12:1–101."
+    },
+    ayyub: {
+      name: "Ayyub (AS)",
+      kicker: "PATIENCE THROUGH HARDSHIP",
+      description:
+        "Prophet Ayyub (AS) is remembered in the Qur'an for turning to Allah during hardship. His story highlights devotion, supplication and divine mercy.",
+      reference:
+        "Qur'an: Surah al-Anbiya 21:83–84; Surah Sad 38:41–44."
+    },
+    yunus: {
+      name: "Yunus (AS)",
+      kicker: "REPENTANCE AND MERCY",
+      description:
+        "Prophet Yunus (AS) is associated with the experience of the great trial and his supplication to Allah. His story highlights turning back to Allah and divine mercy.",
+      reference:
+        "Qur'an: Surah al-Anbiya 21:87–88; Surah as-Saffat 37:139–148."
+    }
+  };
+
+  const name = document.getElementById("profile-name");
+  const kicker = document.getElementById("profile-kicker");
+  const description = document.getElementById("profile-description");
+  const reference = document.getElementById("profile-reference");
+  const search = document.getElementById("prophet-search");
+  const buttons = document.querySelectorAll("[data-prophet]");
+
+  function selectProphet(id) {
+    const profile = profiles[id];
+    if (!profile) return;
+
+    name.textContent = profile.name;
+    kicker.textContent = profile.kicker;
+    description.textContent = profile.description;
+    reference.textContent = profile.reference;
+
+    buttons.forEach(button => {
+      const selected = button.dataset.prophet === id;
+
+      if (button.classList.contains("graph-node")) {
+        button.setAttribute("aria-pressed", String(selected));
+      }
+    });
+  }
+
+  buttons.forEach(button => {
+    button.addEventListener("click", () => {
+      selectProphet(button.dataset.prophet);
+    });
+  });
+
+  search.addEventListener("input", () => {
+    const term = search.value.trim().toLowerCase();
+
+    document.querySelectorAll("#prophet-list button").forEach(button => {
+      button.hidden = !button.textContent.toLowerCase().includes(term);
+    });
+  });
+
+});
+</script>
+
+</body>
+</html>
