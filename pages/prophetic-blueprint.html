@@ -1,74 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#081426">
-  <meta name="description" content="Explore the Prophetic Legacy through an interactive constellation of Prophets.">
-  <title>The Prophetic Blueprint | AHD-E-ZUHOOR</title>
-  <style>
-    * { box-sizing: border-box; }
-    html, body { width: 100%; min-height: 100%; margin: 0; background: #061321; }
-    body {
-  min-height: 100svh;
-  display: block;
-  overflow-x: hidden;
-}
-    .blueprint { position: relative; width: 100%; max-width: 1920px; line-height: 0; isolation: isolate; }
-    .blueprint-art { display: block; width: 100%; height: auto; user-select: none; -webkit-user-drag: none; }
-    .hotspot {
-      position: absolute; z-index: 2; display: block;
-      width: clamp(34px, 5.2vw, 76px); height: clamp(34px, 5.2vw, 76px);
-      padding: 0; border: 1px solid transparent; border-radius: 50%;
-      background: transparent; color: #f7edda; text-decoration: none;
-      transform: translate(-50%, -50%); cursor: pointer; -webkit-tap-highlight-color: transparent;
-      line-height: normal;
-    }
-    .hotspot::after {
-      content: attr(data-name); position: absolute; left: 50%; bottom: calc(100% + 9px);
-      width: max-content; max-width: min(190px, 48vw); padding: 8px 11px;
-      border: 1px solid rgba(215,188,128,.52); border-radius: 2px;
-      background: rgba(5,15,28,.94); color: #f5ead5;
-      font: 500 12px/1.3 Georgia, serif; letter-spacing: .035em; white-space: nowrap;
-      opacity: 0; visibility: hidden; pointer-events: none;
-      transform: translate(-50%, 4px); transition: opacity .18s ease, transform .18s ease, visibility .18s ease;
-    }
-    .hotspot:hover::after, .hotspot:focus-visible::after, .hotspot.is-selected::after {
-      opacity: 1; visibility: visible; transform: translate(-50%, 0);
-    }
-    .hotspot:focus-visible { outline: 1px solid rgba(242,211,150,.9); outline-offset: 2px; background: rgba(215,188,128,.08); }
-    /* Hotspots are positioned against the original 1536 × 864 artwork. */
-    .hotspot[data-name="Adam (AS)"] { left: 11.1%; top: 64.7%; }
-    .hotspot[data-name="Nuh (AS)"] { left: 37.7%; top: 26.7%; }
-    .hotspot[data-name="Ibrahim (AS)"] { left: 28.5%; top: 62.6%; }
-    .hotspot[data-name="Musa (AS)"] { left: 71.6%; top: 49.4%; }
-    .hotspot[data-name="Isa (AS)"] { left: 76%; top: 21.9%; }
-    .hotspot[data-name="Yusuf (AS)"] { left: 70.8%; top: 69.9%; }
-    .imam-label {
-      position: absolute; z-index: 3; left: 50.1%; top: 50%; width: max-content; max-width: 30%;
-      padding: 4px 8px; color: #fff1d6;
-      font: 500 clamp(8px, 1.05vw, 13px)/1.2 Georgia, serif;
-      letter-spacing: .045em; text-align: center;
-      text-shadow: 0 1px 8px #24180b, 0 0 14px rgba(255,214,142,.95);
-      transform: translate(-50%, 23px); pointer-events: none; white-space: nowrap;
-    }
-    @media (max-width: 600px) {
-      .hotspot { width: 38px; height: 38px; }
-      .hotspot::after { font-size: 11px; padding: 7px 9px; }
-      .imam-label { font-size: 8px; transform: translate(-50%, 14px); letter-spacing: 0; }
-    }
-    @media (prefers-reduced-motion: reduce) { .hotspot::after { transition: none; } }
- .page-heading {
-  text-align: center;
-  padding: 42px 16px 28px;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#061321">
+<title>The Prophetic Blueprint | AHD-E-ZUHOOR</title>
+
+<style>
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+  width: 100%;
   background: #061321;
 }
 
-.page-heading .eyebrow {
+body {
+  display: block;
+  overflow-x: hidden;
+}
+
+/* PAGE TITLE */
+.page-heading {
+  text-align: center;
+  padding: 27px 12px 18px;
+  background: #061321;
+}
+
+.eyebrow {
   color: #d7bc80;
-  font: 500 11px/1.5 Arial, sans-serif;
-  letter-spacing: 0.22em;
-  margin-bottom: 10px;
+  font: 500 10px/1.5 Arial, sans-serif;
+  letter-spacing: .22em;
+  margin-bottom: 8px;
 }
 
 .page-heading h1 {
@@ -81,56 +45,382 @@
   width: 54px;
   height: 1px;
   background: #b99a60;
-  margin: 20px auto 0;
+  margin: 13px auto 0;
+}
+
+/* ORIGINAL ARTWORK */
+.blueprint {
+  position: relative;
+  width: 100%;
+  max-width: 1920px;
+  margin: 0 auto;
+  line-height: 0;
+  isolation: isolate;
+}
+
+.blueprint-art {
+  display: block;
+  width: 100%;
+  height: auto;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+/* CENTRE LABEL */
+.imam-label {
+  position: absolute;
+  z-index: 3;
+  left: 50%;
+  top: 50%;
+  width: max-content;
+  padding: 3px 5px;
+  color: #fff1d6;
+  font: 500 clamp(8px, 1.05vw, 13px)/1.2 Georgia, serif;
+  text-align: center;
+  text-shadow: 0 1px 8px #24180b, 0 0 14px rgba(255,214,142,.95);
+  transform: translate(-50%, 18px);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+/* PERMANENT PROPHET LABELS + CLICK AREAS */
+.prophet-node {
+  position: absolute;
+  z-index: 4;
+  left: var(--x);
+  top: var(--y);
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 50px;
+  min-height: 34px;
+  padding: 4px;
+  border: 0;
+  background: transparent;
+  color: #f0d7a4;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  text-shadow: 0 1px 5px #061321, 0 0 8px #061321;
+  line-height: 1.1;
+}
+
+.node-name {
+  font: 500 clamp(6px, .72vw, 9px)/1.15 Georgia, serif;
+  white-space: nowrap;
+}
+
+.prophet-node.muhammad .node-name {
+  font-size: clamp(8px, 1.05vw, 13px);
+}
+
+.prophet-node:focus-visible {
+  outline: 1px solid #e6c98e;
+  outline-offset: 3px;
+}
+
+/* Positions are percentages of the original 1536 × 864 image */
+.prophet-node[data-key="adam"] {
+  --x: 11.1%;
+  --y: 64.7%;
+}
+
+.prophet-node[data-key="nuh"] {
+  --x: 37.7%;
+  --y: 26.7%;
+}
+
+.prophet-node[data-key="ibrahim"] {
+  --x: 28.5%;
+  --y: 62.6%;
+}
+
+.prophet-node[data-key="musa"] {
+  --x: 71.6%;
+  --y: 49.4%;
+}
+
+.prophet-node[data-key="isa"] {
+  --x: 76%;
+  --y: 21.9%;
+}
+
+.prophet-node[data-key="yusuf"] {
+  --x: 70.8%;
+  --y: 69.9%;
+}
+
+.prophet-node[data-key="khizr"] {
+  --x: 56.5%;
+  --y: 78.2%;
+}
+
+.prophet-node[data-key="muhammad"] {
+  --x: 87.8%;
+  --y: 46.5%;
+}
+
+/* POPOVER */
+#insight {
+  position: fixed;
+  inset: 50% auto auto 50%;
+  transform: translate(-50%, -50%);
+  width: min(390px, calc(100vw - 34px));
+  max-width: none;
+  margin: 0;
+  padding: 27px 23px 22px;
+  border: 1px solid rgba(215,188,128,.72);
+  border-radius: 5px;
+  background: linear-gradient(145deg, #10243a, #071525);
+  color: #f5ebdd;
+  box-shadow: 0 22px 70px rgba(0,0,0,.48);
+  overflow: visible;
+  line-height: 1.5;
+}
+
+#insight::backdrop {
+  background: rgba(2,9,17,.64);
+  backdrop-filter: blur(7px);
+  -webkit-backdrop-filter: blur(7px);
+}
+
+.dialog-close {
+  position: absolute;
+  right: 9px;
+  top: 7px;
+  border: 0;
+  background: transparent;
+  color: #d7bc80;
+  font-size: 23px;
+  line-height: 1;
+  padding: 5px;
+  cursor: pointer;
+}
+
+.question {
+  margin: 0;
+  color: #f5ebdd;
+  font: 400 18px/1.48 Georgia, serif;
+}
+
+.question + .question {
+  margin-top: 19px;
+  padding-top: 17px;
+  border-top: 1px solid rgba(215,188,128,.28);
+}
+
+.discover {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  margin-top: 23px;
+  padding: 12px 14px;
+  border: 0;
+  border-radius: 3px;
+  background: #c7a96d;
+  color: #081426;
+  font: 600 13px/1.2 Arial, sans-serif;
+  cursor: pointer;
+}
+
+.discover span {
+  font-size: 18px;
 }
 
 @media (max-width: 600px) {
-  .page-heading {
-    padding: 32px 12px 22px;
+  .prophet-node {
+    min-width: 42px;
+    min-height: 30px;
+  }
+
+  .node-name {
+    font-size: 6px;
+  }
+
+  .prophet-node.muhammad .node-name {
+    font-size: 8px;
+  }
+
+  .imam-label {
+    font-size: 8px;
+    transform: translate(-50%, 14px);
+  }
+
+  #insight {
+    padding: 25px 20px 19px;
+  }
+
+  .question {
+    font-size: 16px;
   }
 }
-   </style>
+</style>
 </head>
-<body>
-<body>
-  <header class="page-heading">
-    <div class="eyebrow">THE PROPHETIC LEGACY</div>
-    <h1>The Prophetic Blueprint</h1>
-    <div class="heading-line"></div>
-  </header>
 
-  <main class="blueprint" aria-label="Interactive Prophetic Blueprint">
-    <img class="blueprint-art"
-      src="../assets/images/prophetic-blueprint-network.PNG"
-      width="1536" height="864"
-      alt="A luminous golden network of interconnected points on a midnight-blue background"
-      draggable="false">
-    <span class="imam-label">Imam Mahdi (ATFS)</span>
-    <a class="hotspot" href="prophet.html?name=adam" data-name="Adam (AS)" aria-label="Explore Prophet Adam (AS)"></a>
-    <a class="hotspot" href="prophet.html?name=nuh" data-name="Nuh (AS)" aria-label="Explore Prophet Nuh (AS)"></a>
-    <a class="hotspot" href="prophet.html?name=ibrahim" data-name="Ibrahim (AS)" aria-label="Explore Prophet Ibrahim (AS)"></a>
-    <a class="hotspot" href="prophet.html?name=musa" data-name="Musa (AS)" aria-label="Explore Prophet Musa (AS)"></a>
-    <a class="hotspot" href="prophet.html?name=isa" data-name="Isa (AS)" aria-label="Explore Prophet Isa (AS)"></a>
-    <a class="hotspot" href="prophet.html?name=yusuf" data-name="Yusuf (AS)" aria-label="Explore Prophet Yusuf (AS)"></a>
-  </main>
-  <script>
-    (() => {
-      const hotspots = document.querySelectorAll(".hotspot");
-      const touchMode = window.matchMedia("(hover: none) and (pointer: coarse)");
-      hotspots.forEach((hotspot) => {
-        hotspot.addEventListener("click", (event) => {
-          if (!touchMode.matches) return;
-          if (!hotspot.classList.contains("is-selected")) {
-            event.preventDefault();
-            hotspots.forEach((item) => item.classList.remove("is-selected"));
-            hotspot.classList.add("is-selected");
-          }
-        });
-      });
-      document.addEventListener("click", (event) => {
-        if (!event.target.closest(".hotspot")) hotspots.forEach((item) => item.classList.remove("is-selected"));
-      });
-    })();
-  </script>
+<body>
+
+<header class="page-heading">
+  <div class="eyebrow">THE PROPHETIC LEGACY</div>
+  <h1>The Prophetic Blueprint</h1>
+  <div class="heading-line"></div>
+</header>
+
+<main class="blueprint" aria-label="Interactive Prophetic Blueprint">
+
+  <!-- DO NOT CHANGE OR REPLACE THIS ORIGINAL IMAGE -->
+  <img
+    class="blueprint-art"
+    src="../assets/images/prophetic-blueprint-network.PNG"
+    width="1536"
+    height="864"
+    alt="A luminous golden network of interconnected points"
+    draggable="false"
+  >
+
+  <span class="imam-label">Imam Mahdi (ATFS)</span>
+
+  <button class="prophet-node" type="button" data-key="adam">
+    <span class="node-name">Adam (AS)</span>
+  </button>
+
+  <button class="prophet-node" type="button" data-key="nuh">
+    <span class="node-name">Nuh (AS)</span>
+  </button>
+
+  <button class="prophet-node" type="button" data-key="ibrahim">
+    <span class="node-name">Ibrahim (AS)</span>
+  </button>
+
+  <button class="prophet-node" type="button" data-key="musa">
+    <span class="node-name">Musa (AS)</span>
+  </button>
+
+  <button class="prophet-node" type="button" data-key="isa">
+    <span class="node-name">Isa (AS)</span>
+  </button>
+
+  <button class="prophet-node" type="button" data-key="yusuf">
+    <span class="node-name">Yusuf (AS)</span>
+  </button>
+
+  <button class="prophet-node" type="button" data-key="khizr">
+    <span class="node-name">Khizr (AS)</span>
+  </button>
+
+  <button class="prophet-node muhammad" type="button" data-key="muhammad">
+    <span class="node-name">Muhammad (SAWW)</span>
+  </button>
+
+</main>
+
+<!-- THE POPOVER -->
+<dialog id="insight">
+
+  <button class="dialog-close" type="button" aria-label="Close">×</button>
+
+  <p class="question" id="laqab-question"></p>
+
+  <p class="question" id="resemblance-question"></p>
+
+  <button class="discover" type="button" id="discover">
+    Discover the Answer <span aria-hidden="true">→</span>
+  </button>
+
+</dialog>
+
+<script>
+(() => {
+
+  const prophets = {
+    adam: {
+      name: "Prophet Adam (AS)",
+      laqab: "Safiyullah",
+      slug: "adam"
+    },
+    nuh: {
+      name: "Prophet Nuh (AS)",
+      laqab: "Najiyullah",
+      slug: "nuh"
+    },
+    ibrahim: {
+      name: "Prophet Ibrahim (AS)",
+      laqab: "Khalilullah",
+      slug: "ibrahim"
+    },
+    musa: {
+      name: "Prophet Musa (AS)",
+      laqab: "Kalimullah",
+      slug: "musa"
+    },
+    isa: {
+      name: "Prophet Isa (AS)",
+      laqab: "Ruhullah",
+      slug: "isa"
+    },
+    yusuf: {
+      name: "Prophet Yusuf (AS)",
+      laqab: "Al-Siddiq",
+      slug: "yusuf"
+    },
+    khizr: {
+      name: "Prophet Khizr (AS)",
+      laqab: "Al-Abd al-Salih",
+      slug: "khizr"
+    },
+    muhammad: {
+      name: "Prophet Muhammad (SAWW)",
+      laqab: "Habibullah",
+      slug: "muhammad"
+    }
+  };
+
+  const dialog = document.getElementById("insight");
+  const nodes = document.querySelectorAll(".prophet-node");
+  let selectedProphet = null;
+
+  nodes.forEach(node => {
+
+    node.addEventListener("click", () => {
+
+      selectedProphet = prophets[node.dataset.key];
+
+      document.getElementById("laqab-question").textContent =
+        "Do you know why " + selectedProphet.name +
+        " is known by the laqab " + selectedProphet.laqab + "?";
+
+      document.getElementById("resemblance-question").textContent =
+        "Do you know the resemblance between " +
+        selectedProphet.name + " and our Imam (ATFS)?";
+
+      dialog.showModal();
+
+    });
+
+  });
+
+  document.querySelector(".dialog-close").addEventListener("click", () => {
+    dialog.close();
+  });
+
+  dialog.addEventListener("click", event => {
+    if (event.target === dialog) {
+      dialog.close();
+    }
+  });
+
+  document.getElementById("discover").addEventListener("click", () => {
+
+    if (selectedProphet) {
+      window.location.href =
+        "prophet.html?name=" + encodeURIComponent(selectedProphet.slug);
+    }
+
+  });
+
+})();
+</script>
+
 </body>
 </html>
