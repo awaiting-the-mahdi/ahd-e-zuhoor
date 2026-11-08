@@ -404,6 +404,48 @@ body {
   50% { opacity: 1; transform: scale(1.95); }
 }
 
+/* A travelling light sweep over the original network */
+.network-light-sweep {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.network-light-sweep::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -45%;
+  width: 35%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 218, 155, .035) 30%,
+    rgba(255, 226, 175, .15) 50%,
+    rgba(255, 218, 155, .035) 70%,
+    transparent
+  );
+  filter: blur(8px);
+  transform: skewX(-18deg);
+  animation: network-light-travel 13s ease-in-out infinite;
+}
+
+@keyframes network-light-travel {
+  0%, 12% { left: -45%; opacity: 0; }
+  22% { opacity: .8; }
+  75% { opacity: .8; }
+  88%, 100% { left: 115%; opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .network-light-sweep::before {
+    animation: none;
+  }
+}
+
 </style>
 </head>
 
@@ -426,6 +468,8 @@ body {
     alt="A luminous golden network of interconnected points"
     draggable="false"
   >
+
+<div class="network-light-sweep" aria-hidden="true"></div>
 
   <span class="imam-label">Imam Mahdi (ATFS)</span>
 
