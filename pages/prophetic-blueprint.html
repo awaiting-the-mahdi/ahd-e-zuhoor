@@ -579,6 +579,53 @@ body {
   }
 }
 
+/* FINAL LAYOUT CORRECTION — keep overlays anchored to artwork */
+
+.blueprint {
+  display: block !important;
+  flex: 0 0 auto !important;
+  min-height: 0 !important;
+  height: auto !important;
+  overflow: visible !important;
+  background: none !important;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.blueprint-art {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: none !important;
+  object-fit: initial;
+}
+
+/* Bring the title and artwork together */
+.page-heading {
+  padding-top: 27px;
+  padding-bottom: 8px;
+}
+
+.heading-line {
+  margin-bottom: 0;
+}
+
+/* Mobile spacing */
+@media (max-width: 600px) {
+  .page-heading {
+    padding: 25px 12px 8px;
+  }
+
+  .blueprint {
+    min-height: 0 !important;
+  }
+
+  .blueprint-art {
+    width: 100%;
+    height: auto;
+  }
+}
+
 </style>
 </head>
 
