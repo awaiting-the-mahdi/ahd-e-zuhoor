@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#081426">
+  <title>Prophet | The Prophetic Blueprint</title>
+  <style>
+    :root { color-scheme: dark; --navy:#081426; --deep:#050e1b; --gold:#d7bc80; --ivory:#f7f2e8; --muted:#b5bfcd; --line:rgba(215,188,128,.25); }
+    * { box-sizing:border-box; }
+    body { margin:0; min-height:100vh; background:radial-gradient(ellipse at 50% 0%,#1a2c43 0%,var(--navy) 48%,var(--deep) 100%); color:var(--ivory); font-family:Arial,sans-serif; }
+    main { width:min(820px,88%); margin:0 auto; padding:34px 0 70px; }
+    .back { display:inline-block; margin:8px 0 54px; color:var(--gold); text-decoration:none; font-size:.85rem; letter-spacing:.04em; }
+    .eyebrow { color:var(--gold); font-size:.68rem; letter-spacing:.2em; text-transform:uppercase; }
+    h1,h2 { font-family:Georgia,serif; font-weight:400; }
+    h1 { margin:16px 0; font-size:clamp(2.8rem,8vw,5rem); line-height:1.05; }
+    .subtitle { color:var(--muted); font-family:Georgia,serif; font-size:1.15rem; line-height:1.7; }
+    .rule { width:76px; height:1px; margin:34px 0; background:var(--gold); }
+    section { padding:24px 0; border-top:1px solid var(--line); }
+    h2 { color:var(--gold); font-size:1.65rem; }
+    p { color:var(--muted); line-height:1.95; }
+    .refs { padding:18px 20px; border-left:2px solid var(--gold); background:rgba(215,188,128,.055); }
+    .refs p { margin:7px 0; font-size:.9rem; }
+    .note { margin-top:28px; padding:20px; border:1px solid var(--line); }
+    .note strong { color:var(--ivory); }
+    @media(max-width:600px) { .back { margin-bottom:38px; } }
+  </style>
+</head>
+<body>
+<main>
+  <a class="back" href="prophetic-blueprint.html">← Return to the Prophetic Blueprint</a>
+  <div class="eyebrow">THE PROPHETIC LEGACY</div>
+  <h1 id="name">Prophet</h1>
+  <div class="subtitle" id="subtitle"></div>
+  <div class="rule"></div>
+  <section>
+    <div class="eyebrow">LIFE &amp; MISSION</div>
+    <h2>An overview</h2>
+    <p id="overview"></p>
+  </section>
+  <section>
+    <div class="eyebrow">QUR'ANIC STARTING POINTS</div>
+    <h2>Explore the text</h2>
+    <div class="refs"><p id="quran"></p></div>
+  </section>
+  <section>
+    <div class="eyebrow">RESEARCH PATH</div>
+    <h2>Reading the sources carefully</h2>
+    <p>Hayat ul Quloob is a key source for studying the biographies and missions of the Prophets (AS). Exact volume, page and edition references should be added after checking the edition used for this research.</p>
+    <p>Any reported resemblance to Imam-e-Zamana (ATFS) will be studied separately against the relevant passages in Mikyal ul Makaram. A resemblance will not be presented as established unless the narration and its source have been verified.</p>
+  </section>
+  <div class="note"><strong>Research standard</strong><p>This page begins with Qur'anic references. Historical reports, narrations and scholarly interpretations will be clearly distinguished and cited before being added.</p></div>
+</main>
+<script>
+const profiles = {
+  adam: {
+    name:"Adam (AS)", subtitle:"The beginning of humanity · Divine teaching, responsibility and repentance",
+    overview:"The Qur'an describes Adam (AS) as the first human, taught by Allah, and appointed in the earth. His account includes the angels' prostration by divine command, the test in the Garden, the lapse, and the acceptance of his repentance. His story introduces human responsibility, divine guidance and the door of return to Allah.",
+    quran:"Surah al-Baqarah 2:30–39; Surah Aal Imran 3:33; Surah al-A'raf 7:11–27; Surah Ta-Ha 20:115–123; Surah Sad 38:71–75."
+  },
+  nuh: {
+    name:"Nuh (AS)", subtitle:"A mission of perseverance · Calling his people towards Allah",
+    overview:"Nuh (AS) called his people to worship Allah alone over a long period, facing rejection and ridicule. The Qur'anic account describes the Ark, the flood and the deliverance of those who believed. His story is a study in steadfastness, warning, trust in Allah and the limits of worldly lineage when faith is rejected.",
+    quran:"Surah Hud 11:25–49; Surah al-Mu'minun 23:23–30; Surah Nuh 71:1–28; Surah al-Qamar 54:9–15."
+  },
+  ibrahim: {
+    name:"Ibrahim (AS)", subtitle:"A model of devotion · Tawhid, trust and divine trials",
+    overview:"Ibrahim (AS) challenged idolatry and called his people to the worship of the One God. The Qur'an recounts his reasoning with his people, his deliverance from the fire, his trials, and his raising of the foundations of the Ka'bah with Isma'il (AS). He is presented as an exemplar of wholehearted submission to Allah.",
+    quran:"Surah al-Baqarah 2:124–129; Surah al-An'am 6:74–83; Surah al-Anbiya 21:51–73; Surah Ibrahim 14:35–41; Surah as-Saffat 37:99–113."
+  },
+  musa: {
+    name:"Musa (AS)", subtitle:"Deliverance and leadership · Confronting tyranny by Allah's command",
+    overview:"Musa (AS) was sent with clear signs to Pharaoh and called him to release the Children of Israel. The Qur'an describes his early life, his mission with Harun (AS), the confrontation with Pharaoh, the crossing of the sea and the guidance of his people. His account explores courage, reliance on Allah, leadership and covenant.",
+    quran:"Surah al-Baqarah 2:49–61; Surah al-A'raf 7:103–160; Surah Ta-Ha 20:9–98; Surah al-Qasas 28:3–46."
+  },
+  isa: {
+    name:"Isa (AS)", subtitle:"Divine signs and mercy · The son of Maryam (AS)",
+    overview:"Isa (AS), son of Maryam (AS), was born by Allah's command and supported with signs and miracles by His permission. The Qur'an recounts his speaking in the cradle, his call to worship Allah, and the signs granted to him. It also sets out the Qur'anic account of the plot against him and rejects the claim that his enemies killed or crucified him.",
+    quran:"Surah Aal Imran 3:42–59; Surah al-Ma'idah 5:110–120; Surah Maryam 19:16–36; Surah an-Nisa 4:157–159; Surah as-Saff 61:6."
+  },
+  yusuf: {
+    name:"Yusuf (AS)", subtitle:"Trial, integrity and forgiveness · A story told in the Qur'an",
+    overview:"The Qur'an tells the story of Yusuf (AS) in a connected narrative: his childhood dream, the jealousy of his brothers, separation from his family, the trial in Egypt, imprisonment, the interpretation of dreams and eventual authority. When reunited with his family, he responds with forgiveness. The account highlights integrity, patience, wisdom and trust in Allah's plan.",
+    quran:"Surah Yusuf 12:1–101."
+  }
+};
+const key = new URLSearchParams(window.location.search).get("name") || "adam";
+const p = profiles[key] || profiles.adam;
+document.title = p.name + " | The Prophetic Blueprint";
+document.getElementById("name").textContent = p.name;
+document.getElementById("subtitle").textContent = p.subtitle;
+document.getElementById("overview").textContent = p.overview;
+document.getElementById("quran").textContent = p.quran;
+</script>
+</body>
+</html>
