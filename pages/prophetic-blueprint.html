@@ -54,9 +54,47 @@
       .imam-label { font-size: 8px; transform: translate(-50%, 14px); letter-spacing: 0; }
     }
     @media (prefers-reduced-motion: reduce) { .hotspot::after { transition: none; } }
-  </style>
+ .page-heading {
+  text-align: center;
+  padding: 42px 16px 28px;
+  background: #061321;
+}
+
+.page-heading .eyebrow {
+  color: #d7bc80;
+  font: 500 11px/1.5 Arial, sans-serif;
+  letter-spacing: 0.22em;
+  margin-bottom: 10px;
+}
+
+.page-heading h1 {
+  color: #f5ebdd;
+  font: 400 clamp(25px, 4vw, 42px)/1.2 Georgia, serif;
+  margin: 0;
+}
+
+.heading-line {
+  width: 54px;
+  height: 1px;
+  background: #b99a60;
+  margin: 20px auto 0;
+}
+
+@media (max-width: 600px) {
+  .page-heading {
+    padding: 32px 12px 22px;
+  }
+}
+   </style>
 </head>
 <body>
+<body>
+  <header class="page-heading">
+    <div class="eyebrow">THE PROPHETIC LEGACY</div>
+    <h1>The Prophetic Blueprint</h1>
+    <div class="heading-line"></div>
+  </header>
+
   <main class="blueprint" aria-label="Interactive Prophetic Blueprint">
     <img class="blueprint-art"
       src="../assets/images/prophetic-blueprint-network.PNG"
