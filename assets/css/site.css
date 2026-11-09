@@ -291,6 +291,27 @@ button {
   font-size: clamp(1.1rem, 2.5vw, 1.4rem);
   line-height: 1.8;
 }
+.title-kicker {
+  display: block;
+  margin-top: 15px;
+  color: rgba(215, 188, 128, 0.72);
+  font-family: var(--sans);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  line-height: 1.8;
+}
+
+.title-dua {
+  margin: 30px auto 10px;
+  color: var(--gold);
+  font-family: Georgia, serif;
+  font-size: clamp(1.55rem, 4vw, 2.15rem);
+  line-height: 2;
+  letter-spacing: 0;
+  text-align: center;
+  text-shadow: 0 0 24px rgba(215, 188, 128, 0.12);
+}
 
 .text-link {
   display: inline-block;
@@ -606,9 +627,10 @@ button {
     padding-left: 22px;
   }
 
-  .title-reveal {
-    margin-top: 110px;
-  }
+ .title-reveal {
+  margin-top: 75px;
+  padding: 48px 12px 20px;
+}
 }
 
 @media (max-width: 380px) {
