@@ -1,0 +1,154 @@
+/* AHD-E-ZUHOOR — GLOBAL HAMBURGER MENU */
+
+.az-menu-button {
+  position: fixed;
+  top: 20px;
+  right: 24px;
+  z-index: 1002;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid rgba(215,188,128,.55);
+  border-radius: 50%;
+  background: rgba(5,13,25,.82);
+  backdrop-filter: blur(12px);
+  cursor: pointer;
+}
+
+.az-menu-button span {
+  display: block;
+  width: 19px;
+  height: 1.5px;
+  background: #d7bc80;
+  transition: transform .3s ease, opacity .3s ease;
+}
+
+.az-menu-button[aria-expanded="true"] span:first-child {
+  transform: translateY(3.75px) rotate(45deg);
+}
+
+.az-menu-button[aria-expanded="true"] span:last-child {
+  transform: translateY(-3.75px) rotate(-45deg);
+}
+
+.az-menu-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1001;
+  display: grid;
+  place-items: center;
+  padding: 90px 24px 35px;
+  background:
+    radial-gradient(ellipse at 50% 35%, #17354a 0%, transparent 65%),
+    rgba(5,13,25,.98);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .35s ease, visibility .35s ease;
+}
+
+.az-menu-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.az-menu-content {
+  width: min(620px, 100%);
+  max-height: 100%;
+  overflow-y: auto;
+  text-align: center;
+}
+
+.az-menu-eyebrow {
+  color: #d7bc80;
+  font: 600 10px/1.8 Arial, sans-serif;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+}
+
+.az-menu-links {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.az-menu-link {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-height: 112px;
+  padding: 19px;
+  border: 1px solid rgba(215,188,128,.22);
+  background: rgba(18,35,59,.55);
+  text-align: left;
+  transition: border-color .25s ease, background .25s ease;
+}
+
+.az-menu-link:hover,
+.az-menu-link:focus-visible {
+  border-color: #d7bc80;
+  background: rgba(215,188,128,.1);
+}
+
+.az-menu-number {
+  color: #d7bc80;
+  font: 12px Georgia, serif;
+}
+
+.az-menu-title {
+  margin-top: 10px;
+  color: #f7f2e8;
+  font: 20px/1.25 Georgia, serif;
+}
+
+.az-menu-footer {
+  margin-top: 30px;
+  color: #d7bc80;
+  font: 22px Georgia, serif;
+}
+
+@media(max-width:600px) {
+  .az-menu-button {
+    top: 14px;
+    right: 15px;
+    width: 43px;
+    height: 43px;
+  }
+
+  .az-menu-links {
+    grid-template-columns: 1fr;
+    gap: 9px;
+  }
+
+  .az-menu-link {
+    min-height: 76px;
+    padding: 13px 17px;
+  }
+
+  .az-menu-title {
+    margin-top: 5px;
+    font-size: 18px;
+  }
+
+  .az-menu-eyebrow {
+    margin-bottom: 18px;
+  }
+
+  .az-menu-footer {
+    margin-top: 20px;
+  }
+}
+
+@media(prefers-reduced-motion:reduce) {
+  .az-menu-button span,
+  .az-menu-overlay,
+  .az-menu-link {
+    transition: none;
+  }
+}
