@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Who is Imam al-Mahdi (atfs)?</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500&display=swap">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#0a1226;--bg2:#101c3a;--card:rgba(255,255,255,.05);--line:rgba(212,175,90,.35);--gold:#e0b862;--text:#e9ecf5;--muted:#a9b2cc;--em:#2fbf9b;--glow:rgba(224,184,98,.35)}
+:root:not([data-theme="dark"]){}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#f7f3e8;--bg2:#efe7d2;--card:rgba(10,18,38,.05);--line:rgba(150,110,30,.4);--gold:#9a7120;--text:#1a2340;--muted:#4c5675;--em:#0d7a60;--glow:rgba(154,113,32,.3)}}
+:root[data-theme="light"]{--bg:#f7f3e8;--bg2:#efe7d2;--card:rgba(10,18,38,.05);--line:rgba(150,110,30,.4);--gold:#9a7120;--text:#1a2340;--muted:#4c5675;--em:#0d7a60;--glow:rgba(154,113,32,.3)}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.7 Inter,system-ui,sans-serif;overflow-x:hidden}
+canvas#stars{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+main,header{position:relative;z-index:1}
+.hero{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem 1.2rem;
+background:radial-gradient(ellipse at 50% 110%,var(--glow),transparent 60%)}
+.geo{position:absolute;width:min(90vw,560px);opacity:.14;animation:spin 120s linear infinite;color:var(--gold)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hero svg.cal{width:min(88vw,520px);height:auto;position:relative}
+.cal text{font-family:Amiri,serif;font-size:96px;fill:transparent;stroke:var(--gold);stroke-width:1.4;stroke-dasharray:900;stroke-dashoffset:900;animation:draw 3.5s ease forwards,fillin 1.5s 3s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes fillin{to{fill:var(--gold)}}
+h1{font:600 clamp(1.8rem,6vw,3rem)/1.2 "Cormorant Garamond",serif;margin:.5rem 0;letter-spacing:.02em;position:relative;opacity:0;animation:up 1.2s 1.5s forwards}
+.sub{color:var(--muted);max-width:36ch;position:relative;opacity:0;animation:up 1.2s 2.2s forwards}
+.hint{position:absolute;bottom:1.5rem;color:var(--gold);animation:bob 2s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(8px)}}
+@keyframes up{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+section{max-width:860px;margin:0 auto;padding:4.5rem 1.2rem}
+h2{font:600 clamp(1.6rem,5vw,2.3rem) "Cormorant Garamond",serif;color:var(--gold);text-align:center;margin:0 0 2rem}
+h2::after{content:"";display:block;width:60px;height:2px;margin:.6rem auto 0;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.rv{opacity:0;transform:translateY(34px);transition:opacity .9s ease,transform .9s ease}
+.rv.in{opacity:1;transform:none}
+.grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:1.2rem;backdrop-filter:blur(6px);transition:transform .35s,box-shadow .35s}
+.card:hover{transform:translateY(-6px);box-shadow:0 12px 30px var(--glow)}
+.card b{display:block;color:var(--gold);font-size:.8rem;letter-spacing:.12em;text-transform:uppercase}
+.card span{font-size:1.05rem}
+.tl{position:relative;margin-left:14px;padding-left:28px;border-left:2px solid var(--line)}
+.tl .fill{position:absolute;left:-2px;top:0;width:2px;height:0;background:linear-gradient(var(--gold),var(--em));box-shadow:0 0 12px var(--gold)}
+.step{position:relative;margin-bottom:2rem}
+.step::before{content:"";position:absolute;left:-37px;top:.4rem;width:14px;height:14px;border-radius:50%;background:var(--bg);border:2px solid var(--gold)}
+.step.in::before{background:var(--gold);box-shadow:0 0 14px var(--gold)}
+.step h3{margin:0;font:600 1.3rem "Cormorant Garamond",serif;color:var(--gold)}
+.step p{margin:.2rem 0;color:var(--muted)}
+.quote{font:italic 500 1.3rem/1.6 "Cormorant Garamond",serif;text-align:center;border:1px solid var(--line);border-radius:18px;padding:1.6rem;background:var(--card)}
+.quote small{display:block;font:400 .8rem Inter,sans-serif;color:var(--muted);margin-top:.8rem}
+details{border:1px solid var(--line);border-radius:14px;margin-bottom:.8rem;background:var(--card);overflow:hidden}
+summary{cursor:pointer;padding:1rem 1.2rem;font-weight:500;list-style:none;display:flex;justify-content:space-between;gap:1rem}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--gold);font-size:1.4rem;line-height:1;transition:transform .3s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{margin:0;padding:0 1.2rem 1rem;color:var(--muted);animation:up .5s}
+.dua{text-align:center;padding:4rem 1.2rem 5rem}
+.dua .ar{font:400 clamp(1.6rem,6vw,2.4rem)/1.9 Amiri,serif;color:var(--gold);animation:pulse 4s ease-in-out infinite}
+@keyframes pulse{50%{text-shadow:0 0 24px var(--gold)}}
+button{margin-top:1.5rem;background:transparent;color:var(--gold);border:1px solid var(--gold);border-radius:99px;padding:.7rem 1.6rem;font:inherit;cursor:pointer;transition:.3s}
+button:hover{background:var(--gold);color:var(--bg);box-shadow:0 0 20px var(--glow)}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv,h1,.sub{opacity:1;transform:none}.cal text{fill:var(--gold);stroke-dashoffset:0}}
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+<header class="hero">
+  <svg class="geo" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width=".6" aria-hidden="true">
+    <rect x="40" y="40" width="120" height="120"/><rect x="40" y="40" width="120" height="120" transform="rotate(45 100 100)"/>
+    <circle cx="100" cy="100" r="60"/><circle cx="100" cy="100" r="30"/><rect x="70" y="70" width="60" height="60" transform="rotate(22.5 100 100)"/>
+  </svg>
+  <svg class="cal" viewBox="0 0 520 150" role="img" aria-label="Al-Imam al-Mahdi"><text x="260" y="105" text-anchor="middle">الإمام المهدي</text></svg>
+  <h1>Who is Imam al-Mahdi (atfs)?</h1>
+  <p class="sub">The awaited hope of humanity, a sunrise of justice after the long night.</p>
+  <div class="hint">↓</div>
+</header>
+<main>
+<section>
+  <h2 class="rv">Who is he?</h2>
+  <div class="grid">
+    <div class="card rv"><b>Names &amp; titles</b><span>Muhammad ibn al-Hasan; al-Mahdi, al-Qa’im, Sahib al-Zaman</span></div>
+    <div class="card rv"><b>Father</b><span>Imam Hasan al-Askari (as), the 11th Imam</span></div>
+    <div class="card rv"><b>Birth</b><span>15 Sha’ban 255 AH, Samarra</span></div>
+    <div class="card rv"><b>Position</b><span>The 12th and final Imam from the Prophet’s family</span></div>
+  </div>
+</section>
+
+<section>
+  <h2 class="rv">The journey</h2>
+  <div class="tl" id="tl"><div class="fill" id="fill"></div>
+    <div class="step rv"><h3>255 AH · Birth</h3><p>Born in Samarra to Imam al-Askari (as).</p></div>
+    <div class="step rv"><h3>260 AH · Imamate begins</h3><p>After his father’s martyrdom, he becomes the Imam at a young age.</p></div>
+    <div class="step rv"><h3>260–329 AH · Minor Occultation</h3><p>Guidance reaches the community through four special deputies.</p></div>
+    <div class="step rv"><h3>329 AH – today · Major Occultation</h3><p>Direct contact ends; the community looks to scholars and to prayer.</p></div>
+    <div class="step rv"><h3>The promised dawn</h3><p>He will emerge to establish justice and peace across the earth.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2 class="rv">Why he is awaited</h2>
+  <div class="quote rv">The Mahdi will fill the earth with justice and fairness, as it was filled with oppression and injustice.
+    <small>Narrated in both Shia and Sunni sources · add exact book &amp; hadith number here</small></div>
+</section>
+
+<section>
+  <h2 class="rv">Our duties in this era</h2>
+  <div class="grid">
+    <div class="card rv"><b>✦ Pray</b><span>Recite Dua al-Faraj and ask for his swift reappearance.</span></div>
+    <div class="card rv"><b>✦ Remember</b><span>Recite Dua Nudba, especially on Friday mornings.</span></div>
+    <div class="card rv"><b>✦ Give</b><span>Give charity on his behalf for his safety.</span></div>
+    <div class="card rv"><b>✦ Prepare</b><span>Build character, knowledge and justice within yourself.</span></div>
+  </div>
+</section>
+
+<section>
+  <h2 class="rv">Questions</h2>
+  <details class="rv"><summary>Why is he in occultation?</summary><p>Add a clear, sourced answer here, citing the relevant narrations and scholarly explanations.</p></details>
+  <details class="rv"><summary>How can he benefit us while unseen?</summary><p>Add the commonly cited analogy of the sun behind clouds, with its source.</p></details>
+  <details class="rv"><summary>Is this belief only Shia?</summary><p>Belief in a Mahdi at the end of time appears across Muslim traditions; they differ on details such as his lineage and whether he is already born.</p></details>
+</section>
+
+<div class="dua rv">
+  <div class="ar">اللَّهُمَّ عَجِّلْ لِوَلِيِّكَ الْفَرَج</div>
+  <p style="color:var(--muted)">O Allah, hasten the relief of Your Walī.</p>
+  <button id="share">Share this page</button>
+</div>
+</main>
+<script>
+(function(){
+var c=document.getElementById('stars'),x=c.getContext('2d'),S=[],W,H;
+function size(){W=c.width=innerWidth;H=c.height=innerHeight;S=[];for(var i=0;i<90;i++)S.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.4+.3,v:Math.random()*.15+.03,p:Math.random()*6})}
+size();addEventListener('resize',size);
+function tick(t){x.clearRect(0,0,W,H);x.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--gold');
+S.forEach(function(s){s.y-=s.v;if(s.y<0)s.y=H;x.globalAlpha=.25+.5*Math.abs(Math.sin(t/1500+s.p));x.beginPath();x.arc(s.x,s.y,s.r,0,6.3);x.fill()});
+requestAnimationFrame(tick)}
+requestAnimationFrame(tick);
+var io=new IntersectionObserver(function(e){e.forEach(function(i){if(i.isIntersecting){i.target.classList.add('in');io.unobserve(i.target)}})},{threshold:.15});
+document.querySelectorAll('.rv,.step').forEach(function(el){io.observe(el)});
+var tl=document.getElementById('tl'),f=document.getElementById('fill');
+function sc(){var r=tl.getBoundingClientRect(),p=(innerHeight*.6-r.top)/r.height;f.style.height=Math.max(0,Math.min(1,p))*100+'%'}
+addEventListener('scroll',sc,{passive:true});sc();
+document.getElementById('share').onclick=function(){
+ try{if(navigator.share){navigator.share({title:document.title,url:location.href});return}}catch(e){}
+ try{navigator.clipboard.writeText(location.href);this.textContent='Link copied ✓'}catch(e){}
+};
+})();
+</script>
+</body>
+</html>
