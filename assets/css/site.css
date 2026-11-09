@@ -541,6 +541,96 @@ button {
   font-size: 0.85rem;
 }
 
+/* =========================================
+   AHD-E-ZUHOOR — MOTION DESIGN FOUNDATION
+   CINEMATIC × INTERACTIVE × SCHOLARLY
+========================================= */
+
+:root {
+  /* Motion durations */
+  --motion-instant: 180ms;
+  --motion-fast: 280ms;
+  --motion-medium: 500ms;
+  --motion-reveal: 800ms;
+  --motion-cinematic: 1200ms;
+
+  /* Motion curves */
+  --ease-refined: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-cinematic: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-gentle: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Movement distances */
+  --motion-distance-small: 8px;
+  --motion-distance-medium: 20px;
+  --motion-distance-large: 36px;
+
+  /* Atmospheric illumination */
+  --gold-glow-soft: 0 0 24px rgba(215, 188, 128, 0.12);
+  --gold-glow-interactive: 0 0 32px rgba(215, 188, 128, 0.2);
+}
+
+/* Reusable motion states */
+
+.motion-fade {
+  opacity: 0;
+  transition: opacity var(--motion-reveal) var(--ease-refined);
+}
+
+.motion-fade.is-visible {
+  opacity: 1;
+}
+
+.motion-rise {
+  opacity: 0;
+  transform: translateY(var(--motion-distance-medium));
+  transition:
+    opacity var(--motion-reveal) var(--ease-refined),
+    transform var(--motion-reveal) var(--ease-refined);
+}
+
+.motion-rise.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.motion-scale {
+  opacity: 0;
+  transform: scale(0.97);
+  transition:
+    opacity var(--motion-cinematic) var(--ease-refined),
+    transform var(--motion-cinematic) var(--ease-refined);
+}
+
+.motion-scale.is-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Subtle interactive illumination */
+
+.motion-interactive {
+  transition:
+    transform var(--motion-medium) var(--ease-refined),
+    border-color var(--motion-medium) var(--ease-refined),
+    box-shadow var(--motion-medium) var(--ease-refined);
+}
+
+.motion-interactive:hover {
+  box-shadow: var(--gold-glow-soft);
+}
+
+/* Accessible motion preference */
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-fade,
+  .motion-rise,
+  .motion-scale {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
 /* REVEAL ANIMATIONS */
 
 .reveal {
