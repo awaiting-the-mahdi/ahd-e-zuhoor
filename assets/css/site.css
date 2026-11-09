@@ -738,6 +738,62 @@ button {
   }
 }
 
+/* =========================================
+   CINEMATIC TITLE — SEQUENTIAL REVEAL
+========================================= */
+
+.title-reveal > * {
+  opacity: 0;
+  transform: translateY(18px);
+  animation: title-element-reveal 900ms var(--ease-refined) forwards;
+}
+
+.title-reveal > *:nth-child(1) {
+  animation-delay: 250ms;
+}
+
+.title-reveal > *:nth-child(2) {
+  animation-delay: 550ms;
+}
+
+.title-reveal > *:nth-child(3) {
+  animation-delay: 850ms;
+}
+
+.title-reveal > *:nth-child(4) {
+  animation-delay: 1100ms;
+}
+
+.title-reveal > *:nth-child(5) {
+  animation-delay: 1400ms;
+}
+
+.title-reveal > *:nth-child(6) {
+  animation-delay: 1750ms;
+}
+
+@keyframes title-element-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Reduced-motion accessibility */
+
+@media (prefers-reduced-motion: reduce) {
+  .title-reveal > * {
+    opacity: 1;
+    transform: none;
+    animation: none;
+  }
+}
+
 /* ACCESSIBILITY */
 
 :focus-visible {
