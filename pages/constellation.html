@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>124,013 Stars</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;700&family=Amiri:wght@400;700&display=swap">
+<style>
+:root{--bg:#050816;--fg:#efe8d8;--gold:#e0bb6c;--mut:#a79f8c;color-scheme:dark}
+html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,sans-serif;overflow:hidden}
+canvas{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:none}
+.top{position:fixed;top:0;left:0;right:0;text-align:center;padding:calc(12px + env(safe-area-inset-top,0px)) 16px 0;pointer-events:none}
+.cnt{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(2.2rem,9vw,3.4rem);font-weight:700;line-height:1;color:var(--gold);text-shadow:0 0 24px rgba(224,187,108,.5);font-variant-numeric:tabular-nums}
+.sub{font-size:.74rem;color:var(--mut);margin-top:4px}
+.bot{position:fixed;left:0;right:0;bottom:0;text-align:center;padding:0 16px calc(10px + env(safe-area-inset-bottom,0px));pointer-events:none}
+#cap{min-height:3.4em;font-size:.85rem;color:var(--mut)}
+#cap b{display:block;font-family:'Cormorant Garamond',Georgia,serif;font-size:1.25rem;color:var(--gold)}
+#cap i{display:block;font:normal 1.2rem Amiri,serif;color:var(--fg)}
+.btns{display:flex;gap:8px;justify-content:center;margin:6px 0}
+button{pointer-events:auto;background:rgba(5,8,22,.7);color:var(--gold);border:1px solid var(--gold);border-radius:99px;padding:8px 14px;font-size:.78rem}
+.note{font-size:.66rem;color:var(--mut);margin:4px auto 0;max-width:460px;line-height:1.35}
+.l{position:fixed;left:0;top:0;pointer-events:none;color:var(--gold);font-size:.66rem;white-space:nowrap;text-shadow:0 0 6px #000,0 0 12px #000;opacity:0;will-change:transform}
+.l.m{font-size:.8rem;font-weight:600;color:#fff3d0}
+.l.m i{display:block;font:normal 1rem Amiri,serif}
+#err{display:none;position:fixed;inset:0;align-items:center;justify-content:center;text-align:center;padding:24px}
+</style>
+</head>
+<body>
+<div class="top"><div class="cnt" id="cnt">0</div><div class="sub">stars · the prophets (a.s.) and the Fourteen Infallibles</div></div>
+<div class="bot"><div id="cap"></div><div class="btns"><button id="b1">Zoom to the Fourteen</button><button id="b2">Whole sky</button></div>
+<p class="note">124,000 prophets (a.s.), among them the Holy Prophet (s.a.w.a.), together with Lady Fatima (s.a.) and the twelve Imams (a.s.), make 124,013, following the number narrated in tradition.</p></div>
+<div id="err">Your browser could not start WebGL, which this page needs.</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+var N=124013,R=26,R0=5,GA=2.39996323;
+var S=[[0,'Imam al-Mahdi (a.t.f.s.)','الإمام المهدي','Mahdi'],
+[1,'Holy Prophet Muhammad (s.a.w.a.)','النبي محمد','Prophet'],
+[2,'Lady Fatima al-Zahra (s.a.)','فاطمة الزهراء','Zahra'],
+[3,'Imam Ali (a.s.)','الإمام علي','Ali'],
+[4,'Imam al-Hasan (a.s.)','الإمام الحسن','Hasan'],
+[5,'Imam al-Husayn (a.s.)','الإمام الحسين','Husayn'],
+[6,'Imam Zayn al-Abidin (a.s.)','الإمام زين العابدين','Sajjad'],
+[7,'Imam al-Baqir (a.s.)','الإمام الباقر','Baqir'],
+[8,'Imam al-Sadiq (a.s.)','الإمام الصادق','Sadiq'],
+[9,'Imam al-Kadhim (a.s.)','الإمام الكاظم','Kadhim'],
+[10,'Imam al-Ridha (a.s.)','الإمام الرضا','Ridha'],
+[11,'Imam al-Jawad (a.s.)','الإمام الجواد','Jawad'],
+[12,'Imam al-Hadi (a.s.)','الإمام الهادي','Hadi'],
+[13,'Imam al-Askari (a.s.)','الإمام العسكري','Askari'],
+[12000,'Prophet Isa (a.s.)','عيسى','Isa'],
+[32000,'Prophet Musa (a.s.)','موسى','Musa'],
+[60000,'Prophet Ibrahim (a.s.)','إبراهيم','Ibrahim'],
+[92000,'Prophet Nuh (a.s.)','نوح','Nuh'],
+[N-1,'Prophet Adam (a.s.), the first','آدم','Adam']];
+var P=new Float32Array(N*3),I=new Float32Array(N),Sz=new Float32Array(N),Sd=new Float32Array(N),K=new Float32Array(N),k;
+for(k=0;k<N;k++){var x=0,y=0,z=0;
+if(k>0&&k<14){var a=(k-1)/13*6.2832-1.5708;x=3.2*Math.cos(a);z=3.2*Math.sin(a);}
+else if(k>=14){var t=(k-14)/(N-14),r=Math.sqrt(R0*R0+(R*R-R0*R0)*t),an=k*GA;x=r*Math.cos(an);z=r*Math.sin(an);y=.55*Math.sin(r*.42)+(Math.random()-.5)*.5;}
+P[3*k]=x;P[3*k+1]=y;P[3*k+2]=z;I[k]=k;Sd[k]=Math.random();Sz[k]=.8+Math.random()*.9;}
+S.forEach(function(s){var q=s[0];K[q]=q==0?3:q<14?2:1;Sz[q]=q==0?18:q<14?12:9;});
+var L=new Float32Array(6*(2*N+40)),LI=new Float32Array(2*(2*N+40)),LB=new Float32Array(2*(2*N+40)),c=0;
+function ed(a,b,i,w){var o=6*c;L[o]=P[3*a];L[o+1]=P[3*a+1];L[o+2]=P[3*a+2];L[o+3]=P[3*b];L[o+4]=P[3*b+1];L[o+5]=P[3*b+2];LI[2*c]=LI[2*c+1]=i;LB[2*c]=LB[2*c+1]=w;c++;}
+for(k=1;k<14;k++){var nx=k%13+1;ed(0,k,k,10);ed(k,nx,Math.max(k,nx),10);}
+for(k=14;k<N;k++){var p1=k-21,p2=k-34;ed(k,p1>=14?p1:1+k%13,k,1);if(p2>=14)ed(k,p2,k,1);}
+var W,H,fit,zin,dist,tgt;
+var ren;try{ren=new THREE.WebGLRenderer({antialias:false});}catch(e){document.getElementById('err').style.display='flex';return;}
+ren.setPixelRatio(Math.min(devicePixelRatio||1,2));ren.setClearColor(0x050816);document.body.prepend(ren.domElement);
+var sc=new THREE.Scene(),cam=new THREE.PerspectiveCamera(55,1,.1,400);
+var U={uT:{value:0},uCount:{value:0},uPx:{value:ren.getPixelRatio()},uSel:{value:-1}};
+var common='uniform float uT,uCount;varying float vA;varying vec3 vC;float pul(float r){return pow(.5+.5*sin(r*.45-uT*1.5),10.);}vec3 col(float r){return mix(vec3(1.,.82,.5),vec3(.5,.62,1.),smoothstep(3.,26.,r));}';
+function mat(v,f){return new THREE.ShaderMaterial({uniforms:U,vertexShader:v,fragmentShader:f,transparent:true,blending:THREE.AdditiveBlending,depthWrite:false,depthTest:false});}
+var g1=new THREE.BufferGeometry();
+g1.setAttribute('position',new THREE.BufferAttribute(P,3));g1.setAttribute('aIdx',new THREE.BufferAttribute(I,1));g1.setAttribute('aSize',new THREE.BufferAttribute(Sz,1));g1.setAttribute('aSeed',new THREE.BufferAttribute(Sd,1));g1.setAttribute('aKind',new THREE.BufferAttribute(K,1));
+var m1=mat(common+`attribute float aIdx,aSize,aSeed,aKind;uniform float uPx,uSel;varying float vK;
+void main(){vec4 mv=modelViewMatrix*vec4(position,1.);float r=length(position.xz);
+float vis=clamp((uCount-aIdx)/500.,0.,1.);float pu=pul(r);float tw=.7+.3*sin(uT*(1.5+aSeed)+aSeed*60.);
+float sel=1.-step(.5,abs(aIdx-uSel));vC=col(r)*(.75+.25*aSeed);if(aKind>.5)vC=mix(vC,vec3(1.,.93,.75),.7);
+vA=vis*tw*(.5+.9*pu);if(aKind>.5)vA=vis;vK=aKind;
+gl_PointSize=aSize*uPx*clamp(48./-mv.z,.5,3.)*(1.+.6*pu+2.*sel)*(.3+.7*vis);gl_Position=projectionMatrix*mv;}`,
+`varying float vK;void main(){vec2 p=gl_PointCoord-.5;float a=pow(smoothstep(.5,0.,length(p)),2.);
+if(vK>.5)a+=.7*(exp(-abs(p.x)*45.)*exp(-abs(p.y)*5.)+exp(-abs(p.y)*45.)*exp(-abs(p.x)*5.));gl_FragColor=vec4(vC,a*vA);}`.replace('varying float vK;','varying float vK;varying float vA;varying vec3 vC;'));
+var pts=new THREE.Points(g1,m1);pts.frustumCulled=false;sc.add(pts);
+var g2=new THREE.BufferGeometry();g2.setAttribute('position',new THREE.BufferAttribute(L.subarray(0,6*c),3));g2.setAttribute('aIdx',new THREE.BufferAttribute(LI.subarray(0,2*c),1));g2.setAttribute('aB',new THREE.BufferAttribute(LB.subarray(0,2*c),1));
+var ln=new THREE.LineSegments(g2,mat(common+`attribute float aIdx,aB;void main(){float r=length(position.xz);float vis=clamp((uCount-aIdx)/500.,0.,1.);
+vC=col(r);vA=vis*aB*(.045+.12*pul(r));gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}`,`varying float vA;varying vec3 vC;void main(){gl_FragColor=vec4(vC,vA);}`));
+ln.frustumCulled=false;sc.add(ln);
+var pg=new THREE.PlaneGeometry(80,80);pg.rotateX(-Math.PI/2);
+sc.add(new THREE.Mesh(pg,new THREE.ShaderMaterial({transparent:true,blending:THREE.AdditiveBlending,depthWrite:false,depthTest:false,
+vertexShader:'varying vec2 u;void main(){u=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
+fragmentShader:'varying vec2 u;void main(){float d=length(u-.5)*2.;vec3 c=mix(vec3(.5,.35,.1),vec3(.1,.15,.5),smoothstep(0.,.6,d));gl_FragColor=vec4(c,exp(-d*3.5)*.4*(1.-smoothstep(.8,1.,d)));}'})));
+var cap=document.getElementById('cap'),cntEl=document.getElementById('cnt'),labs=[];
+S.slice(0,14).forEach(function(s,i){var d=document.createElement('div');d.className='l'+(i?'':' m');d.innerHTML=i?s[3]:s[3]+'<i lang="ar" dir="rtl">'+s[2]+'</i>';document.body.appendChild(d);labs.push(d);});
+function setSel(i){if(i<0){cap.innerHTML='Tap a bright star · drag to turn · pinch to zoom';U.uSel.value=-1;}else{cap.innerHTML='<b>'+S[i][1]+'</b><i lang="ar" dir="rtl">'+S[i][2]+'</i>';U.uSel.value=S[i][0];}}
+setSel(-1);
+function size(){W=innerWidth;H=innerHeight;ren.setSize(W,H);cam.aspect=W/H;cam.updateProjectionMatrix();var f=.52*Math.min(1,W/H);fit=Math.min(130,27/f);zin=4.4/f;}
+size();addEventListener('resize',size);
+var th=.6,ph=.5,touched=false,drag=0,moved=0,lastD=0,ps={};dist=tgt=fit*1.5;
+var el=ren.domElement,sp=S.map(function(){return[0,0,0];}),v=new THREE.Vector3();
+function cl(a,b,x){return Math.max(a,Math.min(b,x));}
+el.addEventListener('pointerdown',function(e){el.setPointerCapture(e.pointerId);ps[e.pointerId]=[e.clientX,e.clientY];moved=0;touched=true;drag=1;});
+el.addEventListener('pointermove',function(e){var p=ps[e.pointerId];if(!p)return;var ids=Object.keys(ps);
+if(ids.length==1){var dx=e.clientX-p[0],dy=e.clientY-p[1];th-=dx*.006;ph=cl(.12,1.5,ph-dy*.006);moved+=Math.abs(dx)+Math.abs(dy);}
+else{var o=ps[ids.filter(function(i){return i!=e.pointerId;})[0]],d=Math.hypot(e.clientX-o[0],e.clientY-o[1]);if(lastD)tgt=cl(zin*.6,fit*2,tgt*lastD/d);lastD=d;moved=99;}
+p[0]=e.clientX;p[1]=e.clientY;});
+el.addEventListener('pointerup',function(e){delete ps[e.pointerId];lastD=0;if(!Object.keys(ps).length)drag=0;
+if(moved<8){var b=-1,bd=42;sp.forEach(function(q,i){var d=Math.hypot(q[0]-e.clientX,q[1]-e.clientY);if(q[2]&&d<bd){bd=d;b=i;}});setSel(b);}});
+el.addEventListener('wheel',function(e){touched=true;tgt=cl(zin*.6,fit*2,tgt*(1+e.deltaY*.001));e.preventDefault();},{passive:false});
+document.getElementById('b1').onclick=function(){touched=true;tgt=zin;ph=.7;};
+document.getElementById('b2').onclick=function(){touched=true;tgt=fit;ph=.5;};
+var t0=performance.now(),last=t0;if(matchMedia('(prefers-reduced-motion:reduce)').matches)t0-=12000;
+function frame(now){requestAnimationFrame(frame);var t=(now-t0)/1000,dt=Math.min(.05,(now-last)/1000);last=now;
+var n=Math.max(20,Math.floor(N*(1-Math.pow(1-Math.min(1,t/10),2.4))));U.uT.value=t;U.uCount.value=n+500;cntEl.textContent=n.toLocaleString('en-US');
+if(t<8&&!touched){var e=1-Math.pow(1-t/8,3);tgt=fit*1.5-fit*.5*e;}
+dist+=(tgt-dist)*Math.min(1,dt*4);if(!drag)th+=dt*.04;
+cam.position.set(dist*Math.sin(ph)*Math.sin(th),dist*Math.cos(ph),dist*Math.sin(ph)*Math.cos(th));cam.lookAt(0,0,0);
+var lo=cl(0,1,(zin*2.6-dist)/(zin*.9));
+S.forEach(function(s,i){var q=s[0];v.set(P[3*q],P[3*q+1],P[3*q+2]).project(cam);var X=(v.x*.5+.5)*W,Y=(-v.y*.5+.5)*H;sp[i][0]=X;sp[i][1]=Y;sp[i][2]=v.z<1&&q<n?1:0;
+if(i<14){var d=labs[i];d.style.opacity=sp[i][2]?(i?lo:cl(0,1,(n-100)/300)):0;d.style.transform='translate('+X+'px,'+Y+'px) translate(-50%,'+(i?'-150%':'35%')+')';}});
+ren.render(sc,cam);}
+requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
