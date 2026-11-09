@@ -11,7 +11,7 @@
     {
       number: "02",
       title: "Prophetic Blueprint",
-      url: "pages/prophetic-blueprint.html"
+      url: "pages/constellation.html"
     },
     {
       number: "03",
