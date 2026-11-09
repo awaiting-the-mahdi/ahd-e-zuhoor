@@ -69,7 +69,12 @@
   `;
 
   document.body.append(button, overlay);
+// Homepage Explore Now opens the same navigation menu
+const exploreButton = document.getElementById("explore-now");
 
+if (exploreButton) {
+  exploreButton.addEventListener("click", openMenu);
+}
   function openMenu() {
     overlay.classList.add("is-open");
     overlay.setAttribute("aria-hidden", "false");
