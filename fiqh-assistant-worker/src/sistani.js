@@ -10,16 +10,19 @@ export const SITE_LANG = { en: "english", ar: "arabic", ur: "urdu" };
 const UA = "FiqhResearchAssistant/1.0";
 const CACHE_SECONDS = 6 * 3600;
 
+/*
+  In-memory cache inside the Worker (no network calls, so it does not use up Cloudflare's
+  per-request subrequest limit). Entries live for a few hours; the oldest are dropped first.
+*/
+const MEM = new Map();
+const MEM_MAX = 400;
 async function cached(key, producer) {
-  const cache = typeof caches !== "undefined" ? caches.default : null;
-  const req = cache ? new Request("https://cache.internal/" + encodeURIComponent(key)) : null;
-  if (cache) {
-    const hit = await cache.match(req);
-    if (hit) return hit.text();
-  }
-  const text = await producer();
-  if (cache) await cache.put(req, new Response(text, { headers: { "Cache-Control": "max-age=" + CACHE_SECONDS } }));
-  return text;
+  const hit = MEM.get(key);
+  if (hit && Date.now() - hit.t < CACHE_SECONDS * 1000) return hit.v;
+  const v = await producer();
+  MEM.set(key, { v, t: Date.now() });
+  if (MEM.size > MEM_MAX) MEM.delete(MEM.keys().next().value);
+  return v;
 }
 
 async function fetchText(url, init = {}, tries = 2) {

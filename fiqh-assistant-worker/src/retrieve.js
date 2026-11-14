@@ -59,8 +59,8 @@ export async function planQuery(env, question) {
 export async function retrieve(env, question, plan) {
   const log = [];
   const jobs = [];
-  for (const t of plan.terms.en.slice(0, 4)) jobs.push(["en", "qa", t]);
-  for (const t of plan.terms.en.slice(0, 4)) jobs.push(["en", "book", t]);
+  for (const t of plan.terms.en.slice(0, 3)) jobs.push(["en", "qa", t]);
+  for (const t of plan.terms.en.slice(0, 3)) jobs.push(["en", "book", t]);
   if (plan.language === "ar") for (const t of plan.terms.ar) jobs.push(["ar", "qa", t]);
   if (plan.language === "ur" || plan.language === "roman-ur") for (const t of plan.terms.ur) jobs.push(["ur", "qa", t]);
 
@@ -97,8 +97,8 @@ export async function retrieve(env, question, plan) {
   });
   const rank = (s) => titled(s) * 2 + intentTitle(s);
   sections.sort((a, b) => rank(b) - rank(a));
-  log.push({ part: "sections", chosen: sections.slice(0, 6).map((s) => s.sectionId + ":" + s.section) });
-  const secPages = await Promise.allSettled(sections.slice(0, 6).map((s) => getPage(s.url)));
+  log.push({ part: "sections", chosen: sections.slice(0, 5).map((s) => s.sectionId + ":" + s.section) });
+  const secPages = await Promise.allSettled(sections.slice(0, 5).map((s) => getPage(s.url)));
   secPages.forEach((r, i) => {
     if (r.status !== "fulfilled") { log.push({ part: "section", url: sections[i].url, error: String(r.reason?.message || r.reason) }); return; }
     for (const rl of parseRulings(r.value, sections[i])) {
