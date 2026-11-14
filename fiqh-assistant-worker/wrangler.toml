@@ -1,0 +1,25 @@
+# Cloudflare Worker for the AHD-E-ZUHOOR Fiqh Research Assistant.
+# This file contains NO secrets. Secrets are set with:
+#   npx wrangler secret put OPENAI_API_KEY
+#   npx wrangler secret put RATE_SALT
+name = "ahd-fiqh-assistant"
+main = "src/index.js"
+compatibility_date = "2025-01-01"
+
+[vars]
+# The website addresses allowed to call this API (comma separated).
+ALLOWED_ORIGINS = "https://awaiting-the-mahdi.github.io"
+# OpenAI model used for search planning and grounded explanations. Change any time.
+OPENAI_MODEL = "gpt-4.1-mini"
+# Leave "0" for consistent answers. Set to "" for models that do not accept a temperature.
+OPENAI_TEMPERATURE = "0"
+# Store the text of visitors' questions in the logs? "false" stores only retrieval data.
+LOG_QUESTIONS = "false"
+RATE_LIMIT_PER_HOUR = "20"
+MAX_PASSAGES = "10"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "ahd-fiqh-assistant"
+# Replace with the id printed by: npx wrangler d1 create ahd-fiqh-assistant
+database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"

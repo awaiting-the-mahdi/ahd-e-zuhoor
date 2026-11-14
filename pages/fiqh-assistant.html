@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#070a24">
+<meta name="description" content="Fiqh Research Assistant: answers quoted from the published rulings of Ayatollah al-Sistani on sistani.org, with sources.">
+<title>Fiqh Research Assistant</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Nunito:wght@600;700;800;900&family=Amiri:wght@400;700&family=Noto+Nastaliq+Urdu:wght@400;600&display=swap">
+<link rel="stylesheet" href="../assets/css/languages.css">
+<link rel="stylesheet" href="../assets/css/menu.css">
+<style>
+:root{--serif:"Cormorant Garamond",Georgia,serif;--gold:#ffc94d}
+main{position:relative;z-index:2;max-width:880px;margin:0 auto;padding:92px 16px 80px}
+.back{position:fixed;top:20px;left:16px;z-index:1000;display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:99px;background:rgba(7,10,36,.7);border:1.5px solid var(--line);font-weight:800;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);backdrop-filter:blur(8px)}
+.back:hover{color:#fff}
+.sh{text-shadow:0 1px 2px #000,0 0 12px rgba(3,4,13,.9)}
+.hero{text-align:center;margin-bottom:22px}
+.eyebrow{display:inline-block;font-size:.72rem;font-weight:900;letter-spacing:.3em;color:var(--gold);text-transform:uppercase}
+h1{font-family:var(--serif);font-weight:600;font-size:clamp(2.3rem,7vw,4rem);line-height:1;margin:.2em 0 .1em;background:linear-gradient(100deg,#fff,#ffe7a8 40%,#ffc94d 55%,#fff);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 2px 3px rgba(0,0,0,.9))}
+.hero .ar{font-family:var(--ar);font-size:1.6rem;color:var(--gold);margin:0}
+.hero p.sub{color:#e3e5f5;font-weight:700;max-width:620px;margin:.6em auto 0}
+.hero p.sub a{color:#fff;text-decoration:underline;text-underline-offset:3px}
+
+.ask{padding:20px;border-radius:24px;border:2px solid var(--line);background:rgba(13,17,52,.82);box-shadow:0 10px 40px rgba(0,0,0,.35)}
+.ask label{display:block;font-weight:900;margin-bottom:8px}
+.ask textarea{width:100%;min-height:110px;resize:vertical;border-radius:16px;border:2px solid var(--line);background:rgba(22,28,74,.9);color:#fff;font:inherit;font-weight:700;font-size:1.08rem;line-height:1.5;padding:14px 16px}
+.ask textarea:focus{outline:none;border-color:var(--gold)}
+.ask textarea[dir=rtl]{font-family:"Noto Nastaliq Urdu",var(--ar);line-height:2}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:12px}
+.row .grow{flex:1}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.chip{border:1.5px solid var(--line);background:rgba(22,28,74,.8);color:#e3e5f5;border-radius:99px;padding:7px 14px;font:inherit;font-weight:800;font-size:.86rem;cursor:pointer}
+.chip:hover{border-color:var(--gold);color:#fff}
+.chip[dir=rtl]{font-family:"Noto Nastaliq Urdu",var(--ar)}
+.count{color:var(--mut);font-weight:800;font-size:.8rem}
+.notice{margin-top:14px;padding:12px 14px;border-radius:14px;border:1.5px dashed rgba(255,201,77,.6);color:#ffe7a8;font-weight:800;display:none}
+
+/* loading */
+.loading{display:none;text-align:center;padding:30px 0}
+.loading.on{display:block}
+.orbit{position:relative;width:110px;height:110px;margin:0 auto 14px}
+.orbit .core{position:absolute;inset:30px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#ffc94d 45%,#a8640f);box-shadow:0 0 40px rgba(255,201,77,.6)}
+.orbit .ring{position:absolute;inset:0;border-radius:50%;border:2px dashed rgba(255,231,168,.4);animation:spin 6s linear infinite}
+.orbit .dot{position:absolute;top:-6px;left:50%;width:12px;height:12px;margin-left:-6px;border-radius:50%;background:#7fd8ff;box-shadow:0 0 14px #7fd8ff}
+@keyframes spin{to{transform:rotate(360deg)}}
+.steps{list-style:none;padding:0;margin:0;color:var(--mut);font-weight:800}
+.steps li{margin:4px 0;transition:color .3s}
+.steps li.on{color:#fff}
+.steps li.done{color:#7ff0d6}
+
+/* result */
+.result{margin-top:24px;display:grid;gap:16px}
+.sec{padding:18px 20px;border-radius:22px;border:2px solid var(--line);background:rgba(13,17,52,.85);animation:popIn .45s ease both}
+.sec h2{display:flex;align-items:center;gap:10px;margin:0 0 10px;font-size:1.08rem;font-weight:900}
+.sec h2 .n{flex:none;display:grid;place-items:center;width:30px;height:30px;border-radius:10px;background:var(--gold);color:#3a2600;font-size:.9rem}
+.sec p{margin:.3em 0;line-height:1.6;font-weight:700;color:#e9ebf8}
+.muted{color:var(--mut)!important}
+.quote{position:relative;margin:10px 0;padding:16px 18px 14px;border-radius:16px;background:linear-gradient(135deg,rgba(255,201,77,.12),rgba(255,201,77,.04));border:1.5px solid rgba(255,201,77,.55)}
+.quote .badge{display:inline-block;font-size:.68rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#3a2600;background:var(--gold);border-radius:99px;padding:3px 10px;margin-bottom:8px}
+.quote blockquote{margin:0;font-size:1.08rem;line-height:1.7;font-weight:700;color:#fff}
+.quote blockquote[dir=rtl]{font-family:"Noto Nastaliq Urdu",var(--ar);font-size:1.15rem;line-height:2.2}
+.quote .src{margin-top:10px;font-weight:800;font-size:.88rem;color:#ffe7a8}
+.quote .src a{color:#fff;text-decoration:underline;text-underline-offset:3px;word-break:break-all}
+.quote details{margin-top:8px;color:var(--mut);font-weight:700;font-size:.9rem}
+.quote details summary{cursor:pointer;color:#cfd3ef}
+.ai{position:relative;padding:14px 16px;border-radius:16px;background:rgba(127,216,255,.08);border:1.5px solid rgba(127,216,255,.4)}
+.ai .tag{display:inline-block;font-size:.68rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#06231d;background:#7fd8ff;border-radius:99px;padding:3px 10px;margin-bottom:6px}
+.ref{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 5px;margin-left:4px;border-radius:7px;background:rgba(255,201,77,.25);color:#ffe7a8;font-size:.75rem;font-weight:900;vertical-align:1px}
+ul.list{margin:0;padding-left:20px;line-height:1.6;font-weight:700;color:#e9ebf8}
+ul.list li{margin:6px 0}
+ul.srcs{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+ul.srcs li{padding:12px 14px;border-radius:14px;background:rgba(22,28,74,.9);font-weight:800}
+ul.srcs a{color:#fff;text-decoration:underline;text-underline-offset:3px;word-break:break-all}
+ul.srcs small{display:block;color:var(--mut);font-weight:700;margin-top:3px}
+.abstain{border-color:rgba(255,201,77,.6)}
+.abstain .big{font-family:var(--serif);font-size:1.6rem;line-height:1.25;color:#fff;margin:4px 0 10px}
+.clarify textarea{width:100%;min-height:80px;border-radius:14px;border:2px solid var(--line);background:rgba(22,28,74,.9);color:#fff;font:inherit;font-weight:700;padding:12px 14px;margin-top:8px}
+.disc{margin-top:22px;text-align:center;color:var(--mut);font-weight:700;font-size:.88rem;line-height:1.5}
+.disc a{color:#fff}
+[dir=rtl]{text-align:right}
+.hero .ar[dir=rtl]{text-align:center}
+.sec a{color:#fff;text-decoration:underline;text-underline-offset:3px}
+</style>
+</head>
+<body>
+<canvas id="stars" aria-hidden="true"></canvas>
+<a class="back" href="academy-fiqh.html">← School of Fiqh</a>
+
+<main>
+  <section class="hero">
+    <span class="eyebrow sh">Digital Learning Academy · Fiqh</span>
+    <h1>Fiqh Research Assistant</h1>
+    <p class="ar" lang="ar" dir="rtl">المساعد البحثي الفقهي</p>
+    <p class="sub sh">Ask a question in English, Urdu, Roman Urdu or Arabic. Answers quote only the published rulings of <a href="https://www.sistani.org/" target="_blank" rel="noopener">Ayatollah al-Sayyid Ali al-Sistani</a>, with the exact source.</p>
+  </section>
+
+  <form class="ask" id="askForm" novalidate>
+    <label for="q">Your question</label>
+    <textarea id="q" name="q" dir="auto" maxlength="600" placeholder="e.g. Does sleep break wudu?  ·  Kya roze mein ulti se roza toot jata hai?  ·  کیا جھینگا حلال ہے؟"></textarea>
+    <div class="row">
+      <span class="count grow" id="count">0 / 600</span>
+      <button class="btn gold" id="askBtn" type="submit">Search the rulings</button>
+    </div>
+    <div class="chips" id="examples" aria-label="Example questions"></div>
+    <p class="notice" id="notice" role="status"></p>
+  </form>
+
+  <section class="loading" id="loading" aria-live="polite">
+    <div class="orbit" aria-hidden="true"><div class="ring"><span class="dot"></span></div><div class="core"></div></div>
+    <ul class="steps" id="steps">
+      <li>Understanding your question</li>
+      <li>Searching sistani.org</li>
+      <li>Reading the official passages</li>
+      <li>Verifying every quotation on sistani.org</li>
+    </ul>
+  </section>
+
+  <section class="result" id="result" aria-live="polite"></section>
+
+  <p class="disc sh">This assistant quotes the published rulings of Ayatollah al-Sistani from sistani.org and explains them in simple language. The explanation is not a fatwa. For your personal situation, please consult the <a href="https://www.sistani.org/english/send-question/" target="_blank" rel="noopener">Office of Ayatollah Sistani</a>.</p>
+</main>
+
+<script src="../assets/js/kids.js"></script>
+<script src="../assets/js/fiqh-assistant.js"></script>
+<script src="../assets/js/menu.js" defer></script>
+</body>
+</html>
