@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#070a24">
-<meta name="description" content="Language Courses at the AHD-E-ZUHOOR Digital Learning Academy, guided by Noor and Rayan.">
+<meta name="description" content="Language Courses at the AHD-E-ZUHOOR Digital Learning Academy, guided by Zahra and Ali.">
 <title>Language Courses</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,7 +26,7 @@
 
 /* splash */
 .splash{justify-content:center;text-align:center;gap:6px}
-.stage{position:relative;width:min(520px,92vw);height:min(340px,46vh);margin-bottom:8px}
+.stage{position:relative;width:min(520px,92vw);height:min(380px,48vh);margin-bottom:8px}
 .planet{position:absolute;left:50%;bottom:0;width:86%;height:34%;translate:-50% 0;border-radius:50%;
   background:radial-gradient(ellipse at 40% 25%,#7ff0d6 0%,#2fb59a 30%,#165d6e 65%,#0b2440 100%);
   box-shadow:0 0 40px rgba(63,208,181,.45),0 0 120px rgba(63,208,181,.25),inset 0 -14px 30px rgba(0,0,0,.4);overflow:hidden;animation:floaty 6s ease-in-out infinite}
@@ -36,6 +36,12 @@
   radial-gradient(circle at 55% 75%,rgba(255,255,255,.12) 0 5%,transparent 6%);background-size:200% 100%;animation:spinTex 18s linear infinite}
 @keyframes spinTex{to{background-position:-200% 0}}
 @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.portrait{position:absolute;left:50%;top:50%;height:100%;aspect-ratio:900/985;translate:-50% -50%;margin:0;border-radius:48% 48% 22px 22px/34% 34% 22px 22px;overflow:hidden;border:2px solid rgba(232,199,125,.8);box-shadow:0 0 0 6px rgba(232,199,125,.12),0 0 40px rgba(232,199,125,.35),0 0 120px rgba(140,120,255,.3);animation:floaty 6s ease-in-out infinite,portraitIn 1.2s cubic-bezier(.2,1.4,.4,1) both}
+.portrait img{width:100%;height:100%;object-fit:cover;display:block}
+.portrait::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.25) 45%,transparent 60%);background-size:300% 100%;animation:sheen 6s ease-in-out infinite}
+.portrait figcaption{position:absolute;left:50%;bottom:10px;translate:-50% 0;padding:4px 14px;border-radius:99px;background:rgba(7,10,36,.75);color:var(--gold);font-weight:900;font-size:.8rem;letter-spacing:.12em;white-space:nowrap}
+@keyframes portraitIn{from{opacity:0;transform:scale(.6) translateY(40px)}to{opacity:1;transform:none}}
+@keyframes sheen{0%,60%{background-position:100% 0}100%{background-position:-200% 0}}
 .duo{position:absolute;left:50%;bottom:16%;translate:-50% 0;display:flex;align-items:flex-end;gap:2%;width:72%;animation:floaty 6s ease-in-out infinite}
 .duo .kid{flex:1;aspect-ratio:2/3}
 .orbit{position:absolute;left:50%;top:52%;width:118%;height:70%;translate:-50% -50%;border:1.5px dashed rgba(191,227,255,.25);border-radius:50%;pointer-events:none;transform:rotate(-8deg)}
@@ -106,15 +112,14 @@
     <section class="screen splash on" data-s="0">
       <div class="stage">
         <div class="orbit"></div>
-        <div class="planet"></div>
-        <div class="duo"><div id="kG0"></div><div id="kB0"></div></div>
+        <figure class="portrait"><img src="../assets/images/zahra-ali.jpg" alt="Zahra and Ali, your guides" width="900" height="985"><figcaption>Zahra &amp; Ali</figcaption></figure>
         <div class="rocket-orbit" aria-hidden="true">
           <svg viewBox="-20 -24 40 48"><path d="M-4 13 Q0 26 4 13Z" fill="#ffb347"/><path d="M0 -20 C8 -11 8 4 5.5 13 L-5.5 13 C-8 4 -8 -11 0 -20Z" fill="#f4efe4"/><path d="M-5.6 3 L-12 15 L-5.5 12.5Z M5.6 3 L12 15 L5.5 12.5Z" fill="#ff6b7d"/><circle cy="-1" r="3.2" fill="#3fd0b5" stroke="#24305e" stroke-width="1.2"/></svg>
         </div>
       </div>
       <h1>Language Courses</h1>
       <p class="arsub" lang="ar" dir="rtl">دورات اللغة</p>
-      <p class="tag">Learn with Noor and Rayan, one word at a time.</p>
+      <p class="tag">Learn with Zahra and Ali, one word at a time.</p>
       <button class="btn" id="startBtn" type="button">Get started</button>
       <a class="back" href="academy.html">← Back to the Academy</a>
     </section>
@@ -159,11 +164,7 @@ AZ.starfield(document.getElementById("stars"));
 var app=document.getElementById("app"), screens=[].slice.call(document.querySelectorAll(".screen"));
 var prog=document.getElementById("prog"), nextBtn=document.getElementById("nextBtn");
 var kids={};
-[0,1,2,3,4].forEach(function(i){kids["g"+i]=new AZ.Kid(document.getElementById("kG"+i),"girl");kids["b"+i]=new AZ.Kid(document.getElementById("kB"+i),"boy")});
-kids.g0.el.classList.add("pop");kids.b0.el.classList.add("pop");kids.b0.el.style.animationDelay=".25s";
-setTimeout(function(){kids.g0.set("wave")},900);
-setTimeout(function(){kids.g0.set("");kids.b0.set("wave")},2600);
-setTimeout(function(){kids.b0.set("")},4200);
+[1,2,3,4].forEach(function(i){kids["g"+i]=new AZ.Kid(document.getElementById("kG"+i),"girl");kids["b"+i]=new AZ.Kid(document.getElementById("kB"+i),"boy")});
 
 var PACES=[
   {id:5,  name:"Gentle orbit",  sub:"5 minutes a day",  ico:'<circle cx="20" cy="20" r="7" fill="#3fd0b5"/><ellipse cx="20" cy="20" rx="16" ry="6" fill="none" stroke="#bfe3ff" stroke-width="2"/>'},
@@ -192,7 +193,7 @@ function speak(bubble,lines){
   return lines.reduce(function(p,l){
     return p.then(function(){
       if(tok!==talkToken)return;
-      bubble.innerHTML='<span class="who '+(l.k.type)+'">'+(l.k.type==="girl"?"Noor":"Rayan")+'</span><span class="t"></span>';
+      bubble.innerHTML='<span class="who '+(l.k.type)+'">'+(l.k.type==="girl"?"Zahra":"Ali")+'</span><span class="t"></span>';
       var t=bubble.querySelector(".t"),i=0,txt=l.text;
       var iv=setInterval(function(){i+=2;t.textContent=txt.slice(0,i);if(i>=txt.length)clearInterval(iv)},22);
       if(l.state)l.k.set(l.state);
@@ -241,8 +242,8 @@ function go(n){
   if(n===1){
     kids.g1.el.classList.add("pop");kids.b1.el.classList.add("pop");kids.b1.el.style.animationDelay=".2s";
     speak(document.getElementById("introBubble"),[
-      {k:kids.g1,text:"Assalamu alaykum! I'm Noor.",state:"wave"},
-      {k:kids.b1,text:"And I'm Rayan! We'll be your guides on this language voyage.",state:"wave"},
+      {k:kids.g1,text:"Assalamu alaykum! I'm Zahra.",state:"wave"},
+      {k:kids.b1,text:"And I'm Ali! We'll be your guides on this language voyage.",state:"wave"},
       {k:kids.g1,text:"Just a few quick questions, and we'll be on our way!"}
     ]);
   }

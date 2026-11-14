@@ -1,5 +1,5 @@
 /*
-  AHD-E-ZUHOOR — Noor & Rayan
+  AHD-E-ZUHOOR — Zahra & Ali
   Two animated guide characters, their voices (browser speech), a starfield,
   confetti and small sound effects. Shared by the language pages.
 */
@@ -59,96 +59,127 @@
   /* ---------------- character drawing ---------------- */
   function kidSVG(type) {
     var g = type === "girl", id = "k" + uid++;
-    var skin = g ? ["#ffe0c4", "#f2b48c", "#d98d66"] : ["#f8d2ac", "#e0a77c", "#c4835a"];
-    var outfit = g ? ["#8ef0d4", "#2fb59a", "#1c7f6c"] : ["#ffc65c", "#f08a24", "#b85f10"];
-    var hijab = ["#e9ddff", "#b49cf5", "#7f62d6"];
+    var skin = g ? ["#ffe8d6", "#f6c6a2", "#d99a76"] : ["#ffe4cc", "#f2bf98", "#d49470"];
+    var navy = ["#34407a", "#1f2752", "#10142f"];
+    var gold = "#d9b45f";
+    function star(x, y, r, fill) {
+      var d = "";
+      for (var k = 0; k < 8; k++) { var a = k / 8 * Math.PI * 2 - Math.PI / 2, rr = k % 2 ? r * 0.42 : r; d += (k ? "L" : "M") + (x + Math.cos(a) * rr).toFixed(1) + " " + (y + Math.sin(a) * rr).toFixed(1); }
+      return '<path d="' + d + 'Z" fill="' + (fill || gold) + '"/>';
+    }
     var s = '<svg viewBox="0 0 200 300" aria-hidden="true"><defs>' +
       '<radialGradient id="' + id + 's" cx=".38" cy=".32" r=".8"><stop offset="0" stop-color="' + skin[0] + '"/><stop offset=".65" stop-color="' + skin[1] + '"/><stop offset="1" stop-color="' + skin[2] + '"/></radialGradient>' +
-      '<linearGradient id="' + id + 'o" x1="0" y1="0" x2=".3" y2="1"><stop offset="0" stop-color="' + outfit[0] + '"/><stop offset=".6" stop-color="' + outfit[1] + '"/><stop offset="1" stop-color="' + outfit[2] + '"/></linearGradient>' +
-      '<radialGradient id="' + id + 'h" cx=".4" cy=".3" r=".85"><stop offset="0" stop-color="' + hijab[0] + '"/><stop offset=".6" stop-color="' + hijab[1] + '"/><stop offset="1" stop-color="' + hijab[2] + '"/></radialGradient>' +
-      '<radialGradient id="' + id + 'i" cx=".45" cy=".35" r=".7"><stop offset="0" stop-color="' + (g ? "#b07a3f" : "#8a5a2b") + '"/><stop offset=".7" stop-color="' + (g ? "#5a3414" : "#4a2a10") + '"/><stop offset="1" stop-color="#1e0f05"/></radialGradient>' +
-      '<radialGradient id="' + id + 'c" cx=".4" cy=".25" r=".9"><stop offset="0" stop-color="#ffffff"/><stop offset=".7" stop-color="#f1ede4"/><stop offset="1" stop-color="#cfc6b3"/></radialGradient>' +
+      '<linearGradient id="' + id + 'n" x1="0" y1="0" x2=".35" y2="1"><stop offset="0" stop-color="' + navy[0] + '"/><stop offset=".55" stop-color="' + navy[1] + '"/><stop offset="1" stop-color="' + navy[2] + '"/></linearGradient>' +
+      '<linearGradient id="' + id + 'c" x1="0" y1="0" x2=".3" y2="1"><stop offset="0" stop-color="#fffaf0"/><stop offset=".6" stop-color="#f3e7cf"/><stop offset="1" stop-color="#d9c7a3"/></linearGradient>' +
+      '<radialGradient id="' + id + 'i" cx=".45" cy=".35" r=".7"><stop offset="0" stop-color="#a8733f"/><stop offset=".7" stop-color="#5a3414"/><stop offset="1" stop-color="#1e0f05"/></radialGradient>' +
+      '<linearGradient id="' + id + 'r" x1="0" y1="0" x2=".2" y2="1"><stop offset="0" stop-color="#7a4b2c"/><stop offset=".6" stop-color="#4f2f1a"/><stop offset="1" stop-color="#2e1a0d"/></linearGradient>' +
+      '<linearGradient id="' + id + 'b" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9a6436"/><stop offset="1" stop-color="#5e3a1d"/></linearGradient>' +
       '<linearGradient id="' + id + 'w" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#e6ecf5"/></linearGradient>' +
       '</defs>';
 
     s += '<ellipse class="kshadow" cx="100" cy="294" rx="48" ry="7" fill="#000" opacity=".5"/>';
     s += '<g class="kb">';
-    // legs + shoes
-    if (g) {
-      s += '<rect x="84" y="258" width="13" height="26" rx="6" fill="#6b5cc4"/><rect x="103" y="258" width="13" height="26" rx="6" fill="#6b5cc4"/>';
-    } else {
-      s += '<rect x="80" y="236" width="17" height="48" rx="8" fill="#34407a"/><rect x="103" y="236" width="17" height="48" rx="8" fill="#34407a"/>';
-    }
-    s += '<ellipse cx="88" cy="285" rx="14" ry="7.5" fill="#e8e3ff"/><ellipse cx="112" cy="285" rx="14" ry="7.5" fill="#e8e3ff"/>' +
-         '<ellipse cx="88" cy="283" rx="10" ry="3" fill="#fff" opacity=".7"/><ellipse cx="112" cy="283" rx="10" ry="3" fill="#fff" opacity=".7"/>';
-    // back arm (left)
-    s += '<g class="arm arm-l"><path d="M66 180 Q54 206 58 232" stroke="url(#' + id + 'o)" stroke-width="18" stroke-linecap="round" fill="none"/>' +
-         '<circle cx="58" cy="236" r="9.5" fill="url(#' + id + 's)"/></g>';
-    // torso
-    if (g) {
-      s += '<path d="M64 170 Q100 158 136 170 L156 266 Q100 280 44 266 Z" fill="url(#' + id + 'o)"/>' +
-           '<path d="M50 252 Q100 266 150 252" stroke="#fff" stroke-opacity=".55" stroke-width="3" fill="none" stroke-dasharray="1 7" stroke-linecap="round"/>' +
-           '<path d="M70 176 Q66 220 60 262" stroke="#fff" stroke-opacity=".18" stroke-width="6" fill="none"/>';
-    } else {
-      s += '<path d="M62 172 Q100 160 138 172 L146 250 Q100 262 54 250 Z" fill="url(#' + id + 'o)"/>' +
-           '<path d="M100 170 L100 214" stroke="' + outfit[2] + '" stroke-width="2.5"/>' +
-           '<circle cx="100" cy="184" r="2.6" fill="#fff6dd"/><circle cx="100" cy="196" r="2.6" fill="#fff6dd"/><circle cx="100" cy="208" r="2.6" fill="#fff6dd"/>' +
-           '<path d="M86 166 Q100 176 114 166" stroke="' + outfit[2] + '" stroke-width="5" fill="none" stroke-linecap="round"/>' +
-           '<path d="M68 178 Q64 214 60 246" stroke="#fff" stroke-opacity=".2" stroke-width="6" fill="none"/>';
-    }
-    // front arm (right)
-    s += '<g class="arm arm-r"><path d="M134 180 Q146 206 142 232" stroke="url(#' + id + 'o)" stroke-width="18" stroke-linecap="round" fill="none"/>' +
-         '<circle cx="142" cy="236" r="9.5" fill="url(#' + id + 's)"/><ellipse cx="139" cy="232" rx="3" ry="2" fill="#fff" opacity=".35"/></g>';
 
-    // head
+    if (g) {
+      /* ---- Zahra: navy star hijab, cream embroidered dress, holding a book ---- */
+      s += '<path d="M30 104 Q22 176 40 244 Q100 266 160 244 Q178 176 170 104 Z" fill="url(#' + id + 'n)"/>';
+      s += '<path d="M40 240 Q100 260 160 240" stroke="' + gold + '" stroke-width="1.4" fill="none" stroke-dasharray="3 4" opacity=".8"/>';
+      [[44, 200, 3], [156, 196, 3.4], [52, 160, 2.2], [150, 150, 2.4], [40, 226, 2]].forEach(function (p) { s += star(p[0], p[1], p[2]); });
+      // shoes
+      s += '<ellipse cx="88" cy="287" rx="13" ry="6.5" fill="#3a3040"/><ellipse cx="112" cy="287" rx="13" ry="6.5" fill="#3a3040"/>' +
+           '<ellipse cx="86" cy="285" rx="6" ry="2" fill="#fff" opacity=".25"/><ellipse cx="110" cy="285" rx="6" ry="2" fill="#fff" opacity=".25"/>';
+      // dress
+      s += '<path d="M66 176 Q100 166 134 176 L158 278 Q100 292 42 278 Z" fill="url(#' + id + 'c)"/>' +
+           '<path d="M50 262 Q100 274 150 262" stroke="' + gold + '" stroke-width="2" fill="none"/>' +
+           '<path d="M47 270 Q100 283 153 270" stroke="' + gold + '" stroke-width="1.2" fill="none" stroke-dasharray="2 3"/>';
+      [64, 82, 100, 118, 136].forEach(function (x, k) {
+        s += '<path d="M' + x + ' 262 Q' + (x - 4) + ' 250 ' + x + ' 242 Q' + (x + 4) + ' 250 ' + x + ' 262" stroke="' + gold + '" stroke-width="1.3" fill="none"/>' + star(x, 236 - (k % 2) * 4, 3.2);
+      });
+      s += star(88, 214, 2.6) + star(114, 222, 2.4);
+      // hijab drapes in front of shoulders
+      s += '<path d="M50 146 Q38 200 48 242 L66 236 Q60 198 72 166 Z" fill="url(#' + id + 'n)"/>' +
+           '<path d="M150 146 Q162 200 152 242 L134 236 Q140 198 128 166 Z" fill="url(#' + id + 'n)"/>' +
+           '<path d="M66 236 Q60 198 72 166 M134 236 Q140 198 128 166" stroke="' + gold + '" stroke-width="1.3" fill="none" stroke-dasharray="3 3"/>';
+      s += star(56, 214, 2.4) + star(146, 206, 2.2);
+      // right arm (waves)
+      s += '<g class="arm arm-r"><path d="M134 180 Q146 206 142 232" stroke="url(#' + id + 'c)" stroke-width="17" stroke-linecap="round" fill="none"/>' +
+           '<path d="M137 222 L147 224" stroke="' + gold + '" stroke-width="2"/><circle cx="142" cy="236" r="9" fill="url(#' + id + 's)"/></g>';
+      // left arm holds the book against her chest
+      s += '<g class="arm arm-l"><path d="M66 180 Q60 206 84 216" stroke="url(#' + id + 'c)" stroke-width="17" stroke-linecap="round" fill="none"/>' +
+           '<g transform="rotate(-8 100 210)"><rect x="80" y="186" width="40" height="52" rx="3" fill="#1d2550" stroke="' + gold + '" stroke-width="1.6"/>' +
+           '<rect x="85" y="191" width="30" height="42" rx="2" fill="none" stroke="' + gold + '" stroke-width=".8" opacity=".8"/>' +
+           '<circle cx="100" cy="212" r="8" fill="none" stroke="' + gold + '" stroke-width="1.2"/>' + star(100, 212, 5) +
+           '<rect x="80" y="186" width="5" height="52" fill="#141a3a"/></g>' +
+           '<circle cx="88" cy="216" r="8.5" fill="url(#' + id + 's)"/><circle cx="112" cy="222" r="8" fill="url(#' + id + 's)"/></g>';
+    } else {
+      /* ---- Ali: tousled hair, navy jacket over cream kurta, backpack ---- */
+      s += '<rect x="48" y="170" width="104" height="74" rx="18" fill="url(#' + id + 'b)"/>' +
+           '<rect x="54" y="210" width="20" height="26" rx="6" fill="#5e3a1d"/><rect x="126" y="210" width="20" height="26" rx="6" fill="#5e3a1d"/>';
+      s += '<rect x="80" y="234" width="18" height="50" rx="8" fill="url(#' + id + 'n)"/><rect x="102" y="234" width="18" height="50" rx="8" fill="url(#' + id + 'n)"/>';
+      s += '<ellipse cx="88" cy="285" rx="15" ry="8" fill="#6b3f1f"/><ellipse cx="112" cy="285" rx="15" ry="8" fill="#6b3f1f"/>' +
+           '<ellipse cx="85" cy="282" rx="7" ry="2.4" fill="#fff" opacity=".3"/><ellipse cx="109" cy="282" rx="7" ry="2.4" fill="#fff" opacity=".3"/>';
+      s += '<g class="arm arm-l"><path d="M66 180 Q54 206 58 232" stroke="url(#' + id + 'n)" stroke-width="18" stroke-linecap="round" fill="none"/>' +
+           '<path d="M52 224 L64 226" stroke="' + gold + '" stroke-width="2"/><circle cx="58" cy="236" r="9" fill="url(#' + id + 's)"/></g>';
+      // kurta
+      s += '<path d="M64 172 Q100 162 136 172 L142 256 Q100 266 58 256 Z" fill="url(#' + id + 'c)"/>' +
+           '<path d="M100 168 L100 212" stroke="' + gold + '" stroke-width="1.6"/>' +
+           '<path d="M96 172 L104 178 L96 184 L104 190 L96 196 L104 202 L96 208" stroke="' + gold + '" stroke-width="1" fill="none"/>' +
+           '<path d="M62 250 Q100 260 138 250" stroke="' + gold + '" stroke-width="1.2" fill="none" stroke-dasharray="2 3"/>';
+      // jacket panels
+      s += '<path d="M60 172 Q76 164 88 167 L86 240 Q70 241 56 236 Z" fill="url(#' + id + 'n)"/>' +
+           '<path d="M140 172 Q124 164 112 167 L114 240 Q130 241 144 236 Z" fill="url(#' + id + 'n)"/>' +
+           '<path d="M88 167 L86 240 M112 167 L114 240" stroke="' + gold + '" stroke-width="1.6"/>' +
+           star(126, 190, 5.2);
+      // backpack straps + collar
+      s += '<path d="M70 170 Q74 200 70 232 M130 170 Q126 200 130 232" stroke="#7a4a25" stroke-width="6" fill="none" stroke-linecap="round"/>' +
+           '<rect x="66" y="196" width="9" height="7" rx="2" fill="#c9a24e"/><rect x="125" y="196" width="9" height="7" rx="2" fill="#c9a24e"/>' +
+           '<path d="M86 165 Q100 173 114 165" stroke="#f3e7cf" stroke-width="6" fill="none" stroke-linecap="round"/>' +
+           '<path d="M86 162 Q100 170 114 162" stroke="' + gold + '" stroke-width="1.2" fill="none"/>';
+      s += '<g class="arm arm-r"><path d="M134 180 Q146 206 142 232" stroke="url(#' + id + 'n)" stroke-width="18" stroke-linecap="round" fill="none"/>' +
+           '<path d="M136 224 L148 222" stroke="' + gold + '" stroke-width="2"/><circle cx="142" cy="236" r="9" fill="url(#' + id + 's)"/></g>';
+    }
+
+    // ---- head ----
     s += '<g class="kh">';
     if (g) {
-      s += '<path d="M33 104 Q28 168 56 194 Q100 216 144 194 Q172 168 167 104 Z" fill="url(#' + id + 'h)"/>' +
-           '<path d="M44 176 Q100 206 156 176" stroke="' + hijab[2] + '" stroke-opacity=".35" stroke-width="3" fill="none" stroke-linecap="round"/>' +
-           '<circle cx="100" cy="102" r="70" fill="url(#' + id + 'h)"/>' +
-           '<path d="M44 84 Q60 40 104 34" stroke="#fff" stroke-opacity=".4" stroke-width="6" fill="none" stroke-linecap="round"/>' +
-           '<ellipse cx="100" cy="110" rx="52" ry="55" fill="url(#' + id + 's)"/>' +
-           '<path d="M48 104 Q52 58 100 54 Q148 58 152 104" stroke="' + hijab[2] + '" stroke-opacity=".55" stroke-width="5" fill="none"/>' +
-           '<circle cx="146" cy="150" r="4.5" fill="#ffd36b"/><circle cx="145" cy="149" r="1.6" fill="#fff"/>';
+      s += '<circle cx="100" cy="102" r="68" fill="url(#' + id + 'n)"/>' +
+           '<path d="M46 76 Q66 40 110 36" stroke="#5a6aa8" stroke-opacity=".55" stroke-width="7" fill="none" stroke-linecap="round"/>';
+      [[64, 52, 2.6], [136, 54, 3], [150, 92, 2.2], [48, 120, 2.4], [118, 40, 2]].forEach(function (p) { s += star(p[0], p[1], p[2]); });
+      s += '<ellipse cx="100" cy="110" rx="51" ry="54" fill="url(#' + id + 's)"/>' +
+           '<path d="M56 96 Q100 56 144 96 Q122 80 100 82 Q78 80 56 96Z" fill="#3a2213"/>' +
+           '<ellipse cx="100" cy="108" rx="53" ry="57" fill="none" stroke="url(#' + id + 'n)" stroke-width="7"/>' +
+           '<ellipse cx="100" cy="108" rx="49.5" ry="53.5" fill="none" stroke="' + gold + '" stroke-width="1" stroke-dasharray="3 4" opacity=".7"/>';
     } else {
       s += '<rect x="90" y="150" width="20" height="20" rx="6" fill="' + skin[1] + '"/>' +
            '<circle cx="43" cy="114" r="11" fill="url(#' + id + 's)"/><circle cx="157" cy="114" r="11" fill="url(#' + id + 's)"/>' +
            '<circle cx="43" cy="114" r="5" fill="' + skin[2] + '" opacity=".5"/><circle cx="157" cy="114" r="5" fill="' + skin[2] + '" opacity=".5"/>' +
            '<circle cx="100" cy="106" r="58" fill="url(#' + id + 's)"/>' +
-           '<path d="M44 106 Q40 52 100 46 Q160 52 156 106 Q150 84 134 78 Q120 92 98 82 Q78 94 62 82 Q48 92 44 106Z" fill="#3a2416"/>' +
-           '<path d="M70 70 Q86 62 104 66" stroke="#6a4630" stroke-width="3" fill="none" stroke-linecap="round" opacity=".7"/>' +
-           '<path d="M50 74 Q56 32 100 28 Q144 32 150 74 Q100 60 50 74Z" fill="url(#' + id + 'c)"/>' +
-           '<path d="M50 74 Q100 60 150 74 L150 66 Q100 52 50 66Z" fill="#e8c77d"/>' +
-           '<path d="M60 64 Q100 50 140 64" stroke="#fff" stroke-width="1.6" stroke-dasharray="2 4" fill="none" opacity=".8"/>';
+           '<path d="M40 114 Q28 62 66 40 Q98 20 134 36 Q172 54 162 114 Q158 92 148 82 Q150 98 140 100 Q134 78 114 72 Q120 90 104 94 Q98 72 80 74 Q86 90 70 96 Q62 82 54 88 Q46 98 40 114Z" fill="url(#' + id + 'r)"/>' +
+           '<path d="M52 92 Q62 58 100 56 Q140 56 152 90 Q138 74 120 74 Q110 88 92 82 Q76 92 60 86 Q56 90 52 92Z" fill="url(#' + id + 'r)"/>' +
+           '<path d="M62 46 Q74 30 92 34 Q108 22 126 32 Q144 36 150 54" stroke="url(#' + id + 'r)" stroke-width="10" fill="none" stroke-linecap="round"/>' +
+           '<path d="M70 56 Q92 44 120 50 M60 72 Q72 60 88 62 M118 60 Q138 60 148 76" stroke="#a5754d" stroke-width="2.4" fill="none" stroke-linecap="round" opacity=".75"/>';
     }
-    // rim light
     s += '<path d="M' + (g ? "56 136 Q50 112 56 88" : "50 136 Q44 108 52 86") + '" stroke="#fff" stroke-opacity=".28" stroke-width="3" fill="none" stroke-linecap="round"/>';
-    // cheeks
-    s += '<ellipse cx="70" cy="132" rx="11" ry="7" fill="#ff7a8a" opacity=".38"/><ellipse cx="130" cy="132" rx="11" ry="7" fill="#ff7a8a" opacity=".38"/>';
-    // eyes
+    s += '<ellipse cx="70" cy="132" rx="11" ry="7" fill="#ff7a8a" opacity=".36"/><ellipse cx="130" cy="132" rx="11" ry="7" fill="#ff7a8a" opacity=".36"/>';
     [78, 122].forEach(function (x, k) {
       s += '<g class="eye">' +
-        '<ellipse cx="' + x + '" cy="112" rx="14" ry="16.5" fill="url(#' + id + 'w)"/>' +
-        '<g class="pupil"><circle cx="' + x + '" cy="114" r="10.5" fill="url(#' + id + 'i)"/><circle cx="' + x + '" cy="115" r="5" fill="#120a05"/>' +
-        '<circle cx="' + (x + 3.5) + '" cy="109" r="3.6" fill="#fff"/><circle cx="' + (x - 3.5) + '" cy="119" r="1.6" fill="#fff" opacity=".85"/></g>' +
-        '<path d="M' + (x - 14) + ' 108 Q' + x + ' 92 ' + (x + 14) + ' 108" stroke="#2b1a10" stroke-width="3.4" fill="none" stroke-linecap="round"/>' +
-        (g ? '<path d="M' + (k ? x + 13 : x - 13) + ' 104 l' + (k ? 6 : -6) + ' -5 M' + (k ? x + 10 : x - 10) + ' 99 l' + (k ? 4 : -4) + ' -6" stroke="#2b1a10" stroke-width="2.4" stroke-linecap="round"/>' : "") +
+        '<ellipse cx="' + x + '" cy="112" rx="14.5" ry="17" fill="url(#' + id + 'w)"/>' +
+        '<g class="pupil"><circle cx="' + x + '" cy="114" r="11" fill="url(#' + id + 'i)"/><circle cx="' + x + '" cy="115" r="5.2" fill="#120a05"/>' +
+        '<circle cx="' + (x + 3.6) + '" cy="109" r="3.8" fill="#fff"/><circle cx="' + (x - 3.6) + '" cy="119" r="1.7" fill="#fff" opacity=".85"/></g>' +
+        '<path d="M' + (x - 15) + ' 108 Q' + x + ' 91 ' + (x + 15) + ' 108" stroke="#2b1a10" stroke-width="3.6" fill="none" stroke-linecap="round"/>' +
+        (g ? '<path d="M' + (k ? x + 14 : x - 14) + ' 104 l' + (k ? 6 : -6) + ' -5 M' + (k ? x + 11 : x - 11) + ' 99 l' + (k ? 4 : -4) + ' -6 M' + (k ? x + 6 : x - 6) + ' 96 l' + (k ? 2 : -2) + ' -6" stroke="#2b1a10" stroke-width="2.2" stroke-linecap="round"/>' : "") +
         '</g>';
     });
-    // brows
-    s += '<path class="brow brow-l" d="M66 88 Q78 80 90 86" stroke="' + (g ? "#5a3414" : "#3a2416") + '" stroke-width="4" fill="none" stroke-linecap="round"/>' +
-         '<path class="brow brow-r" d="M110 86 Q122 80 134 88" stroke="' + (g ? "#5a3414" : "#3a2416") + '" stroke-width="4" fill="none" stroke-linecap="round"/>';
-    // nose
+    var bc = g ? "#4a2a14" : "#3a2213";
+    s += '<path class="brow brow-l" d="M65 88 Q78 79 91 85" stroke="' + bc + '" stroke-width="' + (g ? 3.4 : 4.6) + '" fill="none" stroke-linecap="round"/>' +
+         '<path class="brow brow-r" d="M109 85 Q122 79 135 88" stroke="' + bc + '" stroke-width="' + (g ? 3.4 : 4.6) + '" fill="none" stroke-linecap="round"/>';
     s += '<ellipse cx="100" cy="128" rx="5.5" ry="3.8" fill="' + skin[2] + '" opacity=".45"/><ellipse cx="98.5" cy="126.5" rx="2" ry="1.2" fill="#fff" opacity=".5"/>';
-    // mouths
-    s += '<path class="mo-smile" d="M86 140 Q100 154 114 140" stroke="#8a2f22" stroke-width="3.6" fill="none" stroke-linecap="round"/>' +
+    s += '<path class="mo-smile" d="M87 140 Q100 152 113 140" stroke="#8a2f22" stroke-width="3.6" fill="none" stroke-linecap="round"/>' +
          '<path class="mo-sad" d="M88 148 Q100 138 112 148" stroke="#8a2f22" stroke-width="3.6" fill="none" stroke-linecap="round"/>' +
          '<g class="mo-open"><path d="M85 137 Q100 164 115 137 Q100 141 85 137Z" fill="#6b1e1e"/>' +
          '<path d="M88 138 L112 138 L110 142 Q100 144 90 142Z" fill="#fff"/>' +
          '<ellipse cx="100" cy="153" rx="8" ry="4.5" fill="#ff8a8a"/></g>';
-    s += '</g>'; // head
-    s += '</g>'; // body
-    s += '</svg>';
+    s += '</g></g></svg>';
     return s;
   }
 
@@ -234,12 +265,14 @@
     if (!list.length) return null;
     var exact = list.filter(function (v) { return (v.lang || "").toLowerCase().replace("_", "-") === lang.toLowerCase(); });
     if (exact.length) list = exact.concat(list);
-    if (base === "en" && gender) {
+    if (gender) {
       var want = gender === "girl"
-        ? /female|samantha|victoria|karen|moira|tessa|serena|zira|aria|jenny|libby|sonia|google uk english female|google us english/i
-        : /male|daniel|alex|fred|oliver|guy|ryan|david|mark|google uk english male/i;
-      var avoid = gender === "girl" ? /\bmale\b/i : /female/i;
+        ? /female|woman|girl|child|kid|samantha|victoria|karen|moira|tessa|serena|zira|aria|jenny|ana|libby|sonia|maisie|zariyah|amina|salma|laila|mona|dilara|uzma|gul|google uk english female|google us english/i
+        : /male|man|boy|child|kid|daniel|alex|fred|oliver|guy|ryan|david|mark|thomas|hamed|majed|maged|tarik|naayf|farid|asad|salman|google uk english male/i;
+      var avoid = gender === "girl" ? /\bmale\b|\bman\b/i : /female|woman/i;
       var hit = list.filter(function (v) { return want.test(v.name) && !avoid.test(v.name); });
+      var kidV = hit.filter(function (v) { return /child|kid|ana\b|maisie/i.test(v.name); });
+      if (kidV.length) return kidV[0];
       var natural = hit.filter(function (v) { return /natural|neural|online|premium|enhanced/i.test(v.name); });
       if (natural.length) return natural[0];
       if (hit.length) return hit[0];
@@ -268,12 +301,12 @@
         if (kid) kid.talk(true);
         if (muted || !synth) { setTimeout(fin, muted ? est * 0.8 : est); return; }
         var u = new SpeechSynthesisUtterance(text);
-        var v = pick(lang, lang.indexOf("en") === 0 ? who : null);
+        var v = pick(lang, who);
         if (v) u.voice = v;
         u.lang = v ? v.lang : lang;
         var isEn = lang.indexOf("en") === 0;
-        u.pitch = isEn ? (who === "girl" ? 1.5 : 1.25) : 1.15;
-        u.rate = isEn ? 0.98 : 0.82;
+        u.pitch = who === "girl" ? 1.85 : 1.6;
+        u.rate = (isEn ? 1.0 : 0.86) * (o.slow ? 0.7 : 1);
         u.onend = fin;
         u.onerror = fin;
         setTimeout(fin, est * 2.6 + 2500);
