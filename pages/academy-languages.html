@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#070a24">
+<meta name="description" content="Language Courses at the AHD-E-ZUHOOR Digital Learning Academy, guided by Noor and Rayan.">
+<title>Language Courses</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&family=Amiri:wght@400;700&display=swap">
+<link rel="stylesheet" href="../assets/css/languages.css">
+<style>
+.app{position:relative;z-index:2;min-height:100vh;min-height:100svh;display:flex;flex-direction:column}
+.topbar{opacity:0;pointer-events:none;transition:opacity .5s}
+.app[data-step]:not([data-step="0"]) .topbar{opacity:1;pointer-events:auto}
+.screens{position:relative;flex:1}
+.screen{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;padding:16px 16px 0;opacity:0;visibility:hidden;transform:translateX(60px);
+  transition:opacity .45s,transform .55s cubic-bezier(.2,.9,.3,1),visibility .45s}
+.screen.on{opacity:1;visibility:visible;transform:none}
+.screen.off{transform:translateX(-60px)}
+.footer{position:relative;z-index:5;padding:16px 16px calc(18px + env(safe-area-inset-bottom,0px));border-top:2px solid rgba(42,50,112,.6);background:rgba(7,10,36,.6);backdrop-filter:blur(8px);
+  display:flex;justify-content:flex-end;gap:12px;transition:transform .4s}
+.footer .btn{min-width:200px}
+.app[data-step="0"] .footer{transform:translateY(120%)}
+
+/* splash */
+.splash{justify-content:center;text-align:center;gap:6px}
+.stage{position:relative;width:min(520px,92vw);height:min(340px,46vh);margin-bottom:8px}
+.planet{position:absolute;left:50%;bottom:0;width:86%;height:34%;translate:-50% 0;border-radius:50%;
+  background:radial-gradient(ellipse at 40% 25%,#7ff0d6 0%,#2fb59a 30%,#165d6e 65%,#0b2440 100%);
+  box-shadow:0 0 40px rgba(63,208,181,.45),0 0 120px rgba(63,208,181,.25),inset 0 -14px 30px rgba(0,0,0,.4);overflow:hidden;animation:floaty 6s ease-in-out infinite}
+.planet::before{content:"";position:absolute;inset:0;background:
+  radial-gradient(circle at 20% 60%,rgba(255,255,255,.18) 0 8%,transparent 9%),
+  radial-gradient(circle at 70% 40%,rgba(0,0,0,.18) 0 7%,transparent 8%),
+  radial-gradient(circle at 55% 75%,rgba(255,255,255,.12) 0 5%,transparent 6%);background-size:200% 100%;animation:spinTex 18s linear infinite}
+@keyframes spinTex{to{background-position:-200% 0}}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.duo{position:absolute;left:50%;bottom:16%;translate:-50% 0;display:flex;align-items:flex-end;gap:2%;width:72%;animation:floaty 6s ease-in-out infinite}
+.duo .kid{flex:1;aspect-ratio:2/3}
+.orbit{position:absolute;left:50%;top:52%;width:118%;height:70%;translate:-50% -50%;border:1.5px dashed rgba(191,227,255,.25);border-radius:50%;pointer-events:none;transform:rotate(-8deg)}
+.rocket-orbit{position:absolute;left:50%;top:52%;width:0;height:0;animation:orbit 9s linear infinite}
+.rocket-orbit svg{position:absolute;width:30px;height:30px;left:-15px;top:-15px}
+@keyframes orbit{
+  0%{transform:translate(calc(min(520px,92vw)*.59),0) rotate(90deg)}
+  25%{transform:translate(0,calc(min(340px,46vh)*.35)) rotate(180deg)}
+  50%{transform:translate(calc(min(520px,92vw)*-.59),0) rotate(270deg)}
+  75%{transform:translate(0,calc(min(340px,46vh)*-.35)) rotate(360deg)}
+  100%{transform:translate(calc(min(520px,92vw)*.59),0) rotate(450deg)}
+}
+.splash h1{font-size:clamp(2.2rem,8vw,3.4rem);font-weight:900;margin:8px 0 0;line-height:1.05;letter-spacing:-.01em;
+  background:linear-gradient(90deg,#fff,#7ff0d6,#ffc94d,#fff);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 8s linear infinite}
+@keyframes shine{to{background-position:300% 0}}
+.splash .arsub{font-family:var(--ar);font-size:1.6rem;color:var(--gold);margin:0}
+.splash p.tag{color:var(--mut);font-weight:700;font-size:1.08rem;max-width:440px;margin:6px auto 22px}
+.splash .btn{min-width:min(330px,86vw)}
+.splash .back{margin-top:16px;color:var(--mut);font-weight:800;font-size:.85rem;letter-spacing:.1em;text-transform:uppercase}
+.splash .back:hover{color:#fff}
+
+/* guide row */
+.guide{display:flex;align-items:center;gap:14px;width:100%;max-width:640px;margin:10px 0 20px}
+.guide .pair{flex:none;display:flex;align-items:flex-end;width:150px}
+.guide .pair .kid{width:50%;aspect-ratio:2/3}
+.guide .bubble{flex:1}
+.list{display:grid;gap:12px;width:100%;max-width:640px;padding-bottom:20px;overflow:auto}
+.list .opt{animation:popIn .5s cubic-bezier(.2,1.4,.4,1) both}
+
+/* intro big */
+.intro{justify-content:center}
+.intro .bigduo{display:flex;align-items:flex-end;width:min(420px,80vw);margin-top:18px}
+.intro .bigduo .kid{flex:1;aspect-ratio:2/3}
+.intro .bubble{max-width:560px;text-align:center;font-size:1.2rem}
+
+/* ready */
+.ready{justify-content:center;text-align:center}
+.ready h2{font-size:clamp(1.8rem,6vw,2.6rem);font-weight:900;margin:6px 0}
+.summary{display:flex;align-items:center;gap:16px;text-align:left;margin:18px auto;padding:16px 20px;border-radius:20px;border:2px solid var(--line);background:rgba(22,28,74,.75);max-width:420px}
+.summary .badge{flex:none;display:grid;place-items:center;width:64px;height:64px;border-radius:18px;font-size:2rem;font-weight:900;color:#0b0f2e;box-shadow:inset 0 -5px 0 rgba(0,0,0,.18)}
+.summary b{display:block;font-size:1.3rem;font-weight:900}
+.summary small{color:var(--mut);font-weight:700}
+.pace-ico{flex:none;width:52px;height:52px;border-radius:14px;display:grid;place-items:center;background:#232a63}
+.pace-ico svg{width:34px;height:34px}
+
+@media (max-width:640px){
+  .guide .pair{width:110px}
+  .footer .btn{flex:1;min-width:0}
+  .bubble{font-size:1rem}
+}
+</style>
+</head>
+<body>
+<canvas id="stars" aria-hidden="true"></canvas>
+
+<div class="app" id="app" data-step="0">
+  <div class="topbar">
+    <button class="iconbtn" id="backBtn" type="button" aria-label="Back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#a9afd6" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+    </button>
+    <div class="progress" role="progressbar" aria-label="Progress" aria-valuemin="0" aria-valuemax="100"><i id="prog"></i></div>
+    <button class="iconbtn" id="muteBtn" type="button" aria-label="Sound on"></button>
+  </div>
+
+  <div class="screens">
+
+    <!-- 0 · splash -->
+    <section class="screen splash on" data-s="0">
+      <div class="stage">
+        <div class="orbit"></div>
+        <div class="planet"></div>
+        <div class="duo"><div id="kG0"></div><div id="kB0"></div></div>
+        <div class="rocket-orbit" aria-hidden="true">
+          <svg viewBox="-20 -24 40 48"><path d="M-4 13 Q0 26 4 13Z" fill="#ffb347"/><path d="M0 -20 C8 -11 8 4 5.5 13 L-5.5 13 C-8 4 -8 -11 0 -20Z" fill="#f4efe4"/><path d="M-5.6 3 L-12 15 L-5.5 12.5Z M5.6 3 L12 15 L5.5 12.5Z" fill="#ff6b7d"/><circle cy="-1" r="3.2" fill="#3fd0b5" stroke="#24305e" stroke-width="1.2"/></svg>
+        </div>
+      </div>
+      <h1>Language Courses</h1>
+      <p class="arsub" lang="ar" dir="rtl">دورات اللغة</p>
+      <p class="tag">Learn with Noor and Rayan, one word at a time.</p>
+      <button class="btn" id="startBtn" type="button">Get started</button>
+      <a class="back" href="academy.html">← Back to the Academy</a>
+    </section>
+
+    <!-- 1 · intro -->
+    <section class="screen intro" data-s="1">
+      <div class="bubble down" id="introBubble"></div>
+      <div class="bigduo"><div id="kG1"></div><div id="kB1"></div></div>
+    </section>
+
+    <!-- 2 · choose course -->
+    <section class="screen" data-s="2">
+      <div class="guide"><div class="pair"><div id="kG2"></div><div id="kB2"></div></div><div class="bubble" id="b2"></div></div>
+      <div class="list" id="courseList" role="radiogroup" aria-label="Choose a language"></div>
+    </section>
+
+    <!-- 3 · pace -->
+    <section class="screen" data-s="3">
+      <div class="guide"><div class="pair"><div id="kG3"></div><div id="kB3"></div></div><div class="bubble" id="b3"></div></div>
+      <div class="list" id="paceList" role="radiogroup" aria-label="Choose your pace"></div>
+    </section>
+
+    <!-- 4 · ready -->
+    <section class="screen ready" data-s="4">
+      <div class="bigduo" style="display:flex;align-items:flex-end;width:min(300px,62vw);margin:0 auto"><div id="kG4" style="flex:1;aspect-ratio:2/3"></div><div id="kB4" style="flex:1;aspect-ratio:2/3"></div></div>
+      <h2>Your voyage begins!</h2>
+      <div class="summary" id="summary"></div>
+    </section>
+  </div>
+
+  <div class="footer"><button class="btn" id="nextBtn" type="button">Continue</button></div>
+</div>
+
+<script src="../assets/js/language-data.js"></script>
+<script src="../assets/js/kids.js"></script>
+<script>
+(function(){
+"use strict";
+var C=window.AZ_COURSES, V=AZ.voice;
+AZ.starfield(document.getElementById("stars"));
+
+var app=document.getElementById("app"), screens=[].slice.call(document.querySelectorAll(".screen"));
+var prog=document.getElementById("prog"), nextBtn=document.getElementById("nextBtn");
+var kids={};
+[0,1,2,3,4].forEach(function(i){kids["g"+i]=new AZ.Kid(document.getElementById("kG"+i),"girl");kids["b"+i]=new AZ.Kid(document.getElementById("kB"+i),"boy")});
+kids.g0.el.classList.add("pop");kids.b0.el.classList.add("pop");kids.b0.el.style.animationDelay=".25s";
+setTimeout(function(){kids.g0.set("wave")},900);
+setTimeout(function(){kids.g0.set("");kids.b0.set("wave")},2600);
+setTimeout(function(){kids.b0.set("")},4200);
+
+var PACES=[
+  {id:5,  name:"Gentle orbit",  sub:"5 minutes a day",  ico:'<circle cx="20" cy="20" r="7" fill="#3fd0b5"/><ellipse cx="20" cy="20" rx="16" ry="6" fill="none" stroke="#bfe3ff" stroke-width="2"/>'},
+  {id:10, name:"Steady flight", sub:"10 minutes a day", ico:'<path d="M6 24 L34 14 L28 20 L34 26Z" fill="#ffc94d"/><path d="M6 24 L18 20" stroke="#fff" stroke-width="2"/>'},
+  {id:15, name:"Rocket speed",  sub:"15 minutes a day", ico:'<path d="M20 4 C27 12 27 24 24 30 L16 30 C13 24 13 12 20 4Z" fill="#f4efe4"/><path d="M16 30 Q20 40 24 30Z" fill="#ff8a3d"/><circle cx="20" cy="17" r="3" fill="#3fd0b5"/>'},
+  {id:20, name:"Warp drive",    sub:"20 minutes a day", ico:'<path d="M4 12 L30 12 M8 20 L36 20 M4 28 L30 28" stroke="#a78bfa" stroke-width="3" stroke-linecap="round"/><circle cx="34" cy="12" r="2.5" fill="#fff"/><circle cx="36" cy="28" r="2.5" fill="#fff"/>'}
+];
+
+var state={step:0,course:AZ.store.get("lang-course",null),pace:AZ.store.get("lang-pace",null)};
+if(!C.some(function(c){return c.id===state.course}))state.course=null;
+
+/* mute button */
+var muteBtn=document.getElementById("muteBtn");
+function drawMute(){
+  muteBtn.innerHTML=V.muted
+    ?'<svg viewBox="0 0 24 24" fill="none" stroke="#a9afd6" stroke-width="2.4" stroke-linecap="round"><path d="M4 9h4l5-4v14l-5-4H4z" fill="#a9afd6"/><path d="M17 9l5 6M22 9l-5 6"/></svg>'
+    :'<svg viewBox="0 0 24 24" fill="none" stroke="#3fd0b5" stroke-width="2.4" stroke-linecap="round"><path d="M4 9h4l5-4v14l-5-4H4z" fill="#3fd0b5"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg>';
+  muteBtn.setAttribute("aria-label",V.muted?"Sound off":"Sound on");
+}
+muteBtn.onclick=function(){V.setMuted(!V.muted);drawMute()};drawMute();
+
+/* typewriter + voice */
+var talkToken=0;
+function speak(bubble,lines){
+  var tok=++talkToken;V.stop();
+  return lines.reduce(function(p,l){
+    return p.then(function(){
+      if(tok!==talkToken)return;
+      bubble.innerHTML='<span class="who '+(l.k.type)+'">'+(l.k.type==="girl"?"Noor":"Rayan")+'</span><span class="t"></span>';
+      var t=bubble.querySelector(".t"),i=0,txt=l.text;
+      var iv=setInterval(function(){i+=2;t.textContent=txt.slice(0,i);if(i>=txt.length)clearInterval(iv)},22);
+      if(l.state)l.k.set(l.state);
+      return V.say(l.say||txt,{kid:l.k,lang:l.lang}).then(function(){clearInterval(iv);t.textContent=txt;if(l.state)l.k.set("")});
+    });
+  },Promise.resolve());
+}
+
+/* lists */
+var courseList=document.getElementById("courseList");
+C.forEach(function(c,i){
+  var b=document.createElement("button");b.type="button";b.className="opt";b.setAttribute("role","radio");b.dataset.id=c.id;
+  b.style.animationDelay=(i*70)+"ms";
+  b.innerHTML='<span class="badge" style="--c:'+c.color+'"'+(c.dir==="rtl"?' lang="ar"':'')+'>'+c.glyph+'</span><span><b>'+c.name+' <span style="color:var(--mut);font-weight:700">· <bdi'+(c.dir==="rtl"?' lang="ar"':'')+'>'+c.native+'</bdi></span></b><small>'+c.tagline+'</small></span>';
+  b.onclick=function(){
+    AZ.sfx.tap();state.course=c.id;mark(courseList,c.id);update();
+    var k=i%2?kids.g2:kids.b2;k.jump();
+    var lines=[{k:k,text:c.name+"! "+c.tagline+"."}];
+    if(c.voice.indexOf("en")!==0&&AZ.hasVoice(c.voice))lines.push({k:k===kids.g2?kids.b2:kids.g2,text:c.native,lang:c.voice});
+    speak(document.getElementById("b2"),lines);
+  };
+  courseList.appendChild(b);
+});
+var paceList=document.getElementById("paceList");
+PACES.forEach(function(p,i){
+  var b=document.createElement("button");b.type="button";b.className="opt";b.setAttribute("role","radio");b.dataset.id=p.id;b.style.animationDelay=(i*70)+"ms";
+  b.innerHTML='<span class="pace-ico"><svg viewBox="0 0 40 40">'+p.ico+'</svg></span><span><b>'+p.name+'</b><small>'+p.sub+'</small></span>';
+  b.onclick=function(){AZ.sfx.tap();state.pace=p.id;mark(paceList,p.id);update();var k=i%2?kids.b3:kids.g3;k.jump();
+    speak(document.getElementById("b3"),[{k:k,text:[ "Nice and gentle. Every little step counts!","A steady flight. Great choice!","Rocket speed! Let's go!","Warp drive! You're amazing!"][i]}]);};
+  paceList.appendChild(b);
+});
+function mark(list,id){[].forEach.call(list.children,function(b){var on=String(b.dataset.id)===String(id);b.classList.toggle("sel",on);b.setAttribute("aria-checked",on)})}
+if(state.course)mark(courseList,state.course);
+if(state.pace)mark(paceList,state.pace);
+
+function course(){return C.filter(function(c){return c.id===state.course})[0]}
+function paceObj(){return PACES.filter(function(p){return p.id===state.pace})[0]}
+
+/* navigation */
+function go(n){
+  state.step=n;app.dataset.step=n;
+  screens.forEach(function(s,i){s.classList.toggle("on",i===n);s.classList.toggle("off",i<n)});
+  prog.style.width=(n<=0?0:n/4*100)+"%";
+  update();
+  V.stop();talkToken++;
+  if(n===1){
+    kids.g1.el.classList.add("pop");kids.b1.el.classList.add("pop");kids.b1.el.style.animationDelay=".2s";
+    speak(document.getElementById("introBubble"),[
+      {k:kids.g1,text:"Assalamu alaykum! I'm Noor.",state:"wave"},
+      {k:kids.b1,text:"And I'm Rayan! We'll be your guides on this language voyage.",state:"wave"},
+      {k:kids.g1,text:"Just a few quick questions, and we'll be on our way!"}
+    ]);
+  }
+  if(n===2)speak(document.getElementById("b2"),[{k:kids.g2,text:"Which language would you like to learn?"}]);
+  if(n===3)speak(document.getElementById("b3"),[{k:kids.b3,text:"How fast would you like to travel each day?"}]);
+  if(n===4){
+    var c=course(),p=paceObj();
+    AZ.store.set("lang-course",c.id);AZ.store.set("lang-pace",p.id);
+    document.getElementById("summary").innerHTML='<span class="badge" style="background:'+c.color+'"'+(c.dir==="rtl"?' lang="ar"':'')+'>'+c.glyph+'</span><span><b>'+c.name+'</b><small>'+p.name+' · '+p.sub+'</small></span>';
+    kids.g4.set("cheer");kids.b4.set("cheer");AZ.sfx.win();AZ.confetti();
+    speak(document.createElement("div"),[{k:kids.b4,text:"Yay! "+c.name+" it is!"},{k:kids.g4,text:"Let's start learning!"}]).then(function(){return AZ.sleep(2200)}).then(function(){kids.g4.set("");kids.b4.set("")});
+  }
+}
+function update(){
+  var n=state.step;
+  nextBtn.textContent=n===4?"Start learning":"Continue";
+  nextBtn.disabled=(n===2&&!state.course)||(n===3&&!state.pace);
+  nextBtn.classList.toggle("gold",n===4);
+}
+document.getElementById("startBtn").onclick=function(){AZ.sfx.tap();go(1)};
+nextBtn.onclick=function(){
+  AZ.sfx.tap();
+  if(state.step<4)go(state.step+1);
+  else location.href="language-course.html?c="+encodeURIComponent(state.course);
+};
+document.getElementById("backBtn").onclick=function(){go(Math.max(0,state.step-1))};
+})();
+</script>
+</body>
+</html>

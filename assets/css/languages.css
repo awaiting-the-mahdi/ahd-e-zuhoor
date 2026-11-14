@@ -1,0 +1,80 @@
+/* AHD-E-ZUHOOR — Language Courses (shared) */
+:root{
+  color-scheme:dark;
+  --bg:#070a24;
+  --bg2:#11163d;
+  --panel:#161c4a;
+  --line:#2a3270;
+  --fg:#f4f1ff;
+  --mut:#a9afd6;
+  --teal:#3fd0b5;
+  --teal-d:#22927d;
+  --gold:#ffc94d;
+  --gold-d:#c7901c;
+  --coral:#ff6b7d;
+  --coral-d:#c23b4f;
+  --violet:#a78bfa;
+  --accent:#3fd0b5;
+  --round:"Nunito",system-ui,sans-serif;
+  --ar:"Amiri","Noto Naskh Arabic",serif;
+}
+*{box-sizing:border-box}
+html{background:var(--bg)}
+body{margin:0;min-height:100vh;min-height:100svh;background:
+  radial-gradient(ellipse at 20% 0%,#2a1f6e 0%,transparent 55%),
+  radial-gradient(ellipse at 90% 30%,#0f4a5e 0%,transparent 50%),
+  radial-gradient(ellipse at 50% 110%,#3a1550 0%,transparent 55%),var(--bg);
+  color:var(--fg);font-family:var(--round);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit}
+#stars{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.ar,[lang=ar],[lang=fa],[lang=ur]{font-family:var(--ar)}
+
+/* top bar */
+.topbar{position:relative;z-index:10;width:100%;display:flex;align-items:center;gap:14px;padding:16px 16px 0;max-width:1000px;margin:0 auto}
+.iconbtn{flex:none;display:grid;place-items:center;width:44px;height:44px;border-radius:14px;border:2px solid var(--line);background:rgba(22,28,74,.7);cursor:pointer;transition:transform .15s,background .2s}
+.iconbtn:hover{background:rgba(42,50,112,.8)}
+.iconbtn:active{transform:scale(.92)}
+.iconbtn svg{width:22px;height:22px}
+.progress{flex:1;height:16px;border-radius:99px;background:#232a63;overflow:hidden;position:relative}
+.progress i{position:absolute;inset:0 auto 0 0;width:0;border-radius:99px;background:linear-gradient(90deg,var(--teal),#7ff0d6);transition:width .6s cubic-bezier(.3,1.4,.5,1)}
+.progress i::after{content:"";position:absolute;left:8px;right:8px;top:4px;height:4px;border-radius:9px;background:rgba(255,255,255,.4)}
+
+/* chunky buttons */
+.btn{--c:var(--teal);--d:var(--teal-d);display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:54px;padding:0 28px;border:0;border-radius:16px;
+  background:var(--c);color:#06231d;font-weight:900;font-size:1rem;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;
+  box-shadow:0 5px 0 var(--d);transition:transform .08s,box-shadow .08s,filter .2s;-webkit-tap-highlight-color:transparent}
+.btn:hover{filter:brightness(1.07)}
+.btn:active{transform:translateY(5px);box-shadow:0 0 0 var(--d)}
+.btn[disabled]{--c:#2a3166;--d:#1b2150;color:#6c73a8;cursor:default;filter:none}
+.btn.gold{--c:var(--gold);--d:var(--gold-d);color:#3a2600}
+.btn.coral{--c:var(--coral);--d:var(--coral-d);color:#fff}
+.btn.ghost{--c:transparent;--d:transparent;color:var(--teal);box-shadow:none;border:2px solid var(--line)}
+.btn.ghost:active{transform:scale(.97)}
+.btn.wide{width:100%}
+
+/* speech bubble */
+.bubble{position:relative;background:#fff;color:#1d1f45;border-radius:20px;padding:14px 18px;font-weight:800;font-size:1.08rem;line-height:1.35;
+  box-shadow:0 6px 0 rgba(0,0,0,.25),0 10px 30px rgba(0,0,0,.25);min-height:1.35em}
+.bubble::after{content:"";position:absolute;left:-10px;top:50%;width:22px;height:22px;background:#fff;transform:translateY(-50%) rotate(45deg);border-radius:4px}
+.bubble.down::after{left:50%;top:auto;bottom:-10px;transform:translateX(-50%) rotate(45deg)}
+.bubble .who{display:block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:#7a6be0;margin-bottom:2px}
+.bubble .who.boy{color:#e07a10}
+
+/* option cards */
+.opt{display:flex;align-items:center;gap:16px;width:100%;text-align:left;padding:14px 16px;border-radius:18px;border:2px solid var(--line);
+  background:rgba(22,28,74,.75);box-shadow:0 4px 0 var(--line);cursor:pointer;transition:transform .1s,border-color .2s,background .2s,box-shadow .1s;-webkit-tap-highlight-color:transparent}
+.opt:hover{background:rgba(32,40,96,.85)}
+.opt:active{transform:translateY(3px);box-shadow:0 1px 0 var(--line)}
+.opt.sel{border-color:var(--teal);background:rgba(63,208,181,.14);box-shadow:0 4px 0 var(--teal-d)}
+.opt .badge{flex:none;display:grid;place-items:center;width:52px;height:52px;border-radius:14px;font-size:1.6rem;font-weight:900;color:#0b0f2e;background:var(--c,#3fd0b5);box-shadow:inset 0 -4px 0 rgba(0,0,0,.18)}
+.opt b{display:block;font-size:1.12rem;font-weight:900}
+.opt small{display:block;color:var(--mut);font-weight:700;font-size:.88rem}
+
+/* layout helper */
+.wrap{position:relative;z-index:2;max-width:1000px;margin:0 auto;padding:16px}
+
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-5px)}80%{transform:translateX(5px)}}
+.shake{animation:shake .4s}
+@keyframes popIn{from{opacity:0;transform:translateY(20px) scale(.95)}to{opacity:1;transform:none}}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
