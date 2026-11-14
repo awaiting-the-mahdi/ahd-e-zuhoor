@@ -1,72 +1,94 @@
 /*
-  Evidence-grounded answering with strict verification.
-  The model only sees retrieved official passages. Its output is checked in code:
-  quotes must be verbatim, every statement must cite exactly one retrieved passage,
-  and sources, URLs and numbers are always taken from our own records, never from the model.
+  Evidence-grounded AI answers ("Zahra").
+  The model sees only the official passages retrieved from sistani.org, split into numbered
+  sentences (P1.1, P1.2 …). It chooses the official sentences by number and writes a friendly
+  explanation. The official quote is then assembled by the server from the original text, so it
+  is always word-for-word. Code checks every reference before anything is shown.
 */
-import { chatJSON } from "./openai.js";
-import { normStrict } from "./text.js";
+import { chat } from "./ai.js";
 
 export const ABSTAIN_MESSAGE = "We could not locate a sufficiently relevant published ruling. Please consult the Office of Ayatollah Sistani.";
 
-const ITEM = {
-  type: "object", additionalProperties: false, required: ["text", "passage"],
-  properties: { text: { type: "string" }, passage: { type: "string" } }
-};
 export const ANSWER_SCHEMA = {
   type: "object",
   additionalProperties: false,
-  required: ["status", "question_restated", "clarifying_questions", "rulings", "explanation", "conditions", "related", "reason"],
+  required: ["status", "reply", "rulings", "conditions", "clarifying_questions", "related", "reason"],
   properties: {
-    status: { type: "string", enum: ["answer", "abstain", "clarify"] },
-    question_restated: { type: "string" },
-    clarifying_questions: { type: "array", items: { type: "string" } },
+    status: { type: "string", enum: ["answer", "clarify", "abstain"] },
+    reply: { type: "string" },
     rulings: {
       type: "array",
-      items: { type: "object", additionalProperties: false, required: ["passage", "quote"], properties: { passage: { type: "string" }, quote: { type: "string" } } }
+      items: { type: "object", additionalProperties: false, required: ["sentences"], properties: { sentences: { type: "array", items: { type: "string" } } } }
     },
-    explanation: { type: "array", items: ITEM },
-    conditions: { type: "array", items: ITEM },
+    conditions: {
+      type: "array",
+      items: { type: "object", additionalProperties: false, required: ["text", "passage"], properties: { text: { type: "string" }, passage: { type: "string" } } }
+    },
+    clarifying_questions: { type: "array", items: { type: "string" } },
     related: { type: "array", items: { type: "string" } },
     reason: { type: "string" }
   }
 };
 
-const LANG_NAME = { en: "English", ar: "Arabic", ur: "Urdu", "roman-ur": "Roman Urdu (Urdu in Latin letters)", other: "the user's language" };
+const LANG_NAME = { en: "English", ar: "Arabic", ur: "Urdu (in Urdu script)", "roman-ur": "Roman Urdu (Urdu written in English letters)", other: "the user's language" };
 
 function systemPrompt(lang) {
-  return `You are a careful research assistant for the published rulings of Ayatollah al-Sayyid Ali al-Sistani.
-You will be given a user question and numbered PASSAGES retrieved from the official website sistani.org.
+  return `You are Zahra, a warm and clear assistant on the AHD-E-ZUHOOR academy website. You help people find and understand the PUBLISHED rulings of Ayatollah al-Sayyid Ali al-Sistani.
+You are given the user's question (with any earlier conversation) and numbered PASSAGES retrieved from sistani.org. Each passage's text is split into numbered sentences like [P1.3].
 
 ABSOLUTE RULES
-1. Use ONLY the PASSAGES. Never use your own knowledge of fiqh, never infer a ruling the passages do not state, and never issue a fatwa.
-2. "rulings": copy the relevant sentence(s) EXACTLY, character for character, from a passage's text. Do not paraphrase, shorten inside a sentence, translate, or fix spelling. Each item names one passage id (e.g. "P2").
-3. Only use a passage if it directly addresses the user's question. A passage on a similar but different case is NOT enough.
-4. Preserve every condition, exception, qualification ("based on precaution", "if", "unless", "as long as") that the quoted passage contains.
-5. Never combine rulings from different passages into a new ruling. Each explanation and condition item must explain exactly ONE passage, named in "passage".
-6. If the answer depends on personal facts the user did not give (e.g. traveller or resident, gender, which school year, amounts, whether something touched an impurity), set status "clarify" and ask short clarifying_questions instead of assuming.
-7. If no passage directly answers the question, set status "abstain" and explain why in "reason".
-8. Never write URLs, ruling numbers or question numbers yourself; the system adds them.
-9. "explanation" is a simple-language explanation of the quoted ruling(s) for the user, written in ${LANG_NAME[lang] || "English"}. Do not add anything the passage does not say.
-10. "conditions" lists the conditions and exceptions stated in the passages (empty if none).
-11. "related" lists other passage ids that are relevant but not the main answer (may be empty).
-12. question_restated: restate the user's question briefly in ${LANG_NAME[lang] || "English"}.`;
+1. Use ONLY the PASSAGES. Never use your own knowledge of fiqh, never guess, never add a ruling the passages do not state, never issue a fatwa.
+2. A passage counts only if it DIRECTLY addresses the user's question. A passage about a similar but different case, or one that only mentions the topic as an example, does not count.
+3. "rulings": for each passage you rely on, list the sentence numbers that state the ruling (e.g. ["P2.1","P2.2"]). All sentence numbers in one item must come from the same passage. Include the sentences that carry conditions and exceptions.
+4. "reply": a friendly, natural answer to the user written in ${LANG_NAME[lang] || "English"}, like a helpful teacher. Explain in simple words what the quoted ruling says. Put the passage label in square brackets after each statement it supports, e.g. "Sleep invalidates wudu [P1].". Only cite passages that you listed in "rulings". Keep it short (2-6 sentences). Never write URLs or ruling numbers yourself.
+5. Keep every condition, exception and qualification ("if", "unless", "as long as", "based on obligatory precaution"). Never present a conditional ruling as absolute.
+6. Never merge rulings from different passages into a new ruling. You may mention two passages one after the other, each with its own citation.
+7. "conditions": the conditions and exceptions stated in the cited passages, in ${LANG_NAME[lang] || "English"}, each naming its passage (e.g. "P1"). Empty if none.
+8. If the ruling depends on personal facts the user has not given, set status "clarify", write a short friendly "reply" explaining why, and ask 1-3 short "clarifying_questions" in the user's language. Do not guess.
+9. If no passage directly answers the question, set status "abstain", leave rulings empty, and put the reason in "reason". The "reply" may then be "".
+10. "related": labels of other passages that are useful to read but are not the main answer.`;
+}
+
+function splitSentences(text) {
+  const out = [];
+  for (const block of String(text).split(/\n+/)) {
+    const b = block.trim();
+    if (!b) continue;
+    for (const s of b.split(/(?<=[.!?؟۔])\s+(?=\S)/)) if (s.trim()) out.push(s.trim());
+  }
+  return out;
 }
 
 export function buildPassages(candidates) {
-  return candidates.map((c, i) => ({ ...c, label: "P" + (i + 1) }));
+  return candidates.map((c, i) => {
+    const label = "P" + (i + 1);
+    const sentences = splitSentences(c.text).map((t, k) => ({ id: label + "." + (k + 1), text: t }));
+    return { ...c, label, sentences };
+  });
 }
 
-function passagesForPrompt(ps) {
+function passagesForPrompt(ps, maxChars = 2400) {
   return ps.map((p) => {
-    const head = p.kind === "qa" ? `${p.label} [Official Q&A${p.topic ? " · " + p.topic : ""}]\nQuestion: ${p.question}\nAnswer (text): ${p.text}` : `${p.label} [Islamic Laws · ${p.section}]\nText: ${p.text}`;
-    return head;
+    const src = p.kind === "qa" ? `Official Q&A${p.topic ? " · " + p.topic : ""}` : p.kind === "bookqa" ? `${p.book} · ${p.section}` : `Islamic Laws · ${p.section}`;
+    let used = 0;
+    const lines = [];
+    for (const s of p.sentences) {
+      if (used > maxChars) { lines.push("[…]"); break; }
+      lines.push(`[${s.id}] ${s.text}`);
+      used += s.text.length;
+    }
+    return `${p.label} [${src}]` + (p.question ? `\nOfficial question: ${p.question}` : "") + `\nText:\n${lines.join("\n")}`;
   }).join("\n\n---\n\n");
 }
 
-export async function generate(env, question, context, passages, lang) {
-  const user = `USER QUESTION:\n${question}${context ? "\n\nADDITIONAL DETAILS FROM THE USER:\n" + context : ""}\n\nPASSAGES:\n${passagesForPrompt(passages)}`;
-  return chatJSON(env, { system: systemPrompt(lang), user, schema: ANSWER_SCHEMA, name: "grounded_answer", maxTokens: 1800 });
+function historyText(history) {
+  return (history || []).slice(-6).map((h) => (h.role === "user" ? "User: " : "Zahra: ") + String(h.text || "").slice(0, 400)).join("\n");
+}
+
+export async function generate(env, question, context, passages, lang, history = []) {
+  const user = (history.length ? `EARLIER CONVERSATION:\n${historyText(history)}\n\n` : "") +
+    `USER QUESTION:\n${question}${context ? "\n\nADDITIONAL DETAILS FROM THE USER:\n" + context : ""}\n\nPASSAGES:\n${passagesForPrompt(passages)}`;
+  return chat(env, { system: systemPrompt(lang), user, schema: ANSWER_SCHEMA, name: "grounded_answer", maxTokens: 1400 });
 }
 
 const URL_RE = /(https?:\/\/|www\.|sistani\.org|\.com\b|\.org\b)/i;
@@ -74,37 +96,52 @@ const URL_RE = /(https?:\/\/|www\.|sistani\.org|\.com\b|\.org\b)/i;
 /** Code-level verification of the model output. Returns { ok, reason }. */
 export function verifyAnswer(out, passages) {
   const byLabel = new Map(passages.map((p) => [p.label, p]));
+  const sentence = new Map();
+  for (const p of passages) for (const s of p.sentences) sentence.set(s.id, p.label);
+  if (!out || typeof out !== "object") return { ok: false, reason: "no output" };
+  const arr = (x) => (Array.isArray(x) ? x : []);
   if (out.status === "abstain") return { ok: true };
   if (out.status === "clarify") {
-    if (!out.clarifying_questions.length) return { ok: false, reason: "clarify without questions" };
-    if (out.clarifying_questions.some((q) => URL_RE.test(q))) return { ok: false, reason: "url in clarifying question" };
+    if (!arr(out.clarifying_questions).length) return { ok: false, reason: "clarify without questions" };
+    if ([out.reply, ...arr(out.clarifying_questions)].some((t) => URL_RE.test(String(t || "")))) return { ok: false, reason: "url in clarification" };
     return { ok: true };
   }
-  if (!out.rulings.length) return { ok: false, reason: "answer without an official quote" };
-  for (const r of out.rulings) {
-    const p = byLabel.get(r.passage);
-    if (!p) return { ok: false, reason: `unknown passage ${r.passage}` };
-    const q = normStrict(r.quote);
-    if (q.length < 15) return { ok: false, reason: "quote too short" };
-    // Q&A rulings must come from the official answer, not from the question.
-    if (!normStrict(p.text).includes(q)) return { ok: false, reason: `quote not verbatim in ${r.passage}` };
+  if (out.status !== "answer") return { ok: false, reason: "unknown status" };
+  const rulings = arr(out.rulings);
+  if (!rulings.length) return { ok: false, reason: "answer without an official ruling" };
+  const cited = new Set();
+  for (const r of rulings) {
+    const ids = arr(r.sentences);
+    if (!ids.length) return { ok: false, reason: "ruling without sentences" };
+    const owners = new Set(ids.map((id) => sentence.get(id)));
+    if (owners.has(undefined)) return { ok: false, reason: "unknown sentence id" };
+    if (owners.size !== 1) return { ok: false, reason: "one ruling mixes passages" };
+    cited.add([...owners][0]);
   }
-  const cited = new Set(out.rulings.map((r) => r.passage));
-  for (const list of [out.explanation, out.conditions]) {
-    for (const it of list) {
-      if (!byLabel.has(it.passage)) return { ok: false, reason: `explanation cites unknown ${it.passage}` };
-      if (!cited.has(it.passage)) return { ok: false, reason: `explanation cites ${it.passage} which has no quoted ruling` };
-      if (URL_RE.test(it.text)) return { ok: false, reason: "url written by the model" };
-    }
+  const reply = String(out.reply || "").trim();
+  if (!reply) return { ok: false, reason: "empty reply" };
+  if (URL_RE.test(reply)) return { ok: false, reason: "url written by the model" };
+  const marks = [...reply.matchAll(/\[(P\d+)(?:\.\d+)?\]/g)].map((m) => m[1]);
+  if (!marks.length) return { ok: false, reason: "reply cites no passage" };
+  for (const m of marks) if (!cited.has(m)) return { ok: false, reason: `reply cites ${m} which has no quoted ruling` };
+  for (const c of arr(out.conditions)) {
+    if (!cited.has(c.passage)) return { ok: false, reason: `condition cites ${c.passage} which has no quoted ruling` };
+    if (URL_RE.test(String(c.text || ""))) return { ok: false, reason: "url in condition" };
   }
-  if (!out.explanation.length) return { ok: false, reason: "no explanation" };
-  for (const id of out.related) if (!byLabel.has(id)) return { ok: false, reason: `related cites unknown ${id}` };
+  for (const id of arr(out.related)) if (!byLabel.has(id)) return { ok: false, reason: `related cites unknown ${id}` };
   return { ok: true };
+}
+
+/** The official quote, assembled from the original text by sentence numbers (always verbatim). */
+export function quoteFor(passage, ids) {
+  const want = new Set(ids);
+  return passage.sentences.filter((s) => want.has(s.id)).map((s) => s.text).join(" ");
 }
 
 /** Build the public source description from our own record (never from the model). */
 export function sourceOf(p) {
+  if (p.kind === "bookqa") return { type: p.book || "Book", number: p.number, label: `${p.section} · Q&A ${p.number}`, title: p.question, url: p.url, lang: p.lang };
   return p.kind === "qa"
     ? { type: "Official Q&A", number: p.number, label: `Question ${p.number}${p.topic ? " · " + p.topic : ""}`, title: p.question, url: p.url, lang: p.lang }
-    : { type: "Islamic Laws", number: p.number, label: `Ruling ${p.number} · ${p.section}`, title: p.section, url: p.url, lang: p.lang };
+    : { type: p.book || "Islamic Laws", number: p.number, label: `Ruling ${p.number} · ${p.section}`, title: p.section, url: p.url, lang: p.lang };
 }

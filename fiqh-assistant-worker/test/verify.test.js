@@ -1,50 +1,59 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { verifyAnswer, buildPassages } from "../src/answer.js";
+import { verifyAnswer, buildPassages, quoteFor } from "../src/answer.js";
 
 const passages = buildPassages([
-  { pid: "qa-en-1", kind: "qa", number: "1", question: "Is shrimp halal?", text: "It is not permissible to eat from marine animals anything except fish that has scale; shrimp is considered from that category.", url: "https://www.sistani.org/english/qa/1/" },
-  { pid: "book-48-1-r93", kind: "ruling", number: "93", section: "5. Blood", text: "Ruling 93. The blood of a human being and every animal whose blood gushes out is impure.", url: "https://www.sistani.org/english/book/48/1/" }
+  { pid: "qa-en-1", kind: "qa", number: "1", question: "Is shrimp halal?", text: "It is not permissible to eat from marine animals anything except fish that has scale; shrimp is considered from that category. But lobster is forbidden.", url: "https://www.sistani.org/english/qa/1/" },
+  { pid: "book-48-1-r93", kind: "ruling", number: "93", section: "5. Blood", text: "Ruling 93. The blood of a human being and every animal whose blood gushes out is impure. Therefore, the blood of fish is pure.", url: "https://www.sistani.org/english/book/48/1/" }
 ]);
-const good = {
-  status: "answer", question_restated: "Is shrimp halal?", clarifying_questions: [],
-  rulings: [{ passage: "P1", quote: "shrimp is considered from that category." }],
-  explanation: [{ text: "Shrimp counts as a permitted sea creature.", passage: "P1" }],
-  conditions: [], related: ["P2"], reason: ""
-};
+const good = () => ({
+  status: "answer",
+  reply: "Yes, shrimp is counted among the permitted sea creatures [P1].",
+  rulings: [{ sentences: ["P1.1"] }],
+  conditions: [{ text: "Other sea creatures such as lobster are not permitted.", passage: "P1" }],
+  clarifying_questions: [], related: ["P2"], reason: ""
+});
 
-test("accepts a verbatim, correctly cited answer", () => {
-  assert.deepEqual(verifyAnswer(good, passages), { ok: true });
+test("passages are split into numbered sentences", () => {
+  assert.deepEqual(passages[0].sentences.map((s) => s.id), ["P1.1", "P1.2"]);
+  assert.deepEqual(passages[1].sentences.map((s) => s.id), ["P2.1", "P2.2", "P2.3"]);
 });
-test("ignores whitespace and quote-mark differences only", () => {
-  const o = structuredClone(good); o.rulings[0].quote = "shrimp  is considered from that category.";
-  assert.equal(verifyAnswer(o, passages).ok, true);
+test("the official quote is assembled verbatim from the original text", () => {
+  assert.equal(quoteFor(passages[0], ["P1.1"]), "It is not permissible to eat from marine animals anything except fish that has scale; shrimp is considered from that category.");
 });
-test("rejects a paraphrased quote", () => {
-  const o = structuredClone(good); o.rulings[0].quote = "shrimp is considered halal by the Ayatollah.";
+test("accepts a correctly grounded answer", () => {
+  assert.deepEqual(verifyAnswer(good(), passages), { ok: true });
+});
+test("rejects unknown sentence numbers", () => {
+  const o = good(); o.rulings[0].sentences = ["P1.9"];
   assert.equal(verifyAnswer(o, passages).ok, false);
 });
-test("rejects a quote taken from the user's question instead of the answer", () => {
-  const o = structuredClone(good); o.rulings[0].quote = "Is shrimp halal?";
+test("rejects one quote that mixes two passages (combining rulings)", () => {
+  const o = good(); o.rulings[0].sentences = ["P1.1", "P2.2"];
   assert.equal(verifyAnswer(o, passages).ok, false);
 });
-test("rejects an unknown passage id", () => {
-  const o = structuredClone(good); o.rulings[0].passage = "P9";
+test("rejects a reply that cites a passage with no quoted ruling", () => {
+  const o = good(); o.reply = "Shrimp is fine [P1] and blood is impure [P2].";
   assert.equal(verifyAnswer(o, passages).ok, false);
 });
-test("rejects an answer with no official quote", () => {
-  const o = structuredClone(good); o.rulings = [];
+test("rejects a reply with no citation at all", () => {
+  const o = good(); o.reply = "Yes, shrimp is fine.";
   assert.equal(verifyAnswer(o, passages).ok, false);
 });
-test("rejects explanation citing a passage that was not quoted (combining rulings)", () => {
-  const o = structuredClone(good); o.explanation.push({ text: "And blood is impure too.", passage: "P2" });
+test("rejects an answer with no official ruling", () => {
+  const o = good(); o.rulings = [];
   assert.equal(verifyAnswer(o, passages).ok, false);
 });
 test("rejects URLs written by the model", () => {
-  const o = structuredClone(good); o.explanation[0].text = "See www.sistani.org/english/qa/999 for more.";
+  const o = good(); o.reply = "See www.sistani.org/english/qa/999 [P1].";
   assert.equal(verifyAnswer(o, passages).ok, false);
 });
-test("clarify must contain questions", () => {
-  assert.equal(verifyAnswer({ ...good, status: "clarify", clarifying_questions: [] }, passages).ok, false);
-  assert.equal(verifyAnswer({ ...good, status: "clarify", clarifying_questions: ["Are you travelling?"] }, passages).ok, true);
+test("rejects conditions tied to an unquoted passage", () => {
+  const o = good(); o.conditions = [{ text: "Fish blood is pure.", passage: "P2" }];
+  assert.equal(verifyAnswer(o, passages).ok, false);
+});
+test("clarify must contain questions; abstain is always allowed", () => {
+  assert.equal(verifyAnswer({ ...good(), status: "clarify", clarifying_questions: [] }, passages).ok, false);
+  assert.equal(verifyAnswer({ ...good(), status: "clarify", clarifying_questions: ["Are you travelling?"] }, passages).ok, true);
+  assert.equal(verifyAnswer({ status: "abstain" }, passages).ok, true);
 });

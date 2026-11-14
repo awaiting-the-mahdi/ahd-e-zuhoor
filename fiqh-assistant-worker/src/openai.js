@@ -12,7 +12,7 @@ export async function chatJSON(env, { system, user, schema, name, maxTokens = 18
     max_completion_tokens: maxTokens
   };
   if (env.OPENAI_TEMPERATURE !== undefined && env.OPENAI_TEMPERATURE !== "") body.temperature = Number(env.OPENAI_TEMPERATURE);
-  const r = await fetch("https://api.openai.com/v1/chat/completions", {
+  const r = await fetch((env.OPENAI_BASE || "https://api.openai.com/v1") + "/chat/completions", {
     method: "POST",
     headers: { Authorization: `Bearer ${env.OPENAI_API_KEY}`, "Content-Type": "application/json" },
     body: JSON.stringify(body),

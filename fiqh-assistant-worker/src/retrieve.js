@@ -5,48 +5,63 @@
 import { detectLanguage } from "./normalize.js";
 import { concepts, relevance, searchTermsFromConcepts, intents } from "./match.js";
 import { siteSearch, parseQA, parseBookResults, parseRulings, getPage, bookToc, TOC_BOOKS } from "./sistani.js";
-import { chatJSON } from "./openai.js";
+import { chat, aiAvailable } from "./ai.js";
 import { normLoose } from "./text.js";
 
 const PLAN_SCHEMA = {
   type: "object",
   additionalProperties: false,
-  required: ["language", "english_question", "keywords_en", "keywords_ar", "keywords_ur"],
+  required: ["kind", "language", "standalone_question", "english_question", "keywords_en", "keywords_ar", "keywords_ur", "smalltalk_reply"],
   properties: {
+    kind: { type: "string", enum: ["fiqh", "smalltalk", "off_topic"] },
     language: { type: "string", enum: ["en", "ar", "ur", "roman-ur", "other"] },
+    standalone_question: { type: "string" },
     english_question: { type: "string" },
     keywords_en: { type: "array", items: { type: "string" } },
     keywords_ar: { type: "array", items: { type: "string" } },
-    keywords_ur: { type: "array", items: { type: "string" } }
+    keywords_ur: { type: "array", items: { type: "string" } },
+    smalltalk_reply: { type: "string" }
   }
 };
 
-const PLAN_SYSTEM = `You prepare search terms for the official website of Ayatollah al-Sistani (sistani.org).
-You must NOT answer the question or state any ruling. Only produce search terms.
+const PLAN_SYSTEM = `You are the first step of "Zahra", a friendly assistant that finds the published rulings of Ayatollah al-Sistani on sistani.org.
+You must NOT answer fiqh questions or state any ruling yourself. You only classify the message and prepare search terms.
 The website search is literal: it finds pages containing the exact word or short phrase.
+
 Return:
-- language: the language the user wrote in (roman-ur = Urdu written in Latin letters).
-- english_question: a faithful English translation of the question, adding nothing.
-- keywords_en: up to 4 short English search terms (1-2 words each) as they would appear on sistani.org, most specific first (e.g. "wudu", "ablution", "shrimp", "traveller").
-- keywords_ar: up to 2 Arabic search terms.
-- keywords_ur: up to 2 Urdu search terms.`;
+- kind: "fiqh" for any question about Islamic rulings or practice (even if vague); "smalltalk" for greetings, thanks, "who are you", etc.; "off_topic" for anything unrelated to Islamic rulings.
+- language: the language of the user's latest message (roman-ur = Urdu written in Latin letters).
+- standalone_question: the user's latest message rewritten as a complete question, using the earlier conversation to resolve words like "it", "that" or "and for ghusl?". Keep the user's language. Add nothing else.
+- english_question: a faithful English translation of standalone_question.
+- keywords_en: up to 4 short English search terms (1-2 words each) as they would appear on sistani.org, most specific first (e.g. "wudu", "ablution", "shrimp", "smoking", "traveller").
+- keywords_ar: up to 2 Arabic search terms. keywords_ur: up to 2 Urdu search terms.
+- smalltalk_reply: only for smalltalk or off_topic: one or two warm sentences in the user's language. For off_topic, gently say you can only help find Ayatollah Sistani's published rulings. Otherwise "".`;
 
 export function aiEnabled(env) {
-  return env.MODE === "ai" && !!env.OPENAI_API_KEY;
+  return env.MODE === "ai" && aiAvailable(env);
 }
 
-export async function planQuery(env, question) {
+function historyText(history) {
+  return (history || []).slice(-6).map((h) => (h.role === "user" ? "User: " : "Zahra: ") + String(h.text || "").slice(0, 400)).join("\n");
+}
+
+export async function planQuery(env, question, history = []) {
   const lang = detectLanguage(question);
-  const cs = concepts(question);
-  let plan = { language: lang, english_question: question, keywords_en: [], keywords_ar: [], keywords_ur: [], concepts: cs, intents: intents(question) };
+  let plan = { kind: "fiqh", language: lang, standalone_question: question, english_question: question, keywords_en: [], keywords_ar: [], keywords_ur: [], smalltalk_reply: "" };
   if (aiEnabled(env)) try {
-    const { data } = await chatJSON(env, { system: PLAN_SYSTEM, user: question, schema: PLAN_SCHEMA, name: "search_plan", maxTokens: 400 });
-    plan = { ...plan, ...data, language: lang === "en" && data.language !== "en" ? data.language : lang };
+    const user = (history.length ? "EARLIER CONVERSATION:\n" + historyText(history) + "\n\n" : "") + "LATEST MESSAGE:\n" + question;
+    const { data } = await chat(env, { system: PLAN_SYSTEM, user, schema: PLAN_SCHEMA, name: "search_plan", maxTokens: 450 });
+    plan = { ...plan, ...data, language: lang !== "en" ? lang : (data.language || lang) };
+    plan.aiPlanned = true;
   } catch (e) {
     plan.planError = String(e.message || e);
   }
-  const uniq = (a) => [...new Set(a.map((s) => String(s).trim()).filter((s) => s.length >= 3))];
-  const base = searchTermsFromConcepts(cs, lang);
+  const basis = [question, plan.standalone_question, plan.english_question].filter(Boolean).join("\n");
+  const cs = concepts(basis);
+  plan.concepts = cs;
+  plan.intents = intents(basis);
+  const uniq = (a) => [...new Set((a || []).map((s) => String(s).trim()).filter((s) => s.length >= 3))];
+  const base = searchTermsFromConcepts(cs, plan.language);
   plan.terms = {
     en: uniq([...base.en, ...plan.keywords_en]).slice(0, 5),
     ar: uniq([...base.ar, ...plan.keywords_ar]).slice(0, 2),
@@ -102,7 +117,7 @@ export async function retrieve(env, question, plan) {
   secPages.forEach((r, i) => {
     if (r.status !== "fulfilled") { log.push({ part: "section", url: sections[i].url, error: String(r.reason?.message || r.reason) }); return; }
     for (const rl of parseRulings(r.value, sections[i])) {
-      const lt = normLoose(rl.text);
+      const lt = normLoose((rl.question || "") + " " + rl.text);
       if (plan.terms.en.some((t) => lt.includes(normLoose(t)))) byPid.set(rl.pid, rl);
     }
   });

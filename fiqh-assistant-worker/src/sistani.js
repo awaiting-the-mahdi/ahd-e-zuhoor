@@ -113,12 +113,19 @@ export async function bookToc(bookId) {
   return out;
 }
 
-/** Split a book section page into numbered rulings ("Ruling 12. ..."). */
+/**
+ * Split a book section page into passages. Books use different layouts:
+ *  - "Ruling 12. ..."            (Islamic Laws)            → kind "ruling", number 12
+ *  - "Question: ... Answer: ..." (A Code of Practice, etc.) → kind "bookqa", number = position in section
+ *  - "12. ..." numbered paragraphs                          → kind "ruling", number 12
+ */
 export function parseRulings(html, meta) {
   const title = stripTags((html.match(/<h1 class="c">([\s\S]*?)<\/h1>/) || [, ""])[1]);
   const body = (html.match(/<div class="baz book-text">([\s\S]*?)<\/div>/) || [, ""])[1];
   const text = stripTags(body);
-  const marks = [...text.matchAll(/(^|\n)Ruling (\d+)\./g)];
+  let marks = [...text.matchAll(/(^|\n)Ruling (\d+)\./g)];
+  if (!marks.length && /(^|\n)Question\s*:/.test(text)) return parseBookQA(text, meta, title);
+  if (!marks.length) marks = [...text.matchAll(/(^|\n)(\d{1,4})\.\s/g)];
   return marks.map((m, i) => {
     const start = m.index + m[1].length;
     const end = i + 1 < marks.length ? marks[i + 1].index : text.length;
@@ -134,6 +141,27 @@ export function parseRulings(html, meta) {
       url: meta.url
     };
   });
+}
+
+function parseBookQA(text, meta, title) {
+  const parts = text.split(/(?:^|\n)Question\s*:\s*/).slice(1);
+  return parts.map((part, i) => {
+    const k = part.search(/(^|\n)Answer\s*:\s*/);
+    if (k < 0) return null;
+    const q = part.slice(0, k).trim();
+    const a = part.slice(k).replace(/^\n?Answer\s*:\s*/, "").trim();
+    return {
+      pid: `bookqa-${meta.bookId}-${meta.sectionId}-${i + 1}`,
+      kind: "bookqa",
+      lang: "en",
+      number: String(i + 1),
+      book: meta.book,
+      section: title || meta.section,
+      question: q,
+      text: a,
+      url: meta.url
+    };
+  }).filter(Boolean);
 }
 
 /**

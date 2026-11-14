@@ -41,6 +41,10 @@ export default {
     try { body = await request.json(); } catch { return json({ error: "Invalid JSON" }, 400, cors); }
     const question = String(body.question || "").trim();
     const context = String(body.context || "").trim();
+    // Short conversation history so follow-up questions ("and for ghusl?") can be understood.
+    const history = (Array.isArray(body.history) ? body.history : []).slice(-6)
+      .map((h) => ({ role: h && h.role === "assistant" ? "assistant" : "user", text: String((h && h.text) || "").slice(0, 600) }))
+      .filter((h) => h.text);
     if (question.length < 3 || question.length > 600 || context.length > 800) {
       return json({ status: "error", message: "Please enter a question between 3 and 600 characters." }, 400, cors);
     }
@@ -53,7 +57,7 @@ export default {
     const id = crypto.randomUUID();
     const t0 = Date.now();
     try {
-      const { result, trace } = await answerQuestion(env, question, context);
+      const { result, trace } = await answerQuestion(env, question, context, history);
       ctx.waitUntil(writeLog(env, { id, question, context, result, trace, ms: Date.now() - t0 }));
       // Diagnostics: the retrieval log (public information only: search terms, pages, scores).
       const debug = request.headers.get("X-Debug") === "1" ? { trace } : {};

@@ -7,8 +7,13 @@ main = "src/index.js"
 compatibility_date = "2025-01-01"
 
 [vars]
-# "retrieval" = Option 1: official answers only, no AI, $0. "ai" = add OpenAI explanations (needs OPENAI_API_KEY).
-MODE = "retrieval"
+# "ai" = Zahra answers with AI grounded in sistani.org (Cloudflare Workers AI, free daily allowance).
+# "retrieval" = official answers only, no AI.
+MODE = "ai"
+# Cloudflare Workers AI model. Other providers: set AI_PROVIDER = "gemini" or "openai" and add its key as a secret.
+AI_MODEL = "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
+# How many retrieved passages the AI reads per question.
+AI_PASSAGES = "6"
 # How closely an official answer must match the question to be shown (0 to 1).
 MIN_RELEVANCE = "0.6"
 # The website addresses allowed to call this API (comma separated).
@@ -27,3 +32,7 @@ binding = "DB"
 database_name = "ahd-fiqh-assistant"
 # Replace with the id printed by: npx wrangler d1 create ahd-fiqh-assistant
 database_id = "e5393af9-752a-4f43-bc12-5c49587bdcf1"
+
+# Cloudflare Workers AI (no key needed; uses the free daily allowance).
+[ai]
+binding = "AI"

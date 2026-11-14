@@ -54,6 +54,12 @@ var AZ_FIQH_API_DEFAULT = "https://ahd-fiqh-assistant.fatimahussain2630.workers.
   .azb-tag{display:inline-block;font-size:.66rem;font-weight:900;letter-spacing:.08em;padding:2px 8px;border-radius:99px;margin-left:6px;vertical-align:1px}
   .azb-tag.close{background:#3fd0b5;color:#06231d}.azb-tag.partial{background:#ffb547;color:#3a2600}
   .azb-note{margin-top:8px;font-size:.8rem;color:#cfd3ef}
+  .azb-reply{font-size:.97rem;line-height:1.6;color:#fff;white-space:pre-line}
+  .azb-ref{display:inline-grid;place-items:center;min-width:18px;height:18px;padding:0 4px;margin:0 2px;border-radius:6px;background:#ffc94d;color:#2a1c00;font-size:.68rem;font-weight:900;vertical-align:2px;line-height:1}
+  .azb-cond{margin-top:10px;padding:9px 11px;border-radius:12px;background:rgba(127,216,255,.08);border:1.5px solid rgba(127,216,255,.35);font-size:.86rem}
+  .azb-cond b{display:block;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:#7fd8ff;margin-bottom:4px}
+  .azb-cond ul{margin:0;padding-left:18px}
+  .azb-srchead{margin-top:12px;font-size:.68rem;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:#ffc94d}
   .azb-rel{margin-top:8px;font-size:.82rem}
   .azb-rel summary{cursor:pointer;color:#ffe7a8;font-weight:900}
   .azb-rel ul{margin:6px 0 0;padding-left:18px}
@@ -107,7 +113,7 @@ var AZ_FIQH_API_DEFAULT = "https://ahd-fiqh-assistant.fatimahussain2630.workers.
     send.innerHTML = '<svg width="22" height="22" viewBox="0 0 24 24" fill="#3a2600"><path d="M3 20l18-8L3 4v6l12 2-12 2z"/></svg>';
     foot.appendChild(ta); foot.appendChild(send);
     var disc = el("div", "azb-disc");
-    disc.appendChild(document.createTextNode("Zahra shows official text only, not personal opinions or fatwas. For your own situation, consult the "));
+    disc.appendChild(document.createTextNode("Zahra explains Ayatollah al-Sistani's published rulings using only sistani.org. Her explanations are not fatwas. For your own situation, consult the "));
     disc.appendChild(link(SEND_Q, "Office of Ayatollah Sistani")); disc.appendChild(document.createTextNode("."));
     panel.appendChild(head); panel.appendChild(body); panel.appendChild(foot); panel.appendChild(disc);
     (inline ? opts.inline : document.body).appendChild(panel);
@@ -131,7 +137,7 @@ var AZ_FIQH_API_DEFAULT = "https://ahd-fiqh-assistant.fatimahussain2630.workers.
     function botMsg(text) { var m = el("div", "azb-msg azb-bot"); if (text) { m.textContent = text; if (rtl(text)) m.dir = "rtl"; } body.appendChild(m); scroll(); talk(); return m; }
 
     function greet() {
-      botMsg("Assalamu alaykum! I'm Zahra. Ask me a fiqh question in English, Urdu, Roman Urdu or Arabic, and I'll find Ayatollah al-Sistani's published answer on sistani.org for you.");
+      botMsg("Assalamu alaykum! I'm Zahra. Ask me any fiqh question in English, Urdu, Roman Urdu or Arabic. I'll find Ayatollah al-Sistani's published answer on sistani.org and explain it simply, and you can ask follow-up questions too.");
       var c = el("div", "azb-chips");
       ["Does sleep break wudu?", "Is shrimp halal?", "kya roze mein ulti se roza toot jata hai?", "کیا موسیقی سننا جائز ہے؟", "هل يجوز أكل الروبيان؟"].forEach(function (q) {
         var b = el("button", null, q); b.type = "button"; b.dir = "auto"; b.onclick = function () { ask(q); }; c.appendChild(b);
@@ -146,7 +152,7 @@ var AZ_FIQH_API_DEFAULT = "https://ahd-fiqh-assistant.fatimahussain2630.workers.
         var lq = el("span", "lab", "Official question"); cd.appendChild(lq);
         var oq = el("div", "oq", m.original_question); if (rtl(m.original_question)) oq.dir = "rtl"; cd.appendChild(oq);
       }
-      var la = el("span", "lab", m.original_question ? "Official answer" : "Official ruling");
+      var la = el("span", "lab", (m.ref ? "[" + m.ref + "] " : "") + (m.original_question ? "Official answer" : "Official ruling"));
       if (m.match) { var tg = el("span", "azb-tag " + m.match, m.match === "close" ? "CLOSE MATCH" : "PARTLY MATCHES"); la.appendChild(tg); }
       cd.appendChild(la);
       var text = m.quote, long = text.length > 520;
@@ -157,25 +163,57 @@ var AZ_FIQH_API_DEFAULT = "https://ahd-fiqh-assistant.fatimahussain2630.workers.
       return cd;
     }
 
+    // Zahra's reply text: [1] markers become small source badges.
+    function replyNode(text) {
+      var p = el("div", "azb-reply"); if (rtl(text)) p.dir = "rtl";
+      String(text).split(/(\[\d+\])/).forEach(function (part) {
+        var m = part.match(/^\[(\d+)\]$/);
+        if (m) { var b = el("sup", "azb-ref", m[1]); b.title = "Official source " + m[1]; p.appendChild(b); }
+        else if (part) p.appendChild(document.createTextNode(part));
+      });
+      return p;
+    }
+    var history = [];
+    function remember(role, text) { if (text) { history.push({ role: role, text: String(text).slice(0, 600) }); history = history.slice(-6); } }
+
     function render(r) {
       if (!r || r.status === "error") { botMsg((r && r.message) || "Sorry, I couldn't reach sistani.org just now. Please try again in a moment."); return; }
+      if (r.status === "chat") { botMsg(r.reply); remember("assistant", r.reply); return; }
       if (r.status === "abstain") {
         var a = botMsg(ABSTAIN);
         var p = el("div", "azb-note"); p.appendChild(document.createTextNode("You can send your question to the Office: ")); p.appendChild(link(SEND_Q, "sistani.org · Send Question")); a.appendChild(p);
+        remember("assistant", ABSTAIN);
         return;
       }
       if (r.status === "clarify") {
-        var c = botMsg("The ruling depends on your situation. Could you tell me:");
-        var ul = el("ul"); (r.clarifying_questions || []).forEach(function (q) { ul.appendChild(el("li", null, q)); }); c.appendChild(ul);
+        var c = botMsg("");
+        c.appendChild(replyNode(r.reply || "The ruling depends on your situation. Could you tell me:"));
+        var ul = el("ul"); (r.clarifying_questions || []).forEach(function (q) { var li = el("li", null, q); if (rtl(q)) li.dir = "rtl"; ul.appendChild(li); }); c.appendChild(ul);
+        c.appendChild(el("div", "azb-note", "Just type your answer below."));
+        remember("assistant", (r.reply || "") + " " + (r.clarifying_questions || []).join(" "));
         return;
       }
-      var list = r.matches || (r.official || []).map(function (o) { return { quote: o.quote, original_question: o.original_question, source: o.source, verified_at: o.verified_at }; });
-      var msg = botMsg(list.length > 1 ? "Here are the closest published answers I found:" : "Here is the closest published answer I found:");
-      list.forEach(function (m, i) { msg.appendChild(card(m, i)); });
-      if (r.explanation && r.explanation.length) {
-        var ex = el("div", "azb-note"); ex.appendChild(el("b", null, "Simple explanation (AI, not a fatwa): ")); ex.appendChild(document.createTextNode(r.explanation.map(function (e) { return e.text; }).join(" "))); msg.appendChild(ex);
+      var msg, list;
+      if (r.status === "answer") {
+        msg = botMsg("");
+        msg.appendChild(replyNode(r.reply));
+        if (r.conditions && r.conditions.length) {
+          var cw = el("div", "azb-cond"); cw.appendChild(el("b", null, "Conditions and exceptions"));
+          var cl = el("ul"); r.conditions.forEach(function (c) { var li = el("li", null, c.text); if (rtl(c.text)) li.dir = "rtl"; if (c.ref) li.appendChild(el("sup", "azb-ref", String(c.ref))); cl.appendChild(li); });
+          cw.appendChild(cl); msg.appendChild(cw);
+        }
+        msg.appendChild(el("div", "azb-srchead", "Official source" + (r.official.length > 1 ? "s" : "") + " from sistani.org"));
+        list = r.official;
+        remember("assistant", String(r.reply || "").replace(/\[\d+\]/g, "") + " (Sources: " + r.official.map(function (o) { return o.source.label; }).join("; ") + ")");
+      } else {
+        msg = botMsg(r.ai_note ? r.ai_note : (r.matches.length > 1 ? "Here are the closest published answers I found:" : "Here is the closest published answer I found:"));
+        list = r.matches;
+        remember("assistant", "Showed official answers: " + r.matches.map(function (m) { return m.source.label; }).join("; "));
       }
-      msg.appendChild(el("div", "azb-note", "Please read the official question and answer to check they match your situation before acting on them."));
+      list.forEach(function (m, i) { msg.appendChild(card(m, i)); });
+      msg.appendChild(el("div", "azb-note", r.status === "answer"
+        ? "Zahra's explanation is a simple summary of the official text above, not a fatwa. Please read the official wording to be sure it matches your situation."
+        : "Please read the official question and answer to check they match your situation before acting on them."));
       if (r.related && r.related.length) {
         var d = el("details", "azb-rel"); d.appendChild(el("summary", null, "Related rulings (" + r.related.length + ")"));
         var u = el("ul"); r.related.forEach(function (x) { var li = el("li"); var s = el("span", null, x.title + " "); if (rtl(x.title)) s.dir = "rtl"; li.appendChild(s); li.appendChild(link(x.source.url, "↗")); u.appendChild(li); });
@@ -187,18 +225,18 @@ var AZ_FIQH_API_DEFAULT = "https://ahd-fiqh-assistant.fatimahussain2630.workers.
     var busy = false;
     function ask(q) {
       q = String(q || "").trim();
-      if (q.length < 3 || busy) return;
+      if (q.length < 2 || busy) return;
       var um = el("div", "azb-msg azb-user", q); if (rtl(q)) um.dir = "rtl"; body.appendChild(um); scroll();
       ta.value = ""; grow();
       if (!API) { botMsg("I'm still being connected to sistani.org. Please check back soon!"); return; }
       busy = true; send.disabled = true;
       var ty = el("div", "azb-typing"); ty.innerHTML = "<i></i><i></i><i></i><span>Searching sistani.org…</span>"; body.appendChild(ty); scroll();
-      var steps = ["Searching sistani.org…", "Reading the official answers…", "Verifying the text…"], si = 0;
+      var steps = ["Searching sistani.org…", "Reading the official answers…", "Zahra is writing her answer…", "Verifying the text…"], si = 0;
       var iv = setInterval(function () { si = Math.min(si + 1, steps.length - 1); ty.querySelector("span").textContent = steps[si]; }, 1800);
-      fetch(API + "/api/ask", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ question: q }) })
+      fetch(API + "/api/ask", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ question: q, history: history.slice() }) })
         .then(function (res) { return res.json().catch(function () { return { status: "error" }; }); })
         .catch(function () { return { status: "error" }; })
-        .then(function (r) { clearInterval(iv); ty.remove(); busy = false; send.disabled = false; render(r); });
+        .then(function (r) { clearInterval(iv); ty.remove(); busy = false; send.disabled = false; remember("user", q); render(r); });
     }
     function grow() { ta.style.height = "auto"; ta.style.height = Math.min(120, ta.scrollHeight) + "px"; ta.dir = rtl(ta.value) ? "rtl" : "auto"; }
     ta.addEventListener("input", grow);
