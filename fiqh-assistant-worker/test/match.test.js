@@ -37,3 +37,13 @@ test("answer text naming the topic ranks above a question that only mentions it"
 test("nonsense questions have no glossary concepts", () => {
   assert.equal(concepts("Can I buy a red bicycle on Tuesday?").filter((c) => c.alts.length > 2).length, 0);
 });
+
+import { withoutExamples } from "../src/match.js";
+test("topics mentioned only as examples do not count", () => {
+  const cs = concepts("Is smoking haram?");
+  const oath = relevance({ section: "Oath", kind: "ruling", text: "Ruling 1. If a person takes an oath to do something – for example, he takes an oath to stop smoking – then he must keep it." }, cs);
+  const qa = relevance({ question: "If a person breaks his oath?", text: "If a person takes an oath (e.g. that he will not smoke), he should give kaffarah." }, cs);
+  assert.equal(oath.found, 0);
+  assert.equal(qa.found, 0);
+  assert.match(withoutExamples("Ten things are impure: dog; pig."), /dog/);
+});

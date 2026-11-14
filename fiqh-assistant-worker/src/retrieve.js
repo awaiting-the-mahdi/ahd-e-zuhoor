@@ -97,8 +97,8 @@ export async function retrieve(env, question, plan) {
   });
   const rank = (s) => titled(s) * 2 + intentTitle(s);
   sections.sort((a, b) => rank(b) - rank(a));
-  log.push({ part: "sections", chosen: sections.slice(0, 5).map((s) => s.sectionId + ":" + s.section) });
-  const secPages = await Promise.allSettled(sections.slice(0, 5).map((s) => getPage(s.url)));
+  log.push({ part: "sections", chosen: sections.slice(0, 4).map((s) => s.sectionId + ":" + s.section) });
+  const secPages = await Promise.allSettled(sections.slice(0, 4).map((s) => getPage(s.url)));
   secPages.forEach((r, i) => {
     if (r.status !== "fulfilled") { log.push({ part: "section", url: sections[i].url, error: String(r.reason?.message || r.reason) }); return; }
     for (const rl of parseRulings(r.value, sections[i])) {

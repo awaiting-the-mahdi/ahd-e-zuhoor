@@ -25,7 +25,7 @@ async function cached(key, producer) {
   return v;
 }
 
-async function fetchText(url, init = {}, tries = 2) {
+async function fetchText(url, init = {}, tries = 1) {
   let last;
   for (let i = 0; i < tries; i++) {
     try {

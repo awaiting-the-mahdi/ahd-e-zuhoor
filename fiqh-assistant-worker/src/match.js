@@ -65,6 +65,17 @@ export function intents(question) {
   return INTENTS.filter((it) => it.triggers.some((t) => { const n = normLoose(t); return /[a-z]/.test(n) ? loose.includes(" " + n + " ") : loose.includes(n); })).flatMap((it) => it.targets.map(normLoose));
 }
 
+/*
+  Remove illustrative examples ("for example, ... smoking –", "(e.g. that he will not smoke)") so a
+  topic mentioned only as an example does not count as the passage being about that topic.
+  Used only for matching; the official text is always displayed in full.
+*/
+export function withoutExamples(text) {
+  return String(text)
+    .replace(/\(\s*(e\.\s?g\.?|for example|for instance)[^)]*\)/gi, " ")
+    .replace(/(^|[,–—;:(])\s*(for example|for instance|e\.\s?g\.?)\b[^–—;.)]*/gi, " ");
+}
+
 function has(hay, alt) {
   return /[a-z]/.test(alt) ? new RegExp("(^|[^a-z])" + alt.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + "[a-z]{0,3}($|[^a-z])").test(hay) : hay.includes(alt);
 }
@@ -75,9 +86,10 @@ function has(hay, alt) {
  */
 export function relevance(c, cs, wanted = []) {
   if (!cs.length) return { found: 0, score: 0 };
-  const hay = normLoose((c.question || "") + " " + (c.section || "") + " " + c.text);
+  const body = withoutExamples(c.text);
+  const hay = normLoose((c.question || "") + " " + (c.section || "") + " " + body);
   const qhay = normLoose(c.question || c.section || "");
-  const ahay = normLoose(c.text);
+  const ahay = normLoose(body);
   let found = 0, inQ = 0, inA = 0;
   for (const k of cs) {
     if (k.alts.some((a) => has(hay, a))) found++;
@@ -94,6 +106,9 @@ export function relevance(c, cs, wanted = []) {
     else if (wanted.some((w) => hay.includes(w))) bonus += 0.06;
   }
   bonus += 0.05 * Math.min(1, 350 / Math.max(80, c.text.length)); // shorter, more direct passages first
+  // A book ruling from a chapter whose title names none of the question's topics (e.g. a "Vow"
+  // chapter that only uses the topic as an example) ranks below directly relevant answers.
+  if (c.kind === "ruling" && !inQ) bonus -= 0.2;
   return { found: f, score: f + bonus };
 }
 
