@@ -93,6 +93,23 @@ export async function generate(env, question, context, passages, lang, history =
 
 const URL_RE = /(https?:\/\/|www\.|sistani\.org|\.com\b|\.org\b)/i;
 
+/**
+ * If the model put sentences from several passages into one item, split it into one item per
+ * passage. Each sentence is still the official text of its own passage, so nothing is combined.
+ */
+export function normalizeRulings(out) {
+  if (!out || !Array.isArray(out.rulings)) return out;
+  const items = [];
+  for (const r of out.rulings) {
+    const ids = Array.isArray(r && r.sentences) ? r.sentences.map(String) : [];
+    const by = new Map();
+    for (const id of ids) { const p = id.split(".")[0]; if (!by.has(p)) by.set(p, []); by.get(p).push(id); }
+    for (const list of by.values()) items.push({ sentences: list });
+  }
+  out.rulings = items;
+  return out;
+}
+
 /** Code-level verification of the model output. Returns { ok, reason }. */
 export function verifyAnswer(out, passages) {
   const byLabel = new Map(passages.map((p) => [p.label, p]));

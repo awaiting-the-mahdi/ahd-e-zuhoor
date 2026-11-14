@@ -1,6 +1,6 @@
 /* The full question → answer pipeline. Pure logic, used by the Worker route and by tests. */
 import { planQuery, retrieve, aiEnabled } from "./retrieve.js";
-import { generate, verifyAnswer, buildPassages, sourceOf, quoteFor, ABSTAIN_MESSAGE } from "./answer.js";
+import { generate, verifyAnswer, normalizeRulings, buildPassages, sourceOf, quoteFor, ABSTAIN_MESSAGE } from "./answer.js";
 import { verifyOnSource } from "./sistani.js";
 
 export const DISCLAIMER = "Zahra shows the published rulings of Ayatollah al-Sistani from sistani.org and explains them simply. The explanation is not a fatwa. For your personal situation, please consult the Office of Ayatollah Sistani.";
@@ -46,6 +46,7 @@ export async function answerQuestion(env, question, context = "", history = []) 
   trace.model = model;
   trace.modelStatus = out && out.status;
 
+  normalizeRulings(out);
   const v = verifyAnswer(out, passages);
   if (!v.ok) { trace.verification = v.reason; return retrievalOnly(env, question, lang, candidates, trace, "ai_check_failed"); }
   if (out.status === "abstain") return { result: abstain(question, lang, out.reason || "the model found no directly relevant passage"), trace };

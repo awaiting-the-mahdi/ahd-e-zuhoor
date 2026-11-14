@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { verifyAnswer, buildPassages, quoteFor } from "../src/answer.js";
+import { verifyAnswer, buildPassages, quoteFor, normalizeRulings } from "../src/answer.js";
 
 const passages = buildPassages([
   { pid: "qa-en-1", kind: "qa", number: "1", question: "Is shrimp halal?", text: "It is not permissible to eat from marine animals anything except fish that has scale; shrimp is considered from that category. But lobster is forbidden.", url: "https://www.sistani.org/english/qa/1/" },
@@ -56,4 +56,11 @@ test("clarify must contain questions; abstain is always allowed", () => {
   assert.equal(verifyAnswer({ ...good(), status: "clarify", clarifying_questions: [] }, passages).ok, false);
   assert.equal(verifyAnswer({ ...good(), status: "clarify", clarifying_questions: ["Are you travelling?"] }, passages).ok, true);
   assert.equal(verifyAnswer({ status: "abstain" }, passages).ok, true);
+});
+
+test("a selection spanning two passages is split into one quote per passage", () => {
+  const o = good(); o.rulings = [{ sentences: ["P1.1", "P2.2"] }]; o.reply = "Shrimp is fine [P1]. Blood is impure [P2].";
+  normalizeRulings(o);
+  assert.deepEqual(o.rulings, [{ sentences: ["P1.1"] }, { sentences: ["P2.2"] }]);
+  assert.equal(verifyAnswer(o, passages).ok, true);
 });
