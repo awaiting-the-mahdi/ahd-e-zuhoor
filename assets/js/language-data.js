@@ -28,7 +28,7 @@ window.AZ_COURSES = [
     voice: "ar-SA",
     dir: "rtl",
     color: "#3fd0b5",
-    tagline: "The language of the Qur'an",
+    tagline: "Read, speak and understand Arabic",
     lessons: [
       { title: "Greetings", words: [
         { w: "السَّلامُ عَلَيْكُم", tr: "as-salāmu ʿalaykum", m: "Peace be upon you", tip: "We answer with: wa ʿalaykum as-salām, and upon you be peace." },
@@ -41,6 +41,30 @@ window.AZ_COURSES = [
         { w: "نُور", tr: "nūr", m: "Light" },
         { w: "صَبْر", tr: "ṣabr", m: "Patience" },
         { w: "كِتَاب", tr: "kitāb", m: "Book", tip: "The Qur'an calls itself al-Kitāb, the Book." }
+      ]}
+    ]
+  },
+  {
+    id: "quranic-arabic",
+    name: "Quranic Arabic",
+    native: "العربية القرآنية",
+    glyph: "ق",
+    voice: "ar-SA",
+    dir: "rtl",
+    color: "#ffc94d",
+    tagline: "Understand the words of the Qur'an",
+    lessons: [
+      { title: "Words from Al-Fatiha", words: [
+        { w: "الْحَمْد", tr: "al-ḥamd", m: "All praise", tip: "Al-ḥamdu lillāh means: all praise belongs to Allah." },
+        { w: "رَبّ", tr: "rabb", m: "Lord", tip: "Rabb al-ʿālamīn means Lord of all the worlds." },
+        { w: "يَوْم", tr: "yawm", m: "Day" },
+        { w: "صِرَاط", tr: "ṣirāṭ", m: "Path", tip: "In Al-Fatiha we ask: guide us to the straight path, aṣ-ṣirāṭ al-mustaqīm." }
+      ]},
+      { title: "Common Qur'anic Words", words: [
+        { w: "هُدًى", tr: "hudā", m: "Guidance", tip: "The Qur'an calls itself hudan lil-muttaqīn, a guidance for the God-conscious." },
+        { w: "رَحْمَة", tr: "raḥma", m: "Mercy" },
+        { w: "سَمَاء", tr: "samāʾ", m: "Sky, heaven" },
+        { w: "أَرْض", tr: "arḍ", m: "Earth" }
       ]}
     ]
   },
@@ -93,50 +117,26 @@ window.AZ_COURSES = [
     ]
   },
   {
-    id: "turkish",
-    name: "Turkish",
-    native: "Türkçe",
-    glyph: "Ç",
-    voice: "tr-TR",
-    dir: "ltr",
+    id: "tajweed",
+    name: "Quranic Tajweed",
+    native: "التجويد",
+    glyph: "ت",
+    voice: "ar-SA",
+    dir: "rtl",
     color: "#ff7a8a",
-    tagline: "A bridge between East and West",
+    tagline: "Recite the Qur'an beautifully and correctly",
     lessons: [
-      { title: "Greetings", words: [
-        { w: "Merhaba", tr: "mer-ha-ba", m: "Hello" },
-        { w: "Teşekkürler", tr: "te-shek-kür-ler", m: "Thank you" },
-        { w: "Evet", tr: "e-vet", m: "Yes" },
-        { w: "Hayır", tr: "ha-yuhr", m: "No" }
+      { title: "Tajweed Basics", words: [
+        { w: "تَجْوِيد", tr: "tajwīd", m: "Giving every letter its right when reciting", tip: "Tajwīd comes from a root meaning to make something excellent." },
+        { w: "مَخْرَج", tr: "makhraj", m: "The point a letter is pronounced from" },
+        { w: "سُكُون", tr: "sukūn", m: "A letter with no vowel" },
+        { w: "شَدَّة", tr: "shadda", m: "A doubled letter" }
       ]},
-      { title: "Words of the Heart", words: [
-        { w: "Bilgi", tr: "bil-gi", m: "Knowledge" },
-        { w: "Işık", tr: "uh-shuhk", m: "Light" },
-        { w: "Sabır", tr: "sa-buhr", m: "Patience" },
-        { w: "Kitap", tr: "ki-tap", m: "Book" }
-      ]}
-    ]
-  },
-  {
-    id: "english",
-    name: "English",
-    native: "English",
-    glyph: "A",
-    voice: "en-GB",
-    dir: "ltr",
-    color: "#5ab0ff",
-    tagline: "Words for a life of learning",
-    lessons: [
-      { title: "Good Character", words: [
-        { w: "Patience", tr: "pay-shuns", m: "Staying calm and steady when things are hard" },
-        { w: "Gratitude", tr: "gra-ti-tyood", m: "Feeling and showing thanks" },
-        { w: "Kindness", tr: "kynd-ness", m: "Being gentle and caring towards others" },
-        { w: "Honesty", tr: "on-es-tee", m: "Always telling the truth" }
-      ]},
-      { title: "The Seeker's Words", words: [
-        { w: "Knowledge", tr: "nol-ij", m: "What we learn and understand" },
-        { w: "Wisdom", tr: "wiz-dum", m: "Using knowledge in the right way" },
-        { w: "Guidance", tr: "gy-dens", m: "Being shown the right path" },
-        { w: "Hope", tr: "hohp", m: "Trusting that good is coming" }
+      { title: "Rules of Nūn Sākinah", words: [
+        { w: "إِظْهَار", tr: "iẓhār", m: "Pronouncing the nūn clearly", tip: "It happens before the six throat letters: hamza, hā, ʿayn, ḥā, ghayn and khā." },
+        { w: "إِدْغَام", tr: "idghām", m: "Merging the nūn into the next letter", tip: "Its six letters are gathered in the word yarmalūn." },
+        { w: "إِقْلَاب", tr: "iqlāb", m: "Changing the nūn into a mīm sound", tip: "It happens before the letter bā." },
+        { w: "إِخْفَاء", tr: "ikhfāʾ", m: "Hiding the nūn with a nasal sound" }
       ]}
     ]
   }

@@ -128,7 +128,7 @@
     <!-- 2 · choose course -->
     <section class="screen" data-s="2">
       <div class="guide"><div class="pair"><div id="kG2"></div><div id="kB2"></div></div><div class="bubble" id="b2"></div></div>
-      <div class="list" id="courseList" role="radiogroup" aria-label="Choose a language"></div>
+      <div class="list" id="courseList" role="radiogroup" aria-label="Choose a course"></div>
     </section>
 
     <!-- 3 · pace -->
@@ -246,7 +246,7 @@ function go(n){
       {k:kids.g1,text:"Just a few quick questions, and we'll be on our way!"}
     ]);
   }
-  if(n===2)speak(document.getElementById("b2"),[{k:kids.g2,text:"Which language would you like to learn?"}]);
+  if(n===2)speak(document.getElementById("b2"),[{k:kids.g2,text:"Which course would you like to start?"}]);
   if(n===3)speak(document.getElementById("b3"),[{k:kids.b3,text:"How fast would you like to travel each day?"}]);
   if(n===4){
     var c=course(),p=paceObj();
