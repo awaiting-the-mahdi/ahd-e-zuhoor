@@ -30,7 +30,9 @@ export default {
     const cors = corsHeaders(env, origin);
 
     if (request.method === "OPTIONS") return new Response(null, { status: 204, headers: cors });
-    if (url.pathname === "/api/health") return json({ ok: true, service: "fiqh-research-assistant" }, 200, cors);
+    if (url.pathname === "/api/health" || url.pathname === "/" || url.pathname === "/api" || url.pathname === "/api/") {
+      return json({ ok: true, service: "fiqh-research-assistant", mode: env.MODE || "retrieval", ask: "POST /api/ask" }, 200, cors);
+    }
     if (url.pathname !== "/api/ask") return json({ error: "Not found" }, 404, cors);
     if (request.method !== "POST") return json({ error: "Use POST" }, 405, cors);
     if (!cors["Access-Control-Allow-Origin"]) return json({ error: "Origin not allowed" }, 403, cors);
