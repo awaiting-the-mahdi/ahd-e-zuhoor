@@ -26,4 +26,4 @@ MAX_PASSAGES = "10"
 binding = "DB"
 database_name = "ahd-fiqh-assistant"
 # Replace with the id printed by: npx wrangler d1 create ahd-fiqh-assistant
-database_id = "REPLACE_WITH_YOUR_D1_DATABASE_ID"
+database_id = "e5393af9-752a-4f43-bc12-5c49587bdcf1"
