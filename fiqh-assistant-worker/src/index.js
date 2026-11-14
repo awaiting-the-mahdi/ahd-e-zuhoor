@@ -14,7 +14,7 @@ function corsHeaders(env, origin) {
   return {
     ...(ok ? { "Access-Control-Allow-Origin": origin, Vary: "Origin" } : {}),
     "Access-Control-Allow-Methods": "POST, GET, OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Headers": "Content-Type, X-Debug",
     "Access-Control-Max-Age": "86400"
   };
 }
@@ -55,7 +55,9 @@ export default {
     try {
       const { result, trace } = await answerQuestion(env, question, context);
       ctx.waitUntil(writeLog(env, { id, question, context, result, trace, ms: Date.now() - t0 }));
-      return json({ ...result, request_id: id }, 200, cors);
+      // Diagnostics: the retrieval log (public information only: search terms, pages, scores).
+      const debug = request.headers.get("X-Debug") === "1" ? { trace } : {};
+      return json({ ...result, request_id: id, ...debug }, 200, cors);
     } catch (e) {
       const msg = String(e && e.message || e);
       ctx.waitUntil(writeLog(env, { id, question, context, result: { status: "error" }, trace: { error: msg }, ms: Date.now() - t0 }));

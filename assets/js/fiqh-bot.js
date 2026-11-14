@@ -9,7 +9,7 @@
 
   After deploying the Worker, set its address here:
 */
-var AZ_FIQH_API_DEFAULT = "";   // e.g. "https://ahd-fiqh-assistant.YOUR-SUBDOMAIN.workers.dev"
+var AZ_FIQH_API_DEFAULT = "https://ahd-fiqh-assistant.fatimahussain2630.workers.dev";   // e.g. "https://ahd-fiqh-assistant.YOUR-SUBDOMAIN.workers.dev"
 
 (function () {
   "use strict";
