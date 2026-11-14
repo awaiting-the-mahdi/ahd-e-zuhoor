@@ -41,7 +41,7 @@ ABSOLUTE RULES
 2. A passage counts only if it DIRECTLY addresses the user's question. A passage about a similar but different case, or one that only mentions the topic as an example, does not count.
 3. "rulings": for each passage you rely on, list the sentence numbers that state the ruling (e.g. ["P2.1","P2.2"]). All sentence numbers in one item must come from the same passage. Include the sentences that carry conditions and exceptions.
 4. "reply": a friendly, natural answer to the user written in ${LANG_NAME[lang] || "English"}, like a helpful teacher. Explain in simple words what the quoted ruling says. Put the passage label in square brackets after each statement it supports, e.g. "Sleep invalidates wudu [P1].". Only cite passages that you listed in "rulings". Keep it short (2-6 sentences). Never write URLs or ruling numbers yourself.
-5. Keep every condition, exception and qualification ("if", "unless", "as long as", "based on obligatory precaution"). Never present a conditional ruling as absolute.
+5. Keep every condition, exception and qualification in your reply ("intentionally", "if", "unless", "as long as", "based on obligatory precaution", "it is better"). Translate them faithfully into the user's language. Never present a conditional or precautionary ruling as absolute. Every number, amount or distance you mention must appear in a sentence you listed in "rulings".
 6. Never merge rulings from different passages into a new ruling. You may mention two passages one after the other, each with its own citation.
 7. "conditions": the conditions and exceptions stated in the cited passages, in ${LANG_NAME[lang] || "English"}, each naming its passage (e.g. "P1"). Empty if none.
 8. If the ruling depends on personal facts the user has not given, set status "clarify", write a short friendly "reply" explaining why, and ask 1-3 short "clarifying_questions" in the user's language. Do not guess.
@@ -54,7 +54,8 @@ function splitSentences(text) {
   for (const block of String(text).split(/\n+/)) {
     const b = block.trim();
     if (!b) continue;
-    for (const s of b.split(/(?<=[.!?؟۔])\s+(?=\S)/)) if (s.trim()) out.push(s.trim());
+    // Split after sentence punctuation, but not after a number ("1.", "1551.") or a one-letter abbreviation ("e.g.").
+    for (const s of b.split(/(?<=[^\d\s.][.!?؟۔])(?<!\b\w\.)\s+(?=\S)/)) if (s.trim()) out.push(s.trim());
   }
   return out;
 }
@@ -149,10 +150,58 @@ export function verifyAnswer(out, passages) {
   return { ok: true };
 }
 
-/** The official quote, assembled from the original text by sentence numbers (always verbatim). */
+/**
+ * The official quote, assembled from the original text by sentence numbers (always verbatim).
+ * A list item ("vomiting intentionally.") is shown with the list's heading ("Eight things
+ * invalidate a fast:") so it is never read out of context. Returns contiguous segments.
+ */
+export function quoteSegments(passage, ids) {
+  const S = passage.sentences;
+  const idx = new Set();
+  for (const id of ids) {
+    const i = S.findIndex((s) => s.id === id);
+    if (i < 0) continue;
+    idx.add(i);
+    const looksLikeItem = /^([a-z0-9(]|\d+[.)])/.test(S[i].text) || (i > 0 && /:\s*$/.test(S[i - 1].text));
+    if (looksLikeItem) for (let j = i - 1; j >= 0; j--) if (/:\s*$/.test(S[j].text)) { idx.add(j); break; }
+  }
+  const sorted = [...idx].sort((a, b) => a - b);
+  const segs = [];
+  for (const i of sorted) {
+    if (segs.length && segs[segs.length - 1].end === i - 1) { segs[segs.length - 1].parts.push(S[i].text); segs[segs.length - 1].end = i; }
+    else segs.push({ parts: [S[i].text], end: i });
+  }
+  return segs.map((g) => g.parts.join(" "));
+}
 export function quoteFor(passage, ids) {
-  const want = new Set(ids);
-  return passage.sentences.filter((s) => want.has(s.id)).map((s) => s.text).join(" ");
+  return quoteSegments(passage, ids).join(" … ");
+}
+
+/**
+ * Numbers in the reply must be backed by the quoted text. If a number appears elsewhere in the
+ * same passage, that sentence is added to the quote; if it appears nowhere, the check fails.
+ */
+export function backNumbers(out, passages) {
+  const byLabel = new Map(passages.map((p) => [p.label, p]));
+  const toLatin = (t) => String(t).replace(/[٠-٩]/g, (d) => "٠١٢٣٤٥٦٧٨٩".indexOf(d)).replace(/[۰-۹]/g, (d) => "۰۱۲۳۴۵۶۷۸۹".indexOf(d));
+  for (const sent of String(out.reply || "").split(/(?<=[.!?؟۔])\s+/)) {
+    const nums = toLatin(sent.replace(/\[P\d+(?:\.\d+)?\]/g, "")).match(/\d+(?:[.,]\d+)?/g) || [];
+    const refs = [...sent.matchAll(/\[(P\d+)(?:\.\d+)?\]/g)].map((m) => m[1]);
+    for (const n of nums) {
+      if (!refs.length) return { ok: false, reason: "number without citation: " + n };
+      let backed = false;
+      for (const l of refs) {
+        const p = byLabel.get(l); if (!p) continue;
+        const item = out.rulings.find((r) => r.sentences[0] && r.sentences[0].split(".")[0] === l);
+        if (!item) continue;
+        if (toLatin(quoteFor(p, item.sentences)).includes(n)) { backed = true; break; }
+        const extra = p.sentences.find((s) => toLatin(s.text).includes(n));
+        if (extra) { item.sentences.push(extra.id); backed = true; break; }
+      }
+      if (!backed) return { ok: false, reason: "number not in the official text: " + n };
+    }
+  }
+  return { ok: true };
 }
 
 /** Build the public source description from our own record (never from the model). */
@@ -160,5 +209,5 @@ export function sourceOf(p) {
   if (p.kind === "bookqa") return { type: p.book || "Book", number: p.number, label: `${p.section} · Q&A ${p.number}`, title: p.question, url: p.url, lang: p.lang };
   return p.kind === "qa"
     ? { type: "Official Q&A", number: p.number, label: `Question ${p.number}${p.topic ? " · " + p.topic : ""}`, title: p.question, url: p.url, lang: p.lang }
-    : { type: p.book || "Islamic Laws", number: p.number, label: `Ruling ${p.number} · ${p.section}`, title: p.section, url: p.url, lang: p.lang };
+    : { type: p.book || "Islamic Laws", number: p.number, label: `${p.numLabel || "Ruling"} ${p.number} · ${p.section}`, title: p.section, url: p.url, lang: p.lang };
 }

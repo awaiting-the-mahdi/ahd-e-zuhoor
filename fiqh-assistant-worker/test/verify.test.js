@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { verifyAnswer, buildPassages, quoteFor, normalizeRulings } from "../src/answer.js";
+import { verifyAnswer, buildPassages, quoteFor, normalizeRulings, backNumbers } from "../src/answer.js";
 
 const passages = buildPassages([
   { pid: "qa-en-1", kind: "qa", number: "1", question: "Is shrimp halal?", text: "It is not permissible to eat from marine animals anything except fish that has scale; shrimp is considered from that category. But lobster is forbidden.", url: "https://www.sistani.org/english/qa/1/" },
@@ -16,7 +16,7 @@ const good = () => ({
 
 test("passages are split into numbered sentences", () => {
   assert.deepEqual(passages[0].sentences.map((s) => s.id), ["P1.1", "P1.2"]);
-  assert.deepEqual(passages[1].sentences.map((s) => s.id), ["P2.1", "P2.2", "P2.3"]);
+  assert.deepEqual(passages[1].sentences.map((s) => s.id), ["P2.1", "P2.2"]); // "Ruling 93." stays with its first sentence
 });
 test("the official quote is assembled verbatim from the original text", () => {
   assert.equal(quoteFor(passages[0], ["P1.1"]), "It is not permissible to eat from marine animals anything except fish that has scale; shrimp is considered from that category.");
@@ -63,4 +63,16 @@ test("a selection spanning two passages is split into one quote per passage", ()
   normalizeRulings(o);
   assert.deepEqual(o.rulings, [{ sentences: ["P1.1"] }, { sentences: ["P2.2"] }]);
   assert.equal(verifyAnswer(o, passages).ok, true);
+});
+
+const fast = buildPassages([{ pid: "b", kind: "ruling", number: "1551", section: "Fast", text: "Ruling 1551. Eight things invalidate a fast:\n1. eating and drinking;\n2. vomiting intentionally.\nThe journey must be eight farsakhs, about 45 km." }]);
+test("a list item is quoted with its heading", () => {
+  assert.equal(quoteFor(fast[0], ["P1.3"]), "Ruling 1551. Eight things invalidate a fast: … 2. vomiting intentionally.");
+});
+test("numbers in the reply must be in the official text (auto-added from the same passage)", () => {
+  const o = { status: "answer", reply: "The distance is about 45 km [P1].", rulings: [{ sentences: ["P1.3"] }], conditions: [], clarifying_questions: [], related: [], reason: "" };
+  assert.equal(backNumbers(o, fast).ok, true);
+  assert.ok(o.rulings[0].sentences.includes("P1.4"));
+  const bad = { status: "answer", reply: "The distance is 99 km [P1].", rulings: [{ sentences: ["P1.3"] }], conditions: [], clarifying_questions: [], related: [], reason: "" };
+  assert.equal(backNumbers(bad, fast).ok, false);
 });

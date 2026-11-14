@@ -1,6 +1,6 @@
 /* The full question → answer pipeline. Pure logic, used by the Worker route and by tests. */
 import { planQuery, retrieve, aiEnabled } from "./retrieve.js";
-import { generate, verifyAnswer, normalizeRulings, buildPassages, sourceOf, quoteFor, ABSTAIN_MESSAGE } from "./answer.js";
+import { generate, verifyAnswer, normalizeRulings, backNumbers, buildPassages, sourceOf, quoteFor, ABSTAIN_MESSAGE } from "./answer.js";
 import { verifyOnSource } from "./sistani.js";
 
 export const DISCLAIMER = "Zahra shows the published rulings of Ayatollah al-Sistani from sistani.org and explains them simply. The explanation is not a fatwa. For your personal situation, please consult the Office of Ayatollah Sistani.";
@@ -47,7 +47,8 @@ export async function answerQuestion(env, question, context = "", history = []) 
   trace.modelStatus = out && out.status;
 
   normalizeRulings(out);
-  const v = verifyAnswer(out, passages);
+  let v = verifyAnswer(out, passages);
+  if (v.ok && out.status === "answer") v = backNumbers(out, passages);
   if (!v.ok) { trace.verification = v.reason; return retrievalOnly(env, question, lang, candidates, trace, "ai_check_failed"); }
   if (out.status === "abstain") return { result: abstain(question, lang, out.reason || "the model found no directly relevant passage"), trace };
 
@@ -66,14 +67,21 @@ export async function answerQuestion(env, question, context = "", history = []) 
   trace.sourceChecks = rulings.map((r, i) => ({ passage: r.p.pid, ok: checks[i].status === "fulfilled" && checks[i].value === true }));
   if (!ok.length) return { result: abstain(question, lang, "source verification failed"), trace };
 
-  // Merge several rulings from the same passage into one card.
+  // Merge several rulings from the same passage into one card; identical texts share one card.
   const cards = [];
+  const alias = new Map();
+  const sameText = (a, b) => a.replace(/\W+/g, "").toLowerCase() === b.replace(/\W+/g, "").toLowerCase();
   for (const r of ok) {
     const c = cards.find((x) => x.label === r.label);
-    if (c) c.quote += " … " + r.quote; else cards.push({ label: r.label, p: r.p, quote: r.quote });
+    if (c) { c.quote += " … " + r.quote; continue; }
+    const twin = cards.find((x) => sameText(x.quote, r.quote));
+    if (twin) { alias.set(r.label, twin.label); twin.also = (twin.also || []).concat(r.p); continue; }
+    cards.push({ label: r.label, p: r.p, quote: r.quote });
   }
   const number = new Map(cards.map((c, i) => [c.label, i + 1]));
-  const reply = String(out.reply).replace(/\[(P\d+)(?:\.\d+)?\]/g, (m, l) => (number.has(l) ? `[${number.get(l)}]` : ""));
+  for (const [a, b] of alias) number.set(a, number.get(b));
+  const reply = String(out.reply).replace(/\[(P\d+)(?:\.\d+)?\]/g, (m, l) => (number.has(l) ? `[${number.get(l)}]` : ""))
+    .replace(/(\[\d+\])(?:[\s,،]*\1)+/g, "$1").replace(/(\[\d+\])[\s,،]+(?=\[\d+\])/g, "$1");
   const now = new Date().toISOString();
   trace.cited = cards.map((c) => c.p.pid);
   return {
@@ -82,7 +90,7 @@ export async function answerQuestion(env, question, context = "", history = []) 
       question,
       language: lang,
       reply,
-      official: cards.map((c) => ({ ref: number.get(c.label), quote: c.quote, original_question: c.p.question || null, source: sourceOf(c.p), verified_at: now })),
+      official: cards.map((c) => ({ ref: number.get(c.label), quote: c.quote, original_question: c.p.question || null, source: sourceOf(c.p), also: (c.also || []).map(sourceOf), verified_at: now })),
       conditions: (out.conditions || []).filter((c) => number.has(c.passage)).map((c) => ({ text: c.text, ref: number.get(c.passage) })),
       related: (out.related || []).filter((l) => byLabel.has(l) && !number.has(l)).slice(0, 3).map((l) => { const p = byLabel.get(l); return { title: p.question || `Ruling ${p.number} · ${p.section}`, source: sourceOf(p) }; }),
       ai: true,

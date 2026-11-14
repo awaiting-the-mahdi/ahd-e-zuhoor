@@ -125,7 +125,9 @@ export function parseRulings(html, meta) {
   const text = stripTags(body);
   let marks = [...text.matchAll(/(^|\n)Ruling (\d+)\./g)];
   if (!marks.length && /(^|\n)Question\s*:/.test(text)) return parseBookQA(text, meta, title);
-  if (!marks.length) marks = [...text.matchAll(/(^|\n)(\d{1,4})\.\s/g)];
+  let label = "Ruling";
+  if (!marks.length) { marks = [...text.matchAll(/(^|\n)Issue (\d+)\s*:/g)]; label = "Issue"; }
+  if (!marks.length) { marks = [...text.matchAll(/(^|\n)(\d{1,4})\.\s/g)]; label = "Item"; }
   return marks.map((m, i) => {
     const start = m.index + m[1].length;
     const end = i + 1 < marks.length ? marks[i + 1].index : text.length;
@@ -135,6 +137,7 @@ export function parseRulings(html, meta) {
       kind: "ruling",
       lang: "en",
       number: n,
+      numLabel: label,
       book: meta.book,
       section: title || meta.section,
       text: text.slice(start, end).trim(),
@@ -171,5 +174,6 @@ function parseBookQA(text, meta, title) {
 export async function verifyOnSource(passage, quote) {
   const html = await getPage(passage.url);
   const pageText = normStrict(stripTags(html));
-  return pageText.includes(normStrict(quote));
+  // A quote made of separate parts ("A … B") is checked part by part.
+  return String(quote).split(" … ").every((part) => pageText.includes(normStrict(part)));
 }
