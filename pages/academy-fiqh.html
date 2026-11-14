@@ -61,6 +61,17 @@ h1 small{display:block;font-size:.5em;font-style:italic;font-weight:500;color:#f
 .clock b{color:var(--gold)}
 .progress-note{text-align:center;color:#d6d9ee;font-weight:800;margin:0 0 10px}
 .progress-note b{color:var(--gold)}
+.furu{max-width:900px;margin:6px auto 0;padding:0 16px;text-align:center}
+.furu h3{margin:0 0 10px;font-size:.75rem;font-weight:900;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);text-shadow:0 1px 2px #000}
+.furu .chips{display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
+.fchip{display:inline-flex;align-items:center;gap:8px;padding:8px 14px 8px 8px;border-radius:99px;border:1.5px solid color-mix(in srgb,var(--c) 60%,transparent);background:rgba(13,17,52,.8);color:#fff;font:inherit;font-weight:800;font-size:.86rem;cursor:pointer;transition:transform .15s,background .3s}
+.fchip:hover{transform:translateY(-2px)}
+.fchip i{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;font-style:normal;font-weight:900;font-size:.8rem;color:#0b0f2e;background:conic-gradient(var(--c) calc(var(--p,0)*1turn),rgba(255,255,255,.25) 0)}
+.fchip.done{background:color-mix(in srgb,var(--c) 22%,rgba(13,17,52,.8))}
+.fchip.found i{background:rgba(255,255,255,.2);color:#fff}
+.srclist{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:6px}
+.srclist a{color:#fff;text-decoration:underline;text-underline-offset:3px}
+.srcnote{margin-top:12px;padding:12px 14px;border-radius:14px;border:1.5px dashed rgba(255,159,184,.6);color:#ffd3de;font-weight:800}
 
 /* rulings meter */
 .meter{max-width:760px;margin:40px auto 0;padding:24px 16px 10px;text-align:center}
@@ -239,8 +250,9 @@ h1 small{display:block;font-size:.5em;font-style:italic;font-weight:500;color:#f
   .stage2 .cap{width:66%;font-size:.72rem}
   .stage2 .board{width:64%}
   .system{height:540px;margin-top:0}
-  .bead .lbl b{font-size:.78rem}
-  .bead .lbl small{font-size:.6rem}
+  .bead .lbl{top:calc(100% + 4px)}
+  .bead .lbl b{font-size:.68rem;white-space:normal;width:84px;line-height:1.15}
+  .bead .lbl small{display:none}
   .qibla{grid-template-columns:1fr;justify-items:center;text-align:center}
   .kout{grid-template-columns:1fr}
   .mute{right:78px}
@@ -259,7 +271,7 @@ h1 small{display:block;font-size:.5em;font-style:italic;font-weight:500;color:#f
     <span class="eyebrow">School 03 · Digital Learning Academy</span>
     <h1 aria-label="School of Islamic Jurisprudence (Fiqh)"><span id="tw">School of Islamic Jurisprudence</span><small>(Fiqh) · The Golden Ring of the Day</small></h1>
     <p class="ar" lang="ar" dir="rtl">مدرسة الفقه الإسلامي</p>
-    <p class="lead shadow-text"><b>Belief lives in what we do.</b> Follow the sun around the golden ring. Each station is a part of the day, and a part of fiqh.</p>
+    <p class="lead shadow-text"><b>Belief lives in what we do.</b> Follow the sun around the golden ring: all ten Furu' al-Din, with Taharah and everyday fiqh as their foundations.</p>
     <span class="marja">All rulings follow <a href="https://www.sistani.org/english/" target="_blank" rel="noopener">Ayatollah al-Sistani</a></span>
   </section>
 
@@ -271,6 +283,7 @@ h1 small{display:block;font-size:.5em;font-style:italic;font-weight:500;color:#f
   </section>
   <p class="clock shadow-text" id="clock"></p>
   <p class="progress-note shadow-text" id="progNote"></p>
+  <section class="furu" aria-label="The ten Furu' al-Din"><h3>The ten Furu' al-Din</h3><div class="chips" id="furuChips"></div></section>
 
   <section class="meter" id="meter">
     <span class="eyebrow" style="opacity:1;animation:none">The five rulings</span>
@@ -337,6 +350,9 @@ var ICONS={
   leaf:'<path d="M20 4C10 4 4 9 4 16c0 2 1 4 1 4s2-7 9-10c-5 4-6 8-6 10 0 0 12 1 12-16z" fill="#0b0f2e"/>',
   coin:'<circle cx="12" cy="12" r="9" fill="#0b0f2e"/><circle cx="12" cy="12" r="6" fill="none" stroke="#fff" stroke-width="1.4"/><path d="M12 8v8M9.5 10.5h5M9.5 13.5h5" stroke="#fff" stroke-width="1.4" stroke-linecap="round"/>',
   moon:'<path d="M15 3a9 9 0 1 0 6 15A7 7 0 0 1 15 3z" fill="#0b0f2e"/><path d="M18 6l.6 1.4L20 8l-1.4.6L18 10l-.6-1.4L16 8l1.4-.6z" fill="#fff"/>',
+  hand:'<path d="M8 11V5a1.5 1.5 0 0 1 3 0v5M11 10V4a1.5 1.5 0 0 1 3 0v6M14 10V5.5a1.5 1.5 0 0 1 3 0V14c0 4-2.5 7-6.5 7S5 18.5 4 16l-1.5-3.2a1.4 1.4 0 0 1 2.4-1.4L8 14" fill="none" stroke="#0b0f2e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>',
+  heart:'<path d="M12 21s-8-5.2-8-11a4.8 4.8 0 0 1 8-3.6A4.8 4.8 0 0 1 20 10c0 5.8-8 11-8 11z" fill="#0b0f2e"/><path d="M8.5 9.5a2.2 2.2 0 0 1 2-1.8" stroke="#fff" stroke-width="1.5" fill="none" stroke-linecap="round"/>',
+  shield:'<path d="M12 2l8 3v6c0 5-3.4 9.4-8 11-4.6-1.6-8-6-8-11V5z" fill="#0b0f2e"/><path d="M8.5 12l2.5 2.5 4.5-5" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>',
   kaaba:'<path d="M4 8l8-4 8 4v10l-8 3-8-3z" fill="#0b0f2e"/><path d="M4 10.5l8 3 8-3" stroke="#ffc94d" stroke-width="1.6" fill="none"/>'
 };
 function icon(n){return '<svg viewBox="0 0 24 24" aria-hidden="true">'+ICONS[n]+'</svg>'}
@@ -365,7 +381,27 @@ muteBtn.onclick=function(){V.setMuted(!V.muted);drawMute()};drawMute();
 var prog=S.get("fiqh-progress",{});
 function pOf(id){var p=prog[id]||{};return ((p.watch?1:0)+(p.practise?1:0)+(p.quiz?1:0))/3}
 function mark(id,k){prog[id]=prog[id]||{};if(!prog[id][k]){prog[id][k]=true;S.set("fiqh-progress",prog);refresh()}}
+var FURU=["Salah","Sawm","Hajj","Zakat","Khums","Jihad","Amr bil Ma'ruf","Nahi anil Munkar","Tawalla","Tabarra"];
+function furuLabel(s){
+  if(!s.furu||!s.furu.length)return "Foundation";
+  return "Furu' al-Din "+s.furu.join(" & ")+" of 10";
+}
+function stationOf(n){for(var i=0;i<ST.length;i++)if((ST[i].furu||[]).indexOf(n)>=0)return i;return -1}
+function drawFuru(){
+  var host=document.getElementById("furuChips");if(!host)return;
+  if(!host.children.length){
+    FURU.forEach(function(name,k){
+      var si=stationOf(k+1);var b=document.createElement("button");b.type="button";b.className="fchip";
+      b.style.setProperty("--c",si>=0?ST[si].color:"#888");b.dataset.si=si;
+      b.innerHTML='<i>'+(k+1)+'</i>'+name;b.setAttribute("aria-label","Furu' al-Din "+(k+1)+": "+name);
+      b.onclick=function(){if(si>=0)openStation(si,beads[si])};
+      host.appendChild(b);
+    });
+  }
+  [].forEach.call(host.children,function(b){var si=+b.dataset.si;if(si<0)return;var p=pOf(ST[si].id);b.style.setProperty("--p",p);b.classList.toggle("done",p===1)});
+}
 function refresh(){
+  drawFuru();
   var done=ST.filter(function(s){return pOf(s.id)===1}).length;
   document.getElementById("progNote").innerHTML=done?'<b>'+done+' of '+ST.length+'</b> stations complete':'Tap a station on the ring to begin';
   beads.forEach(function(b,i){b.style.setProperty("--p",pOf(ST[i].id))});
@@ -378,7 +414,7 @@ var beads=[], cur=null, W,H,RX,RY,TILT=-12, rot=0, sunA=0, spread=0, rate=1, rat
 ST.forEach(function(s,i){
   var b=document.createElement("button");b.type="button";b.className="bead";b.style.setProperty("--c",s.color);
   b.setAttribute("aria-label",s.name+", "+s.time);
-  b.innerHTML='<span class="ring"></span>'+icon(s.icon)+'<span class="lbl"><small>'+s.time+'</small><b>'+s.name+'</b></span>';
+  b.innerHTML='<span class="ring"></span>'+icon(s.icon)+'<span class="lbl"><small>'+s.time+'</small><b>'+(s.short||s.name)+'</b></span>';
   b.onpointerenter=function(){rateT=.1};b.onpointerleave=function(){rateT=1};
   b.onfocus=function(){rateT=.1};b.onblur=function(){rateT=1};
   b.onclick=function(){openStation(i,b)};
@@ -387,9 +423,9 @@ ST.forEach(function(s,i){
 function layout(){
   W=sys.clientWidth;H=sys.clientHeight;
   var mob=W<700;
-  RX=mob?W*.42:Math.min(W*.42,520);RY=RX*(mob?.62:.3);
+  RX=mob?W*.37:Math.min(W*.42,520);RY=RX*(mob?.62:.3);
   var ps=mob?Math.max(110,W*.34):Math.max(130,Math.min(W*.2,220));
-  sys.style.setProperty("--ps",ps+"px");sys.style.setProperty("--bs",(mob?50:Math.max(54,Math.min(W*.05,70)))+"px");
+  sys.style.setProperty("--ps",ps+"px");sys.style.setProperty("--bs",(mob?42:Math.max(54,Math.min(W*.05,70)))+"px");
 }
 function ringSVG(half){
   var cx=W/2,cy=H/2,s="",rings=[[1,6,.35],[.94,2,.6],[1.07,1.4,.5],[.86,1,.4]];
@@ -505,7 +541,7 @@ function fill(i){
   mod.style.setProperty("--c",s.color);
   [].forEach.call(dots.children,function(d,k){d.classList.toggle("cur",k===i)});
   document.getElementById("mIcon").innerHTML=icon(s.icon);
-  document.getElementById("mKick").textContent="Station "+(i+1)+" of "+ST.length+" · "+s.time;
+  document.getElementById("mKick").textContent=furuLabel(s)+" · "+s.time;
   document.getElementById("mName").innerHTML=s.name+'<span class="mar" lang="ar">'+s.ar+'</span>';
   document.getElementById("mSum").textContent=s.summary;
   renderTabs();showTab(tab);
@@ -781,8 +817,12 @@ function renderQuiz(){
 /* ---- rulings & source ---- */
 function buildRulings(){
   var s=ST[cur];
+  var src=(s.sources||[]).length
+    ? '<ul class="srclist">'+s.sources.map(function(x){return '<li><a href="'+x.href+'" target="_blank" rel="noopener">'+x.label+'</a></li>'}).join("")+'</ul>'
+    : '<p style="margin:6px 0 0">General source: <a href="'+D.source.href+'" target="_blank" rel="noopener">'+D.source.label+'</a></p>';
   document.getElementById("pRulings").innerHTML='<ul class="points">'+s.points.map(function(p,k){return '<li style="--i:'+k+'">'+p+'</li>'}).join("")+'</ul>'+
-    '<div class="srcbox">These rulings follow '+D.marja+'. Source: <a href="'+D.source.href+'" target="_blank" rel="noopener">'+D.source.label+'</a>. For any question about your own situation, refer to Ayatollah Sistani\'s office or his representatives.</div>';
+    '<div class="srcbox">'+(s.sourceNote?'This station is not quoted from a specific published ruling. For any ruling, follow the guidance of '+D.marja+'.':'These rulings follow '+D.marja+'. Read them on sistani.org:'+src)+'<p style="margin:10px 0 0">For any question about your own situation, refer to Ayatollah Sistani\'s office or his representatives.</p></div>'+
+    (s.sourceNote?'<div class="srcnote">'+s.sourceNote+'</div>':'');
 }
 
 refresh();
