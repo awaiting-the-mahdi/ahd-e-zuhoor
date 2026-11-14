@@ -52,4 +52,4 @@ export const GLOSSARY = [
 ];
 
 /* Words that strongly suggest Roman Urdu when written in Latin script. */
-export const ROMAN_URDU_MARKERS = ["kya", "kia", "hai", "hain", "hy", "ka", "ki", "ke", "mein", "main", "me", "se", "ko", "agar", "to", "kar", "karna", "karne", "sakte", "sakta", "sakti", "jaiz", "najaiz", "hota", "hoti", "hoga", "wala", "wali", "nahi", "nahin", "kaise", "kyun", "kyon", "chahiye"];
+export const ROMAN_URDU_MARKERS = ["kya", "kia", "hai", "hain", "hy", "ka", "ki", "ke", "mein", "se", "ko", "agar", "kar", "karna", "karne", "sakte", "sakta", "sakti", "jaiz", "najaiz", "hota", "hoti", "hoga", "wala", "wali", "nahi", "nahin", "kaise", "kyun", "kyon", "chahiye"];

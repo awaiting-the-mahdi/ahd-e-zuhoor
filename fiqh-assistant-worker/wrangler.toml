@@ -7,6 +7,10 @@ main = "src/index.js"
 compatibility_date = "2025-01-01"
 
 [vars]
+# "retrieval" = Option 1: official answers only, no AI, $0. "ai" = add OpenAI explanations (needs OPENAI_API_KEY).
+MODE = "retrieval"
+# How closely an official answer must match the question to be shown (0 to 1).
+MIN_RELEVANCE = "0.6"
 # The website addresses allowed to call this API (comma separated).
 ALLOWED_ORIGINS = "https://awaiting-the-mahdi.github.io"
 # OpenAI model used for search planning and grounded explanations. Change any time.

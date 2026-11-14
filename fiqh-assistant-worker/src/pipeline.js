@@ -1,5 +1,5 @@
 /* The full question → answer pipeline. Pure logic, used by the Worker route and by tests. */
-import { planQuery, retrieve } from "./retrieve.js";
+import { planQuery, retrieve, aiEnabled } from "./retrieve.js";
 import { generate, verifyAnswer, buildPassages, sourceOf, ABSTAIN_MESSAGE } from "./answer.js";
 import { verifyOnSource } from "./sistani.js";
 
@@ -17,8 +17,10 @@ export async function answerQuestion(env, question, context = "") {
 
   const { candidates, searches } = await retrieve(env, question, plan);
   trace.searches = searches;
-  trace.candidates = candidates.map((c) => ({ pid: c.pid, score: c.score }));
+  trace.candidates = candidates.map((c) => ({ pid: c.pid, found: c.found, score: c.score }));
   if (!candidates.length) return { result: abstain(question, lang, "no candidate passages found"), trace };
+
+  if (!aiEnabled(env)) return retrievalOnly(env, question, lang, candidates, trace);
 
   const passages = buildPassages(candidates);
   const { data: out, model } = await generate(env, question, context, passages, lang);
@@ -64,4 +66,46 @@ export async function answerQuestion(env, question, context = "") {
   };
   trace.cited = [...keep].map((l) => byLabel.get(l).pid);
   return { result, trace };
+}
+
+/*
+  Option 1 (no AI): show the closest official answers verbatim, each re-verified on its live page.
+  Abstain when nothing is close enough.
+*/
+async function retrievalOnly(env, question, lang, candidates, trace) {
+  const min = Number(env.MIN_RELEVANCE || 0.6);
+  const passing = candidates.filter((c) => c.found >= min);
+  const best = passing.length ? passing[0].score : 0;
+  // Main answers: only those nearly as strong as the best match. Weaker ones become "related".
+  const strong = passing.filter((c) => c.score >= best - 0.12).slice(0, 3);
+  trace.threshold = min;
+  if (!strong.length) return { result: abstain(question, lang, "no passage above relevance " + min), trace };
+
+  const checks = await Promise.allSettled(strong.map((c) => verifyOnSource(c, c.text)));
+  const ok = strong.filter((c, i) => checks[i].status === "fulfilled" && checks[i].value === true);
+  trace.sourceChecks = strong.map((c, i) => ({ passage: c.pid, ok: checks[i].status === "fulfilled" && checks[i].value === true }));
+  if (!ok.length) return { result: abstain(question, lang, "source verification failed"), trace };
+
+  const now = new Date().toISOString();
+  const shown = new Set(ok.map((c) => c.pid));
+  const related = candidates.filter((c) => !shown.has(c.pid) && c.found >= min - 0.25).slice(0, 3);
+  trace.cited = ok.map((c) => c.pid);
+  return {
+    result: {
+      status: "matches",
+      question,
+      language: lang,
+      matches: ok.map((c) => ({
+        quote: c.text,
+        original_question: c.kind === "qa" ? c.question : null,
+        source: sourceOf(c),
+        match: c.found >= 0.99 ? "close" : "partial",
+        verified_at: now
+      })),
+      related: related.map((c) => ({ title: c.kind === "qa" ? c.question : `Ruling ${c.number} · ${c.section}`, source: sourceOf(c) })),
+      note: "These are the closest published answers of Ayatollah al-Sistani to your question. Please check that the official question matches your situation before acting on it.",
+      disclaimer: DISCLAIMER
+    },
+    trace
+  };
 }

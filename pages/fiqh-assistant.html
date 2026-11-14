@@ -94,37 +94,17 @@ ul.srcs small{display:block;color:var(--mut);font-weight:700;margin-top:3px}
     <span class="eyebrow sh">Digital Learning Academy · Fiqh</span>
     <h1>Fiqh Research Assistant</h1>
     <p class="ar" lang="ar" dir="rtl">المساعد البحثي الفقهي</p>
-    <p class="sub sh">Ask a question in English, Urdu, Roman Urdu or Arabic. Answers quote only the published rulings of <a href="https://www.sistani.org/" target="_blank" rel="noopener">Ayatollah al-Sayyid Ali al-Sistani</a>, with the exact source.</p>
+    <p class="sub sh">Chat with Zahra in English, Urdu, Roman Urdu or Arabic. She shows only the published answers of <a href="https://www.sistani.org/" target="_blank" rel="noopener">Ayatollah al-Sayyid Ali al-Sistani</a>, with the exact source on sistani.org.</p>
   </section>
 
-  <form class="ask" id="askForm" novalidate>
-    <label for="q">Your question</label>
-    <textarea id="q" name="q" dir="auto" maxlength="600" placeholder="e.g. Does sleep break wudu?  ·  Kya roze mein ulti se roza toot jata hai?  ·  کیا جھینگا حلال ہے؟"></textarea>
-    <div class="row">
-      <span class="count grow" id="count">0 / 600</span>
-      <button class="btn gold" id="askBtn" type="submit">Search the rulings</button>
-    </div>
-    <div class="chips" id="examples" aria-label="Example questions"></div>
-    <p class="notice" id="notice" role="status"></p>
-  </form>
+  <div id="botHost"></div>
 
-  <section class="loading" id="loading" aria-live="polite">
-    <div class="orbit" aria-hidden="true"><div class="ring"><span class="dot"></span></div><div class="core"></div></div>
-    <ul class="steps" id="steps">
-      <li>Understanding your question</li>
-      <li>Searching sistani.org</li>
-      <li>Reading the official passages</li>
-      <li>Verifying every quotation on sistani.org</li>
-    </ul>
-  </section>
-
-  <section class="result" id="result" aria-live="polite"></section>
-
-  <p class="disc sh">This assistant quotes the published rulings of Ayatollah al-Sistani from sistani.org and explains them in simple language. The explanation is not a fatwa. For your personal situation, please consult the <a href="https://www.sistani.org/english/send-question/" target="_blank" rel="noopener">Office of Ayatollah Sistani</a>.</p>
+  <p class="disc sh">This assistant shows the published answers and rulings of Ayatollah al-Sistani from sistani.org, word for word. It does not give opinions or fatwas. For your personal situation, please consult the <a href="https://www.sistani.org/english/send-question/" target="_blank" rel="noopener">Office of Ayatollah Sistani</a>.</p>
 </main>
 
 <script src="../assets/js/kids.js"></script>
-<script src="../assets/js/fiqh-assistant.js"></script>
+<script src="../assets/js/fiqh-bot.js"></script>
+<script>AZFiqhBot.mount({ inline: document.getElementById("botHost") });</script>
 <script src="../assets/js/menu.js" defer></script>
 </body>
 </html>

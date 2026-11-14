@@ -96,6 +96,20 @@ export function parseBookResults(html) {
   return out;
 }
 
+/** The table of contents of an English book: every section with its title and link. */
+export const TOC_BOOKS = { 48: "Islamic Laws", 47: "Hajj Rituals", 46: "A Code of Practice For Muslims in the West" };
+export async function bookToc(bookId) {
+  const html = await getPage(`${BASE}/english/book/${bookId}/`);
+  const out = [];
+  const seen = new Set();
+  for (const m of html.matchAll(new RegExp(`<a href="(/english/book/${bookId}/(\\d+)/)">([^<]+)</a>`, "g"))) {
+    if (seen.has(m[2])) continue;
+    seen.add(m[2]);
+    out.push({ url: BASE + m[1], bookId: String(bookId), sectionId: m[2], section: stripTags(m[3]), book: TOC_BOOKS[bookId] || "" });
+  }
+  return out;
+}
+
 /** Split a book section page into numbered rulings ("Ruling 12. ..."). */
 export function parseRulings(html, meta) {
   const title = stripTags((html.match(/<h1 class="c">([\s\S]*?)<\/h1>/) || [, ""])[1]);
