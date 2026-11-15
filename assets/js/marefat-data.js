@@ -74,7 +74,7 @@ window.AZ_MAREFAT = {
 
   /* ---------------- II. LADY FATIMA ---------------- */
   fatima: {
-    name: "Fatima al-Zahra", ar: "فَاطِمَةُ الزَّهْرَاءُ عَلَيْهَا السَّلَامُ",
+    name: "Fatima al-Zahra", ar: "فَاطِمَةُ الزَّهْرَاءُ سَلَامُ اللهِ عَلَيْهَا",
     facts: [
       ["Born", "20 Jumada al-Thani, 5th year of the mission, Makkah"],
       ["Martyred", "3 Jumada al-Thani 11 AH, Madinah (another report: 13 Jumada al-Awwal)"],
