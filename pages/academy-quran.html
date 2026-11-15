@@ -404,15 +404,22 @@ function applyMemo(){
 }
 
 /* ---- tadabbur: personal reflection saved on this device ---- */
-function renderTad(){
-  var n=S.n,v=S.verses[Math.floor(Math.random()*S.verses.length)];
-  var p=document.getElementById("pTad"),saved=store("tad-"+n)||"";
+function renderTad(vi){
+  var n=S.n;if(vi==null||vi>=S.verses.length)vi=Math.floor(Math.random()*S.verses.length);
+  var v=S.verses[vi],key="tad-"+n+"-"+v.n,saved=store(key)||"";
+  var mine=S.verses.filter(function(x){return store("tad-"+n+"-"+x.n)});
+  var p=document.getElementById("pTad");
   p.innerHTML='<div class="card"><div class="va" lang="ar">'+esc(v.ar)+'</div><div class="tr en">'+esc(v.en)+' <small>('+n+':'+v.n+')</small></div>'+
     '<p class="q">What is this verse saying to you today, and what will you do because of it?</p></div>'+
-    '<textarea id="tadText" placeholder="Write your reflection… (saved only on this device)">'+esc(saved)+'</textarea>'+
-    '<div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap"><button class="btn" id="tadSave" type="button">Save reflection</button><button class="btn ghost" id="tadNew" type="button">Another verse</button><span id="tadMsg" style="align-self:center;color:var(--em);font-weight:800"></span></div>';
-  document.getElementById("tadSave").onclick=function(){store("tad-"+n,document.getElementById("tadText").value);document.getElementById("tadMsg").textContent="Saved ✓"};
-  document.getElementById("tadNew").onclick=renderTad;
+    '<textarea id="tadText" placeholder="Write your reflection on verse '+v.n+'… (saved only on this device)">'+esc(saved)+'</textarea>'+
+    '<div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap"><button class="btn" id="tadSave" type="button">Save reflection</button><button class="btn ghost" id="tadNew" type="button">Another verse</button><span id="tadMsg" style="align-self:center;color:var(--em);font-weight:800"></span></div>'+
+    (mine.length?'<div style="margin-top:16px"><span class="lab">My reflections in this surah</span><div class="opts">'+mine.map(function(x){return '<button class="tchip" type="button" data-v="'+S.verses.indexOf(x)+'"'+(x===v?' aria-pressed="true"':'')+'>Verse '+x.n+'</button>'}).join("")+'</div></div>':'');
+  var ta=document.getElementById("tadText"),msg=document.getElementById("tadMsg"),t;
+  function save(){store(key,ta.value);msg.textContent=ta.value.trim()?"Saved ✓":""}
+  ta.oninput=function(){clearTimeout(t);t=setTimeout(save,600)};
+  document.getElementById("tadSave").onclick=function(){save();renderTad(vi)};
+  document.getElementById("tadNew").onclick=function(){save();var k;do{k=Math.floor(Math.random()*S.verses.length)}while(S.verses.length>1&&k===vi);renderTad(k)};
+  p.querySelectorAll("[data-v]").forEach(function(b){b.onclick=function(){save();renderTad(+b.dataset.v)}});
 }
 
 /* ---- start ---- */
