@@ -14,8 +14,8 @@
     and the placeholder / aria-label / title / alt attributes are translated, including content
     the page builds later (a MutationObserver watches for it).
   - Text not in the dictionary simply stays in English.
-  - Pages that translate themselves (the Marefat page) set <html data-own-i18n>; this script then
-    only provides the shared setting.
+  - Pages that translate themselves (Marefat, Hadiths) set <html data-own-i18n>; this script then
+    only translates the shared site menu there.
 */
 (function () {
   "use strict";
@@ -97,13 +97,15 @@
 
   function onReady(fn) { if (document.readyState !== "loading") fn(); else document.addEventListener("DOMContentLoaded", fn); }
 
-  if (LANG !== "ur" || own) { onReady(addButton); return; }
+  if (LANG !== "ur") { onReady(addButton); return; }
 
   /* ---------- Urdu ---------- */
-  html.lang = "ur";
-  html.classList.add("az-ur", "az-ur-wait");
+  /* On a page that translates itself, only the shared parts (the site menu) are translated here. */
+  var SHARED = ".az-menu-button,.az-menu-overlay";
+  html.classList.add("az-ur");
+  if (!own) { html.lang = "ur"; html.classList.add("az-ur-wait"); }
   var reveal = function () { html.classList.remove("az-ur-wait"); };
-  setTimeout(reveal, 2500);
+  if (!own) setTimeout(reveal, 2500);
 
   var font = document.createElement("link");
   font.rel = "stylesheet";
@@ -161,6 +163,34 @@
   }
 
   /* a page's dictionary may ask for shared files too:  AZ_UR.also = ["courses"]; */
+  if (own) {
+    var shared = load(BASE + "ur/common.js");
+    var doShared = function (n) {
+      if (n.nodeType !== 1) return;
+      if (n.matches(SHARED)) walk(n);
+      else [].forEach.call(n.querySelectorAll(SHARED), walk);
+    };
+    onReady(function () {
+      addButton();
+      shared.then(function () {
+        doShared(document.body); keepLangInLinks();
+        new MutationObserver(function (muts) {
+          if (busy) return;
+          muts.forEach(function (m) {
+            var t = m.target.nodeType === 1 ? m.target : m.target.parentElement;
+            if (m.type !== "childList" && t && t.closest(SHARED)) { if (m.type === "attributes") doAttrs(t); else walk(m.target); return; }
+            m.addedNodes.forEach(function (n) {
+              var inside = n.parentElement && n.parentElement.closest(SHARED);
+              if (inside) walk(n); else doShared(n);
+              if (n.nodeType === 1) keepLangInLinks();
+            });
+          });
+        }).observe(document.body, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ["aria-label", "title"] });
+      });
+    });
+    return;
+  }
+
   var ready = load(BASE + "ur/common.js")
     .then(function () { return load(BASE + "ur/" + PAGE + ".js"); })
     .then(function () { return Promise.all((window.AZ_UR.also || []).map(function (n) { return load(BASE + "ur/" + n + ".js"); })); });
