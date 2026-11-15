@@ -178,6 +178,7 @@ select.pill{appearance:none;padding-right:30px;background:rgba(13,20,52,.85) url
 
 <script src="../assets/js/quran-data.js"></script>
 <script src="../assets/js/quran-roman.js"></script>
+<script src="../assets/js/quran-search.js"></script>
 <script>
 (function(){
 "use strict";
@@ -211,8 +212,13 @@ function target(i){
   return [Math.asin(1-2*t), n*2.39996323];
 }
 function resize(){
+  if(!cv.clientWidth)return;
   DPR=Math.min(devicePixelRatio||1,2);W=cv.clientWidth;H=cv.clientHeight;cv.width=W*DPR;cv.height=H*DPR;
-  var small=W<700;cx=W/2;cy=small?H*.68:H*.66;R=small?Math.min(W*.34,H*.2):Math.min(W*.22,H*.25);
+  var small=W<700;cx=W/2;
+  var barB=(document.querySelector(".bar").getBoundingClientRect().bottom-cv.getBoundingClientRect().top)||H*.35;
+  var room=H-barB-(small?90:40);
+  R=Math.max(90,Math.min(small?W*.36:W*.24,room/2.9));
+  cy=barB+R*1.45;
   bg=[];for(var i=0;i<Math.min(500,W*H/2500|0);i++)bg.push([Math.random()*W,Math.random()*H,Math.random()*1.1,Math.random()*TAU]);
 }
 function P(lat,lon){var x=Math.cos(lat)*Math.sin(lon+rot),y=Math.sin(lat),z=Math.cos(lat)*Math.cos(lon+rot);var y2=y*Math.cos(tilt)-z*Math.sin(tilt),z2=y*Math.sin(tilt)+z*Math.cos(tilt);return [cx+x*R,cy-y2*R,z2]}
@@ -255,7 +261,8 @@ function loop(t){
   if(galaxy.style.display!=="none")requestAnimationFrame(loop);
 }
 var galaxy=document.getElementById("galaxy"),tip=document.getElementById("tip");
-function pick(x,y){var best=-1,bd=1e9;for(var k=screenPts.length-1;k>=0;k--){var q=screenPts[k],p=q[1];if(p[2]<-.2)continue;var d=Math.hypot(p[0]-x,p[1]-y),r=Math.max(12,(q[2]||3)*2.5);if(d<r&&d<bd){bd=d;best=q[0]}}return best}
+var e_touch=matchMedia("(pointer: coarse)").matches;
+function pick(x,y){var best=-1,bd=1e9;for(var k=screenPts.length-1;k>=0;k--){var q=screenPts[k],p=q[1];if(p[2]<-.2)continue;var d=Math.hypot(p[0]-x,p[1]-y),r=Math.max(e_touch?22:14,(q[2]||3)*3);if(d<r&&d<bd){bd=d;best=q[0]}}return best}
 function showTip(i,x,y){
   if(i<0){tip.classList.remove("on");return}
   var s=SUR[i];tip.innerHTML='<span class="an" lang="ar">'+s[1]+'</span><b>'+(i+1)+' · '+s[0]+'</b><small>'+s[2]+' · '+s[3]+' verses · '+(s[4]?"Madani":"Makki")+' · Juz\' '+(juzOfSurah(i+1)+1)+'</small><div class="go">TAP TO OPEN ✦</div>';
@@ -269,7 +276,7 @@ cv.addEventListener("pointermove",function(e){
 });
 cv.addEventListener("pointerup",function(e){
   var r=cv.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top,d=drag;drag=null;cv.classList.remove("drag");
-  if(d&&d.moved<8){var i=pick(x,y);if(i>=0){if(e.pointerType!=="mouse"&&hover!==i){hover=i;spin=0;showTip(i,x,y);return}openSurah(i+1)}}
+  if(d&&d.moved<10){var i=pick(x,y);if(i>=0)openSurah(i+1)}
 });
 cv.addEventListener("pointerleave",function(){hover=-1;spin=1;showTip(-1)});
 function setOrder(o){order=o;document.getElementById("oMushaf").setAttribute("aria-pressed",o==="mushaf");document.getElementById("oRev").setAttribute("aria-pressed",o!=="mushaf");pos=SUR.map(function(_,i){return target(i)})}
@@ -282,7 +289,7 @@ function norm(s){return String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ
 qIn.addEventListener("input",function(){
   var v=qIn.value.trim(),nv=norm(v);results.innerHTML="";
   if(!v){results.classList.remove("on");hi=juzSel.value?surahsInJuz(+juzSel.value):null;return}
-  var m=[];SUR.forEach(function(s,i){if(String(i+1)===v||norm(s[0]).indexOf(nv)>=0||norm(s[2]).indexOf(nv)>=0||norm(s[1]).indexOf(norm(v))>=0)m.push(i)});
+  var m=AZQuranSearch(v,SUR);
   hi=m.map(function(i){return i+1});
   m.slice(0,12).forEach(function(i){var b=document.createElement("button");b.type="button";b.innerHTML='<span>'+(i+1)+' · '+SUR[i][0]+' <small style="color:var(--mut)">'+SUR[i][2]+'</small></span><span class="a" lang="ar">'+SUR[i][1]+'</span>';b.onclick=function(){openSurah(i+1)};results.appendChild(b)});
   if(!m.length)results.innerHTML='<div style="padding:12px 14px;color:var(--mut);font-weight:800">No surah found</div>';
@@ -337,7 +344,7 @@ function openSurah(n){
   load(n).then(function(v){if(S.n!==n)return;S.verses=v;renderRead();renderMemo();renderTad();setProg()}).catch(function(){
     document.getElementById("pRead").innerHTML='<div class="err">The surah could not be loaded. Please check your connection and try again.</div>'});
 }
-function closeSurah(){stop();surahEl.classList.remove("on");galaxy.style.display="";document.getElementById("backBtn").textContent="← Academy";document.getElementById("backBtn").href="academy.html";history.replaceState(null,"",location.pathname);document.title="Galaxy of the Qur'an";requestAnimationFrame(loop)}
+function closeSurah(){stop();surahEl.classList.remove("on");galaxy.style.display="";resize();hover=-1;spin=1;tip.classList.remove("on");document.getElementById("backBtn").textContent="← Academy";document.getElementById("backBtn").href="academy.html";history.replaceState(null,"",location.pathname);document.title="Galaxy of the Qur'an";requestAnimationFrame(loop)}
 document.getElementById("backBtn").addEventListener("click",function(e){if(surahEl.classList.contains("on")){e.preventDefault();closeSurah()}});
 document.getElementById("prevS").onclick=function(){if(S.n>1)openSurah(S.n-1)};
 document.getElementById("nextS").onclick=function(){if(S.n<114)openSurah(S.n+1)};
