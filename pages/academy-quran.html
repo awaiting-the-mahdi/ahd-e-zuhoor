@@ -137,6 +137,14 @@ select.pill{appearance:none;padding-right:30px;background:rgba(13,20,52,.85) url
 .rw{border-radius:8px;padding:0 2px;transition:background .15s,color .15s}
 .rw.on{background:rgba(79,207,143,.32);color:#eafff3;box-shadow:0 0 0 2px rgba(79,207,143,.5)}
 .tad .card .tr{margin-top:8px}
+.tf .card{padding:20px;border-radius:18px;background:linear-gradient(135deg,rgba(255,201,77,.12),rgba(13,20,52,.6));border:1.5px solid rgba(255,201,77,.45);text-align:left}
+.tf h3{margin:0 0 4px;font-family:"Cormorant Garamond",serif;font-size:1.6rem}.tf .ur{font-family:"Noto Nastaliq Urdu",serif;direction:rtl;color:var(--gold);font-size:1.1rem;margin:0 0 8px}
+.tf p{color:#dfe6ff;font-weight:600;line-height:1.6;margin:6px 0}
+.tf a.btn{display:inline-block;text-decoration:none;margin-top:8px}
+.tf .vg{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.tf .vg a{min-width:44px;padding:9px 10px;border-radius:12px;border:1.5px solid var(--line);background:rgba(13,20,52,.8);color:#fff;font-weight:900;text-align:center;text-decoration:none}
+.tf .vg a:hover,.tf .vg a:focus-visible{border-color:var(--gold);color:var(--gold)}
+.tf .src{color:var(--mut);font-size:.8rem;font-weight:700;margin-top:14px}
 .tad .nav{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
 .tad .nav .cnt{font-weight:900;color:var(--mut);font-size:.85rem;margin-right:auto}
 .tad .bar2{height:6px;border-radius:9px;background:rgba(255,255,255,.1);margin:0 0 14px;overflow:hidden}.tad .bar2 i{display:block;height:100%;background:var(--em)}
@@ -223,11 +231,13 @@ select.pill{appearance:none;padding-right:30px;background:rgba(13,20,52,.85) url
         <button class="tab" role="tab" aria-selected="false" data-t="memo" type="button">Memorise</button>
         <button class="tab" role="tab" aria-selected="false" data-t="tad" type="button">Tadabbur</button>
         <button class="tab" role="tab" aria-selected="false" data-t="tj" type="button">Tajweed rules</button>
+        <button class="tab" role="tab" aria-selected="false" data-t="tf" type="button">Tafseer</button>
       </div>
       <section class="panel on" data-p="read" id="pRead"></section>
       <section class="panel memo" data-p="memo" id="pMemo"></section>
       <section class="panel tad" data-p="tad" id="pTad"></section>
       <section class="panel tj" data-p="tj" id="pTj"></section>
+      <section class="panel tf" data-p="tf" id="pTf"></section>
       <p class="credits">Arabic text: Uthmani script (Tanzil). English translation: Ali Quli Qarai. Urdu translation: Allama Syed Zeeshan Haider Jawadi. Text served by api.alquran.cloud; recitations and word timings from everyayah.com and Quran.com. Tajweed colours: Tanzil tajweed edition (Global Quran).</p>
     </main>
   </div>
@@ -402,9 +412,9 @@ function openSurah(n){
   document.getElementById("sStar").setAttribute("style",starStyle(n-1));
   document.getElementById("sAr").textContent=s[1];document.getElementById("sName").textContent=s[0];
   document.getElementById("sMeta").textContent=s[2]+" · Surah "+n+" · "+s[3]+" verses · "+(s[4]?"Madani":"Makki");
-  document.getElementById("pRead").innerHTML='<div class="loading">Opening the surah…</div>';document.getElementById("pMemo").innerHTML="";document.getElementById("pTad").innerHTML="";document.getElementById("pTj").innerHTML="";
+  document.getElementById("pRead").innerHTML='<div class="loading">Opening the surah…</div>';document.getElementById("pMemo").innerHTML="";document.getElementById("pTad").innerHTML="";document.getElementById("pTj").innerHTML="";document.getElementById("pTf").innerHTML="";
   history.replaceState(null,"","#surah-"+n);document.title=s[0]+" · Galaxy of the Qur'an";
-  segLoad(rec(),n);load(n).then(function(v){if(S.n!==n)return;S.verses=v;renderRead();renderMemo();renderTad();setProg();if(curTab()==="tj")renderTj()}).catch(function(){
+  segLoad(rec(),n);load(n).then(function(v){if(S.n!==n)return;S.verses=v;renderRead();renderMemo();renderTad();renderTf();setProg();if(curTab()==="tj")renderTj()}).catch(function(){
     document.getElementById("pRead").innerHTML='<div class="err">The surah could not be loaded. Please check your connection and try again.</div>'});
 }
 function closeSurah(){stop();var ti=document.getElementById("tjInfo");if(ti)ti.classList.remove("on");surahEl.classList.remove("on");galaxy.style.display="";document.getElementById("backBtn").textContent="← Academy";document.getElementById("backBtn").href="academy.html";history.replaceState(null,"",location.pathname);document.title="Galaxy of the Qur'an";
@@ -577,6 +587,17 @@ function renderTj(){
   }).catch(function(){if(S.n===n)p.innerHTML='<div class="err">The tajweed text could not be loaded. Please check your connection and try again.</div>'});
 }
 function playOne(i){stop();S.idx=i;setProg();audio.src=audioUrl(rec(),S.n,S.verses[i].n);audio.play().catch(function(){});pinfo.textContent="Verse "+S.verses[i].n+" · "+rec().name}
+
+/* ---- Tafseer: Tafseer-e-Namoona (Ayatollah Nasir Makarem Shirazi), read on tafseerenamoona.net ---- */
+function renderTf(){
+  var n=S.n,base="https://www.tafseerenamoona.net/surahs/"+n;
+  document.getElementById("pTf").innerHTML='<div class="card"><h3>Tafseer-e-Namoona</h3><p class="ur" lang="ur">تفسیرِ نمونہ</p>'+
+    '<p>The well-known Shia commentary of the Qur\'an by <b>Ayatollah Nasir Makarem Shirazi</b> and a group of scholars in Qom. It explains each verse with the narrations of the Ahl al-Bayt (a.s.).</p>'+
+    '<p>Read it in Urdu on tafseerenamoona.net. It opens in a new tab.</p>'+
+    '<a class="btn" href="'+base+'" target="_blank" rel="noopener">Read the tafseer of Surah '+esc(SUR[n-1][0])+' ↗</a></div>'+
+    '<span class="lab">Go straight to a verse</span><div class="vg">'+S.verses.map(function(v){return '<a href="'+base+'#ayah-'+v.n+'" target="_blank" rel="noopener" aria-label="Tafseer of verse '+v.n+'">'+v.n+'</a>'}).join("")+'</div>'+
+    '<p class="src">Some verses are explained together with the verses after them; the site shows a note when that happens.</p>';
+}
 
 /* ---- start ---- */
 var rT;addEventListener("resize",function(){if(galaxy.style.display==="none")return;clearTimeout(rT);rT=setTimeout(buildPath,200)});
