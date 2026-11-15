@@ -20,7 +20,7 @@
     },
     {
       number: "04",
-      title: "Hadiths",
+      title: "Duas & Hadiths",
       url: "pages/hadiths.html"
     },
     {
