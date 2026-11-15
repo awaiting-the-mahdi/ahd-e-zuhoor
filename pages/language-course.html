@@ -331,10 +331,12 @@
 var V=AZ.voice, S=AZ.store;
 var params=new URLSearchParams(location.search);
 var cid=params.get("c")||S.get("lang-course","arabic");
+if(window.AZ_COURSE_ALIAS&&AZ_COURSE_ALIAS[cid])cid=AZ_COURSE_ALIAS[cid];
 var C=window.AZ_COURSES.filter(function(c){return c.id===cid})[0]||window.AZ_COURSES[0];
 var ALL=[];C.lessons.forEach(function(l,li){l.words.forEach(function(w){w.lesson=li;ALL.push(w)})});
 var RTL=C.dir==="rtl";
-function wHTML(w,cls){return '<bdi class="'+(cls||"")+'"'+(RTL?' lang="ar" dir="rtl"':'')+'>'+w.w+'</bdi>'}
+/* data-no-ur: the course's own words are never translated by the site's Urdu switch */
+function wHTML(w,cls){return '<bdi data-no-ur class="'+(cls||"")+'"'+(RTL?' lang="ar" dir="rtl"':'')+'>'+w.w+'</bdi>'}
 
 document.title=C.name+" · Language Course";
 document.documentElement.style.setProperty("--accent",C.color);
@@ -555,10 +557,10 @@ function showLine(i,silent){
   [].forEach.call(seek.children,function(s,k){s.className=k<i?"done":k===i?"cur":""});
   if(P.scene==null)setBoard(line);
   var who=line.k==="both"?"Zahra & Ali":line.k==="g"?"Zahra":"Ali";
-  var txt=line.pron?wHTML(line.w)+(RTL||C.voice.indexOf("en")!==0?' <span style="color:var(--gold)">('+line.w.tr+')</span>':""):line.text;
+  var txt=line.pron?wHTML(line.w)+(RTL||C.voice.indexOf("en")!==0||C.id==="english"?' <span style="color:var(--gold)">('+line.w.tr+')</span>':""):line.text;
   if(line.t){
     if(line.lang==="en")txt=line.t;
-    else txt='<bdi class="nat"'+(RTL?' lang="ar" dir="rtl"':'')+'>'+line.t+'</bdi>'+(line.tr?'<span class="ctr">'+line.tr+'</span>':'')+(line.en?'<span class="cen">'+line.en+'</span>':'');
+    else txt='<bdi data-no-ur class="nat"'+(RTL?' lang="ar" dir="rtl"':'')+'>'+line.t+'</bdi>'+(line.tr?'<span class="ctr">'+line.tr+'</span>':'')+(line.en?'<span class="cen">'+line.en+'</span>':'');
   }
   caption.innerHTML='<span class="who '+(line.k==="b"?"boy":"")+'">'+who+'</span><span>'+txt+'</span>';
   if(silent)return;

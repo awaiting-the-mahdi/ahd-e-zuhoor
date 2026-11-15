@@ -2,6 +2,7 @@
   AHD-E-ZUHOOR — Language Courses data
   ------------------------------------
   Edit this file to change the five courses, their lessons and words.
+  (When the site is read in Urdu, the Urdu course is replaced by the English course at the end of this file.)
   Every page (the welcome flow, videos, quizzes and vocabulary) is built from it.
 
   Course fields
@@ -450,3 +451,90 @@ window.AZ_COURSES = [
     ]
   }
 ];
+
+/*
+  English for Urdu speakers.
+  Shown in place of the Urdu course when the site is read in Urdu (AZ_LANG === "ur").
+  Fields as above, except: tr is how the English sounds, written in Urdu script, and
+  en / m / tip are in Urdu (they are the learner's own language here).
+*/
+window.AZ_COURSE_ENGLISH = {
+  id: "english",
+  name: "English",
+  native: "English",
+  glyph: "En",
+  voice: "en-US",
+  dir: "ltr",
+  color: "#7fb8ff",
+  tagline: "انگریزی بولیں، پڑھیں اور سمجھیں",
+  scenes: [
+    {
+      "title": "In the Library",
+      "place": "library",
+      "lines": [
+        { "k": "a", "t": "Assalamu alaykum, Zahra!", "tr": "اَلسّلامُ علیکم، زہرا!", "en": "السلام علیکم، زہرا!" },
+        { "k": "z", "t": "Wa alaykum assalam, Ali! How are you?", "tr": "وعلیکم السلام، علی! ہاؤ آر یو؟", "en": "وعلیکم السلام، علی! آپ کیسے ہیں؟" },
+        { "k": "a", "t": "I am fine, thank you. What are you reading?", "tr": "آئی ایم فائن، تھینک یو۔ وَٹ آر یو رِیڈنگ؟", "en": "میں ٹھیک ہوں، شکریہ۔ آپ کیا پڑھ رہی ہیں؟" },
+        { "k": "z", "t": "I am reading a book about the stars.", "tr": "آئی ایم رِیڈنگ اے بُک اَباؤٹ دی اسٹارز۔", "en": "میں ستاروں کے بارے میں ایک کتاب پڑھ رہی ہوں۔" },
+        { "k": "a", "t": "Can I read with you?", "tr": "کین آئی رِیڈ وِد یو؟", "en": "کیا میں آپ کے ساتھ پڑھ سکتا ہوں؟" },
+        { "k": "z", "t": "Yes, of course! Please sit down.", "tr": "یس، آف کورس! پلیز سِٹ ڈاؤن۔", "en": "جی ہاں، ضرور! براہِ کرم بیٹھ جائیں۔" },
+        { "k": "a", "t": "Thank you, Zahra.", "tr": "تھینک یو، زہرا۔", "en": "شکریہ، زہرا۔" },
+        { "k": "z", "t": "You are welcome.", "tr": "یو آر ویلکم۔", "en": "کوئی بات نہیں۔" }
+      ]
+    },
+    {
+      "title": "At the Masjid",
+      "place": "masjid",
+      "lines": [
+        { "k": "z", "t": "Look, Ali! The masjid is so beautiful.", "tr": "لُک، علی! دی مسجد اِز سو بیوٹیفُل۔", "en": "دیکھیں علی! مسجد کتنی خوبصورت ہے۔" },
+        { "k": "a", "t": "It is time to pray. Let us make wudu.", "tr": "اِٹ اِز ٹائم ٹو پرے۔ لیٹ اَس میک وضو۔", "en": "نماز کا وقت ہو گیا ہے۔ آئیں وضو کر لیں۔" },
+        { "k": "z", "t": "After the prayer, we will read the Qur'an.", "tr": "آفٹر دی پریئر، وی وِل رِیڈ دی قرآن۔", "en": "نماز کے بعد ہم قرآن پڑھیں گے۔" },
+        { "k": "a", "t": "And we will pray for Imam al-Mahdi.", "tr": "اینڈ وی وِل پرے فار امام المہدی۔", "en": "اور ہم امام مہدی کے لیے دعا کریں گے۔" },
+        { "k": "z", "t": "Yes. May Allah hasten his return.", "tr": "یس۔ مے اللہ ہیسن ہِز رِٹرن۔", "en": "جی ہاں۔ اللہ ان کے ظہور میں جلدی فرمائے۔" },
+        { "k": "a", "t": "Ameen!", "tr": "آمین!", "en": "آمین!" }
+      ]
+    }
+  ],
+  lessons: [
+    { title: "Greetings", words: [
+      { w: "Hello", tr: "ہیلو", m: "سلام / خوش آمدید" },
+      { w: "Good morning", tr: "گُڈ مارننگ", m: "صبح بخیر" },
+      { w: "Thank you", tr: "تھینک یو", m: "شکریہ", tip: "کسی کا شکریہ ادا کرنا اچھے اخلاق کی نشانی ہے۔" },
+      { w: "Please", tr: "پلیز", m: "براہِ کرم" },
+      { w: "Goodbye", tr: "گُڈ بائے", m: "خدا حافظ" }
+    ]},
+    { title: "My Family", words: [
+      { w: "Mother", tr: "مَدَر", m: "امی / ماں", tip: "جنت ماں کے قدموں تلے ہے۔" },
+      { w: "Father", tr: "فادَر", m: "ابو / والد" },
+      { w: "Brother", tr: "بْرَدَر", m: "بھائی" },
+      { w: "Sister", tr: "سِسٹَر", m: "بہن" },
+      { w: "Friend", tr: "فْرینڈ", m: "دوست" }
+    ]},
+    { title: "Words of the Heart", words: [
+      { w: "Knowledge", tr: "نالِج", m: "علم" },
+      { w: "Light", tr: "لائٹ", m: "روشنی / نور" },
+      { w: "Patience", tr: "پیشَنس", m: "صبر" },
+      { w: "Hope", tr: "ہوپ", m: "امید", tip: "انتظار امید کے ساتھ ہوتا ہے۔" },
+      { w: "Justice", tr: "جَسٹِس", m: "عدل / انصاف", tip: "امام مہدی زمین کو عدل سے بھر دیں گے۔" }
+    ]},
+    { title: "At the Masjid", words: [
+      { w: "Prayer", tr: "پریئر", m: "نماز / دعا" },
+      { w: "Book", tr: "بُک", m: "کتاب" },
+      { w: "Read", tr: "رِیڈ", m: "پڑھنا" },
+      { w: "Learn", tr: "لَرن", m: "سیکھنا" },
+      { w: "Wait", tr: "ویٹ", m: "انتظار کرنا" }
+    ]}
+  ]
+};
+/* in Urdu, the English course takes the Urdu course's place */
+window.AZ_COURSE_ALIAS = {};
+(function () {
+  if (window.AZ_LANG === "ur") {
+    for (var i = 0; i < window.AZ_COURSES.length; i++) {
+      if (window.AZ_COURSES[i].id === "urdu") { window.AZ_COURSES[i] = window.AZ_COURSE_ENGLISH; break; }
+    }
+    window.AZ_COURSE_ALIAS.urdu = "english";
+  } else {
+    window.AZ_COURSE_ALIAS.english = "urdu";
+  }
+})();

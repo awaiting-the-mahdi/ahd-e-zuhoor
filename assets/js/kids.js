@@ -294,6 +294,11 @@
     say: function (text, o) {
       o = o || {};
       var kid = o.kid, lang = o.lang || "en-GB", who = o.who || (kid && kid.type) || "girl";
+      /* site in Urdu: the guides speak their narration in Urdu when the device has an Urdu voice */
+      if (window.AZ_LANG === "ur" && lang === "en-GB" && window.AZ_UR && pick("ur-PK")) {
+        var ut = window.AZ_UR.t(text);
+        if (ut !== text) { text = ut; lang = "ur-PK"; }
+      }
       var est = Math.max(900, text.length * 62 + 500);
       return new Promise(function (res) {
         var done = false;

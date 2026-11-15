@@ -270,7 +270,7 @@ h1 small{display:block;font-size:.5em;font-style:italic;font-weight:500;color:#f
 <main>
   <section class="hero">
     <span class="eyebrow">School 03 · Digital Learning Academy</span>
-    <h1 aria-label="School of Islamic Jurisprudence (Fiqh)"><span id="tw">School of Islamic Jurisprudence</span><small>(Fiqh) · The Golden Ring of the Day</small></h1>
+    <h1 aria-label="School of Islamic Jurisprudence (Fiqh)"><span id="tw" data-ur="مدرسۂ فقہِ اسلامی">School of Islamic Jurisprudence</span><small>(Fiqh) · The Golden Ring of the Day</small></h1>
     <p class="ar" lang="ar" dir="rtl">مدرسة الفقه الإسلامي</p>
     <p class="lead shadow-text"><b>Belief lives in what we do.</b> Follow the sun around the golden ring: all ten Furu' al-Din, with Taharah and everyday fiqh as their foundations.</p>
     <span class="marja">All rulings follow <a href="https://www.sistani.org/english/" target="_blank" rel="noopener">Ayatollah al-Sistani</a></span>
@@ -368,11 +368,12 @@ muteBtn.onclick=function(){V.setMuted(!V.muted);drawMute()};drawMute();
 
 /* title */
 (function(){
-  var el=document.getElementById("tw"),h="",k=0;
-  el.textContent.split(" ").forEach(function(w){
+  var el=document.getElementById("tw"),h="",k=0,UR=window.AZ_LANG==="ur"&&el.dataset.ur;if(UR)el.dir="rtl";
+  (UR||el.textContent).split(" ").forEach(function(w){
     h+='<span style="display:inline-block;white-space:nowrap">';
-    for(var i=0;i<w.length;i++){var a=Math.random()*TAU,d=200+Math.random()*300;
-      h+='<span class="ch" style="--i:'+k+';--x:'+(Math.cos(a)*d|0)+';--y:'+(Math.sin(a)*d|0)+'"><i>'+w[i]+'</i></span>';k++}
+    var parts=UR?[w]:w.split("");
+    for(var i=0;i<parts.length;i++){var a=Math.random()*TAU,d=200+Math.random()*300;
+      h+='<span class="ch" style="--i:'+k+';--x:'+(Math.cos(a)*d|0)+';--y:'+(Math.sin(a)*d|0)+'"><i>'+parts[i]+'</i></span>';k++}
     h+='</span> ';
   });
   el.innerHTML=h;el.setAttribute("aria-hidden","true");
