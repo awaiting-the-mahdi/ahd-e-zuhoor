@@ -20,10 +20,9 @@ a{color:inherit}
 .back:hover{color:#fff}
 .sh{text-shadow:0 1px 2px #000,0 0 12px rgba(3,4,13,.9)}
 
-/* ---------- galaxy view ---------- */
-#galaxy{position:relative;min-height:100vh;min-height:100svh}
-#globe{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;cursor:grab}
-#globe.drag{cursor:grabbing}
+/* ---------- path view ---------- */
+#galaxy{position:relative;min-height:100vh;min-height:100svh;padding-bottom:60px}
+#sky{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
 .top{position:relative;z-index:2;text-align:center;padding:76px 16px 0;pointer-events:none}
 .eyebrow{font-size:.72rem;font-weight:900;letter-spacing:.32em;color:var(--gold);text-transform:uppercase;opacity:0;animation:rise 1.2s .2s forwards}
 h1{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:clamp(2.3rem,7vw,3.6rem);line-height:1;margin:.2em 0 .05em;background:linear-gradient(100deg,#fff,#b8ffd9 40%,#ffc94d 60%,#fff);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;opacity:0;animation:fade 1.4s .35s forwards,shine 9s linear infinite}
@@ -32,11 +31,11 @@ h1{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:clamp(2.3rem
 .top .ar{font-family:Amiri,serif;color:var(--gold);font-size:1.5rem;margin:0;opacity:0;animation:rise 1.4s .6s forwards}
 @keyframes rise{from{opacity:0;transform:translateY(20px);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
 @keyframes shine{to{background-position:250% 0}}
-.bar{position:relative;z-index:3;display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:14px 16px 0;opacity:0;animation:rise 1.2s .9s forwards}
-.pill{padding:9px 16px;border-radius:99px;border:1.5px solid var(--line);background:rgba(13,20,52,.85);font:inherit;font-weight:800;font-size:.85rem;color:#fff;cursor:pointer}
+.bar{position:relative;z-index:6;display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:14px 0 0;padding:10px 16px;background:linear-gradient(180deg,rgba(5,10,28,.95),rgba(5,10,28,.8));backdrop-filter:blur(8px);opacity:0;animation:rise 1.2s .9s forwards}
+.pill{padding:9px 14px;border-radius:99px;border:1.5px solid var(--line);background:rgba(13,20,52,.85);font:inherit;font-weight:800;font-size:.82rem;color:#fff;cursor:pointer}
 .pill[aria-pressed=true]{background:var(--em);color:#04261a;border-color:var(--em)}
 .search{position:relative}
-.search input{width:min(300px,80vw);padding:9px 16px;border-radius:99px;border:1.5px solid var(--line);background:rgba(13,20,52,.85);color:#fff;font:inherit;font-weight:700;font-size:.85rem}
+.search input{width:min(280px,86vw);padding:9px 16px;border-radius:99px;border:1.5px solid var(--line);background:rgba(13,20,52,.85);color:#fff;font:inherit;font-weight:700;font-size:.85rem}
 .search input:focus{outline:none;border-color:var(--gold)}
 .results{position:absolute;left:0;right:0;top:calc(100% + 6px);max-height:300px;overflow:auto;border-radius:16px;background:rgba(8,14,40,.97);border:1.5px solid var(--line);display:none;z-index:10}
 .results.on{display:block}
@@ -44,14 +43,42 @@ h1{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:clamp(2.3rem
 .results button:hover,.results button:focus{background:rgba(79,207,143,.15);outline:none}
 .results .a{font-family:Amiri,serif;color:var(--gold);font-size:1.15rem}
 select.pill{appearance:none;padding-right:30px;background:rgba(13,20,52,.85) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23fff' stroke-width='2' fill='none'/%3E%3C/svg%3E") no-repeat right 12px center}
-.tip{position:absolute;z-index:4;padding:12px 16px;border-radius:16px;background:rgba(8,14,40,.94);border:1.5px solid var(--gold);box-shadow:0 0 30px rgba(255,201,77,.35);min-width:220px;pointer-events:none;opacity:0;transform:translateY(6px);transition:opacity .2s,transform .2s}
-.tip.on{opacity:1;transform:none}
-.tip b{font-size:1.05rem}.tip .an{font-family:Amiri,serif;font-size:1.5rem;color:var(--gold);float:right;margin-left:12px;line-height:1.2}
-.tip small{display:block;color:var(--mut);font-weight:800;margin-top:2px}
-.tip .go{margin-top:8px;font-size:.78rem;color:var(--em);font-weight:900;letter-spacing:.08em}
-.legend{position:absolute;left:16px;bottom:16px;z-index:3;padding:10px 14px;border-radius:14px;background:rgba(8,14,40,.82);border:1.5px solid var(--line);font-size:.78rem;font-weight:800;line-height:1.85}
-.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px;vertical-align:-1px}
-.hint{position:absolute;right:16px;bottom:18px;z-index:3;color:var(--mut);font-weight:800;font-size:.8rem;text-align:right;line-height:1.6}
+.stats{position:relative;z-index:2;display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:14px 16px 0}
+.stat{padding:8px 14px;border-radius:14px;background:rgba(13,20,52,.85);border:1.5px solid var(--line);font-weight:900;font-size:.85rem}
+.stat b{color:var(--gold);font-size:1.05rem}
+.legend2{position:relative;z-index:2;text-align:center;color:var(--mut);font-weight:800;font-size:.78rem;margin:10px 16px 0}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin:0 6px 0 12px;vertical-align:-1px}
+#path{position:relative;z-index:2;max-width:760px;margin:10px auto 0}
+#path svg.trail{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.stop{position:absolute;width:150px;margin-left:-75px;text-align:center;border:0;background:none;color:#fff;font:inherit;cursor:pointer;padding:0;-webkit-tap-highlight-color:transparent}
+.stop .pl{position:relative;width:var(--s);height:var(--s);margin:0 auto 6px;border-radius:50%;display:grid;place-items:center;font-weight:900;font-size:.95rem;color:#0b0f2e;
+  background:radial-gradient(circle at 35% 30%,#fff,var(--c) 45%,color-mix(in srgb,var(--c) 40%,#0b0f2e));box-shadow:0 0 18px var(--c),inset -6px -8px 14px rgba(0,0,0,.3);transition:transform .25s cubic-bezier(.2,1.6,.4,1)}
+.stop:hover .pl,.stop:focus-visible .pl{transform:scale(1.12)}
+.stop.ahead .pl{filter:saturate(.5) brightness(.7)}
+.stop .nm{display:block;font-weight:800;font-size:.85rem;text-shadow:0 1px 2px #000}
+.stop .an{display:block;font-family:Amiri,serif;color:var(--gold);font-size:1rem;line-height:1.3}
+.stop .ok{position:absolute;right:-4px;top:-4px;width:24px;height:24px;border-radius:50%;background:var(--em);color:#04261a;font-size:.8rem;display:grid;place-items:center;font-weight:900;box-shadow:0 0 10px rgba(79,207,143,.8)}
+.stop .ring{position:absolute;inset:-7px;border-radius:50%;background:conic-gradient(var(--em) calc(var(--p)*1turn),rgba(255,255,255,.12) 0);-webkit-mask:radial-gradient(circle,transparent calc(50% - 3px),#000 calc(50% - 2px));mask:radial-gradient(circle,transparent calc(50% - 3px),#000 calc(50% - 2px))}
+.stop .start{position:absolute;left:50%;top:-38px;translate:-50% 0;padding:5px 12px;border-radius:10px;background:#fff;color:#1d1f45;font-weight:900;font-size:.75rem;white-space:nowrap;box-shadow:0 4px 0 rgba(0,0,0,.25);animation:bounce 1.6s ease-in-out infinite}
+.stop .start::after{content:"";position:absolute;left:50%;bottom:-6px;translate:-50% 0;border:6px solid transparent;border-top-color:#fff;border-bottom:0}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.stop.cur .pl{animation:glow 2s ease-in-out infinite}
+@keyframes glow{0%,100%{box-shadow:0 0 18px var(--c)}50%{box-shadow:0 0 40px var(--c),0 0 70px var(--c)}}
+.stop.hit .pl{outline:3px solid var(--gold);outline-offset:6px}
+.stop.dim{opacity:.25}
+.rocket{position:absolute;width:34px;height:42px;margin:-21px 0 0 -17px;z-index:5;pointer-events:none;transition:left 1.4s cubic-bezier(.5,0,.4,1),top 1.4s cubic-bezier(.5,0,.4,1)}
+.toast{position:fixed;left:50%;bottom:24px;translate:-50% 0;z-index:50;padding:12px 18px;border-radius:16px;background:#fff;color:#1d1f45;font-weight:900;box-shadow:0 10px 30px rgba(0,0,0,.4);opacity:0;transform:translateY(20px);transition:all .4s}
+.toast.on{opacity:1;transform:none}
+@media (max-width:600px){
+  .top{padding-top:64px}.eyebrow{font-size:.6rem;letter-spacing:.2em}.top .ar{font-size:1.2rem}
+  .stats{gap:6px;margin-top:10px}.stat{padding:5px 9px;font-size:.7rem;border-radius:10px}.stat b{font-size:.85rem}
+  .bar{gap:6px;padding:8px 10px}
+  .bar [data-o]{flex:1 1 0;padding:7px 4px;font-size:.7rem}
+  .search{flex:1 1 60%}.search input{width:100%;font-size:.8rem;padding:8px 12px}
+  select.pill{font-size:.75rem;padding:7px 26px 7px 10px}
+  .legend2{font-size:.68rem}
+  .lg{display:none}
+}
 
 /* ---------- surah view ---------- */
 #surah{display:none;position:relative;z-index:5;min-height:100vh;padding:76px 16px 120px}
@@ -123,23 +150,25 @@ select.pill{appearance:none;padding-right:30px;background:rgba(13,20,52,.85) url
 <body>
 <a class="back" id="backBtn" href="academy.html">← Academy</a>
 
-<section id="galaxy" aria-label="The 114 surahs as a celestial globe">
-  <canvas id="globe" aria-hidden="true"></canvas>
+<canvas id="sky" aria-hidden="true"></canvas>
+<section id="galaxy" aria-label="The Qur'an learning path">
   <div class="top sh">
     <div class="eyebrow">School 04 · Digital Learning Academy</div>
     <h1>The Galaxy of the Qur'an</h1>
     <p class="ar" lang="ar" dir="rtl">مدرسة الدراسات القرآنية</p>
   </div>
+  <div class="stats" id="stats"></div>
   <div class="bar">
-    <button class="pill" id="oMushaf" type="button" aria-pressed="true">Mushaf order</button>
-    <button class="pill" id="oRev" type="button" aria-pressed="false">Order of revelation</button>
+    <button class="pill" data-o="learn" type="button" aria-pressed="true">Short surahs<span class="lg"> first</span></button>
+    <button class="pill" data-o="mushaf" type="button" aria-pressed="false">Mushaf<span class="lg"> order</span></button>
+    <button class="pill" data-o="revelation" type="button" aria-pressed="false">Revelation<span class="lg"> order</span></button>
     <div class="search"><input id="q" type="search" placeholder="🔍 Search a surah, e.g. Yasin or يس" aria-label="Search a surah" autocomplete="off"><div class="results" id="results" role="listbox"></div></div>
-    <select class="pill" id="juzSel" aria-label="Highlight a juz'"><option value="">Juz' — all</option></select>
+    <select class="pill" id="juzSel" aria-label="Show a juz'"><option value="">Juz' — all</option></select>
   </div>
-  <div class="tip" id="tip" role="status"></div>
-  <div class="legend sh"><span class="dot" style="background:#ffc94d;box-shadow:0 0 8px #ffc94d"></span>Makki surah<br><span class="dot" style="background:#7fb8ff;box-shadow:0 0 8px #7fb8ff"></span>Madani surah<br><span class="dot" style="background:#fff;width:6px;height:6px;margin:0 10px 0 2px"></span>Star size = number of verses</div>
-  <div class="hint sh">Drag to turn the globe<br>Tap a star to open its surah</div>
+  <p class="legend2"><span class="dot" style="background:#ffc94d;box-shadow:0 0 8px #ffc94d"></span>Makki <span class="dot" style="background:#7fb8ff;box-shadow:0 0 8px #7fb8ff"></span>Madani · Listen to a whole surah to complete it ✓</p>
+  <div id="path"></div>
 </section>
+<div class="toast" id="toast" role="status"></div>
 
 <section id="surah" aria-live="polite">
   <div class="wrap">
@@ -202,95 +231,84 @@ var juzSel=document.getElementById("juzSel");
 for(var j=1;j<=30;j++){var o=document.createElement("option");o.value=j;o.textContent="Juz' "+j;juzSel.appendChild(o)}
 function surahsInJuz(j){var a=Q.juz[j-1],b=Q.juz[j]||[115,1],out=[];for(var s=a[0];s<=b[0];s++){if(s===b[0]&&b[1]===1)break;if(s<=114)out.push(s)}return out}
 
-/* ================= GLOBE ================= */
-var cv=document.getElementById("globe"),c=cv.getContext("2d"),W,H,DPR,cx,cy,R;
-var rot=0.9,tilt=-0.32,vel=reduce?0:0.0016,drag=null,hover=-1,hi=null,order="mushaf",spin=1;
-var bg=[];
-var pos=SUR.map(function(_,i){return target(i)}), cur=pos.map(function(p){return p.slice()});
-function target(i){
-  var n=order==="mushaf"?i:SUR[i][5]-1, t=(n+.5)/114;
-  return [Math.asin(1-2*t), n*2.39996323];
+/* ================= LEARNING PATH ================= */
+var galaxy=document.getElementById("galaxy"),pathEl=document.getElementById("path");
+var done=store("done")||{}, heard=store("heard")||{}, order=store("order")||"learn", hi=null;
+function seq(){
+  var all=SUR.map(function(_,i){return i+1});
+  if(order==="mushaf")return all;
+  if(order==="revelation")return all.slice().sort(function(a,b){return SUR[a-1][5]-SUR[b-1][5]});
+  return [1].concat(all.slice(1).reverse()); // Al-Fatiha, then An-Nas back to Al-Baqarah
 }
-function resize(){
-  if(!cv.clientWidth)return;
-  DPR=Math.min(devicePixelRatio||1,2);W=cv.clientWidth;H=cv.clientHeight;cv.width=W*DPR;cv.height=H*DPR;
-  var small=W<700;cx=W/2;
-  var barB=(document.querySelector(".bar").getBoundingClientRect().bottom-cv.getBoundingClientRect().top)||H*.35;
-  var room=H-barB-(small?90:40);
-  R=Math.max(90,Math.min(small?W*.36:W*.24,room/2.9));
-  cy=barB+R*1.45;
-  bg=[];for(var i=0;i<Math.min(500,W*H/2500|0);i++)bg.push([Math.random()*W,Math.random()*H,Math.random()*1.1,Math.random()*TAU]);
+function progOf(n){var h=heard[n]||[];return Math.min(1,h.length/SUR[n-1][3])}
+function streak(){
+  var days=store("days")||[],d=new Date(),k=0;
+  for(;;){var key=d.toISOString().slice(0,10);if(days.indexOf(key)<0)break;k++;d.setDate(d.getDate()-1)}
+  return k;
 }
-function P(lat,lon){var x=Math.cos(lat)*Math.sin(lon+rot),y=Math.sin(lat),z=Math.cos(lat)*Math.cos(lon+rot);var y2=y*Math.cos(tilt)-z*Math.sin(tilt),z2=y*Math.sin(tilt)+z*Math.cos(tilt);return [cx+x*R,cy-y2*R,z2]}
-function col(i){return SUR[i][4]?"127,184,255":"255,201,77"}
-var screenPts=[];
-function draw(t){
-  c.setTransform(DPR,0,0,DPR,0,0);c.clearRect(0,0,W,H);
-  for(var i=0;i<bg.length;i++){var b=bg[i];c.fillStyle="rgba(255,255,255,"+(.25+.35*Math.abs(Math.sin(t/1400+b[3])))+")";c.fillRect(b[0],b[1],b[2],b[2])}
-  var g=c.createRadialGradient(cx,cy,R*.1,cx,cy,R*1.3);g.addColorStop(0,"rgba(79,207,143,.2)");g.addColorStop(.75,"rgba(20,60,90,.12)");g.addColorStop(1,"rgba(0,0,0,0)");c.fillStyle=g;c.beginPath();c.arc(cx,cy,R*1.3,0,TAU);c.fill();
-  c.lineWidth=1;c.strokeStyle="rgba(255,201,77,.11)";
-  for(var la=-60;la<=60;la+=30){c.beginPath();for(var lo=0;lo<=360;lo+=6){var p=P(la*Math.PI/180,lo*Math.PI/180);lo?c.lineTo(p[0],p[1]):c.moveTo(p[0],p[1])}c.stroke()}
-  for(var lo=0;lo<360;lo+=30){c.beginPath();for(var la2=-90;la2<=90;la2+=6){var p2=P(la2*Math.PI/180,lo*Math.PI/180);la2>-90?c.lineTo(p2[0],p2[1]):c.moveTo(p2[0],p2[1])}c.stroke()}
-  // astrolabe rings + juz' marks
-  c.strokeStyle="rgba(255,201,77,.55)";c.lineWidth=2;c.beginPath();c.arc(cx,cy,R*1.16,0,TAU);c.stroke();
-  c.strokeStyle="rgba(255,201,77,.22)";c.lineWidth=1;c.beginPath();c.arc(cx,cy,R*1.25,0,TAU);c.stroke();
-  c.font="800 11px Nunito";c.textAlign="center";c.textBaseline="middle";
-  var hj=+juzSel.value||0;
-  for(var k=0;k<30;k++){var a=k/30*TAU-Math.PI/2+t/90000;var on=hj===k+1;
-    c.strokeStyle=on?"#ffc94d":"rgba(255,201,77,.6)";c.lineWidth=on?3:1;c.beginPath();c.moveTo(cx+Math.cos(a)*R*1.16,cy+Math.sin(a)*R*1.16);c.lineTo(cx+Math.cos(a)*R*1.21,cy+Math.sin(a)*R*1.21);c.stroke();
-    c.fillStyle=on?"#ffc94d":"rgba(255,231,168,.75)";c.fillText(k+1,cx+Math.cos(a)*R*1.33,cy+Math.sin(a)*R*1.33)}
-  c.font="700 "+Math.round(R*.22)+"px Amiri";c.fillStyle="rgba(255,247,218,.13)";c.fillText("القرآن",cx,cy);
-  // stars
-  var hiSet=hi?new Set(hi):null;
-  screenPts=[];
-  for(var i2=0;i2<114;i2++){var tg=pos[i2],cu=cur[i2];cu[0]+=(tg[0]-cu[0])*.06;cu[1]+=(tg[1]-cu[1])*.06;var p3=P(cu[0],cu[1]);screenPts.push([i2,p3])}
-  screenPts.sort(function(a,b){return a[1][2]-b[1][2]});
-  screenPts.forEach(function(q){
-    var i=q[0],p=q[1],front=(p[2]+1)/2,dim=hiSet&&!hiSet.has(i+1);
-    var s=(1.4+Math.sqrt(SUR[i][3])*.4)*(.55+.6*front)*(i===hover?1.6:1);
-    var a=(.2+.8*front)*(dim?.18:1),tw=.85+.15*Math.sin(t/600+i);
-    var gr=c.createRadialGradient(p[0],p[1],0,p[0],p[1],s*4);gr.addColorStop(0,"rgba(255,255,255,"+a*tw+")");gr.addColorStop(.25,"rgba("+col(i)+","+(.9*a)+")");gr.addColorStop(1,"rgba("+col(i)+",0)");
-    c.fillStyle=gr;c.beginPath();c.arc(p[0],p[1],s*4,0,TAU);c.fill();
-    q.push(s);
-    if(i===hover){c.strokeStyle="#ffc94d";c.lineWidth=1.5;c.beginPath();c.arc(p[0],p[1],s*4+4,0,TAU);c.stroke()}
+function touchDay(){var days=store("days")||[],t=new Date().toISOString().slice(0,10);if(days.indexOf(t)<0){days.push(t);store("days",days.slice(-400))}}
+function drawStats(){
+  var nDone=Object.keys(done).length, verses=Object.keys(heard).reduce(function(a,k){return a+heard[k].length},0);
+  document.getElementById("stats").innerHTML='<span class="stat">⭐ <b>'+verses+'</b> verses heard</span><span class="stat">🔥 <b>'+streak()+'</b>-day streak</span><span class="stat">✓ <b>'+nDone+'</b> / 114 surahs</span>';
+}
+var stops={}, pts=[];
+function buildPath(){
+  var list=seq(), W=pathEl.clientWidth||360, mob=W<560, gap=mob?132:150, amp=mob?W*.26:W*.3, sz=mob?60:68;
+  pathEl.style.height=(list.length*gap+80)+"px";
+  pts=list.map(function(n,i){return [W/2+Math.sin(i*.9)*amp, 60+i*gap]});
+  var d=pts.map(function(p,i){return (i?"L":"M")+p[0].toFixed(0)+" "+p[1].toFixed(0)}).join(" ");
+  var firstOpen=list.filter(function(n){return !done[n]})[0];
+  var h='<svg class="trail" viewBox="0 0 '+W+' '+(list.length*gap+80)+'" preserveAspectRatio="none"><path d="'+d+'" fill="none" stroke="rgba(255,201,77,.32)" stroke-width="9" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1 15"/></svg>';
+  list.forEach(function(n,i){
+    var s=SUR[n-1],c=s[4]?"#7fb8ff":"#ffc94d",st=done[n]?"done":n===firstOpen?"cur":"ahead",p=progOf(n);
+    h+='<button class="stop '+st+'" type="button" data-n="'+n+'" style="left:'+pts[i][0]+'px;top:'+(pts[i][1]-sz/2)+'px;--c:'+c+';--s:'+sz+'px;--p:'+p+'" aria-label="Surah '+n+', '+s[0]+(done[n]?", completed":"")+'">'+
+      '<span class="pl">'+(p>0&&!done[n]?'<span class="ring"></span>':'')+n+(done[n]?'<span class="ok">✓</span>':'')+(st==="cur"?'<span class="start">START ▶</span>':'')+'</span>'+
+      '<span class="nm">'+s[0]+'</span><span class="an" lang="ar">'+s[1]+'</span></button>';
   });
+  pathEl.innerHTML=h;stops={};
+  pathEl.querySelectorAll(".stop").forEach(function(b){stops[b.dataset.n]=b;b.onclick=function(){openSurah(+b.dataset.n)}});
+  applyHi();drawStats();
 }
-function loop(t){
-  if(!drag)rot+=vel*spin;
-  draw(t||0);
-  if(galaxy.style.display!=="none")requestAnimationFrame(loop);
+function applyHi(){Object.keys(stops).forEach(function(n){stops[n].classList.toggle("dim",!!hi&&hi.indexOf(+n)<0);stops[n].classList.toggle("hit",!!hi&&hi.length<6&&hi.indexOf(+n)>=0)})}
+function scrollToSurah(n,smooth){var b=stops[n];if(!b)return;var r=b.getBoundingClientRect();window.scrollTo({top:scrollY+r.top-innerHeight*.42,behavior:smooth&&!reduce?"smooth":"auto"})}
+function setOrder(o){order=o;store("order",o);document.querySelectorAll(".bar [data-o]").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.o===o)});buildPath()}
+document.querySelectorAll(".bar [data-o]").forEach(function(b){b.onclick=function(){setOrder(b.dataset.o);var f=seq().filter(function(n){return !done[n]})[0];if(f)scrollToSurah(f,true)}});
+juzSel.onchange=function(){hi=juzSel.value?surahsInJuz(+juzSel.value):null;applyHi();if(hi){var first=seq().filter(function(n){return hi.indexOf(n)>=0})[0];scrollToSurah(first,true)}};
+var toastT;function toast(t){var e=document.getElementById("toast");e.textContent=t;e.classList.add("on");clearTimeout(toastT);toastT=setTimeout(function(){e.classList.remove("on")},3200)}
+
+/* sky */
+(function(){var cv=document.getElementById("sky"),c=cv.getContext("2d"),st=[],W,H;
+  function rs(){var D=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;cv.width=W*D;cv.height=H*D;c.setTransform(D,0,0,D,0,0);st=[];for(var i=0;i<Math.min(260,W*H/3500);i++)st.push([Math.random()*W,Math.random()*H,Math.random()*1.3+.3,Math.random()*TAU])}
+  var shoot=null;
+  function fr(t){c.clearRect(0,0,W,H);for(var i=0;i<st.length;i++){var s=st[i],y=(s[1]-scrollY*.15*s[2]%H+H)%H;c.fillStyle="rgba(255,255,255,"+(.25+.5*Math.abs(Math.sin(t/1500+s[3])))+")";c.fillRect(s[0],y,s[2],s[2])}
+    if(!shoot&&Math.random()<.004)shoot={x:Math.random()*W,y:Math.random()*H*.5,l:1};
+    if(shoot){var g=c.createLinearGradient(shoot.x,shoot.y,shoot.x-90,shoot.y-45);g.addColorStop(0,"rgba(255,255,255,"+shoot.l+")");g.addColorStop(1,"rgba(255,255,255,0)");c.strokeStyle=g;c.lineWidth=1.6;c.beginPath();c.moveTo(shoot.x,shoot.y);c.lineTo(shoot.x-90,shoot.y-45);c.stroke();shoot.x+=9;shoot.y+=4.5;shoot.l-=.025;if(shoot.l<=0)shoot=null}
+    if(!reduce)requestAnimationFrame(fr)}
+  rs();addEventListener("resize",rs);requestAnimationFrame(fr)})();
+
+/* rocket + confetti when a surah is completed */
+function celebrate(n){
+  var list=seq(),i=list.indexOf(n),next=list.filter(function(m,k){return k>i&&!done[m]})[0];
+  scrollToSurah(n,false);
+  var r=document.createElement("div");r.className="rocket";
+  r.innerHTML='<svg viewBox="-20 -24 40 52"><path d="M-4.5 13 Q0 30 4.5 13Z" fill="#ffb347"/><path d="M0 -20 C8 -11 8 4 5.5 13 L-5.5 13 C-8 4 -8 -11 0 -20Z" fill="#f4efe4"/><path d="M-5.6 3 L-12 15 L-5.5 12.5Z M5.6 3 L12 15 L5.5 12.5Z" fill="#4fcf8f"/><circle cy="-1" r="3.2" fill="#5fd8c8" stroke="#24305e" stroke-width="1.2"/></svg>';
+  var a=pts[i];r.style.left=a[0]+"px";r.style.top=a[1]+"px";pathEl.appendChild(r);
+  confetti();toast("Mashallah! You completed "+SUR[n-1][0]+" ✓");
+  if(next!=null){var b=pts[list.indexOf(next)];setTimeout(function(){r.style.left=b[0]+"px";r.style.top=b[1]+"px";scrollToSurah(next,true)},500)}
+  setTimeout(function(){r.remove()},3600);
 }
-var galaxy=document.getElementById("galaxy"),tip=document.getElementById("tip");
-var e_touch=matchMedia("(pointer: coarse)").matches;
-function pick(x,y){var best=-1,bd=1e9;for(var k=screenPts.length-1;k>=0;k--){var q=screenPts[k],p=q[1];if(p[2]<-.2)continue;var d=Math.hypot(p[0]-x,p[1]-y),r=Math.max(e_touch?22:14,(q[2]||3)*3);if(d<r&&d<bd){bd=d;best=q[0]}}return best}
-function showTip(i,x,y){
-  if(i<0){tip.classList.remove("on");return}
-  var s=SUR[i];tip.innerHTML='<span class="an" lang="ar">'+s[1]+'</span><b>'+(i+1)+' · '+s[0]+'</b><small>'+s[2]+' · '+s[3]+' verses · '+(s[4]?"Madani":"Makki")+' · Juz\' '+(juzOfSurah(i+1)+1)+'</small><div class="go">TAP TO OPEN ✦</div>';
-  var tx=Math.min(W-250,Math.max(8,x+18)),ty=Math.max(70,y-90);tip.style.left=tx+"px";tip.style.top=ty+"px";tip.classList.add("on");
-}
-cv.addEventListener("pointerdown",function(e){drag={x:e.clientX,y:e.clientY,r:rot,moved:0};cv.classList.add("drag");cv.setPointerCapture(e.pointerId)});
-cv.addEventListener("pointermove",function(e){
-  var r=cv.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;
-  if(drag){var dx=e.clientX-drag.x;drag.moved=Math.max(drag.moved,Math.abs(dx)+Math.abs(e.clientY-drag.y));rot=drag.r+dx/R;showTip(-1);return}
-  hover=pick(x,y);spin=hover>=0?0:1;cv.style.cursor=hover>=0?"pointer":"grab";showTip(hover,x,y);
-});
-cv.addEventListener("pointerup",function(e){
-  var r=cv.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top,d=drag;drag=null;cv.classList.remove("drag");
-  if(d&&d.moved<10){var i=pick(x,y);if(i>=0)openSurah(i+1)}
-});
-cv.addEventListener("pointerleave",function(){hover=-1;spin=1;showTip(-1)});
-function setOrder(o){order=o;document.getElementById("oMushaf").setAttribute("aria-pressed",o==="mushaf");document.getElementById("oRev").setAttribute("aria-pressed",o!=="mushaf");pos=SUR.map(function(_,i){return target(i)})}
-document.getElementById("oMushaf").onclick=function(){setOrder("mushaf")};
-document.getElementById("oRev").onclick=function(){setOrder("revelation")};
-juzSel.onchange=function(){hi=juzSel.value?surahsInJuz(+juzSel.value):null};
+function confetti(){if(reduce)return;var cv=document.createElement("canvas");cv.style.cssText="position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:60";document.body.appendChild(cv);
+  var c=cv.getContext("2d"),W=cv.width=innerWidth,H=cv.height=innerHeight,ps=[],cols=["#4fcf8f","#ffc94d","#7fb8ff","#ff8fb0","#fff"];
+  for(var i=0;i<140;i++)ps.push({x:W/2,y:H*.45,vx:(Math.random()-.5)*16,vy:-Math.random()*15-5,r:Math.random()*6,c:cols[i%5]});
+  var f=0;(function fr(){c.clearRect(0,0,W,H);ps.forEach(function(p){p.vy+=.4;p.x+=p.vx;p.y+=p.vy;c.fillStyle=p.c;c.fillRect(p.x,p.y,6,4)});if(++f<160)requestAnimationFrame(fr);else cv.remove()})()}
+
 /* search */
 var qIn=document.getElementById("q"),results=document.getElementById("results");
-function norm(s){return String(s).toLowerCase().normalize("NFD").replace(/[̀-ًͯ-ٰٟ]/g,"").replace(/[^a-z0-9؀-ۿ]/g,"").replace(/^(al|an|ar|as|at|ad|az|ash)/,"")}
 qIn.addEventListener("input",function(){
-  var v=qIn.value.trim(),nv=norm(v);results.innerHTML="";
-  if(!v){results.classList.remove("on");hi=juzSel.value?surahsInJuz(+juzSel.value):null;return}
+  var v=qIn.value.trim();results.innerHTML="";
+  if(!v){results.classList.remove("on");hi=juzSel.value?surahsInJuz(+juzSel.value):null;applyHi();return}
   var m=AZQuranSearch(v,SUR);
-  hi=m.map(function(i){return i+1});
+  hi=m.map(function(i){return i+1});applyHi();if(m.length)scrollToSurah(m[0]+1,true);
   m.slice(0,12).forEach(function(i){var b=document.createElement("button");b.type="button";b.innerHTML='<span>'+(i+1)+' · '+SUR[i][0]+' <small style="color:var(--mut)">'+SUR[i][2]+'</small></span><span class="a" lang="ar">'+SUR[i][1]+'</span>';b.onclick=function(){openSurah(i+1)};results.appendChild(b)});
   if(!m.length)results.innerHTML='<div style="padding:12px 14px;color:var(--mut);font-weight:800">No surah found</div>';
   results.classList.add("on");
@@ -332,10 +350,13 @@ function load(n){
   });
 }
 function starStyle(i){var col=SUR[i][4]?"127,184,255":"255,201,77";return "background:radial-gradient(circle,#fff 0%,rgba("+col+",1) 30%,rgba("+col+",.15) 62%,transparent 70%);box-shadow:0 0 60px rgba("+col+",.5)"}
+var pathY=0,justDone=null;
 function openSurah(n){
+  if(!surahEl.classList.contains("on"))pathY=scrollY;
+  results.classList.remove("on");
   stop();S.n=n;S.idx=0;var s=SUR[n-1];
   galaxy.style.display="none";surahEl.classList.add("on");window.scrollTo(0,0);
-  document.getElementById("backBtn").textContent="← The Galaxy";document.getElementById("backBtn").href="#";
+  document.getElementById("backBtn").textContent="← The Path";document.getElementById("backBtn").href="#";
   document.getElementById("sStar").setAttribute("style",starStyle(n-1));
   document.getElementById("sAr").textContent=s[1];document.getElementById("sName").textContent=s[0];
   document.getElementById("sMeta").textContent=s[2]+" · Surah "+n+" · "+s[3]+" verses · "+(s[4]?"Madani":"Makki");
@@ -344,7 +365,11 @@ function openSurah(n){
   load(n).then(function(v){if(S.n!==n)return;S.verses=v;renderRead();renderMemo();renderTad();setProg()}).catch(function(){
     document.getElementById("pRead").innerHTML='<div class="err">The surah could not be loaded. Please check your connection and try again.</div>'});
 }
-function closeSurah(){stop();surahEl.classList.remove("on");galaxy.style.display="";resize();hover=-1;spin=1;tip.classList.remove("on");document.getElementById("backBtn").textContent="← Academy";document.getElementById("backBtn").href="academy.html";history.replaceState(null,"",location.pathname);document.title="Galaxy of the Qur'an";requestAnimationFrame(loop)}
+function closeSurah(){stop();surahEl.classList.remove("on");galaxy.style.display="";document.getElementById("backBtn").textContent="← Academy";document.getElementById("backBtn").href="academy.html";history.replaceState(null,"",location.pathname);document.title="Galaxy of the Qur'an";
+  qIn.value="";hi=juzSel.value?surahsInJuz(+juzSel.value):null;
+  buildPath();
+  if(justDone){var n=justDone;justDone=null;requestAnimationFrame(function(){celebrate(n)})}else window.scrollTo(0,pathY);
+}
 document.getElementById("backBtn").addEventListener("click",function(e){if(surahEl.classList.contains("on")){e.preventDefault();closeSurah()}});
 document.getElementById("prevS").onclick=function(){if(S.n>1)openSurah(S.n-1)};
 document.getElementById("nextS").onclick=function(){if(S.n<114)openSurah(S.n+1)};
@@ -368,7 +393,7 @@ function setProg(){document.getElementById("prog").style.width=(S.verses.length?
 function mark(i){document.querySelectorAll("#pRead .verse.now").forEach(function(e){e.classList.remove("now")});var el=document.getElementById("v"+(S.verses[i]&&S.verses[i].n));if(el){el.classList.add("now");if(document.getElementById("follow").checked)el.scrollIntoView({behavior:reduce?"auto":"smooth",block:"center"})}}
 function playAt(i){
   if(!S.verses.length)return;
-  if(i>=S.verses.length){stop();S.idx=0;setProg();pinfo.textContent="Surah complete. Sadaq Allahu al-'Aliyy al-'Azim";return}
+  if(i>=S.verses.length){stop();S.idx=0;setProg();pinfo.textContent=justDone===S.n?"Mashallah! Surah completed ✓ Go back to the path to see your rocket fly":"Surah complete. Sadaq Allahu al-'Aliyy al-'Azim";return}
   S.idx=i;S.playing=true;drawPlay();mark(i);setProg();
   audio.src=audioUrl(rec(),S.n,S.verses[i].n);
   pinfo.textContent="Verse "+S.verses[i].n+" of "+S.verses.length+" · "+rec().name;
@@ -376,7 +401,11 @@ function playAt(i){
   var nx=S.verses[i+1];if(nx){var pre=new Audio();pre.preload="auto";pre.src=audioUrl(rec(),S.n,nx.n)}
 }
 function stop(){audio.pause();S.playing=false;drawPlay()}
-audio.addEventListener("ended",function(){if(S.playing)playAt(S.idx+1)});
+audio.addEventListener("ended",function(){
+  var n=S.n,v=S.verses[S.idx];
+  if(v){var h=heard[n]||[];if(h.indexOf(v.n)<0){h.push(v.n);heard[n]=h;store("heard",heard)}touchDay();
+    if(!done[n]&&h.length>=S.verses.length){done[n]=Date.now();store("done",done);justDone=n;pinfo.textContent="Mashallah! Surah completed ✓ Go back to the path to see your progress"}}
+  if(S.playing)playAt(S.idx+1)});
 audio.addEventListener("error",function(){if(S.playing){pinfo.textContent="This verse's audio could not be loaded. Skipping…";setTimeout(function(){if(S.playing)playAt(S.idx+1)},1200)}});
 playBtn.onclick=function(){if(S.playing)stop();else playAt(S.idx)};
 document.getElementById("track").onclick=function(e){var r=this.getBoundingClientRect();playAt(Math.floor((e.clientX-r.left)/r.width*S.verses.length))};
@@ -423,7 +452,8 @@ function renderTad(vi){
 }
 
 /* ---- start ---- */
-addEventListener("resize",resize);resize();requestAnimationFrame(loop);
+var rT;addEventListener("resize",function(){if(galaxy.style.display==="none")return;clearTimeout(rT);rT=setTimeout(buildPath,200)});
+setOrder(order);
 addEventListener("keydown",function(e){if(e.key==="Escape"&&surahEl.classList.contains("on"))closeSurah()});
 var m=location.hash.match(/^#surah-(\d+)$/);if(m&&+m[1]>=1&&+m[1]<=114)openSurah(+m[1]);
 })();
