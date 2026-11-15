@@ -67,8 +67,8 @@ window.AZ_DUAS = {
    "id": "salamati",
    "cat": "daily",
    "t": {
-    "en": "Allahumma Kun li-Waliyyik (Dua al-Faraj)",
-    "ur": "اللّٰہم کن لولیک (دعائے فرج)",
+    "en": "Allahumma Kun li-Waliyyik: Dua for his Safety (Dua al-Faraj)",
+    "ur": "اللّٰہم کن لولیک: دعائے سلامتیِ امامِ زمانہ (دعائے فرج)",
     "ar": "اللَّهُمَّ كُنْ لِوَلِيِّكَ"
    },
    "first": "اللَّهُمَّ كُنْ لِوَلِيِّكَ",
