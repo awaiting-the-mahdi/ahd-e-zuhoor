@@ -9,6 +9,7 @@ AZ_UR.add({
   "Prophetic Blueprint": "انبیاء کا نقشِ راہ",
   "Knowledge Library": "علمی کتب خانہ",
   "Hadiths": "احادیث",
+  "Duas & Hadiths": "دعائیں اور احادیث",
   "Digital Learning Academy": "ڈیجیٹل تعلیمی اکیڈمی",
   "Research & Preservation Archive": "تحقیق و تحفظ کا آرشیو",
   "O Allah, hasten the relief of Your Wali.": "اے اللہ! اپنے ولی کے فرج میں جلدی فرما۔",
