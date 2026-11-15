@@ -61,10 +61,12 @@ body.begun .rail{opacity:1}
 .w{display:inline-block;opacity:0;filter:blur(8px);transform:translateY(10px);transition:opacity 1.1s,filter 1.1s,transform 1.1s}
 .w.on{opacity:1;filter:none;transform:none}
 .src{display:block;margin-top:1.1em;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
-.asks{font-family:var(--serif);font-style:italic;font-size:clamp(1.5rem,5vw,2.4rem);color:var(--gold);margin:1.6em 0 .2em;opacity:0;transition:opacity 2.2s}
-.asks.on{opacity:1}
-.threshold .sub{color:var(--mut);max-width:520px;margin:0 auto;opacity:0;transition:opacity 2s .6s}
-.asks.on+.sub{opacity:1}
+.asks{font-family:var(--serif);font-style:italic;font-size:clamp(1.5rem,5vw,2.4rem);color:var(--gold);margin:1.6em 0 .2em;opacity:0;will-change:opacity;-webkit-backface-visibility:hidden;backface-visibility:hidden}
+.asks.on{animation:fadeIn 2.2s ease forwards}
+.threshold .sub{color:var(--mut);max-width:520px;margin:0 auto;opacity:0;will-change:opacity}
+.asks.on+.sub{animation:fadeIn 2s .6s ease forwards}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.say-slot{min-height:46px}
 
 /* hold-to-continue */
 .hold{--p:0;position:relative;display:inline-flex;align-items:center;gap:14px;margin-top:28px;padding:10px 26px 10px 10px;border-radius:99px;border:1px solid var(--line);background:rgba(10,12,32,.7);
@@ -679,13 +681,21 @@ function holdable(btn,done){
 
 /* ---------- threshold ---------- */
 function words(el,s){el.innerHTML=s.split(" ").map(function(w){return '<span class="w">'+esc(w)+'</span>'}).join(" ")}
-words($("t-h"),D.opening.ar);$("t-h").insertAdjacentHTML("afterend",'<div>'+say(D.opening.ar)+'</div>');words($("openEn"),D.opening.en);ref("openRef",D.opening);
+words($("t-h"),D.opening.ar);$("t-h").insertAdjacentHTML("afterend",'<div class="say-slot">'+say(D.opening.ar)+'</div>');words($("openEn"),D.opening.en);ref("openRef",D.opening);
 var W1=[].slice.call(document.querySelectorAll("#t-h .w")),W2=[].slice.call(document.querySelectorAll("#openEn .w"));
-var gap=reduce?0:420,t0=reduce?0:900;
-W1.forEach(function(w,i){setTimeout(function(){w.classList.add("on")},t0+i*gap)});
-var t1=t0+W1.length*gap+(reduce?0:700);
-W2.forEach(function(w,i){setTimeout(function(){w.classList.add("on")},t1+i*(reduce?0:170))});
-setTimeout(function(){$("asks").classList.add("on")},t1+W2.length*(reduce?0:170)+(reduce?0:1600));
+/* start only once the fonts are in, so no line swaps fonts (and flickers) while it fades in */
+function revealThreshold(){
+  var gap=reduce?0:420,t0=reduce?0:500;
+  W1.forEach(function(w,i){setTimeout(function(){w.classList.add("on")},t0+i*gap)});
+  var t1=t0+W1.length*gap+(reduce?0:700);
+  W2.forEach(function(w,i){setTimeout(function(){w.classList.add("on")},t1+i*(reduce?0:170))});
+  setTimeout(function(){$("asks").classList.add("on")},t1+W2.length*(reduce?0:170)+(reduce?0:1600));
+}
+(function(){var started=false;function go(){if(!started){started=true;revealThreshold()}}
+  setTimeout(go,3000);
+  try{var f=document.fonts,loads=['italic 500 1em "Cormorant Garamond"','500 1em "Cormorant Garamond"','400 1em "Amiri"','400 1em "Inter"'];
+    if(LANG==="ur")loads.push('400 1em "Noto Nastaliq Urdu"');
+    Promise.all(loads.map(function(x){return f.load(x)})).then(function(){return f.ready}).then(go,go)}catch(e){go()}})();
 
 holdable($("beginBtn"),function(){
   document.body.classList.add("begun");
