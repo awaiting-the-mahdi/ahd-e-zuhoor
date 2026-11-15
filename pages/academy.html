@@ -235,7 +235,7 @@ h1 .ch i{filter:drop-shadow(0 2px 3px rgba(0,0,0,.95)) drop-shadow(0 0 12px rgba
     <div class="horizon" id="horizon" aria-hidden="true"></div>
     <div class="hero-inner">
       <span class="eyebrow">AHD-E-ZUHOOR · Digital Learning Academy</span>
-      <h1 id="title" aria-label="Learning Academy">Learning Academy</h1>
+      <h1 id="title" aria-label="Learning Academy" data-ur="تعلیمی اکیڈمی">Learning Academy</h1>
       <p class="verse" lang="ar" dir="rtl">رَبِّ زِدْنِي عِلْمًا</p>
       <p class="verse-tr">“My Lord, increase me in knowledge.”<small>Surah Ta-Ha · 20:114</small></p>
       <p class="lead">Five worlds of learning, charted like stars across the night — one voyage toward recognition of the Imam of our time.</p>
@@ -362,12 +362,16 @@ var COL={teal:"95,216,200",violet:"170,145,255",gold:"240,200,120",emerald:"110,
 /* ================= hero title: letters arrive like stars ================= */
 var title=document.getElementById("title");
 (function(){
-  var words=title.textContent.trim().split(/\s+/), html="", k=0;
+  var UR=window.AZ_LANG==="ur"&&title.dataset.ur;
+  if(UR){title.setAttribute("aria-label",title.dataset.ur);title.dir="rtl"}
+  /* Urdu letters join, so in Urdu each word flies in whole */
+  var words=(UR||title.textContent).trim().split(/\s+/), html="", k=0;
   words.forEach(function(w){
     html+='<span class="w" aria-hidden="true">';
-    for(var i=0;i<w.length;i++){
+    var parts=UR?[w]:w.split("");
+    for(var i=0;i<parts.length;i++){
       var a=rand(0,TAU),d=rand(260,520);
-      html+='<span class="ch" style="--i:'+k+';--x:'+(Math.cos(a)*d|0)+';--y:'+(Math.sin(a)*d|0)+'"><i style="--i:'+k+'">'+w[i]+'</i></span>';k++}
+      html+='<span class="ch" style="--i:'+k+';--x:'+(Math.cos(a)*d|0)+';--y:'+(Math.sin(a)*d|0)+'"><i style="--i:'+k+'">'+parts[i]+'</i></span>';k++}
     html+='</span> ';
   });
   title.innerHTML=html;

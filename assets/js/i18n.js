@@ -52,7 +52,7 @@
     if (DICT[n] !== undefined) return DICT[n];
     for (var i = 0; i < PATS.length; i++) {
       var re = PATS[i][0]; re.lastIndex = 0;
-      if (re.test(n)) { re.lastIndex = 0; return n.replace(re, PATS[i][1]); }
+      if (re.test(n)) { re.lastIndex = 0; var out = n.replace(re, PATS[i][1]); if (out !== n) return out; }
     }
     return null;
   }
@@ -118,11 +118,14 @@
   }
 
   var INLINE = /^(B|STRONG|EM|I|SMALL|SPAN|BR|A|SUP|SUB|U|MARK)$/;
+  /* letters used in Urdu but not in Arabic: Urdu text a page writes itself also gets the Urdu font */
+  var URDU_CHARS = /[ٹڈڑںھہۂۃےۓ]/;
   function markUr(el) { if (el && el.nodeType === 1 && !el.hasAttribute("lang")) { el.setAttribute("data-ur", ""); if (!el.hasAttribute("dir")) el.setAttribute("dir", "rtl"); } }
   function doText(n) {
-    var raw = n.nodeValue; if (!raw || !/[A-Za-z]/.test(raw)) return;
+    var raw = n.nodeValue; if (!raw || !/[A-Za-z\u0600-\u06FF]/.test(raw)) return;
     var p = n.parentElement; if (!p || /^(SCRIPT|STYLE|TEXTAREA|CODE|PRE)$/.test(p.tagName) || p.closest("[data-no-ur]")) return;
-    var u = tr(norm(raw)); if (u === null) return;
+    var u = tr(norm(raw));
+    if (u === null) { if (URDU_CHARS.test(raw) && !p.closest("[lang]:not([lang=ur])")) markUr(p); return; }
     var lead = raw.match(/^\s*/)[0], trail = raw.match(/\s*$/)[0];
     n.nodeValue = lead + u + trail; markUr(p);
   }
@@ -157,7 +160,10 @@
     } finally { busy = false; }
   }
 
-  var ready = load(BASE + "ur/common.js").then(function () { return load(BASE + "ur/" + PAGE + ".js"); });
+  /* a page's dictionary may ask for shared files too:  AZ_UR.also = ["courses"]; */
+  var ready = load(BASE + "ur/common.js")
+    .then(function () { return load(BASE + "ur/" + PAGE + ".js"); })
+    .then(function () { return Promise.all((window.AZ_UR.also || []).map(function (n) { return load(BASE + "ur/" + n + ".js"); })); });
   onReady(function () {
     addButton();
     ready.then(function () {

@@ -46,16 +46,16 @@ h1{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(2rem,8vw,3.4re
 .ar{font-family:Amiri,'Noto Naskh Arabic',serif;font-size:1.3rem;color:var(--gold);text-align:right;margin:2px 0 4px;line-height:1.5}
 .fork{margin-bottom:34px}
 .cols{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:12px;padding-top:22px}
-.cols::before{content:"";position:absolute;top:0;left:25%;right:25%;height:22px;border:2px solid var(--line);border-bottom:0}
-.cols::after{content:"";position:absolute;top:-16px;left:50%;height:16px;border-left:2px solid var(--line)}
+.cols::before{content:"";position:absolute;top:0;left:calc(25% - 4px);right:calc(25% - 4px);height:22px;border:2px solid var(--line);border-bottom:0}
+.cols::after{content:"";position:absolute;top:-16px;left:calc(50% - 1px);height:16px;border-left:2px solid var(--line)}
 .col{display:flex;flex-direction:column}
 .col::after{content:"";flex:1;min-height:14px;align-self:center;border-left:2px solid var(--line)}
 .col>.card{position:relative;margin-bottom:16px;padding:10px 12px}
-.col>.card::after{content:"";position:absolute;left:50%;bottom:-16px;height:16px;border-left:2px solid var(--line)}
+.col>.card::after{content:"";position:absolute;left:calc(50% - 1px);bottom:-16px;height:16px;border-left:2px solid var(--line)}
 .col .nm{font-size:1.05rem}.col .ar{font-size:1.1rem}.col .nt{font-size:.75rem}
 .lab{text-align:center;font-size:.68rem;letter-spacing:.14em;color:var(--gold);margin-bottom:8px}
-.merge{position:relative;height:22px;margin:0 25%;border:2px solid var(--line);border-top:0}
-.merge::after{content:"";position:absolute;left:50%;bottom:-18px;height:18px;border-left:2px solid var(--line)}
+.merge{position:relative;height:22px;margin:0 calc(25% - 4px);border:2px solid var(--line);border-top:0}
+.merge::after{content:"";position:absolute;left:calc(50% - 1px);bottom:-36px;height:36px;border-left:2px solid var(--line)}
 .mosque{position:absolute;bottom:0;left:0;right:0;margin:0 auto;width:min(100%,560px);fill:var(--gold);opacity:.3;animation:glow 6s ease-in-out infinite}
 .mosque .s{fill:none;stroke:var(--gold);stroke-width:2}
 @keyframes glow{50%{opacity:.48}}

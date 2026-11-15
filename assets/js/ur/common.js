@@ -14,6 +14,7 @@ AZ_UR.add({
   "O Allah, hasten the relief of Your Wali.": "اے اللہ! اپنے ولی کے فرج میں جلدی فرما۔",
   "O Allah, hasten the relief of Your Walī.": "اے اللہ! اپنے ولی کے فرج میں جلدی فرما۔",
   "Close": "بند کریں",
+  "← Academy": "← اکیڈمی",
   "Next": "اگلا",
   "Previous": "پچھلا",
   "Listen": "سنیں",
@@ -65,5 +66,9 @@ AZ_UR.add({
   "We could not locate a sufficiently relevant published ruling. Please consult the Office of Ayatollah Sistani.": "ہمیں کوئی کافی حد تک متعلقہ شائع شدہ حکم نہیں ملا۔ براہِ کرم آیت اللہ سیستانی کے دفتر سے رجوع کریں۔"
 });
 AZ_UR.patterns([
+  /* “quoted line”  ·  ← Back to X  ·  Next X → */
+  [/^“(.+)”$/, function (m, x) { var u = AZ_UR.t(x); return u === x ? m : "”" + u + "“"; }],
+  [/^← (.+)$/, function (m, x) { var u = AZ_UR.t(x); return u === x ? m : "→ " + u; }],
+  [/^(.+) →$/, function (m, x) { var u = AZ_UR.t(x); return u === x ? m : u + " ←"; }],
   [/^Related rulings \((\d+)\)$/, "متعلقہ احکام ($1)"]
 ]);

@@ -231,7 +231,7 @@ h1 small{display:block;font-size:.45em;font-style:italic;font-weight:500;color:#
 <main>
   <section class="hero">
     <span class="eyebrow">School 02 · Digital Learning Academy</span>
-    <h1 id="title" aria-label="School of Theology and Islamic Thought"><span id="tw">School of Theology</span><small>and Islamic Thought</small></h1>
+    <h1 id="title" aria-label="School of Theology and Islamic Thought"><span id="tw" data-ur="مدرسۂ عقائد">School of Theology</span><small>and Islamic Thought</small></h1>
     <p class="ar" lang="ar" dir="rtl">مدرسة العقيدة والفكر الإسلامي</p>
     <p class="lead"><b>The Five Moons of Belief.</b> Each moon is a root of religion. Tap a moon to begin its journey.</p>
   </section>
@@ -337,11 +337,12 @@ muteBtn.onclick=function(){V.setMuted(!V.muted);drawMute()};drawMute();
 
 /* title letters fly in like stars */
 (function(){
-  var el=document.getElementById("tw"),h="",k=0;
-  el.textContent.split(" ").forEach(function(w,wi){
+  var el=document.getElementById("tw"),h="",k=0,UR=window.AZ_LANG==="ur"&&el.dataset.ur;if(UR)el.dir="rtl";
+  (UR||el.textContent).split(" ").forEach(function(w,wi){
     h+='<span style="display:inline-block;white-space:nowrap">';
-    for(var i=0;i<w.length;i++){var a=Math.random()*TAU,d=200+Math.random()*300;
-      h+='<span class="ch" style="--i:'+k+';--x:'+(Math.cos(a)*d|0)+';--y:'+(Math.sin(a)*d|0)+'"><i style="--i:'+k+'">'+w[i]+'</i></span>';k++}
+    var parts=UR?[w]:w.split("");
+    for(var i=0;i<parts.length;i++){var a=Math.random()*TAU,d=200+Math.random()*300;
+      h+='<span class="ch" style="--i:'+k+';--x:'+(Math.cos(a)*d|0)+';--y:'+(Math.sin(a)*d|0)+'"><i style="--i:'+k+'">'+parts[i]+'</i></span>';k++}
     h+='</span> ';
   });
   el.innerHTML=h;el.setAttribute("aria-hidden","true");
