@@ -8,7 +8,7 @@
 <title>The Hidden Sun</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Amiri:wght@400;700&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Amiri:wght@400;700&family=Inter:wght@400;500;600&family=Noto+Nastaliq+Urdu:wght@400;600&display=swap">
 <link rel="stylesheet" href="../assets/css/menu.css">
 <style>
 :root{
@@ -340,6 +340,43 @@ dialog.imam[open]{animation:up .6s cubic-bezier(.2,.8,.2,1)}
 .finale nav{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:30px}
 .review{max-width:620px;margin:40px auto 0;font-size:.74rem;color:var(--dim);line-height:1.6}
 
+/* language switch */
+.lang{position:fixed;top:18px;left:50%;translate:-50% 0;z-index:1000;padding:7px 16px;border-radius:99px;border:1px solid var(--line);background:rgba(3,4,13,.6);color:var(--gold2);cursor:pointer;backdrop-filter:blur(8px);font:500 .95rem var(--sans)}
+.lang[lang=ur]{font-family:"Noto Nastaliq Urdu",serif;font-size:.8rem;line-height:1.7;padding:1px 14px}
+.lang[lang=en]{font-family:"Inter",system-ui,sans-serif;font-size:.78rem;line-height:1.4;padding:6px 14px}
+.hold .dot{left:auto;inset-inline-start:10px}
+.lang:hover{border-color:var(--gold)}
+/* listen */
+.say{display:inline-flex;align-items:center;gap:7px;margin:8px auto 4px;padding:5px 13px 5px 9px;border-radius:99px;border:1px solid rgba(232,199,125,.35);background:rgba(3,4,13,.45);color:var(--gold);cursor:pointer;font:500 .72rem var(--sans);letter-spacing:.08em}
+.say svg{width:16px;height:16px}
+.say:hover{border-color:var(--gold)}
+.say.on{background:var(--gold);color:var(--bg)}
+.say.tts{display:none}
+body.has-ar .say.tts{display:inline-flex}
+.mline .say{margin:6px 0 2px}
+
+/* Urdu */
+html[lang=ur]{--serif:"Noto Nastaliq Urdu",serif;--sans:"Noto Nastaliq Urdu",serif}
+html[lang=ur] body{line-height:2.2}
+html[lang=ur] *:not([lang=ar]){letter-spacing:0!important;font-style:normal!important;text-transform:none!important}
+html[lang=ur] .chap h2{font-size:clamp(1.9rem,6.4vw,3.2rem);line-height:1.9}
+html[lang=ur] .hadith-en,html[lang=ur] .asks{line-height:2.2}
+html[lang=ur] .lede,html[lang=ur] .prose,html[lang=ur] .ve,html[lang=ur] .pq,html[lang=ur] .closeline,html[lang=ur] .qaim p{line-height:2.25}
+html[lang=ur] .subh b,html[lang=ur] .card h3,html[lang=ur] .qbox h3,html[lang=ur] .dlg h3,html[lang=ur] .chk b,html[lang=ur] .mirror p,html[lang=ur] .finale .q{line-height:2}
+html[lang=ur] .ref,html[lang=ur] .src{font-size:.78rem;line-height:2}
+html[lang=ur] .hold b,html[lang=ur] .hold small,html[lang=ur] .ev div,html[lang=ur] .life,html[lang=ur] .chk{text-align:start}
+html[lang=ur] .dlg .ar{text-align:right}
+html[lang=ur] .tree svg,html[lang=ur] .constel{direction:ltr}
+html[lang=ur] .tree text{font-size:13px}
+html[lang=ur] .star em{font-size:.7rem}
+html[lang=ur] .counter b{font-family:"Cormorant Garamond",serif}
+html[lang=ur] .ev p,html[lang=ur] .chk span,html[lang=ur] .card p{font-size:.95rem;line-height:2.2}
+.names li{padding-left:0;padding-inline-start:54px}
+.names li::before{left:auto;inset-inline-start:0}
+.life .fill{inset:0 auto 0 0;inset-inline-start:0;inset-inline-end:auto}
+html[lang=ur] .life .fill{left:auto;right:0}
+html[lang=ur] .life .val{right:auto;left:8px}
+
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition-duration:.01ms!important;transition-delay:0s!important}
   .w,.rv,.names li{opacity:1;filter:none;transform:none}
@@ -353,6 +390,7 @@ dialog.imam[open]{animation:up .6s cubic-bezier(.2,.8,.2,1)}
 <div class="bar" id="bar" aria-hidden="true"></div>
 
 <a class="back" href="academy.html">← Academy</a>
+<button class="lang" id="langBtn" type="button" lang="ur" aria-label="اردو میں پڑھیں">اردو</button>
 <nav class="rail" id="rail" aria-label="Journey chapters"></nav>
 
 <main>
@@ -563,21 +601,52 @@ dialog.imam[open]{animation:up .6s cubic-bezier(.2,.8,.2,1)}
     <p style="color:var(--mut);font-family:var(--serif);font-style:italic;font-size:1.2rem;margin:0">O Allah, hasten the relief of Your Wali.</p>
     <p class="q">He is waiting.<br><em>Are you?</em></p>
     <nav><a class="btn" href="who-is-imam.html">Who is Imam al-Mahdi?</a><a class="btn" href="knowledge-library.html">Read the sources</a><a class="btn" href="academy.html">Back to the Academy</a></nav>
-    <p class="review">Narrations are quoted from the Qur'an and from Shia sources, chiefly the books in our Knowledge Library: Shaykh Saduq's Kamal al-Din and Shaykh Tusi's al-Ghayba. Where Sunni scholars record the same hadith, it is shown as a side note. Dates follow the commonly held reports; others exist. This page should be reviewed by a qualified scholar.</p>
+    <p class="review">Narrations are quoted from the Qur'an and from Shia sources, chiefly the books in our Knowledge Library: Shaykh Saduq's Kamal al-Din and Shaykh Tusi's al-Ghayba. Where Sunni scholars record the same hadith, it is shown as a side note. Dates follow the commonly held reports.</p>
   </section>
   </div>
 </main>
 
 <script src="../assets/js/marefat-data.js"></script>
+<script src="../assets/js/marefat-data-ur.js"></script>
 <script>
 (function(){
 "use strict";
-var D=window.AZ_MAREFAT, $=function(id){return document.getElementById(id)};
+var $=function(id){return document.getElementById(id)};
+var EN=window.AZ_MAREFAT, UR=window.AZ_MAREFAT_UR;
+function getLang(){var q=null;try{q=new URLSearchParams(location.search).get("lang")}catch(e){}
+  if(q==="ur"||q==="en"){store("az-marefat-lang",q);return q}return store("az-marefat-lang")==="ur"?"ur":"en"}
+var LANG=UR&&getLang()==="ur"?"ur":"en";
+function merge(a,b){if(b===undefined||b===null)return a;if(Array.isArray(a))return a.map(function(x,i){return merge(x,b[i])});
+  if(a&&typeof a==="object"){var o={};for(var k in a)o[k]=merge(a[k],b[k]);return o}return b}
+var D=LANG==="ur"?merge(EN,UR):EN;
+var TEN={sunni:"Also recorded by Sunni scholars:",reflected:"Reflected",readOn:"Read on",readAnswer:"Read the answer",sitFirst:"Sit with the question first",holdReflect:"Hold to reflect",
+  welcome:"Welcome back. Hold, and begin again.",question:"Question {i} of {n}",imamOf:"Imam {n} of 12",twelfth:"The twelfth · the living Imam",
+  born:"Born",martyred:"Martyred",rests:"Rests",today:"Today",where:"Where",spoke:"He spoke of the Qa'im",ownWords:"In his own words",
+  prev:"← Previous",next:"Next →",close:"Close",yrs:"yrs",touchActs:"Touch each act. See what Musa saw — then what was hidden.",kahf:"(al-Kahf 18:65–82)",
+  musaSaw:"What Musa saw",hiddenWisdom:"The hidden wisdom",clear:"Clear",clouded:"Clouded",eye:"Sun visible to the eye",earth:"Light and warmth reaching the earth",
+  units:["Years","Days","Hours","Minutes","Seconds","Lunar yrs"],since:"since 15 Sha'ban 255 AH (July 869 CE), approximately",todayIs:"today is",
+  morning:"Morning {n} of 40",completed:" — completed. Keep the covenant every morning.",forty:"Forty mornings, one at a time.",
+  renewedToday:"Your covenant is renewed for today.",neverTurn:"لَا أَحُولُ عَنْهَا وَلَا أَزُولُ أَبَدًا — I will never turn from it, and never waver.",
+  listen:"Listen",stop:"Stop",
+  tree:["","","al-Hasan al-Mujtaba","al-Husayn","Zayn al-'Abidin","al-Baqir","al-Sadiq","al-Kazim","al-Rida","al-Jawad","al-Hadi","al-'Askari","al-Mahdi (atfs)"],
+  treeFatima:"Fatima al-Zahra",treeAli:"Imam Ali",firstImam:"1st Imam",hasan:"al-Hasan",mujtaba:"al-Mujtaba",alive:"alive · behind the clouds"};
+if(UR&&UR.t&&!UR.t.kahf)UR.t.kahf="(سورۂ کہف 18:65–82)";
+function tt(k,v){var x=TEN[k];if(LANG==="ur"){var u=UR.t[k];if(u===undefined&&typeof x==="string")u=UR.ui[x];if(u!==undefined)x=u}
+  if(typeof x==="string"&&v)for(var n in v)x=x.replace("{"+n+"}",v[n]);return x}
+if(LANG==="ur"){
+  document.documentElement.lang="ur";document.documentElement.dir="rtl";
+  [].forEach.call(document.querySelectorAll("body *"),function(el){if(el.tagName==="SCRIPT")return;var k=el.innerHTML.trim();if(k&&UR.ui[k]!==undefined)el.innerHTML=UR.ui[k]});
+  var lb=document.getElementById("langBtn");lb.textContent="English";lb.lang="en";lb.setAttribute("aria-label","Read in English");
+  document.title="پوشیدہ سورج";
+}
 var reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
 function txt(id,s){var e=$(id);if(e)e.textContent=s}
-function sn(x){return x?'<span class="sunni"><i>Also recorded by Sunni scholars:</i> '+esc(x)+'</span>':""}
+function qq(s){return LANG==="ur"?"”"+s+"“":"“"+s+"”"}
+function sn(x){return x?'<span class="sunni"><i>'+esc(tt("sunni"))+'</i> '+esc(x)+'</span>':""}
 function ref(id,o){var e=$(id);if(e)e.innerHTML=esc(o.ref)+sn(o.sunni)}
+var ICO='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16 8.5a5 5 0 0 1 0 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
+function say(text,q){return '<button class="say'+(q?"":" tts")+'" type="button" data-say="'+esc(text)+'"'+(q?' data-q="'+q+'"':'')+'>'+ICO+'<span>'+esc(tt("listen"))+'</span></button>'}
 function store(k,v){try{if(v===undefined)return JSON.parse(localStorage.getItem(k));localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}}
 
 /* ---------- star sky ---------- */
@@ -610,7 +679,7 @@ function holdable(btn,done){
 
 /* ---------- threshold ---------- */
 function words(el,s){el.innerHTML=s.split(" ").map(function(w){return '<span class="w">'+esc(w)+'</span>'}).join(" ")}
-words($("t-h"),D.opening.ar);words($("openEn"),D.opening.en);ref("openRef",D.opening);
+words($("t-h"),D.opening.ar);$("t-h").insertAdjacentHTML("afterend",'<div>'+say(D.opening.ar)+'</div>');words($("openEn"),D.opening.en);ref("openRef",D.opening);
 var W1=[].slice.call(document.querySelectorAll("#t-h .w")),W2=[].slice.call(document.querySelectorAll("#openEn .w"));
 var gap=reduce?0:420,t0=reduce?0:900;
 W1.forEach(function(w,i){setTimeout(function(){w.classList.add("on")},t0+i*gap)});
@@ -626,16 +695,16 @@ holdable($("beginBtn"),function(){
 
 /* ---------- prelude ---------- */
 var cols=["#ffe7a8","#ff9a6b","#c2577a"];
-$("mapLines").innerHTML=D.marefaDua.lines.map(function(l,i){return '<div class="mline rv d'+(i+1)+'" style="--c:'+cols[i]+'"><span class="o">'+(i+1)+'</span><div><div class="ma" lang="ar">'+esc(l.ar)+'</div><div class="me">'+esc(l.en)+' — <i>'+esc(l.tail)+'</i></div></div></div>'}).join("");
+$("mapLines").innerHTML=D.marefaDua.lines.map(function(l,i){return '<div class="mline rv d'+(i+1)+'" style="--c:'+cols[i]+'"><span class="o">'+(i+1)+'</span><div><div class="ma" lang="ar">'+esc(l.ar)+'</div>'+say(l.ar)+'<div class="me">'+esc(l.en)+' — <i>'+esc(l.tail)+'</i></div></div></div>'}).join("");
 txt("mapRef",D.marefaDua.ref);
 
 /* ---------- I. prophet ---------- */
 var P=D.prophet;
 txt("pAr",P.ar);
 $("pFacts").innerHTML=P.facts.map(function(f){return '<span><b>'+esc(f[0])+'</b>'+esc(f[1])+'</span>'}).join("");
-$("pVerses").innerHTML=P.verses.map(function(v){return '<div class="verse rv"><p class="va" lang="ar">'+esc(v.ar)+'</p><p class="ve">'+esc(v.en)+'</p><span class="ref">'+esc(v.ref)+'</span></div>'}).join("");
+$("pVerses").innerHTML=P.verses.map(function(v){return '<div class="verse rv"><p class="va" lang="ar">'+esc(v.ar)+'</p>'+say(v.ar,v.q)+'<p class="ve">'+esc(v.en)+'</p><span class="ref">'+esc(v.ref)+'</span></div>'}).join("");
 $("pWhy").innerHTML=P.why.map(function(c,i){return '<div class="card rv d'+(i+1)+'"><h3>'+esc(c.t)+'</h3><p>'+esc(c.d)+'</p></div>'}).join("");
-txt("thAr",P.thaqalayn.ar);txt("thEn",P.thaqalayn.en);ref("thRef",P.thaqalayn);
+txt("thAr",P.thaqalayn.ar);$("thAr").insertAdjacentHTML("afterend",say(P.thaqalayn.ar));txt("thEn",P.thaqalayn.en);ref("thRef",P.thaqalayn);
 if(P.twelve.ar)txt("twAr",P.twelve.ar);else $("twAr").remove();txt("twEn",P.twelve.en);ref("twRef",P.twelve);
 txt("jabirIntro",P.jabir.intro);txt("jabirClose",P.jabir.close);txt("jabirRef",P.jabir.ref);
 $("names").innerHTML=P.jabir.names.map(function(n){return '<li>'+esc(n)+'</li>'}).join("");
@@ -644,29 +713,29 @@ $("names").innerHTML=P.jabir.names.map(function(n){return '<li>'+esc(n)+'</li>'}
 var F=D.fatima;
 txt("fAr",F.ar);
 $("fFacts").innerHTML=F.facts.map(function(f){return '<span><b>'+esc(f[0])+'</b>'+esc(f[1])+'</span>'}).join("");
-$("fSayings").innerHTML=F.sayings.map(function(v){return '<div class="verse rv"><p class="va" lang="ar">'+esc(v.ar)+'</p><p class="ve">'+esc(v.en)+'</p><span class="ref">'+esc(v.ref)+sn(v.sunni)+'</span></div>'}).join("");
+$("fSayings").innerHTML=F.sayings.map(function(v){return '<div class="verse rv"><p class="va" lang="ar">'+esc(v.ar)+'</p>'+say(v.ar)+'<p class="ve">'+esc(v.en)+'</p><span class="ref">'+esc(v.ref)+sn(v.sunni)+'</span></div>'}).join("");
 $("fBridge").innerHTML=F.bridge.map(function(c,i){return '<div class="card rv d'+(i+1)+'"><h3>'+esc(c.t)+'</h3><p>'+esc(c.d)+'</p></div>'}).join("");
-txt("fSermon",F.sermon.ar);ref("fSermonRef",F.sermon);
-txt("fmAr",F.mahdi.ar);txt("fmEn",F.mahdi.en);txt("fmRef",F.mahdi.ref);
+txt("fSermon",F.sermon.ar);$("fSermon").insertAdjacentHTML("afterend",say(F.sermon.ar));ref("fSermonRef",F.sermon);
+txt("fmAr",F.mahdi.ar);$("fmAr").insertAdjacentHTML("afterend",say(F.mahdi.ar));txt("fmEn",F.mahdi.en);txt("fmRef",F.mahdi.ref);
 /* family tree: Fatima & Ali → al-Hasan, al-Husayn → nine from al-Husayn */
 (function(){
-  var lab=["","","al-Hasan al-Mujtaba","al-Husayn","Zayn al-'Abidin","al-Baqir","al-Sadiq","al-Kazim","al-Rida","al-Jawad","al-Hadi","al-'Askari","al-Mahdi (atfs)"];
-  var X=200,Y0=190,STEP=54,g='<svg viewBox="0 0 400 730" aria-hidden="true"><defs>'+
+  var lab=tt("tree");
+  var X=200,Y0=190,STEP=54,UO=LANG==="ur"?7:0,g='<svg viewBox="0 0 400 730" aria-hidden="true"><defs>'+
     '<radialGradient id="gF" cx="40%" cy="35%"><stop offset="0" stop-color="#fff"/><stop offset=".55" stop-color="#ffd6e4"/><stop offset="1" stop-color="#c2577a"/></radialGradient>'+
     '<radialGradient id="gA" cx="40%" cy="35%"><stop offset="0" stop-color="#fff"/><stop offset=".55" stop-color="#ffe7a8"/><stop offset="1" stop-color="#b8862e"/></radialGradient>'+
     '<radialGradient id="gS" cx="40%" cy="35%"><stop offset="0" stop-color="#fffaf0"/><stop offset=".5" stop-color="#ffd27a"/><stop offset="1" stop-color="#ff9a6b"/></radialGradient></defs>';
   function ln(d,del,c){return '<path class="ln'+(c?" "+c:"")+'" pathLength="1" d="'+d+'" style="--d:'+del+'s"/>'}
   function nd(x,y,r,del,inner){return '<g class="nd" style="--d:'+del+'s">'+inner+'</g>'}
   g+=ln("M120 56 H280",.2,"wed")+ln("M200 56 V128",.9)+ln("M200 128 V"+Y0,1.5)+ln("M200 128 C200 160 90 150 90 "+Y0,1.5)+ln("M"+X+" "+Y0+" V"+(Y0+9*STEP),2.1);
-  g+=nd(0,0,0,0,'<circle cx="120" cy="56" r="32" fill="url(#gF)" style="filter:drop-shadow(0 0 14px rgba(255,200,220,.8))"/><text class="ar" x="120" y="62" text-anchor="middle">فاطمة</text><text class="big" x="120" y="114" text-anchor="middle">Fatima al-Zahra</text>');
-  g+=nd(0,0,0,.4,'<circle cx="280" cy="56" r="24" fill="url(#gA)" style="filter:drop-shadow(0 0 10px rgba(232,199,125,.7))"/><text class="ar" x="280" y="62" text-anchor="middle" style="font-size:15px;fill:#4a3010">علي</text><text class="big" x="280" y="106" text-anchor="middle">Imam Ali</text><text class="sm" x="280" y="124" text-anchor="middle">1st Imam</text>');
-  g+=nd(0,0,0,1.9,'<circle cx="90" cy="'+Y0+'" r="12" fill="url(#gA)"/><text x="90" y="'+(Y0+30)+'" text-anchor="middle"><tspan class="n">2</tspan> · al-Hasan</text><text class="sm" x="90" y="'+(Y0+48)+'" text-anchor="middle">al-Mujtaba</text>');
+  g+=nd(0,0,0,0,'<circle cx="120" cy="56" r="32" fill="url(#gF)" style="filter:drop-shadow(0 0 14px rgba(255,200,220,.8))"/><text class="ar" x="120" y="62" text-anchor="middle">فاطمة</text><text class="big" x="120" y="114" text-anchor="middle">'+tt("treeFatima")+'</text>');
+  g+=nd(0,0,0,.4,'<circle cx="280" cy="56" r="24" fill="url(#gA)" style="filter:drop-shadow(0 0 10px rgba(232,199,125,.7))"/><text class="ar" x="280" y="62" text-anchor="middle" style="font-size:15px;fill:#4a3010">علي</text><text class="big" x="280" y="106" text-anchor="middle">'+tt("treeAli")+'</text><text class="sm" x="280" y="'+(124+UO)+'" text-anchor="middle">'+tt("firstImam")+'</text>');
+  g+=nd(0,0,0,1.9,'<circle cx="90" cy="'+Y0+'" r="12" fill="url(#gA)"/><text x="90" y="'+(Y0+30)+'" text-anchor="middle"><tspan class="n">2</tspan> · '+tt("hasan")+'</text><text class="sm" x="90" y="'+(Y0+48+UO)+'" text-anchor="middle">'+tt("mujtaba")+'</text>');
   for(var k=3;k<=12;k++){var y=Y0+(k-3)*STEP,last=k===12,del=(k===3?1.9:2.1+(k-4)*.28);
     g+=nd(0,0,0,del,(last?'<circle cx="'+X+'" cy="'+y+'" r="22" fill="rgba(255,154,107,.18)"/>':'')+
       '<circle cx="'+X+'" cy="'+y+'" r="'+(last?15:11)+'" fill="url(#'+(last?"gS":"gA")+')"'+(last?' style="filter:drop-shadow(0 0 12px #ff9a6b)"':'')+'/>'+
       (last?'<ellipse cx="'+(X+8)+'" cy="'+(y+4)+'" rx="15" ry="7" fill="rgba(231,235,242,.55)"/>':'')+
       '<text x="'+(X+(last?28:22))+'" y="'+(y+5)+'"><tspan class="n">'+k+'</tspan> · '+lab[k]+'</text>'+
-      (last?'<text class="sm" x="'+(X+28)+'" y="'+(y+23)+'">alive · behind the clouds</text>':''));
+      (last?'<text class="sm" x="'+(X+28)+'" y="'+(y+23+UO)+'">'+tt("alive")+'</text>':''));
   }
   $("tree").innerHTML=g+'</svg>';
 })();
@@ -674,20 +743,20 @@ txt("fmAr",F.mahdi.ar);txt("fmEn",F.mahdi.en);txt("fmRef",F.mahdi.ref);
 /* ---------- ponder gates ---------- */
 [].forEach.call(document.querySelectorAll("[data-ponder]"),function(p){
   var b=p.querySelector(".hold"),a=p.querySelector(".after");
-  holdable(b,function(){a.classList.add("open");b.querySelector("b").textContent="Reflected";b.querySelector("small").textContent="Read on";
+  holdable(b,function(){a.classList.add("open");b.querySelector("b").textContent=tt("reflected");b.querySelector("small").textContent=tt("readOn");
     var lis=a.querySelectorAll(".names li");[].forEach.call(lis,function(li,i){setTimeout(function(){li.classList.add("on")},reduce?0:900+i*650)})});
 });
 
 /* ---------- III. the twelve ---------- */
-txt("svAr",D.starsVerse.ar);txt("svEn",D.starsVerse.en);txt("svRef",D.starsVerse.ref);
-$("shEn").textContent="“"+D.starsHadith.en+"” — "+D.starsHadith.ref;
-txt("torchEn","“"+D.torches.en+"”");txt("torchRef",D.torches.ref);
+txt("svAr",D.starsVerse.ar);$("svAr").insertAdjacentHTML("afterend",say(D.starsVerse.ar,D.starsVerse.q));txt("svEn",D.starsVerse.en);txt("svRef",D.starsVerse.ref);
+$("shEn").textContent=qq(D.starsHadith.en)+" — "+D.starsHadith.ref;
+txt("torchEn",qq(D.torches.en));txt("torchRef",D.torches.ref);
 var seen=store("az-marefat-stars")||[], stars=[], C=$("constel");
 D.imams.forEach(function(m,i){
   var a=-Math.PI/2+i*Math.PI*2/12,x=50+40*Math.cos(a),y=50+40*Math.sin(a);
   var b=document.createElement("button");b.type="button";b.className="star"+(i===11?" last":"");b.style.left=x+"%";b.style.top=y+"%";b.style.setProperty("--i",i);
   b.setAttribute("aria-label","Imam "+m.n+": "+m.name+", "+m.title);
-  b.innerHTML='<i></i><em>'+m.n+' · '+esc(m.title.split(",")[0])+'</em>';b.dataset.x=x;b.dataset.y=y;
+  b.innerHTML='<i></i><em>'+m.n+' · '+esc(m.title.split(/[,،]/)[0])+'</em>';b.dataset.x=x;b.dataset.y=y;
   b.onclick=function(){openImam(i)};C.appendChild(b);stars.push(b);
 });
 function paintStars(){
@@ -701,12 +770,12 @@ function paintStars(){
   if(ordered.length===12)$("allSeen").classList.add("on");
 }
 paintStars();
-var dlg=$("dlg"),cur=0;
+var dlg=$("dlg"),cur=0;$("dPrev").textContent=tt("prev");
 function openImam(i){cur=i;var m=D.imams[i];
-  txt("dKn",(i===11?"The twelfth · the living Imam":"Imam "+m.n+" of 12"));txt("dName",m.name);txt("dAr",m.ar);txt("dTi",m.title);
-  $("dFacts").innerHTML='<span><b>Born</b>'+esc(m.born)+'</span><span><b>'+(i===11?"Today":"Martyred")+'</b>'+esc(m.died)+'</span><span><b>'+(i===11?"Where":"Rests")+'</b>'+esc(m.rest)+'</span>';
-  txt("dLight",m.light);$("dSunni").innerHTML=sn(m.sunni);txt("dLab",i===11?"In his own words":"He spoke of the Qa'im");txt("dQ","“"+m.qaim+"”");txt("dRef",m.qref);
-  $("dPrev").disabled=i===0;$("dNext").textContent=i===11?"Close":"Next →";
+  txt("dKn",(i===11?tt("twelfth"):tt("imamOf",{n:m.n})));txt("dName",m.name);txt("dAr",m.ar);txt("dTi",m.title);
+  $("dFacts").innerHTML='<span><b>'+tt("born")+'</b>'+esc(m.born)+'</span><span><b>'+tt(i===11?"today":"martyred")+'</b>'+esc(m.died)+'</span><span><b>'+tt(i===11?"where":"rests")+'</b>'+esc(m.rest)+'</span>';
+  txt("dLight",m.light);$("dSunni").innerHTML=sn(m.sunni);txt("dLab",tt(i===11?"ownWords":"spoke"));txt("dQ",qq(m.qaim));txt("dRef",m.qref);
+  $("dPrev").disabled=i===0;$("dNext").textContent=tt(i===11?"close":"next");
   if(seen.indexOf(i)<0){seen.push(i);store("az-marefat-stars",seen);paintStars()}
   if(!dlg.open){if(dlg.showModal)dlg.showModal();else dlg.setAttribute("open","")}
   dlg.querySelector(".dlg").scrollTop=0;
@@ -719,7 +788,7 @@ dlg.addEventListener("click",function(e){if(e.target===dlg)closeDlg()});
 
 /* ---------- IV. hidden sun ---------- */
 $("deps").innerHTML=D.deputies.map(function(d,i){return '<div><b>'+esc(d.name)+'</b>'+esc(d.yrs)+'</div>'}).join("");
-txt("llEn","“"+D.lastLetter.en+"”");txt("llRef",D.lastLetter.ref);
+txt("llEn",qq(D.lastLetter.en));txt("llRef",D.lastLetter.ref);
 
 var icons={
   boat:'<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M5 25h30l-5 7H10z"/><path d="M20 6v19M20 8l9 13H20"/><path d="M14 28l2 2"/></svg>',
@@ -727,21 +796,21 @@ var icons={
   wall:'<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 9h30v24H5zM5 17h30M5 25h30M14 9v8M26 9v8M20 17v8M11 25v8M29 25v8"/></svg>'
 };
 $("qlist").innerHTML=D.questions.map(function(q,i){
-  var ev='<div class="ev">'+q.a.map(function(a){return '<div><span class="k '+esc(a.k)+'">'+esc(a.k)+'</span><p>'+esc(a.t)+'<small>'+esc(a.r)+'</small>'+sn(a.sunni)+'</p></div>'}).join("")+'</div>'+(q.sunni?'<p style="max-width:720px;margin:12px auto 0;text-align:left">'+sn(q.sunni)+'</p>':'');
+  var ev='<div class="ev">'+q.a.map(function(a,j){return '<div><span class="k '+esc(EN.questions[i].a[j].k)+'">'+esc(a.k)+'</span><p>'+esc(a.t)+'<small>'+esc(a.r)+'</small>'+sn(a.sunni)+'</p></div>'}).join("")+'</div>'+(q.sunni?'<p style="max-width:720px;margin:12px auto 0;text-align:start">'+sn(q.sunni)+'</p>':'');
   var extra="";
-  if(q.chart)extra+='<div class="life" id="life">'+D.lifespans.map(function(l){return '<div class="row'+(l.live?" me":"")+'"><div class="lb">'+esc(l.label)+'<small>'+esc(l.note)+'</small></div><div class="tr"><div class="fill" data-v="'+(l.v||0)+'"'+(l.live?' data-live="1"':'')+'></div><span class="val">'+(l.live?"":l.v+" yrs")+'</span></div></div>'}).join("")+'</div>';
-  if(q.khidr)extra+='<p class="prose" style="margin-bottom:0">Touch each act. See what Musa saw — then what was hidden. <span style="color:var(--dim)">(al-Kahf 18:65–82)</span></p><div class="khidr">'+D.khidr.map(function(k){return '<button class="kt" type="button" aria-label="'+esc(k.seen)+' Reveal the wisdom"><div class="in"><div class="f">'+icons[k.icon]+'<p>'+esc(k.seen)+'</p><small>What Musa saw</small></div><div class="f b"><p>'+esc(k.wisdom)+'</p><small>The hidden wisdom · '+esc(k.ref)+'</small></div></div></button>'}).join("")+'</div>';
+  if(q.chart)extra+='<div class="life" id="life">'+D.lifespans.map(function(l){return '<div class="row'+(l.live?" me":"")+'"><div class="lb">'+esc(l.label)+'<small>'+esc(l.note)+'</small></div><div class="tr"><div class="fill" data-v="'+(l.v||0)+'"'+(l.live?' data-live="1"':'')+'></div><span class="val">'+(l.live?"":l.v+" "+tt("yrs"))+'</span></div></div>'}).join("")+'</div>';
+  if(q.khidr)extra+='<p class="prose" style="margin-bottom:0">'+esc(tt("touchActs"))+' <span style="color:var(--dim)">'+esc(tt("kahf"))+'</span></p><div class="khidr">'+D.khidr.map(function(k){return '<button class="kt" type="button" aria-label="'+esc(k.seen)+' ·"><div class="in"><div class="f">'+icons[k.icon]+'<p>'+esc(k.seen)+'</p><small>'+esc(tt("musaSaw"))+'</small></div><div class="f b"><p>'+esc(k.wisdom)+'</p><small>'+esc(tt("hiddenWisdom"))+' · '+esc(k.ref)+'</small></div></div></button>'}).join("")+'</div>';
   if(q.sun)extra+='<div class="scene" id="scene" role="img" aria-label="The sun behind clouds; the land below remains lit"><div class="s"></div><div class="rays"></div><div class="sky-dim"></div><div class="cl cl1"></div><div class="cl cl2"></div>'+
     '<div class="land"><svg viewBox="0 0 400 160" preserveAspectRatio="none"><path d="M0 70 Q80 30 170 60 T400 50 V160 H0Z" fill="#4c8a52"/><path d="M0 100 Q120 70 230 95 T400 90 V160 H0Z" fill="#3d7a45"/><rect x="300" y="40" width="6" height="30" fill="#5a3b22"/><circle cx="303" cy="34" r="16" fill="#2f6d3a"/><path d="M60 120 h4 v-14 a8 8 0 1 1 0.1 0" fill="#e4c75a"/><circle cx="62" cy="104" r="5" fill="#ffd34d"/><circle cx="110" cy="128" r="4" fill="#ffd34d"/><circle cx="160" cy="118" r="4" fill="#ff9a6b"/></svg></div></div>'+
-    '<label class="ctrl"><span>Clear</span><input type="range" id="clouds" min="0" max="100" value="85" aria-label="Cloud cover"><span>Clouded</span></label>'+
-    '<div class="meters"><span>Sun visible to the eye<b id="mEye"></b></span><span>Light and warmth reaching the earth<b id="mEarth"></b></span></div>';
-  return '<article class="qbox rv" id="q-'+q.id+'"><span class="qn">Question '+(i+1)+' of '+D.questions.length+'</span><h3>'+esc(q.q)+'</h3><p class="pq">'+esc(q.ponder)+'</p>'+
-    '<button class="hold" type="button" data-ms="3000"><span class="ring"></span><span class="dot">✦</span><span><b>Hold to reflect</b><small>Sit with the question first</small></span></button>'+
+    '<label class="ctrl"><span>'+tt("clear")+'</span><input type="range" id="clouds" min="0" max="100" value="85" aria-label="Cloud cover"><span>'+tt("clouded")+'</span></label>'+
+    '<div class="meters"><span>'+tt("eye")+'<b id="mEye"></b></span><span>'+tt("earth")+'<b id="mEarth"></b></span></div>';
+  return '<article class="qbox rv" id="q-'+q.id+'"><span class="qn">'+tt("question",{i:i+1,n:D.questions.length})+'</span><h3>'+esc(q.q)+'</h3><p class="pq">'+esc(q.ponder)+'</p>'+
+    '<button class="hold" type="button" data-ms="3000"><span class="ring"></span><span class="dot">✦</span><span><b>'+tt("holdReflect")+'</b><small>'+tt("sitFirst")+'</small></span></button>'+
     '<div class="after"><div><div class="inner">'+ev+extra+'<p class="closeline">'+esc(q.close)+'</p></div></div></div></article>';
 }).join("");
 [].forEach.call(document.querySelectorAll(".qbox"),function(box){
   var b=box.querySelector(".hold"),a=box.querySelector(".after");
-  holdable(b,function(){a.classList.add("open");b.querySelector("b").textContent="Reflected";b.querySelector("small").textContent="Read the answer";
+  holdable(b,function(){a.classList.add("open");b.querySelector("b").textContent=tt("reflected");b.querySelector("small").textContent=tt("readAnswer");
     if(box.id==="q-life")setTimeout(drawLife,reduce?0:600)});
 });
 [].forEach.call(document.querySelectorAll(".kt"),function(k){k.onclick=function(){k.classList.toggle("flip")}});
@@ -753,7 +822,7 @@ function since(from){var now=Date.now(),d=new Date(now),f=new Date(from);
   var ms=now-anniv,days=Math.floor(ms/864e5);ms-=days*864e5;var h=Math.floor(ms/36e5);ms-=h*36e5;var m=Math.floor(ms/6e4);ms-=m*6e4;
   return{y:y,d:days,h:h,m:m,s:Math.floor(ms/1000),lunar:Math.floor((now-from)/864e5/354.367)}}
 function drawLife(){var age=since(BIRTH).y,max=Math.max(age,950)*1.04;
-  [].forEach.call(document.querySelectorAll("#life .fill"),function(f){var v=f.dataset.live?age:+f.dataset.v;f.style.width=(v/max*100)+"%";if(f.dataset.live)f.nextElementSibling.textContent=age.toLocaleString()+"+ yrs"})}
+  [].forEach.call(document.querySelectorAll("#life .fill"),function(f){var v=f.dataset.live?age:+f.dataset.v;f.style.width=(v/max*100)+"%";if(f.dataset.live)f.nextElementSibling.textContent=age.toLocaleString("en-US")+"+ "+tt("yrs")})}
 
 /* sun scene */
 var sc=$("scene"),rng=$("clouds");
@@ -761,24 +830,24 @@ function clouds(){var c=rng.value/100;sc.style.setProperty("--c",c);$("mEye").te
 if(rng){rng.addEventListener("input",clouds);clouds()}
 
 /* ---------- V. waiting ---------- */
-function cells(id){$(id).innerHTML=["Years","Days","Hours","Minutes","Seconds","Lunar yrs"].map(function(l){return '<div><b>0</b><small>'+l+'</small></div>'}).join("")}
+function cells(id){$(id).innerHTML=tt("units").map(function(l){return '<div><b>0</b><small>'+l+'</small></div>'}).join("")}
 cells("cAge");cells("cGhayba");
 function pad(n){return n<10?"0"+n:""+n}
 function tickCounters(){[["cAge",BIRTH],["cGhayba",GHAYBA]].forEach(function(p){var s=since(p[1]),b=$(p[0]).querySelectorAll("b");
-  b[0].textContent=s.y.toLocaleString();b[1].textContent=s.d;b[2].textContent=pad(s.h);b[3].textContent=pad(s.m);b[4].textContent=pad(s.s);b[5].textContent=s.lunar.toLocaleString()})}
+  b[0].textContent=s.y.toLocaleString("en-US");b[1].textContent=s.d;b[2].textContent=pad(s.h);b[3].textContent=pad(s.m);b[4].textContent=pad(s.s);b[5].textContent=s.lunar.toLocaleString("en-US")})}
 tickCounters();setInterval(tickCounters,1000);
-var hijri="";try{hijri=new Intl.DateTimeFormat("en-u-ca-islamic-umalqura",{day:"numeric",month:"long",year:"numeric"}).format(new Date())}catch(e){}
-txt("cAgeNote","since 15 Sha'ban 255 AH (July 869 CE), approximately"+(hijri?" · today is "+hijri:""));
+var hijri="";try{hijri=new Intl.DateTimeFormat(LANG==="ur"?"ur-u-ca-islamic-umalqura-nu-latn":"en-u-ca-islamic-umalqura",{day:"numeric",month:"long",year:"numeric"}).format(new Date())}catch(e){}
+txt("cAgeNote",tt("since")+(hijri?" · "+tt("todayIs")+" "+hijri:""));
 var W5=D.waiting;
-txt("covAr",W5.covenant.ar);txt("covEn",W5.covenant.en);txt("covRef",W5.covenant.ref);
-txt("sqEn","“"+W5.sadiq.en+"”");txt("sqRef",W5.sadiq.ref);
-txt("tentEn","“"+W5.tent.en+"”");txt("tentRef",W5.tent.ref);
+txt("covAr",W5.covenant.ar);$("covAr").insertAdjacentHTML("afterend",say(W5.covenant.ar));txt("covEn",W5.covenant.en);txt("covRef",W5.covenant.ref);
+txt("sqEn",qq(W5.sadiq.en));txt("sqRef",W5.sadiq.ref);
+txt("tentEn",qq(W5.tent.en));txt("tentRef",W5.tent.ref);
 var marks=store("az-marefat-practices")||{};
 $("checks").innerHTML=W5.practices.map(function(p,i){return '<button class="chk rv" type="button" role="checkbox" aria-checked="'+(!!marks[i])+'" data-i="'+i+'"><span class="bx">✓</span><span><b>'+esc(p.t)+'</b><span>'+esc(p.d)+'</span><small>'+esc(p.ref)+'</small></span></button>'}).join("");
 [].forEach.call(document.querySelectorAll(".chk"),function(c){c.onclick=function(){var i=c.dataset.i,on=c.getAttribute("aria-checked")!=="true";c.setAttribute("aria-checked",on);marks[i]=on;store("az-marefat-practices",marks)}});
 
 /* ---------- VI. covenant ---------- */
-$("ahd").innerHTML=D.ahd.lines.map(function(l){return '<div class="ln"><p class="la" lang="ar">'+esc(l.ar)+'</p><p class="le">'+esc(l.en)+'</p></div>'}).join("");
+$("ahd").innerHTML=D.ahd.lines.map(function(l){return '<div class="ln"><p class="la" lang="ar">'+esc(l.ar)+'</p>'+say(l.ar)+'<p class="le">'+esc(l.en)+'</p></div>'}).join("");
 $("ahdNote").innerHTML=esc(D.ahd.note)+'<br><span class="ref">'+esc(D.ahd.ref)+'</span>';
 function today(){var d=new Date();return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate())}
 function streakCount(days){/* consecutive mornings ending today or yesterday */
@@ -787,11 +856,33 @@ function streakCount(days){/* consecutive mornings ending today or yesterday */
 function paintStreak(){var days=store("az-marefat-ahd")||[],n=Math.min(40,streakCount(days)),h="";
   for(var i=0;i<40;i++)h+='<i class="'+(i<n?"on":"")+'"></i>';$("streak").innerHTML=h;
   var done=days.indexOf(today())>-1;
-  $("streakNote").textContent=n?("Morning "+n+" of 40"+(n>=40?" — completed. Keep the covenant every morning.":"")):"Forty mornings, one at a time.";
-  if(done){$("renewed").textContent="Your covenant is renewed for today.";$("renewBtn").classList.add("done")}}
+  $("streakNote").textContent=n?(tt("morning",{n:n})+(n>=40?tt("completed"):"")):tt("forty");
+  if(done){$("renewed").textContent=tt("renewedToday");$("renewBtn").classList.add("done")}}
 paintStreak();
 holdable($("renewBtn"),function(){var days=store("az-marefat-ahd")||[];if(days.indexOf(today())<0){days.push(today());store("az-marefat-ahd",days.slice(-120))}
-  paintStreak();$("renewed").textContent="لَا أَحُولُ عَنْهَا وَلَا أَزُولُ أَبَدًا — I will never turn from it, and never waver."});
+  paintStreak();$("renewed").textContent=tt("neverTurn")});
+
+/* ---------- listen: Qur'an by reciter, other Arabic by the device's Arabic voice ---------- */
+var AUD=new Audio(),playing=null,qList=[];
+function voices(){try{return speechSynthesis.getVoices().filter(function(v){return /^ar(-|_|$)/i.test(v.lang)})}catch(e){return[]}}
+function checkVoices(){if(voices().length)document.body.classList.add("has-ar")}
+if(window.speechSynthesis){checkVoices();try{speechSynthesis.addEventListener("voiceschanged",checkVoices)}catch(e){speechSynthesis.onvoiceschanged=checkVoices}}
+function resetSay(){if(playing){playing.classList.remove("on");playing.querySelector("span").textContent=tt("listen")}playing=null}
+function stopAll(){try{AUD.pause()}catch(e){}qList=[];try{speechSynthesis.cancel()}catch(e){}resetSay()}
+function nextAyah(){if(!qList.length){resetSay();return}AUD.src=qList.shift();AUD.play().catch(resetSay)}
+AUD.addEventListener("ended",nextAyah);AUD.addEventListener("error",resetSay);
+document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest(".say");if(!b)return;
+  var was=b===playing;stopAll();if(was)return;
+  playing=b;b.classList.add("on");b.querySelector("span").textContent=tt("stop");
+  if(b.dataset.q){var m=b.dataset.q.split(":"),s=+m[0],r=m[1].split("-"),a0=+r[0],a1=+(r[1]||r[0]);
+    for(var a=a0;a<=a1;a++)qList.push("https://everyayah.com/data/Alafasy_128kbps/"+String(s).padStart(3,"0")+String(a).padStart(3,"0")+".mp3");nextAyah()}
+  else{try{var u=new SpeechSynthesisUtterance(b.dataset.say),vs=voices();u.lang=vs[0]?vs[0].lang:"ar-SA";if(vs[0])u.voice=vs[0];u.rate=.78;u.onend=u.onerror=resetSay;speechSynthesis.speak(u)}catch(err){resetSay()}}
+});
+
+/* ---------- language switch ---------- */
+$("langBtn").onclick=function(){var to=LANG==="ur"?"en":"ur";store("az-marefat-lang",to);
+  var on=null;chaps.forEach(function(c){if(c.getBoundingClientRect().top<innerHeight*.4)on=c.id});
+  var h=document.body.classList.contains("begun")&&on?"#"+on:"";location.href=location.pathname+"?lang="+to+h};
 
 /* ---------- reveal, rail, dawn ---------- */
 var io;
@@ -799,7 +890,8 @@ function observeAll(){if(io)return;
   io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}})},{threshold:.12,rootMargin:"0px 0px -6% 0px"});
   [].forEach.call(document.querySelectorAll(".rv"),function(el){io.observe(el)})}
 var chaps=[].slice.call(document.querySelectorAll(".chap"));
-$("rail").innerHTML=chaps.map(function(c){return '<a href="#'+c.id+'" aria-label="'+esc(c.dataset.title)+'"><span>'+esc(c.dataset.title)+'</span></a>'}).join("");
+function ctitle(c){return LANG==="ur"&&UR.t.rail[c.id]?UR.t.rail[c.id]:c.dataset.title}
+$("rail").innerHTML=chaps.map(function(c){return '<a href="#'+c.id+'" aria-label="'+esc(ctitle(c))+'"><span>'+esc(ctitle(c))+'</span></a>'}).join("");
 var railA=[].slice.call(document.querySelectorAll(".rail a")),ticking=false;
 function onScroll(){ticking=false;var max=document.documentElement.scrollHeight-innerHeight,p=max>0?scrollY/max:0;
   $("bar").style.width=(p*100)+"%";document.documentElement.style.setProperty("--dawn",Math.max(0,Math.min(1,(p-.45)/.5)).toFixed(3));
@@ -808,7 +900,7 @@ addEventListener("scroll",function(){if(!ticking){ticking=true;requestAnimationF
 
 /* returning visitors who came via a chapter link skip the threshold */
 if(location.hash&&location.hash!=="#threshold"&&document.querySelector(location.hash)){document.body.classList.add("begun");observeAll();setTimeout(function(){document.querySelector(location.hash).scrollIntoView()},50)}
-if(store("az-marefat-begun")){$("beginBtn").querySelector("small").textContent="Welcome back. Hold, and begin again."}
+if(store("az-marefat-begun")){$("beginBtn").querySelector("small").textContent=tt("welcome")}
 })();
 </script>
 <script src="../assets/js/menu.js" defer></script>
