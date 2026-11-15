@@ -245,6 +245,9 @@ dialog.imam[open]{animation:up .6s cubic-bezier(.2,.8,.2,1)}
 .ev .k.Witness,.ev .k.History{color:var(--em)}
 .ev p{margin:0;font-size:.98rem;color:#e2e1ea}
 .ev small{display:block;margin-top:4px;font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+.sunni{display:block;margin-top:8px;font-family:var(--sans);font-style:normal;font-size:.7rem;line-height:1.5;letter-spacing:.03em;text-transform:none;color:var(--dim)}
+.sunni::before{content:"◦ ";color:var(--gold)}
+.sunni i{font-style:normal;color:var(--mut)}
 .closeline{font-family:var(--serif);font-style:italic;font-size:clamp(1.3rem,4vw,1.7rem);color:var(--gold2);margin:22px auto 0;max-width:620px;line-height:1.4}
 @media (max-width:520px){.ev div{grid-template-columns:1fr;gap:8px}}
 
@@ -477,7 +480,7 @@ dialog.imam[open]{animation:up .6s cubic-bezier(.2,.8,.2,1)}
       <p class="ar" lang="ar" id="dAr"></p>
       <span class="ti" id="dTi"></span>
       <div class="facts" id="dFacts"></div>
-      <p class="light" id="dLight"></p>
+      <p class="light" id="dLight"></p><p id="dSunni" style="margin:-8px 0 16px"></p>
       <div class="qaim"><span class="lab" id="dLab">He spoke of the Qa'im</span><p id="dQ"></p><span class="ref" id="dRef"></span></div>
       <div class="dnav"><button class="btn" id="dPrev" type="button">← Previous</button><button class="btn" id="dNext" type="button">Next →</button></div>
     </div>
@@ -548,7 +551,7 @@ dialog.imam[open]{animation:up .6s cubic-bezier(.2,.8,.2,1)}
     <p style="color:var(--mut);font-family:var(--serif);font-style:italic;font-size:1.2rem;margin:0">O Allah, hasten the relief of Your Wali.</p>
     <p class="q">He is waiting.<br><em>Are you?</em></p>
     <nav><a class="btn" href="who-is-imam.html">Who is Imam al-Mahdi?</a><a class="btn" href="knowledge-library.html">Read the sources</a><a class="btn" href="academy.html">Back to the Academy</a></nav>
-    <p class="review">Narrations are quoted from the books in our Knowledge Library — chiefly Shaykh Saduq's Kamal al-Din and Shaykh Tusi's al-Ghayba — and from the Qur'an and well-known hadith collections. Dates follow the commonly held reports; others exist. This page should be reviewed by a qualified scholar.</p>
+    <p class="review">Narrations are quoted from the Qur'an and from Shia sources, chiefly the books in our Knowledge Library: Shaykh Saduq's Kamal al-Din and Shaykh Tusi's al-Ghayba. Where Sunni scholars record the same hadith, it is shown as a side note. Dates follow the commonly held reports; others exist. This page should be reviewed by a qualified scholar.</p>
   </section>
   </div>
 </main>
@@ -561,6 +564,8 @@ var D=window.AZ_MAREFAT, $=function(id){return document.getElementById(id)};
 var reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
 function txt(id,s){var e=$(id);if(e)e.textContent=s}
+function sn(x){return x?'<span class="sunni"><i>Also recorded by Sunni scholars:</i> '+esc(x)+'</span>':""}
+function ref(id,o){var e=$(id);if(e)e.innerHTML=esc(o.ref)+sn(o.sunni)}
 function store(k,v){try{if(v===undefined)return JSON.parse(localStorage.getItem(k));localStorage.setItem(k,JSON.stringify(v))}catch(e){return null}}
 
 /* ---------- star sky ---------- */
@@ -593,7 +598,7 @@ function holdable(btn,done){
 
 /* ---------- threshold ---------- */
 function words(el,s){el.innerHTML=s.split(" ").map(function(w){return '<span class="w">'+esc(w)+'</span>'}).join(" ")}
-words($("t-h"),D.opening.ar);words($("openEn"),D.opening.en);txt("openRef",D.opening.ref);
+words($("t-h"),D.opening.ar);words($("openEn"),D.opening.en);ref("openRef",D.opening);
 var W1=[].slice.call(document.querySelectorAll("#t-h .w")),W2=[].slice.call(document.querySelectorAll("#openEn .w"));
 var gap=reduce?0:420,t0=reduce?0:900;
 W1.forEach(function(w,i){setTimeout(function(){w.classList.add("on")},t0+i*gap)});
@@ -618,8 +623,8 @@ txt("pAr",P.ar);
 $("pFacts").innerHTML=P.facts.map(function(f){return '<span><b>'+esc(f[0])+'</b>'+esc(f[1])+'</span>'}).join("");
 $("pVerses").innerHTML=P.verses.map(function(v){return '<div class="verse rv"><p class="va" lang="ar">'+esc(v.ar)+'</p><p class="ve">'+esc(v.en)+'</p><span class="ref">'+esc(v.ref)+'</span></div>'}).join("");
 $("pWhy").innerHTML=P.why.map(function(c,i){return '<div class="card rv d'+(i+1)+'"><h3>'+esc(c.t)+'</h3><p>'+esc(c.d)+'</p></div>'}).join("");
-txt("thAr",P.thaqalayn.ar);txt("thEn",P.thaqalayn.en);txt("thRef",P.thaqalayn.ref);
-txt("twAr",P.twelve.ar);txt("twEn",P.twelve.en);txt("twRef",P.twelve.ref);
+txt("thAr",P.thaqalayn.ar);txt("thEn",P.thaqalayn.en);ref("thRef",P.thaqalayn);
+if(P.twelve.ar)txt("twAr",P.twelve.ar);else $("twAr").remove();txt("twEn",P.twelve.en);ref("twRef",P.twelve);
 txt("jabirIntro",P.jabir.intro);txt("jabirClose",P.jabir.close);txt("jabirRef",P.jabir.ref);
 $("names").innerHTML=P.jabir.names.map(function(n){return '<li>'+esc(n)+'</li>'}).join("");
 
@@ -627,9 +632,9 @@ $("names").innerHTML=P.jabir.names.map(function(n){return '<li>'+esc(n)+'</li>'}
 var F=D.fatima;
 txt("fAr",F.ar);
 $("fFacts").innerHTML=F.facts.map(function(f){return '<span><b>'+esc(f[0])+'</b>'+esc(f[1])+'</span>'}).join("");
-$("fSayings").innerHTML=F.sayings.map(function(v){return '<div class="verse rv"><p class="va" lang="ar">'+esc(v.ar)+'</p><p class="ve">'+esc(v.en)+'</p><span class="ref">'+esc(v.ref)+'</span></div>'}).join("");
+$("fSayings").innerHTML=F.sayings.map(function(v){return '<div class="verse rv"><p class="va" lang="ar">'+esc(v.ar)+'</p><p class="ve">'+esc(v.en)+'</p><span class="ref">'+esc(v.ref)+sn(v.sunni)+'</span></div>'}).join("");
 $("fBridge").innerHTML=F.bridge.map(function(c,i){return '<div class="card rv d'+(i+1)+'"><h3>'+esc(c.t)+'</h3><p>'+esc(c.d)+'</p></div>'}).join("");
-txt("fSermon",F.sermon.ar);txt("fSermonRef",F.sermon.ref);
+txt("fSermon",F.sermon.ar);ref("fSermonRef",F.sermon);
 txt("fmAr",F.mahdi.ar);txt("fmEn",F.mahdi.en);txt("fmRef",F.mahdi.ref);
 var dh="";for(var i=0;i<11;i++)dh+='<span class="drop" style="--i:'+i+'"></span>';
 $("drops").innerHTML=dh;
@@ -671,7 +676,7 @@ var dlg=$("dlg"),cur=0;
 function openImam(i){cur=i;var m=D.imams[i];
   txt("dKn",(i===11?"The twelfth · the living Imam":"Imam "+m.n+" of 12"));txt("dName",m.name);txt("dAr",m.ar);txt("dTi",m.title);
   $("dFacts").innerHTML='<span><b>Born</b>'+esc(m.born)+'</span><span><b>'+(i===11?"Today":"Martyred")+'</b>'+esc(m.died)+'</span><span><b>'+(i===11?"Where":"Rests")+'</b>'+esc(m.rest)+'</span>';
-  txt("dLight",m.light);txt("dLab",i===11?"In his own words":"He spoke of the Qa'im");txt("dQ","“"+m.qaim+"”");txt("dRef",m.qref);
+  txt("dLight",m.light);$("dSunni").innerHTML=sn(m.sunni);txt("dLab",i===11?"In his own words":"He spoke of the Qa'im");txt("dQ","“"+m.qaim+"”");txt("dRef",m.qref);
   $("dPrev").disabled=i===0;$("dNext").textContent=i===11?"Close":"Next →";
   if(seen.indexOf(i)<0){seen.push(i);store("az-marefat-stars",seen);paintStars()}
   if(!dlg.open){if(dlg.showModal)dlg.showModal();else dlg.setAttribute("open","")}
@@ -693,7 +698,7 @@ var icons={
   wall:'<svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 9h30v24H5zM5 17h30M5 25h30M14 9v8M26 9v8M20 17v8M11 25v8M29 25v8"/></svg>'
 };
 $("qlist").innerHTML=D.questions.map(function(q,i){
-  var ev='<div class="ev">'+q.a.map(function(a){return '<div><span class="k '+esc(a.k)+'">'+esc(a.k)+'</span><p>'+esc(a.t)+'<small>'+esc(a.r)+'</small></p></div>'}).join("")+'</div>';
+  var ev='<div class="ev">'+q.a.map(function(a){return '<div><span class="k '+esc(a.k)+'">'+esc(a.k)+'</span><p>'+esc(a.t)+'<small>'+esc(a.r)+'</small>'+sn(a.sunni)+'</p></div>'}).join("")+'</div>'+(q.sunni?'<p style="max-width:720px;margin:12px auto 0;text-align:left">'+sn(q.sunni)+'</p>':'');
   var extra="";
   if(q.chart)extra+='<div class="life" id="life">'+D.lifespans.map(function(l){return '<div class="row'+(l.live?" me":"")+'"><div class="lb">'+esc(l.label)+'<small>'+esc(l.note)+'</small></div><div class="tr"><div class="fill" data-v="'+(l.v||0)+'"'+(l.live?' data-live="1"':'')+'></div><span class="val">'+(l.live?"":l.v+" yrs")+'</span></div></div>'}).join("")+'</div>';
   if(q.khidr)extra+='<p class="prose" style="margin-bottom:0">Touch each act. See what Musa saw — then what was hidden. <span style="color:var(--dim)">(al-Kahf 18:65–82)</span></p><div class="khidr">'+D.khidr.map(function(k){return '<button class="kt" type="button" aria-label="'+esc(k.seen)+' Reveal the wisdom"><div class="in"><div class="f">'+icons[k.icon]+'<p>'+esc(k.seen)+'</p><small>What Musa saw</small></div><div class="f b"><p>'+esc(k.wisdom)+'</p><small>The hidden wisdom · '+esc(k.ref)+'</small></div></div></button>'}).join("")+'</div>';

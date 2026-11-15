@@ -10,6 +10,9 @@
   tr. S. Athar Husain Rizvi); chapter numbers follow Shaykh Saduq's original order.
   "al-Ghayba (Tusi)" was checked against assets/books/Al-Ghayba.pdf.
   Dates follow the commonly held Shia reports; other reports exist for several of them.
+
+  Shia sources come first in every "ref". Where Sunni books record the same
+  hadith, it goes in the optional "sunni" field and is shown as a small side note.
 */
 window.AZ_MAREFAT = {
 
@@ -17,7 +20,8 @@ window.AZ_MAREFAT = {
   opening: {
     ar: "مَنْ مَاتَ وَلَمْ يَعْرِفْ إِمَامَ زَمَانِهِ مَاتَ مِيتَةً جَاهِلِيَّةً",
     en: "Whoever dies without knowing the Imam of his time dies the death of ignorance.",
-    ref: "The Messenger of Allah (s) · Kamal al-Din, ch. 38 · cf. Sahih Muslim 1851"
+    ref: "The Messenger of Allah (s), affirmed by Imam al-'Askari (as) as \"true as the daylight\" · Kamal al-Din, ch. 38",
+    sunni: "Sahih Muslim 1851 · Musnad Ahmad (in similar words)"
   },
 
   /* The supplication of recognition taught by Imam al-Sadiq (as) to Zurarah */
@@ -51,12 +55,14 @@ window.AZ_MAREFAT = {
     thaqalayn: {
       ar: "إِنِّي تَارِكٌ فِيكُمُ الثَّقَلَيْنِ: كِتَابَ اللهِ وَعِتْرَتِي أَهْلَ بَيْتِي، وَإِنَّهُمَا لَنْ يَفْتَرِقَا حَتَّىٰ يَرِدَا عَلَيَّ الْحَوْضَ",
       en: "I am leaving among you the Two Weighty Things: the Book of Allah and my family, my Ahl al-Bayt. And they will never separate from each other until they return to me at the Pool.",
-      ref: "Sahih Muslim 2408 · Sunan al-Tirmidhi 3788 · Musnad Ahmad"
+      ref: "At Ghadir Khumm, narrated by Zayd ibn Arqam · Kamal al-Din, ch. 22 and the author's introduction",
+      sunni: "Sahih Muslim 2408 · Sunan al-Tirmidhi 3788 · Musnad Ahmad"
     },
     twelve: {
-      ar: "لَا يَزَالُ الدِّينُ قَائِمًا حَتَّىٰ تَقُومَ السَّاعَةُ أَوْ يَكُونَ عَلَيْكُمُ اثْنَا عَشَرَ خَلِيفَةً كُلُّهُمْ مِنْ قُرَيْشٍ",
-      en: "This religion will remain standing until the Hour is established, or until there have been twelve successors over you, all of them from Quraysh.",
-      ref: "Sahih Muslim 1821 · cf. Sahih al-Bukhari 7222"
+      ar: "",
+      en: "There are twelve leaders for this nation — all of them from Quraysh. (Other versions say: twelve successors; twelve chiefs, equal to the chiefs of Bani Isra'il.)",
+      ref: "Jabir ibn Samura · Kamal al-Din, author's introduction (through several chains)",
+      sunni: "Sahih Muslim 1821 · Sahih al-Bukhari 7222"
     },
     jabir: {
       intro: "When the verse \"Obey Allah and obey the Messenger and those vested with authority among you\" (al-Nisa 4:59) was revealed, Jabir ibn Abdullah al-Ansari asked who \"those vested with authority\" were. The Prophet (s) named them, one by one:",
@@ -75,16 +81,16 @@ window.AZ_MAREFAT = {
       ["Resting place", "Unknown to this day — she asked to be buried at night, in secret"]
     ],
     sayings: [
-      { ar: "فَاطِمَةُ بَضْعَةٌ مِنِّي، فَمَنْ أَغْضَبَهَا أَغْضَبَنِي", en: "Fatima is a part of me; whoever angers her has angered me.", ref: "The Prophet (s) · Sahih al-Bukhari 3714" },
-      { ar: "سَيِّدَةُ نِسَاءِ أَهْلِ الْجَنَّةِ", en: "\"…the mistress of the women of Paradise.\"", ref: "The Prophet (s) · Sahih al-Bukhari 3624" },
-      { ar: "الْمَهْدِيُّ مِنْ عِتْرَتِي، مِنْ وَلَدِ فَاطِمَةَ", en: "The Mahdi is from my family, from the children of Fatima.", ref: "The Prophet (s) · Sunan Abi Dawud 4284" }
+      { ar: "فَاطِمَةُ بَضْعَةٌ مِنِّي، مَنْ آذَاهَا فَقَدْ آذَانِي", en: "Fatima is a part of me; whoever hurts her has hurt me.", ref: "The Prophet (s) · 'Ilal al-Shara'i (Saduq) · Haqq al-Yaqin (Majlisi)", sunni: "Sahih al-Bukhari 3714 (\"whoever angers her angers me\")" },
+      { ar: "سَيِّدَةُ نِسَاءِ أَهْلِ الْجَنَّةِ", en: "\"You are the mistress of the women of Paradise, and your sons Hasan and Husayn are the masters of the youth of Paradise.\"", ref: "The Prophet (s) to Lady Fatima · Kamal al-Din, ch. 24", sunni: "Sahih al-Bukhari 3624" },
+      { ar: "الْمَهْدِيُّ مِنْ عِتْرَتِي، مِنْ وَلَدِ فَاطِمَةَ", en: "The Mahdi is from my family, from the descendants of Fatima.", ref: "The Prophet (s), narrated by Umm Salama · al-Ghayba (Tusi), no. 145", sunni: "Sunan Abi Dawud 4284" }
     ],
     bridge: [
       { t: "Daughter of Prophethood", d: "The only child of the Prophet (s) through whom his line continued — the answer to the taunt of \"abtar\", the one cut off. Allah replied: \"Indeed, We have given you al-Kawthar\" — abundance (al-Kawthar 108:1)." },
       { t: "Mother of Imamate", d: "Eleven of the Twelve Imams descend from her. The tablet given to her by her father, which Jabir saw and copied, named all twelve and their mothers (Kamal al-Din, ch. 28)." },
       { t: "She spoke of Imamate herself", d: "In her sermon in the Prophet's mosque she said Allah made \"obedience to us an order for the community, and our Imamate a safety from division.\"" }
     ],
-    sermon: { ar: "وَطَاعَتَنَا نِظَامًا لِلْمِلَّةِ، وَإِمَامَتَنَا أَمَانًا مِنَ الْفُرْقَةِ", ref: "Sermon of Fadak · al-Ihtijaj · Balaghat al-Nisa'" },
+    sermon: { ar: "وَطَاعَتَنَا نِظَامًا لِلْمِلَّةِ، وَإِمَامَتَنَا أَمَانًا مِنَ الْفُرْقَةِ", ref: "Sermon of Fadak · al-Ihtijaj (al-Tabrisi)", sunni: "Balaghat al-Nisa' (Ibn Abi Tahir Tayfur)" },
     mahdi: {
       ar: "وَفِي ابْنَةِ رَسُولِ اللهِ لِي أُسْوَةٌ حَسَنَةٌ",
       en: "In the daughter of the Messenger of Allah I have a good example.",
@@ -99,17 +105,20 @@ window.AZ_MAREFAT = {
   imams: [
     { n: 1, name: "Ali ibn Abi Talib", ar: "عَلِيُّ بْنُ أَبِي طَالِبٍ", title: "Amir al-Mu'minin", tar: "أَمِيرُ الْمُؤْمِنِينَ",
       born: "13 Rajab, 30 years after the Year of the Elephant · inside the Ka'bah, Makkah", died: "21 Ramadan 40 AH · Kufa", rest: "Najaf",
-      light: "The first to believe, the gate of the city of knowledge. At Ghadir Khumm the Prophet (s) raised his hand and said: \"Whoever's master I am, Ali is his master\" (Sunan al-Tirmidhi 3713).",
+      light: "The first to believe, the gate of the city of knowledge. At Ghadir Khumm the Prophet (s) raised his hand and said: \"Of whomsoever I am the master, this Ali is his master\" (Kamal al-Din, ch. 22).",
+      sunni: "Sunan al-Tirmidhi 3713 · Musnad Ahmad",
       qaim: "Yes, O Allah! The earth is never empty of one who stands for Allah with a proof — either manifest and well known, or fearful and hidden — so that the proofs of Allah and His clear signs are not nullified.",
       qref: "Nahj al-Balagha, Saying 147 (to Kumayl)" },
     { n: 2, name: "al-Hasan ibn Ali", ar: "الْحَسَنُ بْنُ عَلِيٍّ", title: "al-Mujtaba", tar: "الْمُجْتَبَىٰ",
       born: "15 Ramadan 3 AH · Madinah", died: "28 Safar 50 AH, poisoned · Madinah", rest: "Jannat al-Baqi'",
-      light: "\"Al-Hasan and al-Husayn are the masters of the youth of Paradise\" (Sunan al-Tirmidhi 3768). His peace treaty preserved the faithful when the sword could not.",
+      sunni: "Sunan al-Tirmidhi 3768",
+      light: "\"Your sons Hasan and Husayn are the masters of the youth of Paradise\" (Kamal al-Din, ch. 24). His peace treaty preserved the faithful when the sword could not.",
       qaim: "There is none among us except that the allegiance of the tyrant of his time falls on his neck — except the Qa'im, behind whom 'Isa son of Maryam will pray. Allah keeps his birth secret and his person unseen, so that when he appears no one's allegiance is on his neck … Allah will prolong his life in his occultation, then bring him forth in the form of a young man under forty, so that it be known that Allah has power over all things.",
       qref: "Kamal al-Din, ch. 29" },
     { n: 3, name: "al-Husayn ibn Ali", ar: "الْحُسَيْنُ بْنُ عَلِيٍّ", title: "Sayyid al-Shuhada", tar: "سَيِّدُ الشُّهَدَاءِ",
       born: "3 Sha'ban 4 AH · Madinah", died: "10 Muharram 61 AH · Karbala", rest: "Karbala",
-      light: "\"Husayn is from me and I am from Husayn\" (Sunan al-Tirmidhi 3775). At Karbala he gave everything so that the religion of his grandfather would live.",
+      sunni: "\"Husayn is from me and I am from Husayn\" · Sunan al-Tirmidhi 3775",
+      light: "The Prophet (s): \"…and there will be nine Imams from the progeny of Husayn, whose obedience is my obedience; the ninth of them will be the Qa'im and the Mahdi\" (Hayat al-Qulub, vol. 2). At Karbala he gave everything so that the religion of his grandfather would live.",
       qaim: "The Mahdi of this nation is my ninth descendant. He will have an occultation, and he is the one whose inheritance shall be divided while he is alive.",
       qref: "Kamal al-Din, ch. 30" },
     { n: 4, name: "Ali ibn al-Husayn", ar: "عَلِيُّ بْنُ الْحُسَيْنِ", title: "Zayn al-'Abidin, al-Sajjad", tar: "زَيْنُ الْعَابِدِينَ",
@@ -174,7 +183,8 @@ window.AZ_MAREFAT = {
         { k: "Qur'an", t: "\"You are only a warner, and for every people there is a guide.\"", r: "al-Ra'd 13:7" },
         { k: "Qur'an", t: "\"The day We will call every people by their Imam.\"", r: "al-Isra 17:71" },
         { k: "Hadith", t: "\"…the earth shall not be devoid of a Proof until the Hour comes, whether apparent and known, or unseen and hidden. … Someone asked: how will people benefit from a hidden Proof? He said: as they benefit from the sun hidden behind the clouds.\"", r: "Imam Zayn al-'Abidin (as) · Kamal al-Din, ch. 21" },
-        { k: "Reason", t: "The Book and the family \"will never separate until they return to me at the Pool.\" The Book is here, unchanged. If the family had no living Imam, the two would have separated — and the Prophet's promise would be broken. Even the Sunni scholar Ibn Hajar al-Haytami wrote that the hadith points to someone of the Ahl al-Bayt worthy of being held to in every age, until the Day of Resurrection, just as the Book is.", r: "al-Sawa'iq al-Muhriqa, ch. 11" }
+        { k: "Reason", t: "The Book and the family \"will never separate until they return to me at the Pool.\" The Book is here, unchanged. If the family had no living Imam, the two would have separated — and the Prophet's promise would be broken.", r: "Kamal al-Din, ch. 22 and the author's introduction",
+          sunni: "Ibn Hajar al-Haytami wrote that the hadith points to someone of the Ahl al-Bayt worthy of being held to in every age until the Day of Resurrection, just as the Book is · al-Sawa'iq al-Muhriqa, ch. 11" }
       ],
       close: "The question was never whether there is an Imam today. It is whether we know him."
     },
@@ -184,9 +194,9 @@ window.AZ_MAREFAT = {
       a: [
         { k: "Witness", t: "Lady Hakima, sister of Imam al-Hadi and aunt of Imam al-'Askari, stayed in the house on the night of 15 Sha'ban 255 AH and described the birth in detail.", r: "Kamal al-Din, ch. 42" },
         { k: "Witness", t: "Imam al-'Askari showed his son to trusted companions — Ahmad ibn Ishaq among them — and wrote to him: \"The infant is born. Keep this a secret.\"", r: "Kamal al-Din, ch. 38 & 42" },
-        { k: "History", t: "For about seventy years (260–329 AH), letters in the Imam's name answered questions through four successive deputies in Baghdad — Uthman ibn Sa'id, his son Muhammad, Husayn ibn Ruh and Ali ibn Muhammad al-Samuri. Shaykh Saduq, author of Kamal al-Din, was himself born after a prayer requested from the Imam in one of those letters.", r: "Kamal al-Din, ch. 45" },
-        { k: "History", t: "Sunni historians recorded his birth too — among them Ibn Khallikan, who gives 15 Sha'ban 255 AH.", r: "Wafayat al-A'yan, entry Muhammad ibn al-Hasan al-'Askari" }
+        { k: "History", t: "For about seventy years (260–329 AH), letters in the Imam's name answered questions through four successive deputies in Baghdad — Uthman ibn Sa'id, his son Muhammad, Husayn ibn Ruh and Ali ibn Muhammad al-Samuri. Shaykh Saduq, author of Kamal al-Din, was himself born after a prayer requested from the Imam in one of those letters.", r: "Kamal al-Din, ch. 45" }
       ],
+      sunni: "The historian Ibn Khallikan records his birth on 15 Sha'ban 255 AH · Wafayat al-A'yan",
       close: "His birth was hidden from a regime that was watching for it — not from history."
     },
     {
