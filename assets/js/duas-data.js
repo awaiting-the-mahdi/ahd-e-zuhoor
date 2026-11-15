@@ -42,9 +42,9 @@ window.AZ_DUAS = {
    "id": "faraj",
    "cat": "daily",
    "t": {
-    "en": "Dua al-Faraj",
-    "ur": "دعائے فرج",
-    "ar": "دُعاءُ الفَرَج"
+    "en": "Ilahi 'Azuma al-Bala' (Dua al-Faraj)",
+    "ur": "الٰہی عظم البلاء (دعائے فرج)",
+    "ar": "إِلَهِي عَظُمَ الْبَلاءُ"
    },
    "first": "إِلَهِي عَظُمَ الْبَلاءُ",
    "when": {
@@ -67,8 +67,8 @@ window.AZ_DUAS = {
    "id": "salamati",
    "cat": "daily",
    "t": {
-    "en": "Dua for the Imam's Safety",
-    "ur": "دعائے سلامتیِ امامِ زمانہ",
+    "en": "Allahumma Kun li-Waliyyik (Dua for his Safety)",
+    "ur": "اللّٰہم کن لولیک (دعائے سلامتیِ امامِ زمانہ)",
     "ar": "اللَّهُمَّ كُنْ لِوَلِيِّكَ"
    },
    "first": "اللَّهُمَّ كُنْ لِوَلِيِّكَ",
@@ -85,6 +85,107 @@ window.AZ_DUAS = {
      "ar": "اَللهمَّ كُن لوليَّك الحُجةِ بنِ الحَسَنِ صَلَواتُكَ عَلَيهِ و عَلي ابائهِ في هذهِ السّاعةِ، و في كُلّ ساعَة وَليّا و حافظاً وقائِداً وَ ناصِراً وَ دَليلاً وَ عَيناً حَتّي تُسكِنَهُ اَرضَكَ طَوعاً و تُمَتّعَهُ فيها طَويلاً.",
      "en": "O Allah, be, for Your representative, the Proof, son of al-Hasan, Your blessings be upon him and upon his forefathers, in this hour and in every hour, a guardian, a protector, a leader, a helper, a guide and a watchful eye, until You settle him in Your earth, willingly obeyed, and let him enjoy it for a long time.",
      "ur": "اے اللہ! اپنے ولی حجت ابن الحسن کے لیے، ان پر اور ان کے آباء پر تیرے درود ہوں، اس گھڑی اور ہر گھڑی سرپرست، محافظ، رہبر، مددگار، رہنما اور نگہبان بن جا، یہاں تک کہ تو انہیں اپنی زمین پر (لوگوں کی) رضا و رغبت سے بسا دے اور اس میں انہیں طویل مدت تک بہرہ مند رکھے۔"
+    }
+   ]
+  },
+  {
+   "id": "tawassul",
+   "cat": "daily",
+   "t": {
+    "en": "Dua al-Tawassul",
+    "ur": "دعائے توسل",
+    "ar": "دُعاءُ التَّوَسُّل"
+   },
+   "first": "اَللَّهُمَّ إِنّى أَسْئَلُكَ وَاَتَوَجَّهُ اِلَيْكَ بِنَبِيِّكَ",
+   "when": {
+    "en": "At any time, and especially on Tuesday nights and for any need. It calls on the Prophet (s), Lady Fatima (sa) and each of the twelve Imams by name, ending with the Imam of our time (atfs).",
+    "ur": "کسی بھی وقت، خاص طور پر شبِ بدھ (منگل کی رات) اور ہر حاجت کے لیے۔ اس میں رسولِ خدا (ص)، حضرت فاطمہ (س) اور بارہ اماموں میں سے ہر ایک کو نام لے کر پکارا جاتا ہے، اور آخر میں ہمارے زمانے کے امام (عج) کو۔"
+   },
+   "src": {
+    "en": "Shaykh al-Saduq (Ibn Babawayh), from the Imams (as); he said: “I never recited it for any matter but I soon found it answered” · Bihar al-Anwar (al-Majlisi) · Mafatih al-Jinan",
+    "ur": "شیخ صدوق (ابن بابویہ)، ائمہ (ع) سے؛ انہوں نے فرمایا: ”میں نے جس کام کے لیے بھی یہ دعا پڑھی، جلد ہی اس کی قبولیت کا اثر دیکھا“ · بحار الانوار (علامہ مجلسی) · مفاتیح الجنان"
+   },
+   "parts": [
+    {
+     "ar": "اَللَّهُمَّ إِنّى أَسْئَلُكَ وَاَتَوَجَّهُ اِلَيْكَ بِنَبِيِّكَ نَبِىِّ الرَّحْمَةِ مُحَمَّدٍ صَلَّى اللّهُ عَلَيْهِ وَآلِهِ يا اَبَا الْقاسِمِ يَا رَسُولَ اللّهِ يَا اِمامَ الرَّحْمَةِ يا سَيِّدَنا وَمَوْلينا إِنّا تَوَجَّهْنا وَاسْتَشْفَعْنا وَتَوَسَّلْنا بِكَ اِلَى اللّهِ وَقَدَّمْناكَ بَيْنَ يَدَىْ حاجاتِنا يا وَجيهاً عِنْدَ اللّهِ إِشْفَعْ لَنا عِنْدَ اللَهِ.",
+     "en": "O Allah, I ask You and turn to You through Your Prophet, the Prophet of mercy, Muhammad, may Allah bless him and his family. O Abu al-Qasim, O Messenger of Allah, O Imam of mercy, O our master and our guardian, we have turned to you, sought your intercession and made you our means to Allah, and we have put you forward before our needs. O you who are honoured before Allah, intercede for us with Allah.",
+     "ur": "اے اللہ! میں تجھ سے سوال کرتا ہوں اور تیری طرف متوجہ ہوتا ہوں تیرے نبی، نبیِ رحمت، محمد، ان پر اور ان کی آل پر اللہ کا درود ہو، کے وسیلے سے۔ اے ابو القاسم، اے رسولِ خدا، اے امامِ رحمت، اے ہمارے سردار اور ہمارے مولا! ہم آپ کی طرف متوجہ ہوئے، آپ کو شفیع بنایا اور آپ کو اللہ کی بارگاہ میں اپنا وسیلہ قرار دیا، اور آپ کو اپنی حاجتوں کے آگے رکھا۔ اے اللہ کے نزدیک صاحبِ عزت! اللہ کے حضور ہماری شفاعت کیجیے۔"
+    },
+    {
+     "ar": "يَا اَبَا الْحَسَنِ يا اَميرَ الْمُؤْمِنينَ يا عَلِىَّ بْنَ أَبيطالِبٍ يا حُجَّةَ اللّهِ عَلى خَلْقِهِ يا سَيِّدَنا وَمَوْلينا إِنّا تَوَجَّهْنا وَاسْتَشْفَعْنا وَتَوَسَّلْنا بِكَ اِلَى اللَهِ وَقَدَّمْناكَ بَيْنَ يَدَىْ حاجاتِنا يا وَجيهاً عِنْدَ اللَهِ اِشْفَعْ لَنا عِنْدَ اللَهِ.",
+     "en": "O Abu al-Hasan, O Commander of the Faithful, O Ali ibn Abi Talib, O Proof of Allah over His creation, O our master and our guardian, we have turned to you, sought your intercession and made you our means to Allah, and we have put you forward before our needs. O you who are honoured before Allah, intercede for us with Allah.",
+     "ur": "اے ابو الحسن، اے امیر المومنین، اے علی ابن ابی طالب، اے اپنی مخلوق پر اللہ کی حجت، اے ہمارے سردار اور ہمارے مولا! ہم آپ کی طرف متوجہ ہوئے، آپ کو شفیع بنایا اور آپ کو اللہ کی بارگاہ میں اپنا وسیلہ قرار دیا، اور آپ کو اپنی حاجتوں کے آگے رکھا۔ اے اللہ کے نزدیک صاحبِ عزت! اللہ کے حضور ہماری شفاعت کیجیے۔"
+    },
+    {
+     "ar": "يا فاطِمَةَ الزَّهْراءُ يا بِنْتَ مُحَمَّدٍ يا قُرَّةَ عَيْنِ الرَّسُولِ يا سَيِّدَتَنا وَمَوْلاتَنا اِنّا تَوَجَّهْنا وَاسْتَشْفَعْنا وَتَوَسَّلْنا بِكِ اِلَى اللّهِ وَقَدَّمْناكِ بَيْنَ يَدَىْ حاجاتِنا يا وَجيهَةً عِنْدَ اللَهِ اِشْفَعى لَنا عِنْدَ اللَهِ",
+     "en": "O Fatima al-Zahra, O daughter of Muhammad, O delight of the Messenger's eye, O our lady and our mistress, we have turned to you, sought your intercession and made you our means to Allah, and we have put you forward before our needs. O you who are honoured before Allah, intercede for us with Allah.",
+     "ur": "اے فاطمہ زہرا، اے محمد کی بیٹی، اے رسول کی آنکھوں کی ٹھنڈک، اے ہماری سیدہ اور ہماری مولا! ہم آپ کی طرف متوجہ ہوئے، آپ کو شفیع بنایا اور آپ کو اللہ کی بارگاہ میں اپنا وسیلہ قرار دیا، اور آپ کو اپنی حاجتوں کے آگے رکھا۔ اے اللہ کے نزدیک صاحبۂ عزت! اللہ کے حضور ہماری شفاعت کیجیے۔"
+    },
+    {
+     "ar": "يا اَبا مُحَمَّدٍ يا حَسَنَ بْنَ عَلِي اَيُّهَا الْمُجْتَبى يَا بْنَ رَسُولِ اللَهِ يا حُجَّةَ اللّهِ عَلى خَلْقِهِ يا سَيِّدَنا وَمَوْلينا اِنّا تَوَجَّهْنا وَاسْتَشْفَعْنا وَتَوَسَّلْنا بِكَ اِلَى اللَهِ وَقَدَّمْناكَ بَيْنَ يَدَىْ حاجاتِنا يا وَجيهاً عِنْدَ اللَهِ إِشْفَعْ لَنا عِنْدَ اللَهِ.",
+     "en": "O Abu Muhammad, O Hasan ibn Ali, O chosen one (al-Mujtaba), O son of the Messenger of Allah, O Proof of Allah over His creation, O our master and our guardian, we have turned to you, sought your intercession and made you our means to Allah, and we have put you forward before our needs. O you who are honoured before Allah, intercede for us with Allah.",
+     "ur": "اے ابو محمد، اے حسن ابن علی، اے مجتبیٰ، اے رسولِ خدا کے فرزند، اے اپنی مخلوق پر اللہ کی حجت، اے ہمارے سردار اور ہمارے مولا! ہم آپ کی طرف متوجہ ہوئے، آپ کو شفیع بنایا اور آپ کو اللہ کی بارگاہ میں اپنا وسیلہ قرار دیا، اور آپ کو اپنی حاجتوں کے آگے رکھا۔ اے اللہ کے نزدیک صاحبِ عزت! اللہ کے حضور ہماری شفاعت کیجیے۔"
+    },
+    {
+     "ar": "يا أَبا عَبْدِاللَه يا حُسَيْنَ بْنَ عَلِيٍ أَيُّهَا الْشَّهيدُ يَا بْنَ رَسُولِ اللَه يا حُجَّةَ اللَه عَلى خَلْقِهِ يا سَيِّدَنا وَمَوْلينا اِنّا تَوَجَّهْنا وَاسْتَشْفَعْنا وَتَوَسَّلْنا بِكَ اِلَى اللَهِ وَقَدَّمْناكَ بَيْنَ يَدَىْ حاجاتِنا يا وَجيهاً عِنْدَ اللّهِ اِشْفَعْ لَنا عِنْدَ اللّهِ.",
+     "en": "O Aba 'Abdillah, O Husayn ibn Ali, O martyr, O son of the Messenger of Allah, O Proof of Allah over His creation, O our master and our guardian, we have turned to you, sought your intercession and made you our means to Allah, and we have put you forward before our needs. O you who are honoured before Allah, intercede for us with Allah.",
+     "ur": "اے ابا عبداللہ، اے حسین ابن علی، اے شہید، اے رسولِ خدا کے فرزند، اے اپنی مخلوق پر اللہ کی حجت، اے ہمارے سردار اور ہمارے مولا! ہم آپ کی طرف متوجہ ہوئے، آپ کو شفیع بنایا اور آپ کو اللہ کی بارگاہ میں اپنا وسیلہ قرار دیا، اور آپ کو اپنی حاجتوں کے آگے رکھا۔ اے اللہ کے نزدیک صاحبِ عزت! اللہ کے حضور ہماری شفاعت کیجیے۔"
+    },
+    {
+     "ar": "يا اَبَا الْحَسَنِ يا عَلِىَّ بْنَ الْحُسَيْنِ يا زَيْنَ الْعابِدينَ يَا بْنَ رَسُولِ اللّهِ يا حُجَّةَ اللّهِ عَلى خَلْقِهِ يا سَيِّدَنا وَمَوْلينا اِنّا تَوَجَّهْنا وَاسْتَشْفَعْنا وَتَوَسَّلْنا بِكَ اِلَى اللّهِ وَقَدَّمْناكَ بَيْنَ يَدَىْ حاجاتِنا يا وَجيهاً عِنْدَ اللّهِ اِشْفَعْ لَنا عِنْدَ اللّهِ.",
+     "en": "O Abu al-Hasan, O Ali ibn al-Husayn, O adornment of the worshippers (Zayn al-'Abidin), O son of the Messenger of Allah, O Proof of Allah over His creation, O our master and our guardian, we have turned to you, sought your intercession and made you our means to Allah, and we have put you forward before our needs. O you who are honoured before Allah, intercede for us with Allah.",
+     "ur": "اے ابو الحسن، اے علی ابن الحسین، اے زین العابدین، اے رسولِ خدا کے فرزند، اے اپنی مخلوق پر اللہ کی حجت، اے ہمارے سردار اور ہمارے مولا! ہم آپ کی طرف متوجہ ہوئے، آپ کو شفیع بنایا اور آپ کو اللہ کی بارگاہ میں اپنا وسیلہ قرار دیا، اور آپ کو اپنی حاجتوں کے آگے رکھا۔ اے اللہ کے نزدیک صاحبِ عزت! اللہ کے حضور ہماری شفاعت کیجیے۔"
+    },
+    {
+     "ar": "يا اَبا جَعْفَرٍ يا مُحَمَّدَ بْنَ عَلِي اَيُّهَا الْباقِرُ يَا بْنَ رَسُولِ اللّهِ يا حُجَّةَ اللّهِ عَلى خَلْقِهِ يا سَيِّدَنا وَمَوْلينا اِنّا تَوَجَّهْنا وَاسْتَشْفَعْنا وَتَوَسَّلْنا بِكَ اِلَى اللّهِ وَقَدَّمْناكَ بَيْنَ يَدَىْ حاجاتِنا يا وَجيهاً عِنْدَ اللّهِ اِشْفَعْ لَنا عِنْدَ اللّهِ.",
+     "en": "O Abu Ja'far, O Muhammad ibn Ali, O one who splits open knowledge (al-Baqir), O son of the Messenger of Allah, O Proof of Allah over His creation, O our master and our guardian, we have turned to you, sought your intercession and made you our means to Allah, and we have put you forward before our needs. O you who are honoured before Allah, intercede for us with Allah.",
+     "ur": "اے ابو جعفر، اے محمد ابن علی، اے باقر، اے رسولِ خدا کے فرزند، اے اپنی مخلوق پر اللہ کی حجت، اے ہمارے سردار اور ہمارے مولا! ہم آپ کی طرف متوجہ ہوئے، آپ کو شفیع بنایا اور آپ کو اللہ کی بارگاہ میں اپنا وسیلہ قرار دیا، اور آپ کو اپنی حاجتوں کے آگے رکھا۔ اے اللہ کے نزدیک صاحبِ عزت! اللہ کے حضور ہماری شفاعت کیجیے۔"
+    },
+    {
+     "ar": "يا أَبا عَبْدِ اللّهِ يا جَعْفَرَ بْنَ مُحَمَّدٍ أَيُّهَا الصّادِقُ يَا بْنَ رَسُولِ اللّهِ يا حُجَّةَ اللّهِ عَلى خَلْقِهِ يا سَيِّدَنا وَمَوْلينا اِنّا تَوَجَّهْنا وَاسْتَشْفَعْنا وَتَوَسَّلْنا بِكَ اِلَى اللّهِ وَقَدَّمْناكَ بَيْنَ يَدَىْ حاجاتِنا يا وَجيهاً عِنْدَ اللّهِ اِشْفَعْ لَنا عِنْدَ اللّهِ،",
+     "en": "O Aba 'Abdillah, O Ja'far ibn Muhammad, O truthful one (al-Sadiq), O son of the Messenger of Allah, O Proof of Allah over His creation, O our master and our guardian, we have turned to you, sought your intercession and made you our means to Allah, and we have put you forward before our needs. O you who are honoured before Allah, intercede for us with Allah.",
+     "ur": "اے ابا عبداللہ، اے جعفر ابن محمد، اے صادق، اے رسولِ خدا کے فرزند، اے اپنی مخلوق پر اللہ کی حجت، اے ہمارے سردار اور ہمارے مولا! ہم آپ کی طرف متوجہ ہوئے، آپ کو شفیع بنایا اور آپ کو اللہ کی بارگاہ میں اپنا وسیلہ قرار دیا، اور آپ کو اپنی حاجتوں کے آگے رکھا۔ اے اللہ کے نزدیک صاحبِ عزت! اللہ کے حضور ہماری شفاعت کیجیے۔"
+    },
+    {
+     "ar": "يا أَبَا الْحَسَنِ يا مُوسَى بْنَ جَعْفَرٍ أَيُّهَا الْكاظِمُ يَا بْنَ رَسُولِ اللّهِ يا حُجَّةَ اللّهِ عَلى خَلْقِهِ يا سَيِّدَنا وَمَوْلينا اِنّا تَوَجَّهْنا وَاسْتَشْفَعْنا وَتَوَسَّلْنا بِكَ اِلَى اللّهِ وَقَدَّمْناكَ بَيْنَ يَدَىْ حاجاتِنا يا وَجيهاً عِنْدَ اللّهِ اِشْفَعْ لَنا عِنْدَ اللّهِ،",
+     "en": "O Abu al-Hasan, O Musa ibn Ja'far, O one who restrains his anger (al-Kazim), O son of the Messenger of Allah, O Proof of Allah over His creation, O our master and our guardian, we have turned to you, sought your intercession and made you our means to Allah, and we have put you forward before our needs. O you who are honoured before Allah, intercede for us with Allah.",
+     "ur": "اے ابو الحسن، اے موسیٰ ابن جعفر، اے کاظم، اے رسولِ خدا کے فرزند، اے اپنی مخلوق پر اللہ کی حجت، اے ہمارے سردار اور ہمارے مولا! ہم آپ کی طرف متوجہ ہوئے، آپ کو شفیع بنایا اور آپ کو اللہ کی بارگاہ میں اپنا وسیلہ قرار دیا، اور آپ کو اپنی حاجتوں کے آگے رکھا۔ اے اللہ کے نزدیک صاحبِ عزت! اللہ کے حضور ہماری شفاعت کیجیے۔"
+    },
+    {
+     "ar": "يا أَبَا الْحَسَنِ يا عَلِىَّ بْنَ مُوسى أَيُّهَا الرِّضا يَا بْنَ رَسُولِ اللّهِ يا حُجَّةَ اللّهِ عَلى خَلْقِهِ يا سَيِّدَنا وَمَوْلينا إِنّا تَوَجَّهْنا وَاسْتشْفَعْنا وَتَوَسَّلْنا بِكَ اِلَى اللّهِ وَقَدَّمْناكَ بَيْنَ يَدَىْ حاجاتِنا يا وَجيهاً عِنْدَ اللّهِ اِشْفَعْ لَنا عِنْدَ اللّهِ",
+     "en": "O Abu al-Hasan, O Ali ibn Musa, O one who is well pleased (al-Rida), O son of the Messenger of Allah, O Proof of Allah over His creation, O our master and our guardian, we have turned to you, sought your intercession and made you our means to Allah, and we have put you forward before our needs. O you who are honoured before Allah, intercede for us with Allah.",
+     "ur": "اے ابو الحسن، اے علی ابن موسیٰ، اے رضا، اے رسولِ خدا کے فرزند، اے اپنی مخلوق پر اللہ کی حجت، اے ہمارے سردار اور ہمارے مولا! ہم آپ کی طرف متوجہ ہوئے، آپ کو شفیع بنایا اور آپ کو اللہ کی بارگاہ میں اپنا وسیلہ قرار دیا، اور آپ کو اپنی حاجتوں کے آگے رکھا۔ اے اللہ کے نزدیک صاحبِ عزت! اللہ کے حضور ہماری شفاعت کیجیے۔"
+    },
+    {
+     "ar": "يا اَبا جَعْفَرٍ يا مُحَمَّدَ بْنَ عَلِي اَيُّهَا التَّقِىُّ الْجَوادُ يَا بْنَ رَسُولِ اللّهِ يا حُجَّةَ اللّهِ عَلى خَلْقِهِ يا سَيِّدَنا وَمَوْلينا اِنّا تَوَجَّهْنا وَاسْتَشْفَعْنا وَتَوَسَّلْنا بِكَ اِلَى اللّهِ وَقَدَّمْناكَ بَيْنَ يَدَىْ حاجاتِنا يا وَجيهاً عِنْدَ اللّهِ اِشْفَعْ لَنا عِنْدَ اللّهِ",
+     "en": "O Abu Ja'far, O Muhammad ibn Ali, O God-fearing and generous one (al-Taqi al-Jawad), O son of the Messenger of Allah, O Proof of Allah over His creation, O our master and our guardian, we have turned to you, sought your intercession and made you our means to Allah, and we have put you forward before our needs. O you who are honoured before Allah, intercede for us with Allah.",
+     "ur": "اے ابو جعفر، اے محمد ابن علی، اے تقی، اے جواد، اے رسولِ خدا کے فرزند، اے اپنی مخلوق پر اللہ کی حجت، اے ہمارے سردار اور ہمارے مولا! ہم آپ کی طرف متوجہ ہوئے، آپ کو شفیع بنایا اور آپ کو اللہ کی بارگاہ میں اپنا وسیلہ قرار دیا، اور آپ کو اپنی حاجتوں کے آگے رکھا۔ اے اللہ کے نزدیک صاحبِ عزت! اللہ کے حضور ہماری شفاعت کیجیے۔"
+    },
+    {
+     "ar": "يا أَبَا الْحَسَنِ يا عَلِىَّ بْنَ مُحَمَّدٍ أَيُّهَا الْهادِى النَّقِىُّ يَا بْنَ رَسُولِ اللّهِ يا حُجَّةَ اللّهِ عَلى خَلْقِهِ يا سَيِّدَنا وَمَوْلينا إِنّا تَوَجَّهْنا وَاسْتَشْفَعْنا وَتَوَسَّلْنا بِكَ اِلَى اللّهِ وَقَدَّمْناكَ بَيْنَ يَدَىْ حاجاتِنا يا وَجيهاً عِنْدَ اللّهِ اِشْفَعْ لَنا عِنْدَ اللّهِ",
+     "en": "O Abu al-Hasan, O Ali ibn Muhammad, O guide and pure one (al-Hadi al-Naqi), O son of the Messenger of Allah, O Proof of Allah over His creation, O our master and our guardian, we have turned to you, sought your intercession and made you our means to Allah, and we have put you forward before our needs. O you who are honoured before Allah, intercede for us with Allah.",
+     "ur": "اے ابو الحسن، اے علی ابن محمد، اے ہادی، اے نقی، اے رسولِ خدا کے فرزند، اے اپنی مخلوق پر اللہ کی حجت، اے ہمارے سردار اور ہمارے مولا! ہم آپ کی طرف متوجہ ہوئے، آپ کو شفیع بنایا اور آپ کو اللہ کی بارگاہ میں اپنا وسیلہ قرار دیا، اور آپ کو اپنی حاجتوں کے آگے رکھا۔ اے اللہ کے نزدیک صاحبِ عزت! اللہ کے حضور ہماری شفاعت کیجیے۔"
+    },
+    {
+     "ar": "يا أَبا مُحَمَّدٍ يا حَسَنَ بْنَ عَلِي أَيُّهَا الزَّكِىُّ الْعَسْكَرِىُّ يَا بْنَ رَسُولِ اللّهِ يا حُجَّةَ اللّهِ عَلى خَلْقِهِ يا سَيِّدَنا وَمَوْلينا إِنّا تَوَجَّهْنا وَاسْتَشْفَعْنا وَتَوَسَّلْنا بِكَ اِلَى اللّهِ وَقَدَّمْناكَ بَيْنَ يَدَىْ حاجاتِنا يا وَجيهاً عِنْدَ اللّهِ اِشْفَعْ لَنا عِنْدَ اللّهِ",
+     "en": "O Abu Muhammad, O Hasan ibn Ali, O pure one of 'Askar (al-Zaki al-'Askari), O son of the Messenger of Allah, O Proof of Allah over His creation, O our master and our guardian, we have turned to you, sought your intercession and made you our means to Allah, and we have put you forward before our needs. O you who are honoured before Allah, intercede for us with Allah.",
+     "ur": "اے ابو محمد، اے حسن ابن علی، اے زکی، اے عسکری، اے رسولِ خدا کے فرزند، اے اپنی مخلوق پر اللہ کی حجت، اے ہمارے سردار اور ہمارے مولا! ہم آپ کی طرف متوجہ ہوئے، آپ کو شفیع بنایا اور آپ کو اللہ کی بارگاہ میں اپنا وسیلہ قرار دیا، اور آپ کو اپنی حاجتوں کے آگے رکھا۔ اے اللہ کے نزدیک صاحبِ عزت! اللہ کے حضور ہماری شفاعت کیجیے۔"
+    },
+    {
+     "ar": "يا وَصِىَّ الْحَسَنِ وَالْخَلَفَ الْحُجَّةَ اَيُّهَا الْقائِمُ الْمُنْتَظَرُ الْمَهْدِىُّ يَا بْنَ رَسُولِ اللّهِ يا حُجَّةَ اللّهِ عَلى خَلْقِهِ يا سَيِّدَنا وَمَوْلينا اِنّا تَوَجَّهْنا وَاسْتَشْفَعْنا وَتَوَسَّلْنا بِكَ اِلَى اللّهِ وَقَدَّمْناكَ بَيْنَ يَدَىْ حاجاتِنا يا وَجيهاً عِنْدَ اللّهِ اِشْفَعْ لَنا عِنْدَ اللّهِ",
+     "en": "O successor of al-Hasan, the remaining Proof, O you who will rise, the awaited, al-Mahdi, O son of the Messenger of Allah, O Proof of Allah over His creation, O our master and our guardian, we have turned to you, sought your intercession and made you our means to Allah, and we have put you forward before our needs. O you who are honoured before Allah, intercede for us with Allah.",
+     "ur": "اے حسن (عسکری) کے وصی اور جانشین حجت، اے قائم، اے منتظَر، اے مہدی، اے رسولِ خدا کے فرزند، اے اپنی مخلوق پر اللہ کی حجت، اے ہمارے سردار اور ہمارے مولا! ہم آپ کی طرف متوجہ ہوئے، آپ کو شفیع بنایا اور آپ کو اللہ کی بارگاہ میں اپنا وسیلہ قرار دیا، اور آپ کو اپنی حاجتوں کے آگے رکھا۔ اے اللہ کے نزدیک صاحبِ عزت! اللہ کے حضور ہماری شفاعت کیجیے۔"
+    },
+    {
+     "note": {
+      "en": "Then ask for your needs; by Allah's will they will be granted. Another narration adds that after the dua one says:",
+      "ur": "پھر اپنی حاجتیں طلب کریں؛ ان شاء اللہ پوری ہوں گی۔ ایک اور روایت میں ہے کہ دعا کے بعد یوں کہیں:"
+     }
+    },
+    {
+     "ar": "يا سادَتى وَمَوالِىَّ اِنّى تَوَجَّهْتُ بِكُمْ أَئِمَّتى وَعُدَّتى لِيَوْمِ فَقْرى وَحاجَتى اِلَى اللّهِ وَتَوَسَّلْتُ بِكُمْ اِلَى اللّهِ وَاسْتَشْفَعْتُ بِكُمْ إِلَى اللّهِ فَاشْفَعُوا لى عِنْدَ اللّهِ وَاسْتَنْقِذُونى مِنْ ذُنُوبى عِنْدَ اللّهِ فَاِنَّكُمْ وَسيلَتى اِلَى اللّهِ وَبِحُبِّكُمْ وَبِقُرْبِكُمْ أَرْجُو نَجاةً مِنَ اللّهِ فَكُونُوا عِنْدَ اللّهِ رَجائى يا سادَتى يا أَوْلِياءَ اللّهِ صَلَّى اللّهُ عَلَيْهِمْ اَجْمَعينَ وَلَعَنَ اللّهُ أَعْداءَ اللّهِ ظالِميهِمْ مِنَ الاْوَّلينَ وَالاْخِرينَ امينَ رَبَّ الْعالَمينَ",
+     "en": "O my masters and my guardians, I have turned through you, my Imams and my provision for the day of my poverty and my need, to Allah; I have made you my means to Allah and sought your intercession with Allah. So intercede for me with Allah and rescue me from my sins before Allah, for you are my means to Allah, and through love of you and nearness to you I hope for salvation from Allah. So be my hope with Allah, O my masters, O friends of Allah. May Allah bless them all, and may Allah curse the enemies of Allah who wronged them, from the first to the last. Amin, Lord of the worlds.",
+     "ur": "اے میرے سردارو اور میرے مولاؤ! میں آپ کے وسیلے سے، جو میرے امام اور میری محتاجی اور حاجت کے دن کا سرمایہ ہیں، اللہ کی طرف متوجہ ہوا ہوں؛ میں نے آپ کو اللہ کی بارگاہ میں اپنا وسیلہ بنایا اور اللہ کے حضور آپ کو شفیع بنایا۔ پس اللہ کے حضور میری شفاعت کیجیے اور اللہ کے پاس مجھے میرے گناہوں سے نجات دلائیے، کیونکہ آپ ہی اللہ کی طرف میرا وسیلہ ہیں، اور آپ کی محبت اور قربت کے ذریعے میں اللہ سے نجات کی امید رکھتا ہوں۔ پس اللہ کے حضور میری امید بن جائیے، اے میرے سردارو، اے اللہ کے اولیاء! اللہ ان سب پر درود بھیجے، اور اللہ کے ان دشمنوں پر لعنت کرے جنہوں نے ان پر ظلم کیا، اولین سے آخرین تک۔ آمین، اے جہانوں کے رب۔"
     }
    ]
   },
