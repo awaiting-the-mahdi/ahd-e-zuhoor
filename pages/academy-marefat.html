@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-own-i18n>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -10,6 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Amiri:wght@400;700&family=Inter:wght@400;500;600&family=Noto+Nastaliq+Urdu:wght@400;600&display=swap">
 <link rel="stylesheet" href="../assets/css/menu.css">
+<script src="../assets/js/i18n.js"></script>
 <style>
 :root{
   color-scheme:dark;
@@ -343,7 +344,7 @@ dialog.imam[open]{animation:up .6s cubic-bezier(.2,.8,.2,1)}
 .review{max-width:620px;margin:40px auto 0;font-size:.74rem;color:var(--dim);line-height:1.6}
 
 /* language switch */
-.lang{position:fixed;top:18px;left:50%;translate:-50% 0;z-index:1000;padding:7px 16px;border-radius:99px;border:1px solid var(--line);background:rgba(3,4,13,.6);color:var(--gold2);cursor:pointer;backdrop-filter:blur(8px);font:500 .95rem var(--sans)}
+.lang{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom,0px));left:16px;z-index:1000;box-shadow:0 6px 20px rgba(0,0,0,.35);padding:7px 16px;border-radius:99px;border:1px solid var(--line);background:rgba(3,4,13,.6);color:var(--gold2);cursor:pointer;backdrop-filter:blur(8px);font:500 .95rem var(--sans)}
 .lang[lang=ur]{font-family:"Noto Nastaliq Urdu",serif;font-size:.8rem;line-height:1.7;padding:1px 14px}
 .lang[lang=en]{font-family:"Inter",system-ui,sans-serif;font-size:.78rem;line-height:1.4;padding:6px 14px}
 .hold .dot{left:auto;inset-inline-start:10px}
@@ -615,8 +616,7 @@ html[lang=ur] .life .val{right:auto;left:8px}
 "use strict";
 var $=function(id){return document.getElementById(id)};
 var EN=window.AZ_MAREFAT, UR=window.AZ_MAREFAT_UR;
-function getLang(){var q=null;try{q=new URLSearchParams(location.search).get("lang")}catch(e){}
-  if(q==="ur"||q==="en"){store("az-marefat-lang",q);return q}return store("az-marefat-lang")==="ur"?"ur":"en"}
+function getLang(){return window.AZ_LANG==="ur"?"ur":"en"}
 var LANG=UR&&getLang()==="ur"?"ur":"en";
 function merge(a,b){if(b===undefined||b===null)return a;if(Array.isArray(a))return a.map(function(x,i){return merge(x,b[i])});
   if(a&&typeof a==="object"){var o={};for(var k in a)o[k]=merge(a[k],b[k]);return o}return b}
@@ -890,7 +890,7 @@ document.addEventListener("click",function(e){var b=e.target.closest&&e.target.c
 });
 
 /* ---------- language switch ---------- */
-$("langBtn").onclick=function(){var to=LANG==="ur"?"en":"ur";store("az-marefat-lang",to);
+$("langBtn").onclick=function(){var to=LANG==="ur"?"en":"ur";try{localStorage.setItem("az-lang",to)}catch(e){}
   var on=null;chaps.forEach(function(c){if(c.getBoundingClientRect().top<innerHeight*.4)on=c.id});
   var h=document.body.classList.contains("begun")&&on?"#"+on:"";location.href=location.pathname+"?lang="+to+h};
 

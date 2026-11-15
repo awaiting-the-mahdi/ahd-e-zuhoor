@@ -1,0 +1,30 @@
+/* Urdu — 124,013 Stars */
+AZ_UR.add({
+  "124,013 Stars": "1,24,013 ستارے",
+  "stars · the prophets (a.s.) and the Fourteen Infallibles": "ستارے · انبیاء (ع) اور چودہ معصومین",
+  "Zoom to the Fourteen": "چودہ معصومین پر جائیں",
+  "Whole sky": "پورا آسمان",
+  "124,000 prophets (a.s.), among them the Holy Prophet (s.a.w.a.), together with Lady Fatima (s.a.) and the twelve Imams (a.s.), make 124,013, following the number narrated in tradition.":
+    "ایک لاکھ چوبیس ہزار انبیاء (ع)، جن میں رسولِ اکرم (ص) بھی ہیں، بی بی فاطمہ (س) اور بارہ اماموں (ع) کے ساتھ مل کر 1,24,013 بنتے ہیں — روایات میں بیان کردہ تعداد کے مطابق۔",
+  "Your browser could not start WebGL, which this page needs.": "آپ کا براؤزر WebGL شروع نہیں کر سکا، جس کی اس صفحے کو ضرورت ہے۔",
+  "Tap a bright star · drag to turn · pinch to zoom": "روشن ستارے کو چھوئیں · گھمانے کے لیے کھینچیں · زوم کے لیے چٹکی بھریں",
+  "Imam al-Mahdi (a.t.f.s.)": "امام مہدی (عج)", "Mahdi": "مہدی",
+  "Holy Prophet Muhammad (s.a.w.a.)": "رسولِ اکرم حضرت محمد (ص)", "Prophet": "رسولِ خدا",
+  "Lady Fatima al-Zahra (s.a.)": "بی بی فاطمہ زہرا (س)", "Zahra": "زہرا",
+  "Imam Ali (a.s.)": "امام علی (ع)", "Ali": "علی",
+  "Imam al-Hasan (a.s.)": "امام حسن (ع)", "Hasan": "حسن",
+  "Imam al-Husayn (a.s.)": "امام حسین (ع)", "Husayn": "حسین",
+  "Imam Zayn al-Abidin (a.s.)": "امام زین العابدین (ع)", "Sajjad": "سجاد",
+  "Imam al-Baqir (a.s.)": "امام باقر (ع)", "Baqir": "باقر",
+  "Imam al-Sadiq (a.s.)": "امام صادق (ع)", "Sadiq": "صادق",
+  "Imam al-Kadhim (a.s.)": "امام کاظم (ع)", "Kadhim": "کاظم",
+  "Imam al-Ridha (a.s.)": "امام رضا (ع)", "Ridha": "رضا",
+  "Imam al-Jawad (a.s.)": "امام جواد (ع)", "Jawad": "جواد",
+  "Imam al-Hadi (a.s.)": "امام ہادی (ع)", "Hadi": "ہادی",
+  "Imam al-Askari (a.s.)": "امام عسکری (ع)", "Askari": "عسکری",
+  "Prophet Isa (a.s.)": "حضرت عیسیٰ (ع)", "Isa": "عیسیٰ",
+  "Prophet Musa (a.s.)": "حضرت موسیٰ (ع)", "Musa": "موسیٰ",
+  "Prophet Ibrahim (a.s.)": "حضرت ابراہیم (ع)", "Ibrahim": "ابراہیم",
+  "Prophet Nuh (a.s.)": "حضرت نوح (ع)", "Nuh": "نوح",
+  "Prophet Adam (a.s.), the first": "حضرت آدم (ع)، پہلے نبی", "Adam": "آدم"
+});
