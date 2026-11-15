@@ -2,7 +2,7 @@
   AHD-E-ZUHOOR — School of Theology and Islamic Thought
   "The Five Moons of Belief": one moon for each root of religion (Usul al-Din).
 
-  Edit this file to change any text. Please have a qualified scholar review it.
+  Edit this file to change any text.
 
   Each moon:
     id, name, ar (Arabic name), en (English name), color, question (the big question)

@@ -3,7 +3,7 @@
   "The Hidden Sun": a journey from the Messenger (s), through Lady Fatima (sa)
   and the Twelve Imams (as), to the living Imam behind the clouds.
 
-  Edit this file to change any text. Please have a qualified scholar review it.
+  Edit this file to change any text.
 
   Sources. Narrations marked "Kamal al-Din" were checked against the English
   translation in this repository (assets/books/Kamaluddin-Vol-1.pdf and -Vol-2.pdf,
@@ -43,9 +43,9 @@ window.AZ_MAREFAT = {
       ["Returned to his Lord", "28 Safar 11 AH (632 CE), Madinah"]
     ],
     verses: [
-      { ar: "وَمَا أَرْسَلْنَاكَ إِلَّا رَحْمَةً لِّلْعَالَمِينَ", en: "And We have not sent you except as a mercy to all the worlds.", ref: "al-Anbiya 21:107" },
-      { ar: "وَإِنَّكَ لَعَلَىٰ خُلُقٍ عَظِيمٍ", en: "And indeed, you are of a great moral character.", ref: "al-Qalam 68:4" },
-      { ar: "وَمَا يَنطِقُ عَنِ الْهَوَىٰ ۝ إِنْ هُوَ إِلَّا وَحْيٌ يُوحَىٰ", en: "Nor does he speak from desire. It is only a revelation revealed.", ref: "al-Najm 53:3–4" }
+      { ar: "وَمَا أَرْسَلْنَاكَ إِلَّا رَحْمَةً لِّلْعَالَمِينَ", en: "And We have not sent you except as a mercy to all the worlds.", ref: "al-Anbiya 21:107", q: "21:107" },
+      { ar: "وَإِنَّكَ لَعَلَىٰ خُلُقٍ عَظِيمٍ", en: "And indeed, you are of a great moral character.", ref: "al-Qalam 68:4", q: "68:4" },
+      { ar: "وَمَا يَنطِقُ عَنِ الْهَوَىٰ ۝ إِنْ هُوَ إِلَّا وَحْيٌ يُوحَىٰ", en: "Nor does he speak from desire. It is only a revelation revealed.", ref: "al-Najm 53:3–4", q: "53:3-4" }
     ],
     why: [
       { t: "The door to Allah", d: "We cannot see Allah, so He sent a human being we can see, hear and follow. Whatever we know of how to pray, fast, love and live, we know through him." },
@@ -99,7 +99,7 @@ window.AZ_MAREFAT = {
   },
 
   /* ---------------- III. THE TWELVE ---------------- */
-  starsVerse: { ar: "وَعَلَامَاتٍ ۚ وَبِالنَّجْمِ هُمْ يَهْتَدُونَ", en: "And landmarks; and by the star they are guided.", ref: "al-Nahl 16:16" },
+  starsVerse: { ar: "وَعَلَامَاتٍ ۚ وَبِالنَّجْمِ هُمْ يَهْتَدُونَ", en: "And landmarks; and by the star they are guided.", ref: "al-Nahl 16:16", q: "16:16" },
   starsHadith: { en: "We are like the stars: when one sets, another rises.", ref: "Imam al-Baqir (as) · Kamal al-Din, ch. 32" },
 
   imams: [

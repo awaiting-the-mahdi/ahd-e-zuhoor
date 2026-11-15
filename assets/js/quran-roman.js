@@ -2,7 +2,6 @@
   Roman Urdu rendering of Allama Syed Zeeshan Haider Jawadi's Urdu translation.
   Written verse by verse from the Urdu text (not machine-transliterated), in batches.
   Surahs not listed here are not yet available in Roman Urdu.
-  Please have a fluent reader review before wide use.
 */
 window.AZ_ROMAN = {
 1: [

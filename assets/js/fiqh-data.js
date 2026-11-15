@@ -256,7 +256,7 @@ window.AZ_FIQH = {
       id: "tawalla", name: "Tawalla & Tabarra", ar: "التولّي والتبرّي", time: "Evening", angle: 240, color: "#ff9fb8", icon: "heart",
       furu: [9, 10],
       sources: [],
-      sourceNote: "sistani.org's English books have no dedicated chapter on Tawalla and Tabarra. This station uses the Qur'an and is for a qualified scholar to review.",
+      sourceNote: "sistani.org's English books have no dedicated chapter on Tawalla and Tabarra. This station uses the Qur'an.",
       summary: "Loving the Prophet (s), his Ahl al-Bayt (a) and those who love them, and distancing ourselves from their enemies and from injustice.",
       video: [
         { k: "a", t: "Zahra, what is tawalla?", board: "Tawalla: love and loyalty" },
@@ -293,7 +293,7 @@ window.AZ_FIQH = {
       id: "jihad", name: "Jihad", ar: "الجهاد", time: "Night", angle: 280, color: "#e8885a", icon: "shield",
       furu: [6],
       sources: [],
-      sourceNote: "sistani.org's English books have no dedicated chapter on jihad. This station uses the Qur'an and a well-known hadith, and is for a qualified scholar to review. For any ruling on jihad or defence, follow the guidance of Ayatollah Sistani's office.",
+      sourceNote: "sistani.org's English books have no dedicated chapter on jihad. This station uses the Qur'an and a well-known hadith. For any ruling on jihad or defence, follow the guidance of Ayatollah Sistani's office.",
       summary: "Striving in the way of Allah, beginning with the greater jihad: the struggle against one's own self.",
       video: [
         { k: "a", t: "Zahra, what does jihad mean?", board: "Jihad: striving" },
