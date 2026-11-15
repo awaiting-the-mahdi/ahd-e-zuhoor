@@ -156,5 +156,12 @@ AZ_UR.patterns([
   [/^Resume where you left off ·$/, "جہاں چھوڑا تھا وہیں سے جاری رکھیں ·"],
   [/^Next:$/, "اگلا:"],
   [/^(\d+) min read ·$/, "$1 منٹ کا مطالعہ ·"],
-  [/^min read ·$/, "منٹ کا مطالعہ ·"]
+  [/^min read ·$/, "منٹ کا مطالعہ ·"],
+  [/^(.+) · (\d+) min read · (.+)$/, function (m, c, n, a) { return AZ_UR.t(c) + " · " + n + " منٹ کا مطالعہ · " + AZ_UR.t(a); }],
+  [/^📄 Read full chapter \(PDF · p\. (\d+)\)$/, "📄 مکمل باب پڑھیں (PDF · صفحہ $1)"],
+  [/^📄 Open the full book \(PDF\)$/, "📄 مکمل کتاب کھولیں (PDF)"],
+  [/^(\d+)\. (.+)$/, function (m, n, t) { var u = AZ_UR.t(t); return u === t ? m : n + "۔ " + u; }],
+  [/^Spread (\d+) of (\d+)$/, "صفحات $1 از $2"],
+  [/^Next: (.+) →$/, function (m, t) { return "اگلی: " + AZ_UR.t(t) + " ←"; }],
+  [/^End of the summary of “(.+)”$/, function (m, t) { return "”" + AZ_UR.t(t) + "“ کے خلاصے کا اختتام"; }]
 ]);
