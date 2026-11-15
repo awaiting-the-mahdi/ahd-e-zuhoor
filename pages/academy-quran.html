@@ -256,8 +256,7 @@ var RECITERS=[
   {id:"alafasy",name:"Mishary Rashid Alafasy",dir:"Alafasy_128kbps",qc:7},
   {id:"husary",name:"Mahmoud Khalil Al-Hussary",dir:"Husary_128kbps",qc:6},
   {id:"abdulbasit",name:"Abdul Basit Abdus Samad",dir:"Abdul_Basit_Murattal_192kbps",qc:2},
-  {id:"minshawi",name:"Mohammed Siddiq Al-Minshawi",dir:"Minshawy_Murattal_128kbps",qc:9},
-  {id:"shakernejad",name:"Hamed Shakernejad (coming soon)",dir:null}
+  {id:"minshawi",name:"Mohammed Siddiq Al-Minshawi",dir:"Minshawy_Murattal_128kbps",qc:9}
 ];
 /* Word timings (Quran.com recitation segments). When available, the matching Quran.com audio file is played
    so the timings line up; otherwise everyayah.com is used and only the verse is highlighted. */
@@ -369,7 +368,7 @@ var surahEl=document.getElementById("surah"),audio=document.getElementById("audi
 var S={n:0,verses:[],playing:false,idx:0,tab:"read"};
 var recSel=document.getElementById("reciter");
 RECITERS.forEach(function(r){var o=document.createElement("option");o.value=r.id;o.textContent=r.name;if(!r.dir)o.disabled=true;recSel.appendChild(o)});
-recSel.value=store("reciter")||"alafasy";
+recSel.value=store("reciter")||"alafasy";if(!recSel.value)recSel.value="alafasy";
 recSel.onchange=function(){store("reciter",recSel.value);segLoad(rec(),S.n);if(S.playing)playAt(S.idx)};
 function rec(){return RECITERS.filter(function(r){return r.id===recSel.value})[0]||RECITERS[0]}
 
