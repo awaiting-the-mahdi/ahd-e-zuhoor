@@ -134,6 +134,9 @@ select.pill{appearance:none;padding-right:30px;background:rgba(13,20,52,.85) url
 /* tadabbur */
 .tad .card{padding:20px;border-radius:18px;background:linear-gradient(135deg,rgba(79,207,143,.12),rgba(13,20,52,.6));border:1.5px solid rgba(79,207,143,.45)}
 .tad textarea{width:100%;min-height:140px;margin-top:12px;border-radius:14px;border:1.5px solid var(--line);background:rgba(13,20,52,.9);color:#fff;font:inherit;font-weight:700;padding:12px 14px;line-height:1.6}
+.rw{border-radius:8px;padding:0 2px;transition:background .15s,color .15s}
+.rw.on{background:rgba(79,207,143,.32);color:#eafff3;box-shadow:0 0 0 2px rgba(79,207,143,.5)}
+.tad .card .tr{margin-top:8px}
 .tad .nav{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
 .tad .nav .cnt{font-weight:900;color:var(--mut);font-size:.85rem;margin-right:auto}
 .tad .bar2{height:6px;border-radius:9px;background:rgba(255,255,255,.1);margin:0 0 14px;overflow:hidden}.tad .bar2 i{display:block;height:100%;background:var(--em)}
@@ -224,7 +227,7 @@ select.pill{appearance:none;padding-right:30px;background:rgba(13,20,52,.85) url
       <section class="panel memo" data-p="memo" id="pMemo"></section>
       <section class="panel tad" data-p="tad" id="pTad"></section>
       <section class="panel tj" data-p="tj" id="pTj"></section>
-      <p class="credits">Arabic text: Uthmani script (Tanzil). English translation: Ali Quli Qarai. Urdu translation: Allama Syed Zeeshan Haider Jawadi. Text served by api.alquran.cloud; recitations from everyayah.com. Tajweed colours: Tanzil tajweed edition (Global Quran).</p>
+      <p class="credits">Arabic text: Uthmani script (Tanzil). English translation: Ali Quli Qarai. Urdu translation: Allama Syed Zeeshan Haider Jawadi. Text served by api.alquran.cloud; recitations and word timings from everyayah.com and Quran.com. Tajweed colours: Tanzil tajweed edition (Global Quran).</p>
     </main>
   </div>
 </section>
@@ -243,13 +246,25 @@ function store(k,v){try{if(v===undefined)return JSON.parse(localStorage.getItem(
 
 /* ---------- reciters (verse-by-verse audio) ---------- */
 var RECITERS=[
-  {id:"alafasy",name:"Mishary Rashid Alafasy",dir:"Alafasy_128kbps"},
-  {id:"husary",name:"Mahmoud Khalil Al-Hussary",dir:"Husary_128kbps"},
-  {id:"abdulbasit",name:"Abdul Basit Abdus Samad",dir:"Abdul_Basit_Murattal_192kbps"},
-  {id:"minshawi",name:"Mohammed Siddiq Al-Minshawi",dir:"Minshawy_Murattal_128kbps"},
+  {id:"alafasy",name:"Mishary Rashid Alafasy",dir:"Alafasy_128kbps",qc:7},
+  {id:"husary",name:"Mahmoud Khalil Al-Hussary",dir:"Husary_128kbps",qc:6},
+  {id:"abdulbasit",name:"Abdul Basit Abdus Samad",dir:"Abdul_Basit_Murattal_192kbps",qc:2},
+  {id:"minshawi",name:"Mohammed Siddiq Al-Minshawi",dir:"Minshawy_Murattal_128kbps",qc:9},
   {id:"shakernejad",name:"Hamed Shakernejad (coming soon)",dir:null}
 ];
-function audioUrl(rec,s,a){return "https://everyayah.com/data/"+rec.dir+"/"+String(s).padStart(3,"0")+String(a).padStart(3,"0")+".mp3"}
+/* Word timings (Quran.com recitation segments). When available, the matching Quran.com audio file is played
+   so the timings line up; otherwise everyayah.com is used and only the verse is highlighted. */
+var SEG={},SEGP={};
+function segKey(r,n){return r.qc+":"+n}
+function segLoad(r,n){
+  if(!r.qc)return Promise.resolve(null);var k=segKey(r,n);if(SEG[k])return Promise.resolve(SEG[k]);
+  if(!SEGP[k])SEGP[k]=fetch("https://api.quran.com/api/v4/recitations/"+r.qc+"/by_chapter/"+n+"?fields=segments&per_page=300").then(function(x){if(!x.ok)throw 0;return x.json()}).then(function(j){
+    var m={};j.audio_files.forEach(function(f){var u=f.url.replace(/^(https?:)?\/\/mirrors\.quranicaudio\.com\/everyayah\//,"https://everyayah.com/data/");u=/^\/\//.test(u)?"https:"+u:/^https?:/.test(u)?u:"https://verses.quran.com/"+u;
+      m[+f.verse_key.split(":")[1]]={url:u,seg:(f.segments||[]).filter(function(g){return g.length>=4}).map(function(g){return [g[1],g[2],g[3]]})}});
+    return SEG[k]=m}).catch(function(){delete SEGP[k];return null});
+  return SEGP[k];
+}
+function audioUrl(rec,s,a){var m=SEG[segKey(rec,s)];if(m&&m[a])return m[a].url;return "https://everyayah.com/data/"+rec.dir+"/"+String(s).padStart(3,"0")+String(a).padStart(3,"0")+".mp3"}
 
 /* ---------- juz helpers ---------- */
 function juzOfSurah(s){var j=0;for(var k=0;k<30;k++){var a=Q.juz[k];if(a[0]<s||(a[0]===s&&a[1]===1))j=k}return j}
@@ -348,7 +363,7 @@ var S={n:0,verses:[],playing:false,idx:0,tab:"read"};
 var recSel=document.getElementById("reciter");
 RECITERS.forEach(function(r){var o=document.createElement("option");o.value=r.id;o.textContent=r.name;if(!r.dir)o.disabled=true;recSel.appendChild(o)});
 recSel.value=store("reciter")||"alafasy";
-recSel.onchange=function(){store("reciter",recSel.value);if(S.playing)playAt(S.idx)};
+recSel.onchange=function(){store("reciter",recSel.value);segLoad(rec(),S.n);if(S.playing)playAt(S.idx)};
 function rec(){return RECITERS.filter(function(r){return r.id===recSel.value})[0]||RECITERS[0]}
 
 var TR=[{id:"en",label:"English"},{id:"ur",label:"اردو"},{id:"ro",label:"Roman Urdu"}];
@@ -358,7 +373,7 @@ TR.forEach(function(t){var b=document.createElement("button");b.type="button";b.
   if(t.soon){b.disabled=true;b.title="Roman Urdu translation coming soon";b.setAttribute("aria-pressed","false")}
   else{b.setAttribute("aria-pressed",!!trOn[t.id]);b.onclick=function(){trOn[t.id]=!trOn[t.id];store("tr",trOn);b.setAttribute("aria-pressed",trOn[t.id]);applyTr()}}
   trOpts.appendChild(b)});
-function applyTr(){["en","ur","ro"].forEach(function(k){document.querySelectorAll(".tr."+k+",.ronote").forEach(function(e){if(e.classList.contains(k)||(k==="ro"&&e.classList.contains("ronote")))e.hidden=!trOn[k]})})}
+function applyTr(){["en","ur","ro"].forEach(function(k){document.querySelectorAll("#pRead .tr."+k+",#pRead .ronote").forEach(function(e){if(e.classList.contains(k)||(k==="ro"&&e.classList.contains("ronote")))e.hidden=!trOn[k]})})}
 
 function load(n){
   if(cache[n])return Promise.resolve(cache[n]);
@@ -388,7 +403,7 @@ function openSurah(n){
   document.getElementById("sMeta").textContent=s[2]+" · Surah "+n+" · "+s[3]+" verses · "+(s[4]?"Madani":"Makki");
   document.getElementById("pRead").innerHTML='<div class="loading">Opening the surah…</div>';document.getElementById("pMemo").innerHTML="";document.getElementById("pTad").innerHTML="";document.getElementById("pTj").innerHTML="";
   history.replaceState(null,"","#surah-"+n);document.title=s[0]+" · Galaxy of the Qur'an";
-  load(n).then(function(v){if(S.n!==n)return;S.verses=v;renderRead();renderMemo();renderTad();setProg();if(curTab()==="tj")renderTj()}).catch(function(){
+  segLoad(rec(),n);load(n).then(function(v){if(S.n!==n)return;S.verses=v;renderRead();renderMemo();renderTad();setProg();if(curTab()==="tj")renderTj()}).catch(function(){
     document.getElementById("pRead").innerHTML='<div class="err">The surah could not be loaded. Please check your connection and try again.</div>'});
 }
 function closeSurah(){stop();var ti=document.getElementById("tjInfo");if(ti)ti.classList.remove("on");surahEl.classList.remove("on");galaxy.style.display="";document.getElementById("backBtn").textContent="← Academy";document.getElementById("backBtn").href="academy.html";history.replaceState(null,"",location.pathname);document.title="Galaxy of the Qur'an";
@@ -401,11 +416,29 @@ document.getElementById("prevS").onclick=function(){if(S.n>1)openSurah(S.n-1)};
 document.getElementById("nextS").onclick=function(){if(S.n<114)openSurah(S.n+1)};
 
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function wordsHtml(t){var k=0;return t.split(/\s+/).map(function(w){return /[\u0621-\u064A\u0671-\u06D3]/.test(w)?'<span class="rw" data-w="'+(++k)+'">'+esc(w)+'</span>':esc(w)}).join(" ")}
+var wordRaf=0,lastW=null;
+function wordTick(){
+  wordRaf=0;if(!S.playing)return;
+  var v=S.verses[S.idx],m=v&&SEG[segKey(rec(),S.n)],e=m&&m[v.n];
+  if(e&&e.seg.length&&audio.src.indexOf(e.url.replace(/^https?:/,""))>=0){
+    var t=audio.currentTime*1000,cur=null;
+    for(var i=0;i<e.seg.length;i++){if(t>=e.seg[i][1]-80)cur=e.seg[i][0];else break}
+    var el=document.getElementById("v"+v.n),ws=el?el.querySelectorAll(".rw"):[];
+    var mx=e.seg[e.seg.length-1][0],idx=cur==null?null:(mx===ws.length?cur:Math.max(1,Math.round(cur*ws.length/mx)));
+    var w=idx?ws[idx-1]:null;
+    if(w!==lastW){if(lastW)lastW.classList.remove("on");if(w){w.classList.add("on");
+      if(document.getElementById("follow").checked&&document.getElementById("pRead").classList.contains("on")){var r=w.getBoundingClientRect();if(r.top<90||r.bottom>innerHeight-60)w.scrollIntoView({block:"center",behavior:reduce?"auto":"smooth"})}}lastW=w}
+  }
+  wordRaf=requestAnimationFrame(wordTick);
+}
+audio.addEventListener("playing",function(){if(!wordRaf)wordRaf=requestAnimationFrame(wordTick)});
+audio.addEventListener("pause",function(){if(lastW){lastW.classList.remove("on");lastW=null}});
 function renderRead(){
   var h=S.verses.bism?'<div class="bism" lang="ar" dir="rtl">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>':"";
   var ro=(window.AZ_ROMAN||{})[S.n];
   if(!ro)h+='<p class="ronote">Roman Urdu for this surah is being prepared and will appear here soon.</p>';
-  S.verses.forEach(function(v,i){h+='<div class="verse" id="v'+v.n+'"><div class="va" lang="ar">'+esc(v.ar)+' <button class="n" type="button" data-i="'+i+'" aria-label="Play verse '+v.n+'">'+v.n+'</button></div>'+
+  S.verses.forEach(function(v,i){h+='<div class="verse" id="v'+v.n+'"><div class="va" lang="ar">'+wordsHtml(v.ar)+' <button class="n" type="button" data-i="'+i+'" aria-label="Play verse '+v.n+'">'+v.n+'</button></div>'+
     '<div class="tr en"><small>English</small>'+esc(v.en)+'</div><div class="tr ur" lang="ur"><small>اردو</small>'+esc(v.ur)+'</div>'+
     (ro&&ro[i]?'<div class="tr ro"><small>Roman Urdu</small>'+esc(ro[i])+'</div>':'')+'</div>'});
   var p=document.getElementById("pRead");p.innerHTML=h;applyTr();
@@ -421,6 +454,10 @@ function playAt(i){
   if(!S.verses.length)return;
   if(i>=S.verses.length){stop();S.idx=0;setProg();pinfo.textContent=justDone===S.n?"Mashallah! Surah completed ✓ Go back to the path to see your rocket fly":"Surah complete. Sadaq Allahu al-'Aliyy al-'Azim";return}
   S.idx=i;S.playing=true;drawPlay();mark(i);setProg();
+  var n0=S.n;segLoad(rec(),S.n).then(function(){if(S.n!==n0||S.idx!==i||!S.playing)return;playSrc(i)});
+}
+function playSrc(i){
+  if(lastW){lastW.classList.remove("on");lastW=null}
   audio.src=audioUrl(rec(),S.n,S.verses[i].n);
   pinfo.textContent="Verse "+S.verses[i].n+" of "+S.verses.length+" · "+rec().name;
   audio.play().catch(function(){S.playing=false;drawPlay();pinfo.textContent="Tap play to start the recitation"});
@@ -472,7 +509,9 @@ function renderTad(vi){
     '<select class="tchip" id="tadSel" aria-label="Choose a verse">'+S.verses.map(function(x,k){return '<option value="'+k+'"'+(k===vi?' selected':'')+'>Verse '+x.n+(has[k]?' ✓':'')+'</option>'}).join("")+'</select>'+
     '<button class="tchip" id="tadNext" type="button"'+(vi<N-1?'':' disabled')+'>Next →</button></div>'+
     '<div class="bar2"><i style="width:'+(cnt/N*100)+'%"></i></div>'+
-    '<div class="card"><div class="va" lang="ar">'+esc(v.ar)+'</div><div class="tr en">'+esc(v.en)+' <small>('+n+':'+v.n+')</small></div>'+
+    '<div class="card"><div class="va" lang="ar">'+esc(v.ar)+'</div><div class="tr en"><small>English</small>'+esc(v.en)+' <small>('+n+':'+v.n+')</small></div>'+
+    '<div class="tr ur" lang="ur"><small>اردو</small>'+esc(v.ur)+'</div>'+
+    (((window.AZ_ROMAN||{})[n]||[])[vi]?'<div class="tr ro"><small>Roman Urdu</small>'+esc(AZ_ROMAN[n][vi])+'</div>':'<div class="tr ro"><small>Roman Urdu</small><span style="color:var(--mut)">Being prepared for this surah</span></div>')+
     '<p class="q">What is this verse saying to you today, and what will you do because of it?</p></div>'+
     '<textarea id="tadText" placeholder="Write your reflection on verse '+v.n+'… (saved only on this device)">'+esc(saved)+'</textarea>'+
     '<div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap"><button class="btn" id="tadSave" type="button">'+(vi<N-1?'Save &amp; next verse →':'Save reflection')+'</button><span id="tadMsg" style="align-self:center;color:var(--em);font-weight:800">'+(saved?'Saved ✓':'')+'</span></div>';
