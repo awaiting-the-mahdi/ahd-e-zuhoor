@@ -376,7 +376,7 @@ function rec(){return RECITERS.filter(function(r){return r.id===recSel.value})[0
 var TAF=window.AZ_TAFSEER_EN||{},hasTaf=Object.keys(TAF).length>0;
 var TR=[{id:"en",label:"English"},{id:"ur",label:"اردو"},{id:"ro",label:"Roman Urdu"}].concat(hasTaf?[{id:"tf",label:"Tafseer"}]:[]);
 var trOn=store("tr")||{en:true,ur:true,ro:true};if(trOn.tf===undefined)trOn.tf=true;
-if(hasTaf){var cr=document.querySelector(".credits");if(cr)cr.textContent=cr.textContent.replace("Urdu translation: Allama Syed Zeeshan Haider Jawadi.","Urdu translation: Allama Syed Zeeshan Haider Jawadi. English tafseer: Tafseer e Namoona.")}
+if(hasTaf){var cr=document.querySelector(".credits");if(cr)cr.textContent=cr.textContent.replace("Urdu translation: Allama Syed Zeeshan Haider Jawadi.","Urdu translation: Allama Syed Zeeshan Haider Jawadi. Tafseer notes: our own short English summaries of Majma' al-Bayan by Shaykh Tabrisi.")}
 var trOpts=document.getElementById("trOpts");
 TR.forEach(function(t){var b=document.createElement("button");b.type="button";b.className="tchip";b.textContent=t.label;
   if(t.soon){b.disabled=true;b.title="Roman Urdu translation coming soon";b.setAttribute("aria-pressed","false")}
@@ -445,7 +445,7 @@ audio.addEventListener("playing",function(){if(!wordRaf)wordRaf=requestAnimation
 audio.addEventListener("pause",function(){if(lastW){lastW.classList.remove("on");lastW=null}});
 function tafHtml(vn){
   var list=TAF[S.n]||[];return list.filter(function(t){return t.to===vn}).map(function(t){
-    return '<div class="tr tf"><small>Tafseer'+(t.from!==t.to?' · verses '+t.from+'–'+t.to:'')+'</small><div class="tfx">'+
+    return '<div class="tr tf"><small>Tafseer notes · Majma\' al-Bayan'+(t.from!==t.to?' · verses '+t.from+'–'+t.to:'')+'</small><div class="tfx">'+
       String(t.text).split(/\n\s*\n/).map(function(p){return '<p>'+esc(p.trim())+'</p>'}).join("")+'</div><button class="more" type="button">Read more</button></div>'}).join("");
 }
 function renderRead(){
