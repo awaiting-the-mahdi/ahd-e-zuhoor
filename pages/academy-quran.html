@@ -241,7 +241,6 @@ select.pill{appearance:none;padding-right:30px;background:rgba(13,20,52,.85) url
 <audio id="audio" preload="auto"></audio>
 
 <script src="../assets/js/quran-data.js"></script>
-<script src="../assets/js/quran-roman.js"></script>
 <script src="../assets/js/quran-tafseer-en.js"></script>
 <script src="../assets/js/quran-search.js"></script>
 <script>
@@ -383,6 +382,13 @@ TR.forEach(function(t){var b=document.createElement("button");b.type="button";b.
   trOpts.appendChild(b)});
 function applyTr(){["en","ur","ro","tf"].forEach(function(k){document.querySelectorAll("#pRead .tr."+k+",#pRead .ronote").forEach(function(e){if(e.classList.contains(k)||(k==="ro"&&e.classList.contains("ronote")))e.hidden=!trOn[k]})})}
 
+/* Roman Urdu: one small file per surah, fetched when the surah is opened. A failed fetch just leaves Roman Urdu out. */
+window.AZ_ROMAN=window.AZ_ROMAN||{};var romanP={};
+function romanLoad(n){
+  if(AZ_ROMAN[n])return Promise.resolve();
+  if(!romanP[n])romanP[n]=fetch("../assets/data/roman/"+n+".json").then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(a){if(Array.isArray(a))AZ_ROMAN[n]=a}).catch(function(){delete romanP[n]});
+  return romanP[n];
+}
 function load(n){
   if(cache[n])return Promise.resolve(cache[n]);
   return fetch("https://api.alquran.cloud/v1/surah/"+n+"/editions/quran-uthmani,en.qarai,ur.jawadi").then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);return r.json()}).then(function(j){
@@ -411,7 +417,7 @@ function openSurah(n){
   document.getElementById("sMeta").textContent=s[2]+" · Surah "+n+" · "+s[3]+" verses · "+(s[4]?"Madani":"Makki");
   document.getElementById("pRead").innerHTML='<div class="loading">Opening the surah…</div>';document.getElementById("pMemo").innerHTML="";document.getElementById("pTad").innerHTML="";document.getElementById("pTj").innerHTML="";
   history.replaceState(null,"","#surah-"+n);document.title=s[0]+" · Galaxy of the Qur'an";
-  segLoad(rec(),n);load(n).then(function(v){if(S.n!==n)return;S.verses=v;renderRead();renderMemo();renderTad();setProg();if(curTab()==="tj")renderTj()}).catch(function(){
+  segLoad(rec(),n);var rp=romanLoad(n);load(n).then(function(v){return rp.then(function(){return v})}).then(function(v){if(S.n!==n)return;S.verses=v;renderRead();renderMemo();renderTad();setProg();if(curTab()==="tj")renderTj()}).catch(function(){
     document.getElementById("pRead").innerHTML='<div class="err">The surah could not be loaded. Please check your connection and try again.</div>'});
 }
 function closeSurah(){stop();var ti=document.getElementById("tjInfo");if(ti)ti.classList.remove("on");surahEl.classList.remove("on");galaxy.style.display="";document.getElementById("backBtn").textContent="← Academy";document.getElementById("backBtn").href="academy.html";history.replaceState(null,"",location.pathname);document.title="Galaxy of the Qur'an";
@@ -525,7 +531,7 @@ function renderTad(vi){
     '<div class="bar2"><i style="width:'+(cnt/N*100)+'%"></i></div>'+
     '<div class="card"><div class="va" lang="ar">'+esc(v.ar)+'</div><div class="tr en"><small>English</small>'+esc(v.en)+' <small>('+n+':'+v.n+')</small></div>'+
     '<div class="tr ur" lang="ur"><small>اردو</small>'+esc(v.ur)+'</div>'+
-    (((window.AZ_ROMAN||{})[n]||[])[vi]?'<div class="tr ro"><small>Roman Urdu</small>'+esc(AZ_ROMAN[n][vi])+'</div>':'<div class="tr ro"><small>Roman Urdu</small><span style="color:var(--mut)">Being prepared for this surah</span></div>')+
+    (((window.AZ_ROMAN||{})[n]||[])[vi]?'<div class="tr ro"><small>Roman Urdu</small>'+esc(AZ_ROMAN[n][vi])+'</div>':'<div class="tr ro"><small>Roman Urdu</small><span style="color:var(--mut)">Not available right now</span></div>')+
     '<p class="q">What is this verse saying to you today, and what will you do because of it?</p></div>'+
     '<textarea id="tadText" placeholder="Write your reflection on verse '+v.n+'… (saved only on this device)">'+esc(saved)+'</textarea>'+
     '<div style="display:flex;gap:10px;margin-top:10px;flex-wrap:wrap"><button class="btn" id="tadSave" type="button">'+(vi<N-1?'Save &amp; next verse →':'Save reflection')+'</button><span id="tadMsg" style="align-self:center;color:var(--em);font-weight:800">'+(saved?'Saved ✓':'')+'</span></div>';
