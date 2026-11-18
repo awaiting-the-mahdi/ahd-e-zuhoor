@@ -8,7 +8,7 @@
 <title>Research &amp; Preservation Archive</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&family=Noto+Nastaliq+Urdu:wght@400;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=IM+Fell+English:ital@0;1&family=Inter:wght@400;500;600&family=Noto+Nastaliq+Urdu:wght@400;600&display=swap">
 <link rel="stylesheet" href="../assets/css/menu.css">
 <style>
 :root{--bg:#060b1c;--card:rgba(255,255,255,.045);--card2:rgba(255,255,255,.08);--line:rgba(224,184,98,.3);--gold:#e0b862;--gold2:#f3d79a;--text:#e9ecf5;--muted:#a3adc8;--em:#2fbf9b;--glow:rgba(224,184,98,.3);
@@ -107,6 +107,23 @@ html.ur .rd .head h2{font:600 clamp(1.25rem,5vw,1.7rem)/2 "Noto Nastaliq Urdu",s
 .sheet .tx.v{font-family:Amiri,serif;font-size:clamp(1.25rem,3.4vw,1.6rem)}
 .sheet .tx .al{color:#7a4d10}
 .sheet .gap{display:block;text-align:center;color:var(--ink2);letter-spacing:.6em;margin:.4rem 0 1rem}
+.flipbar{display:flex;justify-content:center;margin:0 0 1.3rem}
+.flipbtn{display:inline-flex;align-items:center;gap:.55rem;background:linear-gradient(135deg,#e0b862,#c9963f);color:#1a1206;border:0;border-radius:99px;padding:.6rem 1.4rem;font:600 .95rem Inter,sans-serif;cursor:pointer;box-shadow:0 8px 24px rgba(224,184,98,.35);transition:transform .25s,box-shadow .25s}
+.flipbtn:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(224,184,98,.5)}
+.flipbtn svg{width:18px;height:18px;transition:transform .9s}
+.flipbtn[aria-pressed=true] svg{transform:rotate(-180deg)}
+.flipbtn .ul{font-family:"Noto Nastaliq Urdu",serif;font-weight:600;line-height:1.6}
+.flip{perspective:2400px;max-width:720px;margin:0 auto}
+.card3d{display:grid;transform-style:preserve-3d;transition:transform 1.1s cubic-bezier(.65,.05,.25,1)}
+.card3d.turned{transform:rotateY(180deg)}
+.card3d>.sheet{grid-area:1/1;width:100%;backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.card3d>.sheet.verso{transform:rotateY(180deg) rotate(.35deg)}
+.reader.open .card3d>.sheet.verso{translate:0 0}
+.sheet .en{font:400 clamp(1.08rem,2.9vw,1.28rem)/1.75 "IM Fell English",Georgia,serif;color:var(--ink);text-align:justify;hyphens:auto;margin:0 0 1rem;direction:ltr}
+.sheet .en:first-of-type::first-letter{float:left;font:400 3.3em/.8 "IM Fell English",serif;color:#7a4d10;padding:.08em .1em 0 0}
+.sheet .urt{font:400 clamp(1.02rem,2.8vw,1.18rem)/2.35 "Noto Nastaliq Urdu",serif;color:var(--ink);text-align:justify;text-align-last:right;direction:rtl;margin:0 0 .9rem}
+.sheet .bk{display:block;text-align:center;font:italic 400 .85rem "IM Fell English",serif;color:var(--ink2);letter-spacing:.2em;text-transform:uppercase;margin:-.6rem 0 1.2rem}
+.sheet .bk.u{font:400 .9rem "Noto Nastaliq Urdu",serif;letter-spacing:0;text-transform:none}
 .sheet .stamp{display:block;width:62px;height:62px;margin:1.4rem auto 0;opacity:.75}
 .cap{max-width:640px;margin:1.2rem auto 0;text-align:center;color:#a3adc8;font-size:.82rem;font-style:italic}
 html.ur .cap{font-style:normal}
@@ -185,7 +202,7 @@ html.ur .life li::before{left:auto;right:.2rem}
 .final p{color:var(--muted);max-width:56ch;margin:.6rem auto 0}
 .final a{color:var(--gold)}
 @media (max-width:560px){.reader .bar .lbl{display:none}.tl .m span{display:none}.tl{padding-bottom:0}}
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv,.hk,h1,.sub,.sheet{opacity:1!important;transform:none!important;translate:none!important}.cal text{fill:var(--gold);stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv,.hk,h1,.sub,.sheet{opacity:1!important;translate:none!important}.card3d{transition:none}.cal text{fill:var(--gold);stroke-dashoffset:0}}
 </style>
 <script src="../assets/js/i18n.js"></script>
 </head>
@@ -247,7 +264,7 @@ var T={
   lIntro:"During the Minor Occultation (260–329 AH) the Imam answered his followers in writing. The narrators say the replies came <b>“in his handwriting”</b>, the same hand they had known in his father's time. The papers themselves have not reached us; what reached us is their text, copied by trusted hands and preserved by al-Kulayni, al-Saduq and al-Tusi. Open a letter to read it.",
   dIntro:"For almost seventy years, four men in Baghdad were the only door between the Imam and his followers. Each was named by the one before him at the Imam's command. Their story is told here from Shaykh al-Tusi's <b>Kitab al-Ghayba</b>.",
   era1:"The Minor Occultation · 260–329 AH",era2:"The Major Occultation",
-  open:"Read his story",close:"Close",share:"Share",copied:"Link copied ✓",ctx:"About this letter",keys:"What it teaches",tr:"Translation",prev:"Previous",next:"Next",
+  open:"Read his story",close:"Close",share:"Share",copied:"Link copied ✓",ctx:"About this letter",keys:"What it teaches",tr:"Translation",flipTo:"English",flipBack:"Arabic",bk:"Translation",prev:"Previous",next:"Next",
   cap:"The text as preserved in {src}. The original papers have not survived.",capT:"Passages as quoted in {src}.",
   src:"Source",gh:"al-Ghayba (al-Tusi),",read:"Read on thaqalayn.net",rest:"Resting place",served:"Deputyship",duas:"Read the full ziyarat →",
   m:[["260","Imam al-'Askari passes;<br>'Uthman ibn Sa'id"],["305","Muhammad ibn 'Uthman dies;<br>Husayn ibn Rawh"],["326","'Ali al-Samuri"],["329","Major Occultation"]],
@@ -257,7 +274,7 @@ var T={
   lIntro:"غیبتِ صغریٰ (260–329 ہجری) کے دوران امام اپنے ماننے والوں کو تحریری جواب دیتے رہے۔ راوی کہتے ہیں کہ جواب <b>”ان کے اپنے ہاتھ کی تحریر میں“</b> آتے تھے، وہی تحریر جو وہ ان کے والد کے زمانے سے پہچانتے تھے۔ اصل کاغذ ہم تک نہیں پہنچے؛ ان کا متن پہنچا ہے، جسے معتمد ہاتھوں نے نقل کیا اور کلینی، صدوق اور طوسی نے محفوظ کیا۔ کوئی خط کھول کر پڑھیں۔",
   dIntro:"تقریباً ستر برس تک بغداد کے چار افراد امام اور ان کے ماننے والوں کے درمیان واحد دروازہ رہے۔ ہر ایک کو امام کے حکم سے اس سے پہلے والے نے نامزد کیا۔ ان کی داستان یہاں شیخ طوسی کی <b>کتاب الغیبہ</b> سے بیان کی گئی ہے۔",
   era1:"غیبتِ صغریٰ · 260–329 ہجری",era2:"غیبتِ کبریٰ",
-  open:"ان کی داستان پڑھیں",close:"بند کریں",share:"شیئر",copied:"لنک کاپی ہو گیا ✓",ctx:"اس خط کے بارے میں",keys:"اس کا پیغام",tr:"ترجمہ",prev:"پچھلا",next:"اگلا",
+  open:"ان کی داستان پڑھیں",close:"بند کریں",share:"شیئر",copied:"لنک کاپی ہو گیا ✓",ctx:"اس خط کے بارے میں",keys:"اس کا پیغام",tr:"ترجمہ",flipTo:"اردو",flipBack:"عربی",bk:"اردو ترجمہ",prev:"پچھلا",next:"اگلا",
   cap:"متن جیسا کہ {src} میں محفوظ ہے۔ اصل کاغذ باقی نہیں رہے۔",capT:"اقتباسات جیسا کہ {src} میں نقل ہوئے۔",
   src:"ماخذ",gh:"الغیبہ (شیخ طوسی)،",read:"thaqalayn.net پر پڑھیں",rest:"آرام گاہ",served:"نیابت",duas:"مکمل زیارت پڑھیں ←",
   m:[["260","رحلتِ امام عسکری؛<br>عثمان بن سعید"],["305","وفاتِ محمد بن عثمان؛<br>حسین بن روح"],["326","علی سمری"],["329","غیبتِ کبریٰ"]],
@@ -301,21 +318,29 @@ function openLetter(id,push){var i=-1;LS.forEach(function(x,k){if(x.id===id)i=k}
  var x='<div class="head"><div class="y">'+esc(UR?yearUr(l):l.year)+'</div><h2 id="rTitle" class="'+(UR?"u":"")+'">'+esc(l.t[L])+'</h2><p class="to'+u+'">'+esc(l.to[L])+'</p></div>';
  x+='<div class="ctx'+u+'">'+esc(l.ctx[L])+'</div>';
  var all=l.ar.join(""),voc=l.typed||(all.match(/[ً-ْ]/g)||[]).length>all.length*.15;
- x+='<div class="sheet" lang="ar">';
+ x+='<div class="flipbar"><button class="flipbtn" id="flipBtn" type="button" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v5h-5"/></svg><span class="'+(UR?"ul":"")+'">'+esc(T.flipTo)+'</span></button></div>';
+ x+='<div class="flip"><div class="card3d" id="card3d"><div class="sheet recto" lang="ar">';
  l.ar.forEach(function(p,k){
   var b=p.match(/^(بسم الله الرحمن الرحيم|بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ)\.?\s*/);
   if(b){x+='<span class="bism">'+esc(b[1])+'</span>';p=p.slice(b[0].length)}
   if(k>0)x+='<span class="gap" aria-hidden="true">· · ·</span>';
   x+='<p class="tx'+(voc?" v":"")+'">'+hiAllah(p)+'</p>'});
  x+='<svg class="stamp" style="color:#7a4d10" aria-hidden="true"><use href="#rosette"/></svg></div>';
+ x+='<div class="sheet verso" aria-hidden="true" lang="'+L+'"><span class="bk'+u+'">'+esc(T.bk)+'</span>';
+ l.tr[L].forEach(function(p){x+='<p class="'+(UR?"urt":"en")+'">'+esc(p)+'</p>'});
+ x+='<svg class="stamp" style="color:#7a4d10" aria-hidden="true"><use href="#rosette"/></svg></div></div></div>';
  x+='<p class="cap'+u+'">'+esc((l.typed?T.capT:T.cap).replace("{src}",l.src[L]))+'</p>';
  if(l.keys&&l.keys.length){x+='<div class="keys"><h4>'+esc(T.keys)+'</h4>';l.keys.forEach(function(k){x+='<div class="key'+u+'">'+esc(k[L])+'</div>'});x+='</div>'}
- x+='<div class="trw"><div class="trh">'+esc(T.tr)+'</div>';l.tr[L].forEach(function(p){x+='<p class="'+(UR?"u":"")+'">'+esc(p)+'</p>'});x+='</div>';
  x+='<div class="srcl'+u+'"><b>'+esc(T.src)+':</b> '+esc(l.src[L])+(l.url?' · <a href="'+l.url+'" target="_blank" rel="noopener">'+esc(T.read)+'</a>':'')+(l.link?' · <a href="'+l.link+(UR?"":"")+'">'+esc(T.duas)+'</a>':'')+'</div>';
  var pv=LS[i-1],nx=LS[i+1];
  x+='<div class="nav2">'+(pv?'<button class="ib" type="button" data-go="'+pv.id+'"><span><small>'+esc(T.prev)+'</small><span class="'+(UR?"u":"")+'">'+esc(pv.t[L])+'</span></span></button>':'<span></span>')+(nx?'<button class="ib" type="button" data-go="'+nx.id+'"><span><small>'+esc(T.next)+'</small><span class="'+(UR?"u":"")+'">'+esc(nx.t[L])+'</span></span></button>':'')+'</div>';
  RD.innerHTML=x;
  [].forEach.call(RD.querySelectorAll("[data-go]"),function(b){b.onclick=function(){openLetter(b.dataset.go,true)}});
+ var fb=$("flipBtn"),cd=$("card3d");
+ fb.onclick=function(){var on=!cd.classList.contains("turned");cd.classList.toggle("turned",on);fb.setAttribute("aria-pressed",on);
+  fb.querySelector("span").textContent=on?T.flipBack:T.flipTo;fb.querySelector("span").className=(UR&&!on)||(UR&&on)?"ul":"";
+  cd.querySelector(".recto").setAttribute("aria-hidden",on);cd.querySelector(".verso").setAttribute("aria-hidden",!on);
+  var r=fb.getBoundingClientRect();if(r.top<60||r.top>innerHeight*.5)fb.scrollIntoView({behavior:"smooth",block:"start"})};
  if(!R.classList.contains("open")){last=document.activeElement;R.classList.add("open");document.body.classList.add("locked")}
  R.scrollTop=0;$("rClose").focus({preventScroll:true});
  if(push&&location.hash!=="#"+id)history.pushState({l:id},"","#"+id);
