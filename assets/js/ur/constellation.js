@@ -29,8 +29,8 @@ AZ_UR.add({
   "Prophet Adam (a.s.), the first": "حضرت آدم (ع)، پہلے نبی", "Adam": "آدم"
 });
 
-/* Resemblance cards. The book quotes stay in the English translation (marked lang="en")
-   until the exact words of an Urdu translation of these books can be matched. */
+/* Resemblance cards. Quotes in Urdu mode are our own rendering (field "u" in resemblance-data.js),
+   with the book's English wording under each one. */
 AZ_UR.add({
   "Prophet Uzair (a.s.)": "حضرت عزیر (ع)", "Uzair": "عزیر",
   "Prophet Daniyal (a.s.)": "حضرت دانیال (ع)", "Daniyal": "دانیال",
@@ -52,7 +52,7 @@ AZ_UR.add({
   "✦ Resemblances": "✦ مشابہتیں",
   "Whose qualities are found in him, according to the books. Tap a name.": "کتابوں کے مطابق جن کی صفات اُن میں پائی جاتی ہیں۔ کسی نام کو چھوئیں۔",
   "and its reflection in": "اور اس کا عکس",
-  "In the book’s own words": "کتاب کے اپنے الفاظ (انگریزی ترجمہ)",
+  "In the book’s own words": "اقتباسات کا اردو ترجمہ (انگریزی ترجمے سے)",
   "Close": "بند کریں",
   "The Fourteen and the prophets marked ✦ each have a resemblance in Imam al-Mahdi (a.t.f.s.) recorded in the books.":
     "چودہ معصومین اور ✦ والے انبیاء، ہر ایک کی امام مہدی (عج) سے مشابہت کتابوں میں درج ہے۔",
@@ -151,7 +151,7 @@ AZ_UR.add({
     "روشن ستارے کو چھوئیں · گھمانے کے لیے کھینچیں · زوم کے لیے چٹکی بھریں<br>مشابہت دیکھنے کے لیے <span style=\"color:var(--gold)\">✦ نبی</span>، چودہ معصومین میں سے کسی، یا مہدی کے ستارے کو چھوئیں",
   "and its reflection in <b>Imam al-Mahdi (a.t.f.s.)</b>": "اور اس کا عکس <b>امام مہدی (عج)</b> میں",
   "Words quoted exactly from the English translations in the library: <i>Kamal al-Din</i> (Shaykh as-Saduq), <i>Mikyal al-Makarim</i> (Sayyid Muhammad Taqi Musavi Isfahani) and <i>Al-Ghayba</i> (Shaykh al-Tusi). Tap a page reference to open it.":
-    "اقتباسات لائبریری میں موجود انگریزی ترجموں سے لفظ بہ لفظ لیے گئے ہیں: <i>کمال الدین</i> (شیخ صدوق)، <i>مکیال المکارم</i> (سید محمد تقی موسوی اصفہانی) اور <i>الغیبہ</i> (شیخ طوسی)۔ کتاب کے اردو ترجمے کے الفاظ ابھی شامل نہیں، اس لیے متن انگریزی میں ہے۔ صفحہ کھولنے کے لیے حوالے کو چھوئیں۔",
+    "اقتباسات لائبریری میں موجود انگریزی ترجموں سے لفظ بہ لفظ لیے گئے ہیں: <i>کمال الدین</i> (شیخ صدوق)، <i>مکیال المکارم</i> (سید محمد تقی موسوی اصفہانی) اور <i>الغیبہ</i> (شیخ طوسی)۔ اردو اقتباسات ہمارا اپنا ترجمہ ہیں جو انگریزی ترجمے سے کیا گیا ہے، کسی شائع شدہ اردو ترجمے کے الفاظ نہیں؛ کتاب کے اصل الفاظ ہر اقتباس کے نیچے ”انگریزی متن“ میں موجود ہیں۔ صفحہ کھولنے کے لیے حوالے کو چھوئیں۔",
   "The Fourteen and the prophets marked ✦ each have a resemblance in Imam al-Mahdi (a.t.f.s.) recorded in the books. 124,000 prophets (a.s.), among them the Holy Prophet (s.a.w.a.), together with Lady Fatima (s.a.) and the twelve Imams (a.s.), make 124,013, following the number narrated in tradition.":
     "چودہ معصومین اور ✦ والے انبیاء، ہر ایک کی امام مہدی (عج) سے مشابہت کتابوں میں درج ہے۔ ایک لاکھ چوبیس ہزار انبیاء (ع)، جن میں رسولِ اکرم (ص) بھی ہیں، بی بی فاطمہ (س) اور بارہ اماموں (ع) کے ساتھ مل کر 1,24,013 بنتے ہیں — روایات میں بیان کردہ تعداد کے مطابق۔"
 });

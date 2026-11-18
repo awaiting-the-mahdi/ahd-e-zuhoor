@@ -59,6 +59,11 @@ html.az-ur .qn,html.az-ur .grp{letter-spacing:0}
 .rc.on .q{opacity:1;transform:none}
 .q p{margin:0;font:500 1.06rem/1.45 'Cormorant Garamond',Georgia,serif;color:#f4ecd9}
 .q p:before{content:'“'}.q p:after{content:'”'}
+.q .uq{font:normal 1.05rem/2.1 'Noto Nastaliq Urdu',serif;color:#f4ecd9}
+.q .uq:before{content:'”'}.q .uq:after{content:'“'}
+.q details{margin-top:6px}
+.q summary{cursor:pointer;font-size:.72rem;color:var(--gold);line-height:2}
+.q details p{margin-top:4px;font-size:.95rem!important;color:var(--mut)!important}
 .q footer{margin-top:6px;font-size:.72rem;color:var(--mut);line-height:1.4}
 .q a{color:var(--gold)}
 .src{margin:12px 0 0;font-size:.68rem;color:var(--mut);line-height:1.4}
@@ -150,7 +155,7 @@ vertexShader:'varying vec2 u;void main(){u=uv;gl_Position=projectionMatrix*model
 fragmentShader:'varying vec2 u;void main(){float d=length(u-.5)*2.;vec3 c=mix(vec3(.5,.35,.1),vec3(.1,.15,.5),smoothstep(0.,.6,d));gl_FragColor=vec4(c,exp(-d*3.5)*.4*(1.-smoothstep(.8,1.,d)));}'})));
 var cap=document.getElementById('cap'),cntEl=document.getElementById('cnt'),labs=[];
 S.forEach(function(s,i){var d=document.createElement('div');d.className='l'+(i?(i<14?'':' p'):' m');d.innerHTML=i?s[3]:s[3]+'<i lang="ar" dir="rtl">'+s[2]+'</i>';document.body.appendChild(d);labs.push(d);});
-var vo=0,rc=document.getElementById('rc'),bl=document.getElementById('bl'),bl2=document.getElementById('bl2'),bd=document.getElementById('bd'),sel=-1,beamT=0;
+var UR=window.AZ_LANG==='ur',vo=0,rc=document.getElementById('rc'),bl=document.getElementById('bl'),bl2=document.getElementById('bl2'),bd=document.getElementById('bd'),sel=-1,beamT=0;
 function esc(x){return String(x).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
 var BK={1:['Kamaluddin-Vol-1.pdf','Kamal al-Din, vol. 1'],2:['Kamaluddin-Vol-2.pdf','Kamal al-Din, vol. 2'],mk1:['Mikyal-al-Makarim-Vol-1.pdf','Mikyal al-Makarim, vol. 1'],gh:['Al-Ghayba.pdf','Al-Ghayba (Shaykh al-Tusi)']};
 function cite(q){var b=BK[q.v];return '<a href="../assets/books/'+b[0]+'#page='+q.p+'" target="_blank" rel="noopener">'+b[1]+', '+(q.bp?'p. '+q.bp:'PDF p. '+q.p)+' ↗</a>';}
@@ -163,7 +168,7 @@ S.forEach(function(t,j){if(!j||!RD[t[3]])return;var b='<button class="tag" data-
 G.innerHTML='<div class="grp">The Fourteen</div>'+h+'<div class="grp">The prophets (a.s.)</div>'+h2;}
 else{var r=RD[s[3]];T.innerHTML='and its reflection in <b>Imam al-Mahdi (a.t.f.s.)</b>';Sm.hidden=false;document.getElementById('rcN').hidden=false;Sm.textContent=r.sum;
 G.innerHTML=r.tags.map(function(t){return '<span class="tag">'+esc(t)+'</span>';}).join('');
-Q.innerHTML=r.q.map(function(q,k){return '<blockquote class="q" style="transition-delay:'+(.35+k*.12)+'s"><p lang="en" dir="ltr" data-no-ur>'+esc(q.t)+'</p><footer><span>'+esc(q.by)+'</span> · '+cite(q)+'</footer></blockquote>';}).join('');}
+Q.innerHTML=r.q.map(function(q,k){return '<blockquote class="q" style="transition-delay:'+(.35+k*.12)+'s">'+(UR&&q.u?'<p class="uq" lang="ur" dir="rtl" data-ur>'+esc(q.u)+'</p><details data-no-ur><summary lang="ur" data-ur>انگریزی متن — کتاب کے الفاظ</summary><p lang="en" dir="ltr">'+esc(q.t)+'</p></details>':'<p lang="en" dir="ltr" data-no-ur>'+esc(q.t)+'</p>')+'<footer><span>'+esc(q.by)+'</span> · '+cite(q)+'</footer></blockquote>';}).join('');}
 rc.classList.remove('on');rc.hidden=false;rc.scrollTop=0;var b=rc.getBoundingClientRect();
 rc.style.setProperty('--ox',(X-b.left)+'px');rc.style.setProperty('--oy',(Y-b.top)+'px');void rc.offsetWidth;rc.classList.add('on');document.getElementById('rcx').focus({preventScroll:true});
 var g=document.createElement('div');g.className='ring';g.style.transform='';g.style.left=X+'px';g.style.top=Y+'px';document.body.appendChild(g);setTimeout(function(){g.remove();},1200);}
