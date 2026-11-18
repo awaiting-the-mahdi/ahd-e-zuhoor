@@ -242,6 +242,40 @@ window.AZ_MAREFAT = {
         { k: "Hadith", t: "\"…Allah places a veil between him and the people, so that they see him but do not recognise him.\"", r: "Imam al-Sadiq (as) · Kamal al-Din, ch. 33" }
       ],
       close: "Hidden does not mean far. It means unrecognised."
+    },
+    {
+      id: "everyone",
+      q: "Is the Mahdi only a Shia belief?",
+      ponder: "If the Prophet promised him, would only one group of his followers remember the promise?",
+      a: [
+        { k: "Prophet", t: "\"The Mahdi is from my descendants. His name is my name and his kunya is my kunya. He resembles me most of all people in appearance and character. He will have an occultation and a time of confusion, so that people stray from their religion. Then he will come like a shooting star and fill the earth with equity and justice, as it will have been filled with injustice and oppression.\"", r: "The Messenger of Allah (s), narrated by Jabir ibn 'Abdullah al-Ansari · Kamal al-Din, ch. 25, no. 1",
+          sunni: "\"The Mahdi is from my family, from the children of Fatima\" · Sunan Abi Dawud 4284 · and \"The Mahdi is from us, the People of the House\" · Sunan Ibn Majah 4085" },
+        { k: "History", t: "Belief in the Mahdi is shared across the Muslim world. Where Muslims differ is on who he is: the Shi'a know him as Muhammad ibn al-Hasan al-'Askari, born in 255 AH and alive in occultation.", r: "Kamal al-Din, ch. 42 (his birth)",
+          sunni: "Some Sunni scholars also identified him as the son of al-Hasan al-'Askari, such as al-Kanji al-Shafi'i in al-Bayan fi Akhbar Sahib al-Zaman, Sibt ibn al-Jawzi in Tadhkirat al-Khawass, and Ibn al-Sabbagh al-Maliki in al-Fusul al-Muhimma" }
+      ],
+      close: "Muslims have differed about who he is. They have not differed that he will come."
+    },
+    {
+      id: "claim",
+      q: "What about those who claim to be him, or to speak for him?",
+      ponder: "If the Imam himself closed the door of deputyship, who could open it again?",
+      a: [
+        { k: "Imam", t: "\"Some will come to my Shi'a claiming to have seen me. Beware: whoever claims to have seen me before the rising of the Sufyani and the Cry is a lying fabricator.\"", r: "Imam al-Mahdi (atfs), last letter to al-Samuri, 329 AH · al-Ghayba (al-Tusi), no. 365 · Kamal al-Din, ch. 45" },
+        { k: "Hadith", t: "\"Every banner raised before the rising of the Qa'im, its bearer is a taghut, worshipped besides Allah, Mighty and Majestic.\"", r: "Imam al-Sadiq (as) · al-Kafi 8, no. 451" },
+        { k: "History", t: "Even during the Minor Occultation, men falsely claimed to be the Imam's door: al-Shari'i, al-Numayri, Ahmad ibn Hilal, al-Hallaj and al-Shalmaghani among them. Letters from the Imam named and cursed them, and Shaykh al-Tusi gave them a whole chapter.", r: "al-Ghayba (al-Tusi), ch. 47 · no. 259" }
+      ],
+      close: "He closed the door with his own letter. Anyone who says he has reopened it must answer to that letter."
+    },
+    {
+      id: "when",
+      q: "When will he come?",
+      ponder: "If you knew the day, would you live differently? And if so, why wait to begin?",
+      a: [
+        { k: "Hadith", t: "\"Those who set a time have lied. We, the People of the House, do not set a time.\"", r: "Imam al-Sadiq (as) to Abu Basir · al-Kafi 1, Kitab al-Hujja, ch. 82, no. 3" },
+        { k: "Hadith", t: "\"O Mihzam, those who set a time have lied, those who hurry perish, and those who submit are saved.\"", r: "Imam al-Sadiq (as) · al-Kafi 1, Kitab al-Hujja, ch. 82, no. 2" },
+        { k: "Imam", t: "\"As for the appearance of the relief, it is with Allah, Mighty and Majestic; those who fix its time have lied … and pray much for the hastening of the relief, for in that is your own relief.\"", r: "Imam al-Mahdi (atfs), letter to Ishaq ibn Ya'qub · al-Ghayba (al-Tusi), no. 247" }
+      ],
+      close: "No one knows the day of his coming. Everyone can choose the state in which they wait."
     }
   ],
 
