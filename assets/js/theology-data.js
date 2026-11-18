@@ -20,7 +20,7 @@ window.AZ_THEOLOGY = {
       id: "tawhid", name: "Tawhid", ar: "التوحيد", en: "The Oneness of God", color: "#ffd36b",
       question: "Who made everything, and how do we know He is One?",
       summary: "Allah is One. He has no partner, no equal and nothing is like Him. He alone creates and sustains everything.",
-      verse: { ar: "قُلْ هُوَ اللَّهُ أَحَدٌ", en: "Say: He is Allah, the One.", ref: "Surah al-Ikhlas 112:1" },
+      verse: { ar: "قُلْ هُوَ اللّٰهُ أَحَدٌ", en: "Say: He is Allah, the One.", ref: "Surah al-Ikhlas 112:1" },
       video: [
         { k: "a", t: "Zahra, who made all these stars?", board: "Who made everything?" },
         { k: "z", t: "Allah made them, and everything else too." },
@@ -61,7 +61,7 @@ window.AZ_THEOLOGY = {
       id: "adl", name: "'Adl", ar: "العدل", en: "Divine Justice", color: "#4fd1c5",
       question: "Is God fair? Why do hard things happen?",
       summary: "Allah is perfectly just. He never wrongs anyone and never does anything without wisdom.",
-      verse: { ar: "إِنَّ اللَّهَ لَا يَظْلِمُ النَّاسَ شَيْئًا", en: "Indeed, Allah does not wrong people at all.", ref: "Surah Yunus 10:44" },
+      verse: { ar: "إِنَّ اللّٰهَ لَا يَظْلِمُ النَّاسَ شَيْئًا", en: "Indeed, Allah does not wrong people at all.", ref: "Surah Yunus 10:44" },
       video: [
         { k: "a", t: "Zahra, is Allah always fair?", board: "Is Allah always fair?" },
         { k: "z", t: "Always. People are unfair because they need something, or because they don't know better." },
@@ -102,7 +102,7 @@ window.AZ_THEOLOGY = {
       id: "nubuwwah", name: "Nubuwwah", ar: "النبوة", en: "Prophethood", color: "#6fb6ff",
       question: "Why did God send prophets?",
       summary: "Allah sent prophets to guide humanity, from Prophet Adam (a) to the last of them, Prophet Muhammad (s).",
-      verse: { ar: "وَلَٰكِن رَّسُولَ اللَّهِ وَخَاتَمَ النَّبِيِّينَ", en: "...but he is the Messenger of Allah and the Seal of the Prophets.", ref: "Surah al-Ahzab 33:40" },
+      verse: { ar: "وَلَٰكِن رَّسُولَ اللّٰهِ وَخَاتَمَ النَّبِيِّينَ", en: "...but he is the Messenger of Allah and the Seal of the Prophets.", ref: "Surah al-Ahzab 33:40" },
       video: [
         { k: "a", t: "Zahra, why did Allah send prophets?", board: "Why prophets?" },
         { k: "z", t: "Our minds are a gift, but some things only Allah can tell us, like how to worship Him and what happens after this life." },
@@ -144,7 +144,7 @@ window.AZ_THEOLOGY = {
       id: "imamah", name: "Imamah", ar: "الإمامة", en: "Divine Leadership", color: "#4fcf8f",
       question: "Who guides us after the Prophet (s)?",
       summary: "After the Holy Prophet (s), Allah appointed twelve Imams from his family to guide the Ummah, from Imam Ali (a) to Imam al-Mahdi (atfs).",
-      verse: { ar: "إِنِّي تَارِكٌ فِيكُمُ الثَّقَلَيْنِ كِتَابَ اللَّهِ وَعِتْرَتِي أَهْلَ بَيْتِي", en: "I am leaving among you the two weighty things: the Book of Allah and my family, my Ahl al-Bayt.", ref: "Hadith al-Thaqalayn" },
+      verse: { ar: "إِنِّي تَارِكٌ فِيكُمُ الثَّقَلَيْنِ كِتَابَ اللّٰهِ وَعِتْرَتِي أَهْلَ بَيْتِي", en: "I am leaving among you the two weighty things: the Book of Allah and my family, my Ahl al-Bayt.", ref: "Hadith al-Thaqalayn" },
       video: [
         { k: "a", t: "Zahra, after the Prophet passed away, who guided the people?", board: "Who guides after the Prophet (s)?" },
         { k: "z", t: "The Imams. Allah chose them, and the Prophet announced them." },

@@ -27,9 +27,9 @@ window.AZ_MAREFAT = {
   /* The supplication of recognition taught by Imam al-Sadiq (as) to Zurarah */
   marefaDua: {
     lines: [
-      { ar: "اللَّهُمَّ عَرِّفْنِي نَفْسَكَ", en: "O Allah, make Yourself known to me", tail: "for if You do not, I will not recognise Your Prophet." },
-      { ar: "اللَّهُمَّ عَرِّفْنِي رَسُولَكَ", en: "O Allah, make Your Messenger known to me", tail: "for if You do not, I will not recognise Your Proof." },
-      { ar: "اللَّهُمَّ عَرِّفْنِي حُجَّتَكَ", en: "O Allah, make Your Proof known to me", tail: "for if You do not, I will stray from my religion." }
+      { ar: "اللّٰهُمَّ عَرِّفْنِي نَفْسَكَ", en: "O Allah, make Yourself known to me", tail: "for if You do not, I will not recognise Your Prophet." },
+      { ar: "اللّٰهُمَّ عَرِّفْنِي رَسُولَكَ", en: "O Allah, make Your Messenger known to me", tail: "for if You do not, I will not recognise Your Proof." },
+      { ar: "اللّٰهُمَّ عَرِّفْنِي حُجَّتَكَ", en: "O Allah, make Your Proof known to me", tail: "for if You do not, I will stray from my religion." }
     ],
     ref: "Imam Ja'far al-Sadiq (as) to Zurarah · Kamal al-Din, ch. 33 · al-Kafi 1:337"
   },
@@ -293,10 +293,10 @@ window.AZ_MAREFAT = {
   /* ---------------- VI. THE COVENANT ---------------- */
   ahd: {
     lines: [
-      { ar: "اللَّهُمَّ إِنِّي أُجَدِّدُ لَهُ فِي صَبِيحَةِ يَوْمِي هَٰذَا وَمَا عِشْتُ مِنْ أَيَّامِي", en: "O Allah, I renew for him, on the morning of this day and for as long as I live," },
+      { ar: "اللّٰهُمَّ إِنِّي أُجَدِّدُ لَهُ فِي صَبِيحَةِ يَوْمِي هَٰذَا وَمَا عِشْتُ مِنْ أَيَّامِي", en: "O Allah, I renew for him, on the morning of this day and for as long as I live," },
       { ar: "عَهْدًا وَعَقْدًا وَبَيْعَةً لَهُ فِي عُنُقِي", en: "a covenant, a bond and a pledge of allegiance to him upon my neck," },
       { ar: "لَا أَحُولُ عَنْهَا وَلَا أَزُولُ أَبَدًا", en: "from which I will never turn and never waver." },
-      { ar: "اللَّهُمَّ أَرِنِي الطَّلْعَةَ الرَّشِيدَةَ وَالْغُرَّةَ الْحَمِيدَةَ", en: "O Allah, show me the rightly-guided countenance and the praiseworthy brow." }
+      { ar: "اللّٰهُمَّ أَرِنِي الطَّلْعَةَ الرَّشِيدَةَ وَالْغُرَّةَ الْحَمِيدَةَ", en: "O Allah, show me the rightly-guided countenance and the praiseworthy brow." }
     ],
     note: "Imam al-Sadiq (as): whoever recites this covenant for forty mornings will be among the helpers of our Qa'im.",
     ref: "Du'a al-'Ahd · Misbah al-Za'ir (Ibn Tawus) · Bihar al-Anwar 102:111"

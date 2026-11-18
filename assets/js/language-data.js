@@ -114,7 +114,7 @@ window.AZ_COURSES = [
           },
           {
             "k": "a",
-            "t": "الحَمْدُ لِلّه عَلى هذا الجَمال.",
+            "t": "الحَمْدُ لِلّٰه عَلى هذا الجَمال.",
             "tr": "al-ḥamdu lillāhi ʿalā hādhā l-jamāl.",
             "en": "Praise be to God for this beauty."
           }
@@ -157,7 +157,7 @@ window.AZ_COURSES = [
           },
           {
             "k": "a",
-            "t": "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ",
+            "t": "بِسْمِ اللّٰهِ الرَّحْمَٰنِ الرَّحِيمِ",
             "tr": "bismi llāhi r-raḥmāni r-raḥīm",
             "en": "In the name of Allah, the Most Gracious, the Most Merciful."
           },
@@ -173,7 +173,7 @@ window.AZ_COURSES = [
           },
           {
             "k": "z",
-            "t": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ",
+            "t": "الْحَمْدُ لِلّٰهِ رَبِّ الْعَالَمِينَ",
             "tr": "al-ḥamdu lillāhi rabbi l-ʿālamīn",
             "en": "All praise is for Allah, Lord of the worlds."
           },
