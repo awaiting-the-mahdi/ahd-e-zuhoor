@@ -25,7 +25,7 @@ window.AZ_ARCHIVE = {
     "en": "al-Ghayba (al-Tusi), no. 245",
     "ur": "الغیبہ (شیخ طوسی)، حدیث 245"
    },
-   "url": "https://thaqalayn.net/hadith/27/1/37/1",
+   "url": "../assets/books/Al-Ghayba.pdf#page=198",
    "tr": {
     "en": [
      "In the name of Allah, the Most Merciful, the Most Kind. May Allah keep us and you safe from misguidance and trials, grant us and you the spirit of certainty, and protect us and you from an evil end.",
@@ -79,7 +79,7 @@ window.AZ_ARCHIVE = {
     "en": "al-Ghayba (al-Tusi), no. 247, from al-Kulayni · Kamal al-Din, ch. 45",
     "ur": "الغیبہ (شیخ طوسی)، حدیث 247، کلینی سے · کمال الدین، باب 45"
    },
-   "url": "https://thaqalayn.net/hadith/27/1/37/3",
+   "url": "../assets/books/Al-Ghayba.pdf#page=202",
    "tr": {
     "en": [
      "As for what you asked, may Allah guide you and make you firm, about those of our family and our cousins who deny me: know that there is no kinship between Allah, Mighty and Majestic, and anyone. Whoever denies me is not of me, and his way is the way of the son of Nuh. As for the way of my uncle Ja'far and his sons, it is the way of the brothers of Yusuf.",
@@ -147,7 +147,7 @@ window.AZ_ARCHIVE = {
     "en": "al-Ghayba (al-Tusi), no. 323 · Kamal al-Din, ch. 45",
     "ur": "الغیبہ (شیخ طوسی)، حدیث 323 · کمال الدین، باب 45"
    },
-   "url": "https://thaqalayn.net/hadith/27/1/43/17",
+   "url": "../assets/books/Al-Ghayba.pdf#page=238",
    "tr": {
     "en": [
      "We belong to Allah and to Him we return, in submission to His command and contentment with His decree. Your father lived happily and died praiseworthy. May Allah have mercy on him and join him to his guardians and masters, peace be upon them. He never stopped striving in their cause, working for what would bring him near to Allah, Mighty and Majestic, and to them. May Allah brighten his face and forgive his slips.",
@@ -194,7 +194,7 @@ window.AZ_ARCHIVE = {
     "en": "al-Ghayba (al-Tusi), no. 325",
     "ur": "الغیبہ (شیخ طوسی)، حدیث 325"
    },
-   "url": "https://thaqalayn.net/hadith/27/1/43/19",
+   "url": "../assets/books/Al-Ghayba.pdf#page=239",
    "tr": {
     "en": [
      "And the son, may Allah protect him, has always been our trusted one in the lifetime of his father, may Allah be pleased with him, please him and brighten his face. He holds with us the place his father held and fills his place; by our command the son commands, and by it he acts. May Allah befriend him. So follow his word, and know that this is how we deal with him."
@@ -234,7 +234,7 @@ window.AZ_ARCHIVE = {
     "en": "al-Ghayba (al-Tusi), no. 344",
     "ur": "الغیبہ (شیخ طوسی)، حدیث 344"
    },
-   "url": "https://thaqalayn.net/hadith/27/1/43/39",
+   "url": "../assets/books/Al-Ghayba.pdf#page=244",
    "tr": {
     "en": [
      "We know him; may Allah make known to him all good and His pleasure, and make him happy with success. We have read his letter, and we trust him in what he is upon; with us he holds the place and rank that please him. May Allah increase His kindness to him; He is the Guardian, the All-Powerful. Praise belongs to Allah, who has no partner, and may Allah bless His Messenger Muhammad and his family and grant them abundant peace."
@@ -274,7 +274,7 @@ window.AZ_ARCHIVE = {
     "en": "al-Ghayba (al-Tusi), no. 365 · Kamal al-Din, ch. 45",
     "ur": "الغیبہ (شیخ طوسی)، حدیث 365 · کمال الدین، باب 45"
    },
-   "url": "https://thaqalayn.net/hadith/27/1/46/6",
+   "url": "../assets/books/Al-Ghayba.pdf#page=255",
    "tr": {
     "en": [
      "In the name of Allah, the Most Merciful, the Most Kind. O 'Ali ibn Muhammad al-Samuri, may Allah make great the reward of your brothers in you, for you will die within six days. So gather your affairs, and do not appoint anyone to take your place after your death, for the complete occultation has come. There will be no appearance except after the permission of Allah, exalted is His remembrance; and that will be after a long time, when hearts have hardened and the earth is filled with tyranny.",
@@ -415,7 +415,7 @@ window.AZ_ARCHIVE = {
      "ur": "امام علی نقی (ع)، احمد بن اسحاق سے"
     },
     "src": "al-Ghayba (al-Tusi), no. 315",
-    "url": "https://thaqalayn.net/hadith/27/1/43/4",
+    "url": "../assets/books/Al-Ghayba.pdf#page=235",
     "ar": "هذا أبو عمرو الثقة الامين ما قاله لكم فعني يقوله، وما أداه إليكم فعني يؤديه."
    },
    "life": [
@@ -423,32 +423,32 @@ window.AZ_ARCHIVE = {
      "en": "He was appointed by Imam al-Hadi and then Imam al-'Askari (as). When Ahmad ibn Ishaq asked al-'Askari whose word to follow, he repeated his father's words: “the trusted one of the past, and my trusted one in life and in death”.",
      "ur": "انہیں امام علی نقی اور پھر امام حسن عسکری (ع) نے مقرر کیا۔ جب احمد بن اسحاق نے امام عسکری سے پوچھا کہ کس کی بات مانیں، تو انہوں نے اپنے والد کے الفاظ دہرائے: ”گزرے ہوئے امام کے معتمد، اور زندگی و موت میں میرے معتمد“۔",
      "src": "no. 315",
-     "url": "https://thaqalayn.net/hadith/27/1/43/4"
+     "url": "../assets/books/Al-Ghayba.pdf#page=235"
     },
     {
      "en": "He traded in cooking fat (samn), so he was called al-Samman. The Shi'a's dues were hidden in his butter skins and carried to Imam al-'Askari, out of caution under the Abbasids.",
      "ur": "وہ گھی (سمن) کی تجارت کرتے تھے، اس لیے سمّان کہلائے۔ عباسیوں کے خوف سے شیعوں کے واجبات ان کے گھی کے مشکیزوں میں چھپا کر امام عسکری (ع) تک پہنچائے جاتے تھے۔",
      "src": "no. 314",
-     "url": "https://thaqalayn.net/hadith/27/1/43/2"
+     "url": "../assets/books/Al-Ghayba.pdf#page=235"
     },
     {
      "en": "Forty believers gathered to ask Imam al-'Askari who the Proof after him would be. A boy “like a piece of the moon” came out, and the Imam said: “This is your Imam after me … you will not see him after this day … so accept from 'Uthman what he says.”",
      "ur": "چالیس مومن امام عسکری (ع) سے ان کے بعد کی حجت کے بارے میں پوچھنے جمع ہوئے۔ ”چاند کے ٹکڑے جیسا“ ایک لڑکا نمودار ہوا، اور امام نے فرمایا: ”یہ میرے بعد تمہارے امام ہیں … آج کے بعد تم انہیں نہیں دیکھو گے … پس عثمان جو کہیں اسے قبول کرو۔“",
      "src": "no. 319",
-     "url": "https://thaqalayn.net/hadith/27/1/43/10"
+     "url": "../assets/books/Al-Ghayba.pdf#page=236"
     },
     {
      "en": "When Imam al-'Askari passed away, 'Uthman washed, shrouded and buried him. After that, the Imam of the Time's letters came out through him “in the same handwriting” the Shi'a had known in al-'Askari's lifetime.",
      "ur": "جب امام عسکری (ع) کی رحلت ہوئی تو عثمان نے غسل، کفن اور تدفین کی۔ اس کے بعد امامِ زمانہ کی توقیعات ان کے ذریعے ”اسی تحریر میں“ آنے لگیں جسے شیعہ امام عسکری کی زندگی میں پہچانتے تھے۔",
      "src": "no. 318",
-     "url": "https://thaqalayn.net/hadith/27/1/43/8"
+     "url": "../assets/books/Al-Ghayba.pdf#page=236"
     }
    ],
    "rest": {
     "en": "West Baghdad, in the mosque of Darb Jabala on Maydan Street. Shaykh al-Tusi visited his tomb every month from 408 AH.",
     "ur": "مغربی بغداد، شارع المیدان پر درب جبلہ کی مسجد میں۔ شیخ طوسی 408 ہجری سے ہر مہینے ان کی قبر کی زیارت کرتے تھے۔",
     "src": "no. 320",
-    "url": "https://thaqalayn.net/hadith/27/1/43/11"
+    "url": "../assets/books/Al-Ghayba.pdf#page=237"
    }
   },
   {
@@ -479,7 +479,7 @@ window.AZ_ARCHIVE = {
      "ur": "محمد بن عثمان عمری"
     },
     "src": "al-Ghayba (al-Tusi), no. 329",
-    "url": "https://thaqalayn.net/hadith/27/1/43/24",
+    "url": "../assets/books/Al-Ghayba.pdf#page=240",
     "ar": "والله إن صاحب هذا الامر ليحضر الموسم كل سنة يرى الناس ويعرفهم ويرونه ولا يعرفونه."
    },
    "life": [
@@ -487,32 +487,32 @@ window.AZ_ARCHIVE = {
      "en": "On his father's death the Imam wrote to him in condolence and confirmed him in his father's place. To Ishaq ibn Ya'qub the Imam wrote: “he is my trusted one, and his writing is my writing”.",
      "ur": "والد کی وفات پر امام نے انہیں تعزیت کا خط لکھا اور والد کی جگہ ان کی تصدیق کی۔ اسحاق بن یعقوب کو امام نے لکھا: ”وہ میرے معتمد ہیں، اور ان کی تحریر میری تحریر ہے“۔",
      "src": "nos. 323, 325, 247",
-     "url": "https://thaqalayn.net/hadith/27/1/43/17"
+     "url": "../assets/books/Al-Ghayba.pdf#page=238"
     },
     {
      "en": "He wrote books of fiqh from what he heard from Imam al-'Askari, from the Imam of the Time and from his father. They passed to the third deputy at his appointment.",
      "ur": "انہوں نے فقہ کی کتابیں لکھیں جو انہوں نے امام عسکری، امامِ زمانہ اور اپنے والد سے سنا تھا۔ یہ کتابیں تقرری کے وقت تیسرے نائب تک پہنچیں۔",
      "src": "no. 328",
-     "url": "https://thaqalayn.net/hadith/27/1/43/23"
+     "url": "../assets/books/Al-Ghayba.pdf#page=240"
     },
     {
      "en": "He dug his own grave and lined it with teak. Asked why, he said: “I have been ordered to gather my affairs.” He died two months later.",
      "ur": "انہوں نے اپنی قبر خود کھودی اور اسے ساگوان کی لکڑی سے برابر کیا۔ پوچھا گیا تو کہا: ”مجھے اپنے معاملات سمیٹنے کا حکم ہوا ہے۔“ دو مہینے بعد ان کا انتقال ہو گیا۔",
      "src": "no. 333",
-     "url": "https://thaqalayn.net/hadith/27/1/43/28"
+     "url": "../assets/books/Al-Ghayba.pdf#page=241"
     },
     {
      "en": "On his deathbed he gathered the leading Shi'a and said: “If death comes to me, the affair is with Abu al-Qasim al-Husayn ibn Rawh al-Nawbakhti. I have been ordered to put him in my place.”",
      "ur": "بسترِ مرگ پر انہوں نے شیعوں کے بزرگوں کو جمع کیا اور کہا: ”اگر مجھے موت آ جائے تو امر ابو القاسم حسین بن روح نوبختی کے سپرد ہے۔ مجھے حکم ہوا ہے کہ انہیں اپنی جگہ مقرر کروں۔“",
      "src": "no. 341",
-     "url": "https://thaqalayn.net/hadith/27/1/43/36"
+     "url": "../assets/books/Al-Ghayba.pdf#page=243"
     }
    ],
    "rest": {
     "en": "Beside his mother, on the street of Bab al-Kufa in Baghdad, where his houses stood. He died at the end of Jumada al-Ula 305 AH (some say 304). He had served in this affair for about fifty years.",
     "ur": "بغداد میں باب الکوفہ کی گلی میں اپنی والدہ کے پاس، جہاں ان کے گھر تھے۔ ان کی وفات جمادی الاولیٰ 305 ہجری کے آخر میں ہوئی (بعض نے 304 کہا ہے)۔ انہوں نے تقریباً پچاس سال اس امر کی خدمت کی۔",
     "src": "no. 334",
-    "url": "https://thaqalayn.net/hadith/27/1/43/29"
+    "url": "../assets/books/Al-Ghayba.pdf#page=241"
    }
   },
   {
@@ -543,7 +543,7 @@ window.AZ_ARCHIVE = {
      "ur": "محمد بن عثمان، بسترِ مرگ پر"
     },
     "src": "al-Ghayba (al-Tusi), no. 341",
-    "url": "https://thaqalayn.net/hadith/27/1/43/36",
+    "url": "../assets/books/Al-Ghayba.pdf#page=243",
     "ar": "إن حدث علي حدث الموت فالأمر إلى أبي القاسم الحسين بن روح النوبختي، فقد أمرت أن أجعله في موضعي بعدي فارجعوا إليه وعولوا في أموركم عليه."
    },
    "life": [
@@ -551,26 +551,26 @@ window.AZ_ARCHIVE = {
      "en": "For years he was the second deputy's agent: he looked after his estates and carried his confidential messages to the leading Shi'a. At the deathbed, Ja'far ibn Ahmad rose from beside Muhammad ibn 'Uthman's head and seated Ibn Rawh in his place.",
      "ur": "برسوں تک وہ دوسرے نائب کے وکیل رہے: ان کی املاک کی دیکھ بھال کرتے اور ان کے خفیہ پیغامات شیعہ بزرگوں تک پہنچاتے۔ بسترِ مرگ پر جعفر بن احمد محمد بن عثمان کے سرہانے سے اٹھے اور ابن روح کو اپنی جگہ بٹھایا۔",
      "src": "nos. 339, 343",
-     "url": "https://thaqalayn.net/hadith/27/1/43/34"
+     "url": "../assets/books/Al-Ghayba.pdf#page=243"
     },
     {
      "en": "The first letter about him arrived on 6 Shawwal 305 AH: “We know him; may Allah make known to him all good.”",
      "ur": "ان کے بارے میں پہلی توقیع 6 شوال 305 ہجری کو پہنچی: ”ہم اسے جانتے ہیں؛ اللہ اسے ہر بھلائی سے آشنا کرے۔“",
      "src": "no. 344",
-     "url": "https://thaqalayn.net/hadith/27/1/43/39"
+     "url": "../assets/books/Al-Ghayba.pdf#page=244"
     },
     {
      "en": "Friend and opponent alike counted him among the most intelligent of people, and he practised taqiyya. He was held in the Abbasid caliph's prison; from there he sent out the Imam's letter cursing the deviant al-Shalmaghani, and he was released soon after.",
      "ur": "دوست اور مخالف دونوں انہیں سب سے زیادہ عقلمند لوگوں میں شمار کرتے تھے، اور وہ تقیہ سے کام لیتے تھے۔ وہ عباسی خلیفہ کے قید خانے میں رہے؛ وہیں سے انہوں نے گمراہ شلمغانی پر لعنت والی امام کی توقیع بھیجی، اور جلد ہی رہا ہو گئے۔",
      "src": "no. 259 · ch. 45",
-     "url": "https://thaqalayn.net/hadith/27/1/37/15"
+     "url": "../assets/books/Al-Ghayba.pdf#page=210"
     }
    ],
    "rest": {
     "en": "In al-Nawbakhtiyya in Baghdad, on the lane of the house of 'Ali ibn Ahmad al-Nawbakhti. He died in Sha'ban 326 AH.",
     "ur": "بغداد کے محلہ نوبختیہ میں، علی بن احمد نوبختی کے گھر والی گلی میں۔ ان کی وفات شعبان 326 ہجری میں ہوئی۔",
     "src": "no. 350",
-    "url": "https://thaqalayn.net/hadith/27/1/45/5"
+    "url": "../assets/books/Al-Ghayba.pdf#page=251"
    }
   },
   {
@@ -601,7 +601,7 @@ window.AZ_ARCHIVE = {
      "ur": "سمری کے آخری الفاظ، جب پوچھا گیا کہ ان کا جانشین کون ہے"
     },
     "src": "al-Ghayba (al-Tusi), no. 365",
-    "url": "https://thaqalayn.net/hadith/27/1/46/6",
+    "url": "../assets/books/Al-Ghayba.pdf#page=255",
     "ar": "لله أمر هو بالغه"
    },
    "life": [
@@ -609,26 +609,26 @@ window.AZ_ARCHIVE = {
      "en": "Abu al-Qasim ibn Rawh appointed him, and he carried on the same duty.",
      "ur": "ابو القاسم بن روح نے انہیں مقرر کیا، اور وہ اسی ذمہ داری کو انجام دیتے رہے۔",
      "src": "no. 363",
-     "url": "https://thaqalayn.net/hadith/27/1/46/4"
+     "url": "../assets/books/Al-Ghayba.pdf#page=254"
     },
     {
      "en": "Sitting with scholars in Baghdad, he suddenly said: “May Allah have mercy on 'Ali ibn al-Husayn ibn Babawayh al-Qummi.” They wrote down the date. News came weeks later that Ibn Babawayh, father of Shaykh al-Saduq, had died in Qum that very day.",
      "ur": "بغداد میں علماء کے ساتھ بیٹھے ہوئے انہوں نے اچانک کہا: ”اللہ علی بن حسین بن بابویہ قمی پر رحم کرے۔“ انہوں نے تاریخ لکھ لی۔ ہفتوں بعد خبر آئی کہ شیخ صدوق کے والد ابن بابویہ اسی دن قم میں وفات پا گئے تھے۔",
      "src": "nos. 364, 366",
-     "url": "https://thaqalayn.net/hadith/27/1/46/5"
+     "url": "../assets/books/Al-Ghayba.pdf#page=255"
     },
     {
      "en": "Days before his death he brought out the last letter: “you will die within six days … do not appoint anyone … the complete occultation has come.”",
      "ur": "وفات سے چند دن پہلے انہوں نے آخری توقیع نکالی: ”تم چھ دن میں وفات پا جاؤ گے … کسی کو وصیت نہ کرنا … غیبتِ تامہ واقع ہو چکی ہے۔“",
      "src": "no. 365",
-     "url": "https://thaqalayn.net/hadith/27/1/46/6"
+     "url": "../assets/books/Al-Ghayba.pdf#page=255"
     }
    ],
    "rest": {
     "en": "On al-Khalanji Street, in the quarter of Bab al-Muhawwal, near the bank of the Abu 'Attab canal in Baghdad. He died in the middle of Sha'ban 329 AH, and the Major Occultation began.",
     "ur": "بغداد میں باب المحول کے محلے میں شارع خلنجی پر، نہر ابو عتاب کے کنارے کے قریب۔ ان کی وفات وسطِ شعبان 329 ہجری میں ہوئی، اور غیبتِ کبریٰ شروع ہو گئی۔",
     "src": "nos. 364, 367",
-    "url": "https://thaqalayn.net/hadith/27/1/46/8"
+    "url": "../assets/books/Al-Ghayba.pdf#page=256"
    }
   }
  ]
