@@ -49,6 +49,12 @@ clip-path:circle(0px at var(--ox,50%) var(--oy,100%));transition:clip-path .75s 
 .sum{margin:0 0 12px;font-size:.88rem;line-height:1.5;color:var(--fg)}
 .sum:before{content:'In short · ';color:var(--gold);font-weight:600}
 .qs{display:grid;gap:10px}
+.qn{margin:0 0 8px;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold)}
+html.az-ur .sum:before{content:'خلاصہ · '}
+html.az-ur .rc,html.az-ur .rc .tags{direction:rtl}
+html.az-ur .q{border-left:0;border-right:2px solid var(--gold);border-radius:12px 0 0 12px}
+html.az-ur .rcx{float:left;margin:-6px 8px 0 -6px}
+html.az-ur .qn,html.az-ur .grp{letter-spacing:0}
 .q{margin:0;padding:10px 12px 10px 14px;border-left:2px solid var(--gold);background:rgba(255,255,255,.035);border-radius:0 12px 12px 0;opacity:0;transform:translateY(8px);transition:opacity .5s,transform .5s}
 .rc.on .q{opacity:1;transform:none}
 .q p{margin:0;font:500 1.06rem/1.45 'Cormorant Garamond',Georgia,serif;color:#f4ecd9}
@@ -57,6 +63,8 @@ clip-path:circle(0px at var(--ox,50%) var(--oy,100%));transition:clip-path .75s 
 .q a{color:var(--gold)}
 .src{margin:12px 0 0;font-size:.68rem;color:var(--mut);line-height:1.4}
 @media (prefers-reduced-motion:reduce){.rc{transition:none}.q{transition:none}.ring,.rcs{animation:none}}
+html .az-lang{top:calc(20px + env(safe-area-inset-top,0px));bottom:auto;left:16px}
+@media(max-width:600px){html .az-lang{top:calc(15px + env(safe-area-inset-top,0px));left:14px}}
 #err{display:none;position:fixed;inset:0;align-items:center;justify-content:center;text-align:center;padding:24px}
 </style>
 <script src="../assets/js/i18n.js"></script>
@@ -67,7 +75,7 @@ clip-path:circle(0px at var(--ox,50%) var(--oy,100%));transition:clip-path .75s 
 <div class="bot"><div id="cap"></div><div class="btns"><button id="b1">Zoom to the Fourteen</button><button id="b2">Whole sky</button><button id="b3" aria-haspopup="dialog">✦ Resemblances</button></div>
 <p class="note">The Fourteen and the prophets marked ✦ each have a resemblance in Imam al-Mahdi (a.t.f.s.) recorded in the books. 124,000 prophets (a.s.), among them the Holy Prophet (s.a.w.a.), together with Lady Fatima (s.a.) and the twelve Imams (a.s.), make 124,013, following the number narrated in tradition.</p></div>
 <svg id="beam" aria-hidden="true"><defs><linearGradient id="bg" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ffe9b8"/><stop offset="1" stop-color="#e0bb6c" stop-opacity=".25"/></linearGradient><filter id="gl"><feGaussianBlur stdDeviation="2.5"/></filter></defs><line id="bl2" stroke="#e0bb6c" stroke-width="6" filter="url(#gl)" opacity="0"/><line id="bl" stroke="url(#bg)" stroke-width="1.6" stroke-linecap="round" opacity="0"/><circle id="bd" r="3.2" fill="#fff6dc" opacity="0"/></svg>
-<div id="rc" class="rc" role="dialog" aria-labelledby="rcT" hidden><button class="rcx" id="rcx" aria-label="Close">×</button><div class="rch"><span class="rcs" aria-hidden="true">✦</span><div><h2 id="rcT"></h2><span class="ar" lang="ar" dir="rtl" id="rcA"></span></div></div><p class="rcto" id="rcTo"></p><div class="tags" id="rcG"></div><p class="sum" id="rcS"></p><div class="qs" id="rcQ"></div><p class="src">Words quoted exactly from the English translations in the library: <i>Kamal al-Din</i> (Shaykh as-Saduq), <i>Mikyal al-Makarim</i> (Sayyid Muhammad Taqi Musavi Isfahani) and <i>Al-Ghayba</i> (Shaykh al-Tusi). Tap a page reference to open it.</p></div>
+<div id="rc" class="rc" role="dialog" aria-labelledby="rcT" hidden><button class="rcx" id="rcx" aria-label="Close">×</button><div class="rch"><span class="rcs" aria-hidden="true">✦</span><div><h2 id="rcT"></h2><span class="ar" lang="ar" dir="rtl" id="rcA"></span></div></div><p class="rcto" id="rcTo"></p><div class="tags" id="rcG"></div><p class="sum" id="rcS"></p><p class="qn" id="rcN">In the book’s own words</p><div class="qs" id="rcQ"></div><p class="src">Words quoted exactly from the English translations in the library: <i>Kamal al-Din</i> (Shaykh as-Saduq), <i>Mikyal al-Makarim</i> (Sayyid Muhammad Taqi Musavi Isfahani) and <i>Al-Ghayba</i> (Shaykh al-Tusi). Tap a page reference to open it.</p></div>
 <div id="err">Your browser could not start WebGL, which this page needs.</div>
 <script src="../assets/js/resemblance-data.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -149,13 +157,13 @@ function cite(q){var b=BK[q.v];return '<a href="../assets/books/'+b[0]+'#page='+
 function card(i){var s=S[i],X=sp[i][0],Y=sp[i][1],h='';
 document.getElementById('rcT').textContent=s[1];document.getElementById('rcA').textContent=s[2];
 var G=document.getElementById('rcG'),Q=document.getElementById('rcQ'),T=document.getElementById('rcTo'),Sm=document.getElementById('rcS');
-if(i==0){T.innerHTML='Whose qualities are found in him, according to the books. Tap a name.';Sm.hidden=true;Q.innerHTML='';
+if(i==0){T.innerHTML='Whose qualities are found in him, according to the books. Tap a name.';Sm.hidden=true;document.getElementById('rcN').hidden=true;Q.innerHTML='';
 var nm=function(t){return esc(t[1].replace(/^(Prophet|Imam|Lady) /,'').replace(/ \(.*$/,'').replace(/,.*$/,''));},h2='';
 S.forEach(function(t,j){if(!j||!RD[t[3]])return;var b='<button class="tag" data-j="'+j+'">'+nm(t)+'</button>';if(j<14)h+=b;else h2+=b;});
 G.innerHTML='<div class="grp">The Fourteen</div>'+h+'<div class="grp">The prophets (a.s.)</div>'+h2;}
-else{var r=RD[s[3]];T.innerHTML='and its reflection in <b>Imam al-Mahdi (a.t.f.s.)</b>';Sm.hidden=false;Sm.textContent=r.sum;
+else{var r=RD[s[3]];T.innerHTML='and its reflection in <b>Imam al-Mahdi (a.t.f.s.)</b>';Sm.hidden=false;document.getElementById('rcN').hidden=false;Sm.textContent=r.sum;
 G.innerHTML=r.tags.map(function(t){return '<span class="tag">'+esc(t)+'</span>';}).join('');
-Q.innerHTML=r.q.map(function(q,k){return '<blockquote class="q" style="transition-delay:'+(.35+k*.12)+'s"><p>'+esc(q.t)+'</p><footer>'+esc(q.by)+' · '+cite(q)+'</footer></blockquote>';}).join('');}
+Q.innerHTML=r.q.map(function(q,k){return '<blockquote class="q" style="transition-delay:'+(.35+k*.12)+'s"><p lang="en" dir="ltr" data-no-ur>'+esc(q.t)+'</p><footer><span>'+esc(q.by)+'</span> · '+cite(q)+'</footer></blockquote>';}).join('');}
 rc.classList.remove('on');rc.hidden=false;rc.scrollTop=0;var b=rc.getBoundingClientRect();
 rc.style.setProperty('--ox',(X-b.left)+'px');rc.style.setProperty('--oy',(Y-b.top)+'px');void rc.offsetWidth;rc.classList.add('on');document.getElementById('rcx').focus({preventScroll:true});
 var g=document.createElement('div');g.className='ring';g.style.transform='';g.style.left=X+'px';g.style.top=Y+'px';document.body.appendChild(g);setTimeout(function(){g.remove();},1200);}
