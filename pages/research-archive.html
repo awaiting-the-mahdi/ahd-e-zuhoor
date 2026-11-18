@@ -276,6 +276,43 @@ html.ur .pc h3{font:600 1.3rem/2 "Noto Nastaliq Urdu",serif}
 .pc .q{margin:1rem 0}
 .pc .lk{color:var(--gold);font-weight:500;text-decoration:none;border-bottom:1px solid var(--line)}
 @media (max-width:820px){.pl{grid-template-columns:1fr}}
+/* community */
+.cm{display:grid;gap:1.4rem;max-width:900px;margin:0 auto}
+.box{padding:1.8rem 1.5rem;border-radius:24px;border:1px solid var(--line);background:linear-gradient(180deg,var(--card2),var(--card))}
+.box h3{margin:0 0 .3rem;font:600 1.6rem/1.2 "Cormorant Garamond",serif;color:var(--gold);text-align:center}
+html.ur .box h3{font:600 1.25rem/2 "Noto Nastaliq Urdu",serif}
+.box .bs{text-align:center;color:var(--muted);max-width:60ch;margin:0 auto 1.3rem}
+.pledge{text-align:center;position:relative;overflow:hidden}
+.lamps{position:relative;height:120px;margin:0 auto 1rem;max-width:620px}
+.lamps i{position:absolute;width:5px;height:5px;border-radius:50%;background:var(--gold);box-shadow:0 0 8px var(--gold),0 0 16px var(--glow);animation:twk 3s ease-in-out infinite}
+@keyframes twk{50%{opacity:.35}}
+.cnt{display:flex;justify-content:center;gap:2.4rem;margin:.2rem 0 1.2rem}
+.cnt b{display:block;font:600 clamp(2rem,7vw,3rem)/1 "Cormorant Garamond",serif;color:var(--gold2)}
+.cnt span{font-size:.75rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+html.ur .cnt span{letter-spacing:0;font:400 .85rem/2 "Noto Nastaliq Urdu",serif}
+.pbtn{background:linear-gradient(135deg,#e0b862,#c9963f);color:#1a1206;border:0;border-radius:99px;padding:.75rem 1.6rem;font:600 1rem Inter,sans-serif;cursor:pointer;box-shadow:0 10px 26px rgba(224,184,98,.35)}
+.pbtn[disabled]{opacity:.65;cursor:default}
+html.ur .pbtn{font-family:"Noto Nastaliq Urdu",serif;padding:.4rem 1.6rem}
+.pnote{color:var(--muted);font-size:.85rem;margin:.8rem 0 0}
+.pnote a{color:var(--gold)}
+.rl{list-style:none;margin:0;padding:0;display:grid;gap:.6rem}
+.rl li{display:flex;align-items:center;gap:.8rem;padding:.7rem .9rem;border-radius:14px;border:1px solid var(--line);background:var(--card)}
+.rl li a{flex:1;color:var(--text);text-decoration:none}
+.rl li a:hover{color:var(--gold)}
+.rl .st{flex:0 0 auto;background:transparent;border:1px solid var(--line);color:var(--muted);border-radius:99px;padding:.3rem .9rem;font:500 .8rem Inter,sans-serif;cursor:pointer;min-width:7.5rem}
+html.ur .rl .st{font-family:"Noto Nastaliq Urdu",serif;padding:.05rem .9rem}
+.rl .st.r{border-color:var(--gold);color:var(--gold)}
+.rl .st.f{border-color:var(--em);color:var(--em);background:color-mix(in srgb,var(--em) 12%,transparent)}
+.rprog{height:6px;border-radius:6px;background:var(--card2);overflow:hidden;margin:0 0 1rem}
+.rprog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--em));transition:width .6s}
+.fm{display:grid;gap:.8rem}
+.fm .rw{display:flex;gap:.6rem;flex-wrap:wrap}
+.fm label{font-size:.85rem;color:var(--muted)}
+.fm .rw label{display:flex;align-items:center;gap:.4rem;padding:.4rem .9rem;border:1px solid var(--line);border-radius:99px;cursor:pointer;color:var(--text)}
+.fm select,.fm textarea,.fm input[type=text]{width:100%;font:inherit;color:var(--text);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:.65rem .8rem}
+.fm textarea{min-height:130px;resize:vertical}
+.fm .out{min-height:1.4em;font-size:.9rem}
+.fm .out.ok{color:var(--em)}.fm .out.bad{color:#f0a48c}
 @media (max-width:560px){.reader .bar .lbl{display:none}.tl .m span{display:none}.tl{padding-bottom:0}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv,.hk,h1,.sub,.sheet{opacity:1!important;translate:none!important}.card3d{transition:none}.cal text{fill:var(--gold);stroke-dashoffset:0}}
 </style>
@@ -301,6 +338,7 @@ html.ur .pc h3{font:600 1.3rem/2 "Noto Nastaliq Urdu",serif}
     <button class="tab" role="tab" id="tD" aria-controls="deputies" aria-selected="false">The Four Deputies</button>
     <button class="tab" role="tab" id="tS" aria-controls="signs" aria-selected="false">Signs of the Reappearance</button>
     <button class="tab" role="tab" id="tP" aria-controls="places" aria-selected="false">Sacred Places</button>
+    <button class="tab" role="tab" id="tC" aria-controls="community" aria-selected="false">Keepers of the Covenant</button>
   </div>
   <section class="pane" id="letters" role="tabpanel" aria-labelledby="tL">
     <p class="intro" id="lIntro"></p>
@@ -315,6 +353,7 @@ html.ur .pc h3{font:600 1.3rem/2 "Noto Nastaliq Urdu",serif}
   </section>
   <section class="pane" id="signs" role="tabpanel" aria-labelledby="tS" hidden></section>
   <section class="pane" id="places" role="tabpanel" aria-labelledby="tP" hidden></section>
+  <section class="pane" id="community" role="tabpanel" aria-labelledby="tC" hidden></section>
 </main>
 
 <div class="reader" id="reader" role="dialog" aria-modal="true" aria-labelledby="rTitle">
@@ -338,7 +377,12 @@ html.ur .pc h3{font:600 1.3rem/2 "Noto Nastaliq Urdu",serif}
 var UR=window.AZ_LANG==="ur",L=UR?"ur":"en",A=window.AZ_ARCHIVE;
 var T={
  en:{home:"← Home",hk:"Research & Preservation Archive",h1:"Letters from the Hidden Imam",sub:"What the Imam of our time wrote during his occultation, and the four trusted men who carried his words.",
-  tl:"The Letters",td:"The Four Deputies",ts:"Signs of the Reappearance",tp:"Sacred Places",
+  tl:"The Letters",td:"The Four Deputies",ts:"Signs of the Reappearance",tp:"Sacred Places",tc:"Keepers of the Covenant",
+  cIntro:"The Imam wrote: \u201cIf our followers were united in heart in fulfilling the covenant upon them, the blessing of meeting us would not have been delayed.\u201d This corner is for keeping that covenant together.",
+  pH:"Renew the covenant",pS:"Recite Du'a al-'Ahd, then light your lamp. Each lamp is one believer renewing their pledge to the Imam today.",pToday:"Lamps lit today",pAll:"Renewals so far",pBtn:"I renewed my covenant today",pDone:"Your lamp is lit for today ✓",pRead:"Read Du'a al-'Ahd →",pOff:"The lamp wall cannot be reached right now. Your renewal is still remembered on this device.",
+  rH:"My reading journey",rS:"Mark the books of our library as you read them. This is private: it stays on your own device.",rSt:["Not started","Reading","Finished"],rOf:"{f} of {n} finished",
+  mH:"Ask a question or report an error",mS:"Found a mistake on any page, or have a question about the Imam? Send it here. Messages are read privately and are never published.",mQ:"A question",mE:"An error on the site",mPage:"Which page?",mText:"Your message",mContact:"Email or name, if you would like a reply (optional)",mSend:"Send",mSending:"Sending…",mOk:"Thank you. Your message has been received.",mBad:"It could not be sent right now. Please try again later.",
+  pages:[["","General"],["academy-marefat.html","The Hidden Sun (Marefat)"],["hadiths.html","Hadiths & Duas"],["research-archive.html","This archive"],["knowledge-library.html","Knowledge Library"],["who-is-imam.html","Who is Imam al-Mahdi?"],["academy-theology.html","School of Theology"],["other","Another page"]],
   sIntro:"The Imams named signs before the rising of the Qa'im so that hearts would hold firm when they came, and they warned us never to use them to set a date.",
   five:"The five definite signs",fiveSub:"Called <i>al-mahtum</i>, the certain: these will come.",hear:"Read the narration",promiseK:"Even the definite can change, but not him",
   others:"Other signs in the narrations",othSub:"Signs the Imams mentioned without counting them among the certain five.",caut:"Read the signs carefully",cautSub:"Each warning below comes from the Imams themselves.",lib:"our library",readLetter:"Read the letter →",
@@ -352,7 +396,12 @@ var T={
   m:[["260","Imam al-'Askari passes;<br>'Uthman ibn Sa'id"],["305","Muhammad ibn 'Uthman dies;<br>Husayn ibn Rawh"],["326","'Ali al-Samuri"],["329","Major Occultation"]],
   fin:"With al-Samuri's last breath the door of deputyship closed. In his letter to Ishaq ibn Ya'qub the Imam had already told us where to turn: <a href=\"#ishaq\">“refer to the narrators of our hadith, for they are my proof over you”</a>."},
  ur:{home:"← گھر",hk:"تحقیق و تحفظ کا آرشیو",h1:"پوشیدہ امام کے خطوط",sub:"ہمارے زمانے کے امام نے غیبت کے دوران کیا لکھا، اور وہ چار معتمد ہستیاں جنہوں نے ان کا کلام پہنچایا۔",
-  tl:"توقیعات",td:"چار نائبین",ts:"ظہور کی نشانیاں",tp:"مقدس مقامات",
+  tl:"توقیعات",td:"چار نائبین",ts:"ظہور کی نشانیاں",tp:"مقدس مقامات",tc:"عہد کے پاسبان",
+  cIntro:"امام نے لکھا: ”اگر ہمارے شیعہ اپنے اوپر لازم عہد کو پورا کرنے میں دل سے متحد ہوتے تو ہماری ملاقات کی سعادت ان سے مؤخر نہ ہوتی۔“ یہ گوشہ اسی عہد کو مل کر نبھانے کے لیے ہے۔",
+  pH:"عہد کی تجدید کریں",pS:"دعائے عہد پڑھیں، پھر اپنا چراغ روشن کریں۔ ہر چراغ ایک مومن ہے جس نے آج امام سے اپنے عہد کی تجدید کی۔",pToday:"آج روشن چراغ",pAll:"اب تک کی تجدیدیں",pBtn:"میں نے آج اپنے عہد کی تجدید کی",pDone:"آج کے لیے آپ کا چراغ روشن ہے ✓",pRead:"دعائے عہد پڑھیں ←",pOff:"چراغوں کی دیوار اس وقت دستیاب نہیں۔ آپ کی تجدید اس آلے پر محفوظ ہے۔",
+  rH:"میرا مطالعاتی سفر",rS:"ہماری لائبریری کی کتابوں کو پڑھتے ہوئے نشان لگائیں۔ یہ نجی ہے: آپ کے اپنے آلے پر رہتا ہے۔",rSt:["شروع نہیں کیا","پڑھ رہے ہیں","مکمل"],rOf:"{n} میں سے {f} مکمل",
+  mH:"سوال پوچھیں یا غلطی کی نشاندہی کریں",mS:"کسی صفحے پر غلطی ملی، یا امام کے بارے میں کوئی سوال ہے؟ یہاں بھیجیں۔ پیغامات نجی طور پر پڑھے جاتے ہیں اور کبھی شائع نہیں کیے جاتے۔",mQ:"ایک سوال",mE:"سائٹ پر کوئی غلطی",mPage:"کون سا صفحہ؟",mText:"آپ کا پیغام",mContact:"اگر جواب چاہیں تو ای میل یا نام (اختیاری)",mSend:"بھیجیں",mSending:"بھیجا جا رہا ہے…",mOk:"شکریہ۔ آپ کا پیغام موصول ہو گیا۔",mBad:"اس وقت پیغام نہیں بھیجا جا سکا۔ براہِ کرم بعد میں کوشش کریں۔",
+  pages:[["","عمومی"],["academy-marefat.html","پوشیدہ سورج (معرفت)"],["hadiths.html","احادیث اور دعائیں"],["research-archive.html","یہ آرشیو"],["knowledge-library.html","علمی کتب خانہ"],["who-is-imam.html","امام مہدی کون ہیں؟"],["academy-theology.html","مدرسۂ عقائد"],["other","کوئی اور صفحہ"]],
   sIntro:"ائمہ نے قائم کے قیام سے پہلے نشانیاں بتائیں تاکہ جب وہ ظاہر ہوں تو دل ثابت قدم رہیں، اور خبردار کیا کہ انہیں کبھی تاریخ مقرر کرنے کے لیے استعمال نہ کیا جائے۔",
   five:"پانچ یقینی نشانیاں",fiveSub:"جنہیں <i>محتوم</i> کہا گیا، یعنی یقینی: یہ ضرور آئیں گی۔",hear:"روایت پڑھیں",promiseK:"محتوم بھی بدل سکتا ہے، مگر امام کا آنا نہیں",
   others:"روایات میں دیگر نشانیاں",othSub:"وہ نشانیاں جن کا ائمہ نے ذکر کیا مگر انہیں پانچ یقینی نشانیوں میں شمار نہیں کیا۔",caut:"نشانیوں کو احتیاط سے پڑھیں",cautSub:"ذیل کی ہر تنبیہ خود ائمہ کی طرف سے ہے۔",lib:"ہماری لائبریری",readLetter:"توقیع پڑھیں ←",
@@ -374,7 +423,7 @@ var u=UR?" u":"";
 
 if(UR){document.documentElement.lang="ur";document.documentElement.classList.add("ur");document.title=T.hk}
 $("hk").textContent=T.hk;$("h1").textContent=T.h1;$("sub").textContent=T.sub;
-$("tL").textContent=T.tl;$("tD").textContent=T.td;$("tS").textContent=T.ts;$("tP").textContent=T.tp;$("lIntro").innerHTML=T.lIntro;$("dIntro").innerHTML=T.dIntro;
+$("tL").textContent=T.tl;$("tD").textContent=T.td;$("tS").textContent=T.ts;$("tP").textContent=T.tp;$("tC").textContent=T.tc;$("lIntro").innerHTML=T.lIntro;$("dIntro").innerHTML=T.dIntro;
 $("rShare").textContent=T.share;$("rClose").setAttribute("aria-label",T.close);
 if(UR)["h1","sub","lIntro","dIntro","hk"].forEach(function(i){$(i).classList.add("u")});
 
@@ -499,10 +548,47 @@ function showPlace(id){curP=id;var p=PL.filter(function(x){return x.id===id})[0]
 [].forEach.call(document.querySelectorAll("#places [data-p]"),function(b){b.onclick=function(){showPlace(b.dataset.p);if(b.tagName.toLowerCase()==="g"&&innerWidth<820)$("pcard").scrollIntoView({behavior:"smooth",block:"nearest"})};b.onkeydown=function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();showPlace(b.dataset.p)}}});
 showPlace("samarra");
 
+/* ---------- keepers of the covenant ---------- */
+var API=(window.AZ_FIQH_API||"https://ahd-fiqh-assistant.fatimahussain2630.workers.dev").replace(/\/$/,"");
+var BOOKS=[["The-Awaited-Saviour","The Awaited Saviour"],["Al-Ghayba","Kitab al-Ghayba (al-Tusi)"],["Kamaluddin-Vol-1","Kamal al-Din, Vol. 1"],["Kamaluddin-Vol-2","Kamal al-Din, Vol. 2"],["Mikyal-al-Makarim-Vol-1","Mikyal al-Makarim, Vol. 1"],["Mikyal-al-Makarim-Vol-2","Mikyal al-Makarim, Vol. 2"],["Haqq-al-Yaqin","Haqq al-Yaqin"],["Hayat-al-Qulub-Vol-1","Hayat al-Qulub, Vol. 1"],["Hayat-al-Qulub-Vol-2","Hayat al-Qulub, Vol. 2"],["Hayat-al-Qulub-Vol-3","Hayat al-Qulub, Vol. 3"]];
+function ls(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}}
+var day=new Date().toISOString().slice(0,10);
+var ch='<p class="intro'+u+'">'+esc(T.cIntro)+'</p><div class="cm">';
+ch+='<div class="box pledge rv"><h3>'+esc(T.pH)+'</h3><p class="bs'+u+'">'+esc(T.pS)+'</p><div class="lamps" id="lamps" aria-hidden="true"></div>'+
+ '<div class="cnt"><div><b id="cToday">–</b><span>'+esc(T.pToday)+'</span></div><div><b id="cAll">–</b><span>'+esc(T.pAll)+'</span></div></div>'+
+ '<button class="pbtn" id="pBtn" type="button">'+esc(T.pBtn)+'</button><p class="pnote'+u+'" id="pNote"><a href="hadiths.html'+(UR?"?lang=ur":"")+'#ahd">'+esc(T.pRead)+'</a></p></div>';
+ch+='<div class="box rv"><h3>'+esc(T.rH)+'</h3><p class="bs'+u+'">'+esc(T.rS)+'</p><div class="rprog"><i id="rBar"></i></div><p class="bs" id="rOf" style="margin:-.4rem auto 1rem"></p><ul class="rl" id="rl"></ul></div>';
+ch+='<div class="box rv"><h3>'+esc(T.mH)+'</h3><p class="bs'+u+'">'+esc(T.mS)+'</p><form class="fm" id="fm"><div class="rw"><label><input type="radio" name="ty" value="question" checked> '+esc(T.mQ)+'</label><label><input type="radio" name="ty" value="error"> '+esc(T.mE)+'</label></div>'+
+ '<label>'+esc(T.mPage)+'<select id="fPage">'+T.pages.map(function(p){return '<option value="'+p[0]+'">'+esc(p[1])+'</option>'}).join("")+'</select></label>'+
+ '<label>'+esc(T.mText)+'<textarea id="fText" maxlength="1500" required></textarea></label><label>'+esc(T.mContact)+'<input type="text" id="fContact" maxlength="200"></label>'+
+ '<div><button class="pbtn" id="fSend" type="submit">'+esc(T.mSend)+'</button></div><p class="out" id="fOut" role="status"></p></form></div></div>';
+$("community").innerHTML=ch;
+function lamps(n){var w=$("lamps"),h="",k=Math.min(n,240);for(var i=0;i<k;i++){var x=(Math.sin(i*12.9898)*43758.5453)%1,y=(Math.sin(i*78.233)*12345.678)%1;h+='<i style="left:'+Math.abs(x*100).toFixed(1)+'%;top:'+Math.abs(y*100).toFixed(1)+'%;animation-delay:'+(-(i%7)*.4)+'s"></i>'}w.innerHTML=h}
+function showCounts(d){$("cToday").textContent=(d.today||0).toLocaleString();$("cAll").textContent=(d.pledges||0).toLocaleString();lamps(d.today||0)}
+function done(){$("pBtn").disabled=true;$("pBtn").textContent=T.pDone}
+if(ls("az-ahd-day")===day)done();
+var statsLoaded=false;function loadStats(){if(statsLoaded)return;statsLoaded=true;fetch(API+"/api/community/stats").then(function(r){if(!r.ok)throw 0;return r.json()}).then(showCounts).catch(function(){lamps(ls("az-ahd-day")===day?1:0)})}
+$("pBtn").onclick=function(){var b=this;b.disabled=true;ls("az-ahd-day",day);
+ fetch(API+"/api/community/pledge",{method:"POST"}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(d){showCounts(d);done()})
+ .catch(function(){done();$("pNote").textContent=T.pOff})};
+/* reading tracker (this device only) */
+var RS={};try{RS=JSON.parse(ls("az-reading")||"{}")||{}}catch(e){RS={}}
+function drawR(){var f=0;$("rl").innerHTML=BOOKS.map(function(b){var s=RS[b[0]]||0;if(s===2)f++;return '<li><a href="knowledge-library.html'+(UR?"?lang=ur":"")+'#book='+b[0]+'">'+esc(b[1])+'</a><button class="st'+(s===1?" r":s===2?" f":"")+(UR?" u":"")+'" type="button" data-b="'+b[0]+'">'+esc(T.rSt[s])+'</button></li>'}).join("");
+ $("rBar").style.width=(f/BOOKS.length*100)+"%";$("rOf").textContent=T.rOf.replace("{f}",f).replace("{n}",BOOKS.length);
+ [].forEach.call(document.querySelectorAll("#rl .st"),function(x){x.onclick=function(){RS[x.dataset.b]=((RS[x.dataset.b]||0)+1)%3;ls("az-reading",JSON.stringify(RS));drawR()}})}
+drawR();
+/* questions and error reports */
+$("fm").onsubmit=function(e){e.preventDefault();var o=$("fOut"),b=$("fSend"),t=$("fText").value.trim();if(t.length<5)return;
+ b.disabled=true;b.textContent=T.mSending;o.className="out";o.textContent="";
+ var ty=(document.querySelector("#fm input[name=ty]:checked")||{}).value||"question";
+ fetch(API+"/api/community/message",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({type:ty,text:t,page:$("fPage").value,contact:$("fContact").value.trim(),lang:L})})
+ .then(function(r){return r.json().then(function(d){if(!r.ok)throw d;return d})}).then(function(){o.className="out ok";o.textContent=T.mOk;$("fText").value=""})
+ .catch(function(d){o.className="out bad";o.textContent=(d&&d.error&&!UR)?d.error:T.mBad}).then(function(){b.disabled=false;b.textContent=T.mSend})};
+
 /* ---------- tabs and deep links ---------- */
-var TABS={letters:"tL",deputies:"tD",signs:"tS",places:"tP"};
+var TABS={letters:"tL",deputies:"tD",signs:"tS",places:"tP",community:"tC"};
 function showTab(t){Object.keys(TABS).forEach(function(k){$(k).hidden=k!==t;$(TABS[k]).setAttribute("aria-selected",k===t)});
- [].forEach.call(document.querySelectorAll("#"+t+" .rv"),function(x){io.unobserve(x);io.observe(x)})}
+ [].forEach.call(document.querySelectorAll("#"+t+" .rv"),function(x){io.unobserve(x);io.observe(x)});if(t==="community")loadStats()}
 Object.keys(TABS).forEach(function(k){$(TABS[k]).onclick=function(){showTab(k);if(k==="letters"){if(location.hash)history.replaceState({},"",location.pathname+location.search)}else history.replaceState({},"","#"+k)}});
 addEventListener("popstate",function(){var h=location.hash.slice(1);if(h&&!TABS[h]&&LS.some(function(x){return x.id===h}))openLetter(h,false);else closeLetter(true)});
 var h0=location.hash.slice(1);

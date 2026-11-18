@@ -3,10 +3,12 @@
   Routes:
     GET  /api/health  → { ok }
     POST /api/ask     → { question, context? } → grounded answer JSON
+    /api/community/*  → pledge wall and messages for the archive page (see community.js)
   Secrets (never in code): OPENAI_API_KEY, RATE_SALT
 */
 import { answerQuestion } from "./pipeline.js";
 import { writeLog, hitRateLimit } from "./log.js";
+import { handleCommunity } from "./community.js";
 
 function corsHeaders(env, origin) {
   const allowed = String(env.ALLOWED_ORIGINS || "").split(",").map((s) => s.trim()).filter(Boolean);
@@ -33,6 +35,8 @@ export default {
     if (url.pathname === "/api/health" || url.pathname === "/" || url.pathname === "/api" || url.pathname === "/api/") {
       return json({ ok: true, service: "fiqh-research-assistant", mode: env.MODE || "retrieval", ask: "POST /api/ask" }, 200, cors);
     }
+    const community = await handleCommunity(request, env, url, json, cors);
+    if (community) return community;
     if (url.pathname !== "/api/ask") return json({ error: "Not found" }, 404, cors);
     if (request.method !== "POST") return json({ error: "Use POST" }, 405, cors);
     if (!cors["Access-Control-Allow-Origin"]) return json({ error: "Origin not allowed" }, 403, cors);

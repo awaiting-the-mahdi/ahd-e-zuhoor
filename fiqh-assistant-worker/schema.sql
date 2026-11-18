@@ -21,3 +21,9 @@ CREATE TABLE IF NOT EXISTS rate (
   n INTEGER NOT NULL,
   ts INTEGER NOT NULL
 );
+
+-- Community features of the Research & Preservation Archive (also created automatically on first use).
+CREATE TABLE IF NOT EXISTS pledges (vkey TEXT PRIMARY KEY, day TEXT NOT NULL, ts INTEGER NOT NULL);
+CREATE INDEX IF NOT EXISTS pledges_day ON pledges (day);
+CREATE TABLE IF NOT EXISTS messages (id TEXT PRIMARY KEY, ts TEXT NOT NULL, type TEXT NOT NULL, page TEXT, lang TEXT, text TEXT NOT NULL, contact TEXT);
+CREATE TABLE IF NOT EXISTS mrate (key TEXT PRIMARY KEY, n INTEGER NOT NULL, ts INTEGER NOT NULL);
