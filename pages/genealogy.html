@@ -62,6 +62,7 @@ h1{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(2rem,8vw,3.4re
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.node,.era{opacity:1;transform:none}}
 </style>
 <script src="../assets/js/i18n.js"></script>
+<link rel="stylesheet" href="../assets/css/menu.css">
 </head>
 <body>
 <canvas id="sky"></canvas>
@@ -138,5 +139,6 @@ cx.beginPath();cx.arc(s[0]*cv.width,y,s[2],0,6.283);cx.fill();});
 requestAnimationFrame(draw);}
 if(!matchMedia('(prefers-reduced-motion:reduce)').matches)requestAnimationFrame(draw);
 </script>
+<script src="../assets/js/menu.js"></script>
 </body>
 </html>
