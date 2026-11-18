@@ -131,6 +131,43 @@ select.pill{appearance:none;padding-right:30px;background:rgba(13,20,52,.85) url
 .memo .w.hide{color:transparent;background:rgba(79,207,143,.18);box-shadow:inset 0 -3px 0 rgba(79,207,143,.6)}
 .memo .w.shown{background:rgba(255,201,77,.22)}
 .memo .note{color:var(--mut);font-weight:700;font-size:.9rem}
+/* recite: words appear as they are recited correctly */
+.rec .modes{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.rec .modes .tchip[aria-pressed=true]{border-color:var(--gold);background:rgba(255,201,77,.18)}
+.rec .bar3{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 12px;padding:12px 14px;border-radius:16px;border:1.5px solid var(--line);background:rgba(13,20,52,.75);position:sticky;top:8px;z-index:5}
+.rec .mic{width:58px;height:58px;border-radius:50%;border:0;background:var(--em);color:#04261a;display:grid;place-items:center;cursor:pointer;flex:none;box-shadow:0 0 0 0 rgba(79,207,143,.6)}
+.rec .mic.on{background:#ff6b6b;animation:micpulse 1.4s infinite}
+@keyframes micpulse{0%{box-shadow:0 0 0 0 rgba(255,107,107,.55)}100%{box-shadow:0 0 0 18px rgba(255,107,107,0)}}
+.rec .st{flex:1;min-width:180px}
+.rec .st b{display:block;font-size:.95rem}
+.rec .heard{display:block;font-family:Amiri,serif;direction:rtl;text-align:right;color:var(--mut);font-size:1.1rem;min-height:1.6em;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.rec .prog3{height:6px;border-radius:6px;background:rgba(255,255,255,.08);overflow:hidden;margin:0 0 12px}
+.rec .prog3 i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--em),var(--gold));transition:width .4s}
+.rec .rv2{position:relative;border-radius:16px;padding:12px 14px 10px;margin-bottom:10px;border:1.5px solid var(--line);background:rgba(13,20,52,.5)}
+.rec.tjm .rv2{background:#fbf6e9;color:#1d1a14;border-color:transparent}
+.rec .rv2.cur{border-color:var(--gold);box-shadow:0 0 0 2px rgba(255,201,77,.25)}
+.rec .rv2.done{border-color:rgba(79,207,143,.6)}
+.rec .va{font-family:Amiri,serif;font-size:1.9rem;line-height:2.3;direction:rtl;text-align:right}
+.rec .x{display:inline-block;border-radius:8px;padding:0 3px;transition:all .35s}
+.rec .x.h{color:transparent!important;background:rgba(79,207,143,.16);box-shadow:inset 0 -3px 0 rgba(79,207,143,.55)}
+.rec .x.h b{color:transparent!important}
+.rec .x.next{box-shadow:inset 0 -3px 0 var(--gold);background:rgba(255,201,77,.16)}
+.rec .x.miss{animation:shake .45s}
+.rec .x.ok{animation:pop .5s}
+.rec .x.help{background:rgba(255,201,77,.22)}
+.rec .x.help b{color:inherit}
+@keyframes shake{20%,60%{transform:translateX(-4px)}40%,80%{transform:translateX(4px)}}
+@keyframes pop{0%{transform:scale(.6);opacity:0}100%{transform:none;opacity:1}}
+.rec .vfoot{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:6px}
+.rec .vfoot .tchip{font-size:.75rem;padding:5px 10px}
+.rec.tjm .vfoot .tchip{color:#1d1a14;border-color:rgba(0,0,0,.2)}
+.rec .chk{margin-top:8px;padding:10px 12px;border-radius:12px;background:rgba(0,0,0,.06);font-size:.85rem;font-weight:700;display:none}
+.rec .rv2.done .chk{display:block}
+.rec .chk ul{margin:.3rem 0 0;padding-left:1.1rem}
+.rec .chk li i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:middle}
+.rec .warn2{padding:14px 16px;border-radius:14px;border:1.5px dashed #ffc94d;color:#ffe7a8;font-weight:800;margin-bottom:12px}
+.rec .note{color:var(--mut);font-weight:700;font-size:.88rem;margin:0 0 12px}
+@media (max-width:760px){.rec .bar3{top:70px}.rec .va{font-size:1.65rem}}
 /* tadabbur */
 .tad .card{padding:20px;border-radius:18px;background:linear-gradient(135deg,rgba(79,207,143,.12),rgba(13,20,52,.6));border:1.5px solid rgba(79,207,143,.45)}
 .tad textarea{width:100%;min-height:140px;margin-top:12px;border-radius:14px;border:1.5px solid var(--line);background:rgba(13,20,52,.9);color:#fff;font:inherit;font-weight:700;padding:12px 14px;line-height:1.6}
@@ -238,11 +275,13 @@ select.pill{appearance:none;padding-right:30px;background:rgba(13,20,52,.85) url
         <button class="tab" role="tab" aria-selected="false" data-t="memo" type="button">Memorise</button>
         <button class="tab" role="tab" aria-selected="false" data-t="tad" type="button">Tadabbur</button>
         <button class="tab" role="tab" aria-selected="false" data-t="tj" type="button">Tajweed rules</button>
+        <button class="tab" role="tab" aria-selected="false" data-t="rec" type="button">Recite</button>
       </div>
       <section class="panel on" data-p="read" id="pRead"></section>
       <section class="panel memo" data-p="memo" id="pMemo"></section>
       <section class="panel tad" data-p="tad" id="pTad"></section>
       <section class="panel tj" data-p="tj" id="pTj"></section>
+      <section class="panel rec" data-p="rec" id="pRec"></section>
       <p class="credits">Arabic text: Uthmani script (Tanzil). English translation: Ali Quli Qarai. Urdu translation: Allama Syed Zeeshan Haider Jawadi. Text served by api.alquran.cloud; recitations and word timings from everyayah.com and Quran.com. Tajweed colours: Tanzil tajweed edition (Global Quran). Word-by-word meanings: Quran.com.</p>
     </main>
   </div>
@@ -433,12 +472,12 @@ function openSurah(n){
   document.getElementById("sStar").setAttribute("style",starStyle(n-1));
   document.getElementById("sAr").textContent=s[1];document.getElementById("sName").textContent=s[0];
   document.getElementById("sMeta").textContent=s[2]+" · Surah "+n+" · "+s[3]+" verses · "+(s[4]?"Madani":"Makki");
-  document.getElementById("pRead").innerHTML='<div class="loading">Opening the surah…</div>';document.getElementById("pMemo").innerHTML="";document.getElementById("pTad").innerHTML="";document.getElementById("pTj").innerHTML="";
+  document.getElementById("pRead").innerHTML='<div class="loading">Opening the surah…</div>';document.getElementById("pMemo").innerHTML="";document.getElementById("pTad").innerHTML="";document.getElementById("pTj").innerHTML="";recStop();document.getElementById("pRec").innerHTML="";
   history.replaceState(null,"","#surah-"+n);document.title=s[0]+" · Galaxy of the Qur'an";
-  segLoad(rec(),n);var rp=romanLoad(n);load(n).then(function(v){return rp.then(function(){return v})}).then(function(v){if(S.n!==n)return;S.verses=v;renderRead();renderMemo();renderTad();setProg();if(curTab()==="tj")renderTj()}).catch(function(){
+  segLoad(rec(),n);var rp=romanLoad(n);load(n).then(function(v){return rp.then(function(){return v})}).then(function(v){if(S.n!==n)return;S.verses=v;renderRead();renderMemo();renderTad();setProg();if(curTab()==="tj")renderTj();if(curTab()==="rec")renderRec()}).catch(function(){
     document.getElementById("pRead").innerHTML='<div class="err">The surah could not be loaded. Please check your connection and try again.</div>'});
 }
-function closeSurah(){stop();wordHide();var ti=document.getElementById("tjInfo");if(ti)ti.classList.remove("on");surahEl.classList.remove("on");galaxy.style.display="";document.getElementById("backBtn").textContent="← Academy";document.getElementById("backBtn").href="academy.html";history.replaceState(null,"",location.pathname);document.title="Galaxy of the Qur'an";
+function closeSurah(){stop();recStop();wordHide();var ti=document.getElementById("tjInfo");if(ti)ti.classList.remove("on");surahEl.classList.remove("on");galaxy.style.display="";document.getElementById("backBtn").textContent="← Academy";document.getElementById("backBtn").href="academy.html";history.replaceState(null,"",location.pathname);document.title="Galaxy of the Qur'an";
   qIn.value="";hi=juzSel.value?surahsInJuz(+juzSel.value):null;
   buildPath();
   if(justDone){var n=justDone;justDone=null;requestAnimationFrame(function(){celebrate(n)})}else window.scrollTo(0,pathY);
@@ -545,7 +584,7 @@ document.getElementById("track").onclick=function(e){var r=this.getBoundingClien
 drawPlay();
 
 /* ---- tabs ---- */
-document.querySelectorAll(".tab").forEach(function(t){t.onclick=function(){wordHide();document.querySelectorAll(".tab").forEach(function(x){x.setAttribute("aria-selected",x===t)});document.querySelectorAll(".panel").forEach(function(p){p.classList.toggle("on",p.dataset.p===t.dataset.t)});if(t.dataset.t==="tj"&&S.verses.length&&!document.getElementById("pTj").innerHTML)renderTj()}});
+document.querySelectorAll(".tab").forEach(function(t){t.onclick=function(){wordHide();document.querySelectorAll(".tab").forEach(function(x){x.setAttribute("aria-selected",x===t)});document.querySelectorAll(".panel").forEach(function(p){p.classList.toggle("on",p.dataset.p===t.dataset.t)});if(t.dataset.t==="tj"&&S.verses.length&&!document.getElementById("pTj").innerHTML)renderTj();if(t.dataset.t==="rec"&&S.verses.length&&!document.getElementById("pRec").innerHTML)renderRec();if(t.dataset.t!=="rec")recStop()}});
 function curTab(){var t=document.querySelector(".tab[aria-selected=true]");return t?t.dataset.t:"read"}
 
 /* ---- memorise: hide words progressively, tap a word to reveal it ---- */
@@ -646,6 +685,102 @@ function renderTj(){
   }).catch(function(){if(S.n===n)p.innerHTML='<div class="err">The tajweed text could not be loaded. Please check your connection and try again.</div>'});
 }
 function playOne(i){stop();S.idx=i;setProg();audio.src=audioUrl(rec(),S.n,S.verses[i].n);audio.play().catch(function(){});pinfo.textContent="Verse "+S.verses[i].n+" · "+rec().name}
+
+/* ---- recite: words appear as the reciter pronounces them correctly ----
+   Uses the browser's own Arabic speech recognition (Chrome, Edge, Safari). It checks the WORDS.
+   "With tajweed" adds the tajweed colours and records each verse so the reciter can compare
+   their recitation with the Qari's, rule by rule. */
+var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+var RC={mode:store("rec-mode")||"plain",on:false,vi:0,wi:0,sr:null,mr:null,stream:null,chunks:[],clips:{},helped:0};
+function nrm(w){return String(w).replace(/[ؐ-ًؚ-ٰٟۖ-ۭـ]/g,"").replace(/[ٱأإآ]/g,"ا").replace(/ى/g,"ي").replace(/ة/g,"ه").replace(/ؤ/g,"و").replace(/ئ/g,"ي").replace(/ء/g,"").replace(/[^ء-ي]/g,"")}
+function lev(a,b){var m=a.length,n=b.length,d=[],i,j;for(i=0;i<=m;i++){d[i]=[i]}for(j=1;j<=n;j++)d[0][j]=j;for(i=1;i<=m;i++)for(j=1;j<=n;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return d[m][n]}
+/* Uthmani spelling differs from modern spelling (الصلوة / الصلاة): compare a looser form too */
+function loose(w){return w.replace(/و(?=ه$)/,"ا").replace(/ا/g,"").replace(/ي/g,"")}
+function same(heard,want){if(!heard||!want)return false;if(heard===want)return true;
+  var L=Math.max(heard.length,want.length);if(L<=3)return loose(heard)===loose(want)&&loose(want).length>0;
+  var r=1-lev(heard,want)/L,r2=1-lev(loose(heard),loose(want))/Math.max(1,Math.max(loose(heard).length,loose(want).length));
+  return r>=.72||r2>=.8}
+var recWords=[];      // per verse: [{n: normalised, el}]
+function renderRec(){
+  var p=document.getElementById("pRec"),n=S.n,tj=RC.mode==="tj";
+  p.classList.toggle("tjm",tj);
+  var h='<div class="modes" role="group" aria-label="Mode"><button class="tchip" type="button" data-m="plain" aria-pressed="'+!tj+'">Without Tajweed</button><button class="tchip" type="button" data-m="tj" aria-pressed="'+tj+'">With Tajweed</button></div>';
+  h+='<p class="note">'+(tj?"Recite with tajweed. Each word appears in its tajweed colours once it is recognised. When you finish a verse, play your recitation beside the Qari's and check each rule.":"Tap the microphone and recite from memory. Each word appears once you pronounce it correctly. Stuck? Tap the glowing word to reveal it.")+'</p>';
+  if(!SR)h+='<div class="warn2">Your browser cannot listen to Arabic recitation. Please open this page in Chrome, Edge or Safari.</div>';
+  h+='<div class="bar3"><button class="mic" id="recMic" type="button" aria-label="Start reciting"'+(SR?'':' disabled')+'><svg width="26" height="26" viewBox="0 0 24 24" fill="#04261a"><path d="M12 15a3 3 0 0 0 3-3V6a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.9V22h2v-3.1A7 7 0 0 0 19 12z"/></svg></button>'+
+    '<div class="st"><b id="recSt">Ready when you are</b><span class="heard" id="recHeard" lang="ar"></span></div><button class="tchip" type="button" id="recReset">Start again</button></div><div class="prog3"><i id="recBar"></i></div><div id="recV"><div class="loading">Preparing the verses…</div></div>';
+  p.innerHTML=h;
+  p.querySelectorAll("[data-m]").forEach(function(b){b.onclick=function(){if(RC.mode===b.dataset.m)return;recStop();RC.mode=b.dataset.m;store("rec-mode",RC.mode);renderRec()}});
+  document.getElementById("recMic").onclick=function(){RC.on?recStop():recStart()};
+  document.getElementById("recReset").onclick=function(){recStop();store("rec-"+RC.mode+"-"+n,null);renderRec()};
+  (tj?tjLoad(n).catch(function(){return null}):Promise.resolve(null)).then(function(tja){if(S.n!==n||RC.mode!==(tj?"tj":"plain"))return;buildRecVerses(tja)});
+}
+/* split tajweed-marked text into words. A marked span can cross a word boundary ("[u[دًى ل]", idgham):
+   it is cut into one span per word so each word keeps its colour. */
+function splitTj(t){return String(t).replace(/^\ufeff/,"").replace(/\u200c/g," ")
+  .replace(/\[([a-z])(:\d+)?\[([^\]]*)\]/g,function(m,r,id,c){return /\s/.test(c)?c.split(/\s+/).map(function(x){return x?"["+r+(id||"")+"["+x+"]":""}).join(" "):m})
+  .split(/\s+/).filter(Boolean)}
+function buildRecVerses(tja){
+  var n=S.n,tj=RC.mode==="tj",saved=store("rec-"+RC.mode+"-"+n)||{},h="";recWords=[];RC.clips={};
+  S.verses.forEach(function(v,i){
+    var plain=v.ar.split(/\s+/).filter(function(w){return /[ء-يٱ-ۓ]/.test(w)}),parts=null,rules={};
+    if(tj&&tja&&tja[i]){parts=splitTj(tja[i]).filter(function(t){return /[\u0621-\u064A\u0671-\u06D3]/.test(t)});if(parts.length!==plain.length)parts=null}
+    h+='<div class="rv2" id="rv-'+i+'"><div class="va" lang="ar">'+plain.map(function(w,k){var html=parts?tjHtml(parts[k],rules):esc(w);return '<span class="x h" data-v="'+i+'" data-k="'+k+'">'+html+'</span>'}).join(" ")+'</div>'+
+      '<div class="vfoot"><button class="tchip" type="button" data-play="'+i+'">▶ Qari · verse '+v.n+'</button>'+(tj?'<button class="tchip" type="button" data-mine="'+i+'" hidden>▶ My recitation</button>':'')+'<span class="vs" style="font-weight:800;font-size:.8rem;color:var(--mut)"></span></div>'+
+      (tj?'<div class="chk"><b>Check your tajweed against the Qari:</b><ul>'+(Object.keys(rules).length?Object.keys(rules).map(function(r){return '<li><i style="background:'+TJ[r][1]+'"></i>'+TJ[r][0]+' — <span lang="ar" style="font-family:Amiri,serif">'+esc(rules[r].join("، "))+'</span>: '+TJ[r][2]+'</li>'}).join(""):'<li>No special rules are marked in this verse. Check your makharij and vowels.</li>')+'</ul></div>':'')+'</div>';
+    recWords.push(plain.map(function(w){return nrm(w)}));
+  });
+  var box=document.getElementById("recV");box.innerHTML=h;
+  box.querySelectorAll("[data-play]").forEach(function(b){b.onclick=function(){playOne(+b.dataset.play)}});
+  box.querySelectorAll("[data-mine]").forEach(function(b){b.onclick=function(){var c=RC.clips[+b.dataset.mine];if(c){stop();var a=new Audio(c);a.play().catch(function(){})}}});
+  box.querySelectorAll(".x").forEach(function(x){x.onclick=function(){if(x.classList.contains("next")){reveal(+x.dataset.v,+x.dataset.k,true);advance()}}});
+  /* restore progress */
+  RC.vi=0;RC.wi=0;
+  for(var i=0;i<recWords.length;i++){if(saved[i]==="d"){for(var k=0;k<recWords[i].length;k++)reveal(i,k,false,true);markDone(i,true);RC.vi=i+1}else break}
+  RC.wi=0;pointNext();progress();
+}
+function wEl(i,k){return document.querySelector('#recV .x[data-v="'+i+'"][data-k="'+k+'"]')}
+function reveal(i,k,helped,quiet){var e=wEl(i,k);if(!e)return;e.classList.remove("h","next","miss");if(helped)e.classList.add("help");if(!quiet){e.classList.remove("ok");void e.offsetWidth;e.classList.add("ok")}}
+function pointNext(){document.querySelectorAll("#recV .x.next").forEach(function(e){e.classList.remove("next")});document.querySelectorAll("#recV .rv2.cur").forEach(function(e){e.classList.remove("cur")});
+  if(RC.vi>=recWords.length){document.getElementById("recSt").textContent="Mashallah! You recited the whole surah ✓";return}
+  var e=wEl(RC.vi,RC.wi);if(e)e.classList.add("next");var v=document.getElementById("rv-"+RC.vi);if(v){v.classList.add("cur");if(RC.on)v.scrollIntoView({behavior:reduce?"auto":"smooth",block:"center"})}}
+function progress(){var tot=0,dn=0;recWords.forEach(function(w,i){tot+=w.length;if(i<RC.vi)dn+=w.length;else if(i===RC.vi)dn+=RC.wi});document.getElementById("recBar").style.width=(tot?dn/tot*100:0)+"%"}
+function markDone(i,quiet){var v=document.getElementById("rv-"+i);if(!v)return;v.classList.add("done");v.querySelector(".vs").textContent="✓ Verse complete";
+  if(!quiet){var sv=store("rec-"+RC.mode+"-"+S.n)||{};sv[i]="d";store("rec-"+RC.mode+"-"+S.n,sv)}}
+function advance(){RC.wi++;if(RC.wi>=recWords[RC.vi].length){markDone(RC.vi);clipCut(RC.vi);RC.vi++;RC.wi=0}pointNext();progress()}
+/* match heard words in order; allow one skipped word and words split or joined by the recogniser */
+function feed(text){
+  var hw=String(text).split(/\s+/).map(nrm).filter(Boolean),i=0,got=false;
+  while(i<hw.length&&RC.vi<recWords.length){
+    var want=recWords[RC.vi][RC.wi],nxt=recWords[RC.vi][RC.wi+1];
+    if(same(hw[i],want)){reveal(RC.vi,RC.wi);advance();i++;got=true;continue}
+    if(i+1<hw.length&&same(hw[i]+hw[i+1],want)){reveal(RC.vi,RC.wi);advance();i+=2;got=true;continue}
+    if(nxt&&same(hw[i],want+nxt)){reveal(RC.vi,RC.wi);advance();reveal(RC.vi,RC.wi);advance();i++;got=true;continue}
+    i++}
+  if(!got&&hw.length){var e=wEl(RC.vi,RC.wi);if(e){e.classList.remove("miss");void e.offsetWidth;e.classList.add("miss")}}
+}
+var consumed="";
+function recStart(){
+  if(!SR||RC.vi>=recWords.length)return;stop();
+  var sr=new SR();sr.lang="ar-SA";sr.continuous=true;sr.interimResults=true;sr.maxAlternatives=1;
+  sr.onresult=function(ev){var fin="",intr="";for(var i=ev.resultIndex;i<ev.results.length;i++){var t=ev.results[i][0].transcript;if(ev.results[i].isFinal)fin+=" "+t;else intr+=" "+t}
+    document.getElementById("recHeard").textContent=(fin+intr).trim();if(fin.trim())feed(fin)};
+  sr.onerror=function(e){if(e.error==="not-allowed"||e.error==="service-not-allowed"){document.getElementById("recSt").textContent="Please allow the microphone to recite here.";recStop()}};
+  sr.onend=function(){if(RC.on){try{sr.start()}catch(e){}}};
+  try{sr.start()}catch(e){return}
+  RC.sr=sr;RC.on=true;var m=document.getElementById("recMic");m.classList.add("on");m.setAttribute("aria-label","Stop");
+  document.getElementById("recSt").textContent=RC.mode==="tj"?"Listening… recite with tajweed":"Listening… recite the glowing word";
+  pointNext();if(RC.mode==="tj")clipBegin();
+}
+function recStop(){RC.on=false;if(RC.sr){try{RC.sr.onend=null;RC.sr.stop()}catch(e){}RC.sr=null}
+  if(RC.mr){try{RC.mr.stop()}catch(e){}RC.mr=null}if(RC.stream){RC.stream.getTracks().forEach(function(t){t.stop()});RC.stream=null}
+  var m=document.getElementById("recMic");if(m){m.classList.remove("on");m.setAttribute("aria-label","Start reciting");var s=document.getElementById("recSt");if(s&&RC.vi<recWords.length)s.textContent="Paused. Tap the microphone to continue"}}
+/* with tajweed: record each verse so it can be compared with the Qari */
+function clipBegin(){if(!window.MediaRecorder||!navigator.mediaDevices)return;
+  navigator.mediaDevices.getUserMedia({audio:true}).then(function(st){if(!RC.on){st.getTracks().forEach(function(t){t.stop()});return}RC.stream=st;newRec()}).catch(function(){})}
+function newRec(){if(!RC.stream)return;try{var mr=new MediaRecorder(RC.stream);RC.chunks=[];mr.ondataavailable=function(e){if(e.data&&e.data.size)RC.chunks.push(e.data)};mr.start();RC.mr=mr}catch(e){}}
+function clipCut(i){if(RC.mode!=="tj"||!RC.mr)return;var mr=RC.mr,ch=RC.chunks;mr.onstop=function(){if(!ch.length)return;RC.clips[i]=URL.createObjectURL(new Blob(ch,{type:mr.mimeType||"audio/webm"}));var b=document.querySelector('#recV [data-mine="'+i+'"]');if(b)b.hidden=false};
+  try{mr.stop()}catch(e){}RC.mr=null;if(RC.on)newRec()}
 
 /* ---- start ---- */
 var rT;addEventListener("resize",function(){if(galaxy.style.display==="none")return;clearTimeout(rT);rT=setTimeout(buildPath,200)});
