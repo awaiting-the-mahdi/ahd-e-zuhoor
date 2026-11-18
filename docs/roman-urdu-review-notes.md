@@ -102,6 +102,14 @@ Working notes kept while writing the Roman Urdu from the online text of Allama J
 - 85:6: kept as written.
 - 72:21: "na" added: "na kisi nuqsaan ka ikhtiyaar rakhta hoon aur na faaide ka".
 - 58:8: kept as written.
-- 41:47: Arabic "min akmamiha" = from their coverings (the sheaths of the blossoms); "ghilaafon se" kept.
+- 41:47: "shagoofon se" (from the blossoms) for the unclear Urdu word.
 - 6:99: the Urdu word is کوئے (koye, trunk/stem); now "har shai ke koye nikaale".
 - 2:78: changed to follow the Arabic (la ya'lamuna al-kitab): "jo Taurait ka ilm nahin rakhte", in place of the Urdu "jo Taurait ko yaad kiye hue hain".
+- 58:8: confirmed: "aur apne dil hi dil mein kehte hain ke hum ghalati par hain to Khuda hamaari baaton par azaab kyon nahin naazil karta".
+
+### Changed or added words, batch 1
+- Kept: 2:177 "aur ambiya", 2:285 "aur kutub", 3:7 "taaweel ka ilm", 5:2 "na karna" and "fazl-e-Parwardigar", 5:93 "(Allah)", 39:5 "aur din ko raat par".
+- 3:156: follows the Urdu with a gloss: "baa'is-e-masarrat (khushi ka sabab)".
+- 4:155: bracketed "(hum ne un par la'nat ki)" removed.
+- 9:94: "tarah-tarah ke uzr (excuse) bayaan karenge"; the reworded garbled clause kept for now.
+- 13:33: bracketed "(un ke shareekon jaisi ho sakti hai)" removed.
