@@ -399,11 +399,16 @@ function romanLoad(n){
   if(!romanP[n])romanP[n]=fetch("../assets/data/roman/"+n+".json").then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(a){if(Array.isArray(a))AZ_ROMAN[n]=a}).catch(function(){delete romanP[n]});
   return romanP[n];
 }
+/* The name Allah: Tanzil's Uthmani text (like every Uthmani source) stores it with a fatha and leaves the small
+   upright alif of the Madinah Mushaf to special fonts. Store the upright alif (U+0670) instead, so it shows in any font.
+   Matches only the name (Allah, lillah, Allahumma), not words like al-lahw or al-lahab. */
+var ALLAH_RX=/(\u0644\u0650?\]?)\u0644(?:\u0651\u064E|\u064E\u0651)(\u0647[\u064E\u064F\u0650](?:\u0645\u0651\u064E)?)(?![\u0621-\u064A\u0671-\u06D3])/g;
+function allahAlif(t){return String(t).replace(ALLAH_RX,"$1\u0644\u0651\u0670$2")}
 function load(n){
   if(cache[n])return Promise.resolve(cache[n]);
   return fetch("https://api.alquran.cloud/v1/surah/"+n+"/editions/quran-uthmani,en.qarai,ur.jawadi").then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);return r.json()}).then(function(j){
     var ar=j.data[0].ayahs,en=j.data[1].ayahs,ur=j.data[2].ayahs;
-    var v=ar.map(function(a,i){return{n:a.numberInSurah,ar:a.text,en:en[i].text,ur:ur[i].text}});
+    var v=ar.map(function(a,i){return{n:a.numberInSurah,ar:allahAlif(a.text),en:en[i].text,ur:ur[i].text}});
     // The API includes the basmala inside verse 1 of most surahs: show it separately.
     if(n!==1&&n!==9&&v.length){
       var plain=function(w){return w.replace(/[^\u0621-\u064A]/g,"").replace(/[\u0623\u0625\u0622\u0671]/g,"\u0627")};
@@ -495,7 +500,7 @@ function tafHtml(vn){
       String(t.text).split(/\n\s*\n/).map(function(p){return '<p>'+esc(p.trim())+'</p>'}).join("")+'</div><button class="more" type="button">Read more</button></div>'}).join("");
 }
 function renderRead(){
-  var h=S.verses.bism?'<div class="bism" lang="ar" dir="rtl">بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>':"";
+  var h=S.verses.bism?'<div class="bism" lang="ar" dir="rtl">بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>':"";
   var ro=(window.AZ_ROMAN||{})[S.n];
   h+='<p class="whint">Tap any Arabic word to see its meaning.</p>';
   S.verses.forEach(function(v,i){h+='<div class="verse" id="v'+v.n+'"><div class="va" lang="ar">'+wordsHtml(v.ar)+' <button class="n" type="button" data-i="'+i+'" aria-label="Play verse '+v.n+'">'+v.n+'</button></div>'+
@@ -608,7 +613,7 @@ var TJ={
   g:["Ghunnah","#ff7e1e","Nūn or mīm with shaddah: hold the nasal sound for 2 counts."]
 };
 var tjCache={},tjOnly=null;
-function tjLoad(n){if(tjCache[n])return Promise.resolve(tjCache[n]);return fetch("https://api.alquran.cloud/v1/surah/"+n+"/quran-tajweed").then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){var a=j.data.ayahs.map(function(x){return x.text.replace(/^﻿/,"")});tjCache[n]=a;return a})}
+function tjLoad(n){if(tjCache[n])return Promise.resolve(tjCache[n]);return fetch("https://api.alquran.cloud/v1/surah/"+n+"/quran-tajweed").then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){var a=j.data.ayahs.map(function(x){return allahAlif(x.text.replace(/^﻿/,""))});tjCache[n]=a;return a})}
 function tjHtml(t,rules){
   var out="",re=/\[([a-z])(?::\d+)?\[([^\]]*)\]/g,last=0,m;
   while((m=re.exec(t))){out+=esc(t.slice(last,m.index));var r=TJ[m[1]];
