@@ -103,4 +103,5 @@ Working notes kept while writing the Roman Urdu from the online text of Allama J
 - 72:21: "na" added: "na kisi nuqsaan ka ikhtiyaar rakhta hoon aur na faaide ka".
 - 58:8: kept as written.
 - 41:47: Arabic "min akmamiha" = from their coverings (the sheaths of the blossoms); "ghilaafon se" kept.
-- 6:99: suggested reading "kuein" (wells) checked against the Arabic "nabata kulli shay'" (growth / vegetation of every kind). The Arabic is about plants, not wells, so "konplein" (shoots) kept for now.
+- 6:99: the Urdu word is کوئے (koye, trunk/stem); now "har shai ke koye nikaale".
+- 2:78: changed to follow the Arabic (la ya'lamuna al-kitab): "jo Taurait ka ilm nahin rakhte", in place of the Urdu "jo Taurait ko yaad kiye hue hain".
