@@ -263,6 +263,13 @@
     var base = lang.split("-")[0].toLowerCase();
     var list = voices.filter(function (v) { return (v.lang || "").toLowerCase().replace("_", "-").indexOf(base) === 0; });
     if (!list.length) return null;
+    /* language courses: the device's copy of the cast's own native voice (e.g. Edge's "Microsoft Zariyah Online") */
+    var LV = window.AZ_LANGVOICE, cast = LV && LV.voiceFor(lang, gender || "girl");
+    if (cast) {
+      var nm = cast.split("-")[2].replace(/Neural$/, "").toLowerCase();
+      var same = list.filter(function (v) { return v.name.toLowerCase().indexOf(nm) >= 0; });
+      if (same.length) return same[0];
+    }
     var exact = list.filter(function (v) { return (v.lang || "").toLowerCase().replace("_", "-") === lang.toLowerCase(); });
     if (exact.length) list = exact.concat(list);
     if (gender) {
@@ -282,14 +289,42 @@
   }
   AZ.hasVoice = function (lang) { return !!pick(lang); };
 
+  /* recorded clips (language courses) */
+  var audioEl = null, audioFin = null;
+  function stopAll() {
+    if (synth) synth.cancel();
+    if (audioEl) { try { audioEl.pause(); } catch (e) {} audioEl = null; }
+    if (audioFin) { var f = audioFin; audioFin = null; f(); }
+  }
+  function playClip(url, slow, fin) {
+    try {
+      stopAll();
+      var a = new Audio(url);
+      a.preservesPitch = true; a.mozPreservesPitch = true; a.webkitPreservesPitch = true;
+      a.playbackRate = slow ? 0.72 : 1;
+      audioEl = a; audioFin = fin;
+      function end() { if (audioEl === a) { audioEl = null; audioFin = null; } fin(); }
+      a.onended = end; a.onerror = end;
+      var pr = a.play();
+      if (pr && pr.catch) pr.catch(end);
+      setTimeout(end, 20000);
+      return true;
+    } catch (e) { return false; }
+  }
+  AZ.hasRecording = function (text, lang, who) {
+    return !!(window.AZ_LANGVOICE && window.AZ_LANGVOICE.clip(text, lang, who || "girl"));
+  };
+
   AZ.voice = {
     get muted() { return muted; },
     setMuted: function (m) {
       muted = !!m;
       try { localStorage.setItem("az-muted", muted ? "1" : "0"); } catch (e) {}
-      if (muted && synth) synth.cancel();
+      if (muted) stopAll();
     },
-    stop: function () { if (synth) synth.cancel(); },
+    /* natural: speak at the voice's own pitch (language courses, where pronunciation must be authentic) */
+    natural: false,
+    stop: function () { stopAll(); },
     /* say(text, {who:"girl"|"boy", lang:"en-GB", kid:Kid}) -> Promise */
     say: function (text, o) {
       o = o || {};
@@ -300,18 +335,23 @@
         if (ut !== text) { text = ut; lang = "ur-PK"; }
       }
       var est = Math.max(900, text.length * 62 + 500);
+      var natural = AZ.voice.natural;
+      var rec = window.AZ_LANGVOICE ? window.AZ_LANGVOICE.clip(text, lang, who) : null;
       return new Promise(function (res) {
         var done = false;
         function fin() { if (done) return; done = true; if (kid) kid.talk(false); res(); }
         if (kid) kid.talk(true);
-        if (muted || !synth) { setTimeout(fin, muted ? est * 0.8 : est); return; }
+        if (muted) { setTimeout(fin, est * 0.8); return; }
+        /* a native speaker's recording, when there is one */
+        if (rec && playClip(rec, o.slow, fin)) return;
+        if (!synth) { setTimeout(fin, est); return; }
         var u = new SpeechSynthesisUtterance(text);
         var v = pick(lang, who);
         if (v) u.voice = v;
         u.lang = v ? v.lang : lang;
         var isEn = lang.indexOf("en") === 0;
-        u.pitch = who === "girl" ? 1.85 : 1.6;
-        u.rate = (isEn ? 1.0 : 0.86) * (o.slow ? 0.7 : 1);
+        u.pitch = natural ? (who === "girl" ? 1.1 : 1.0) : (who === "girl" ? 1.85 : 1.6);
+        u.rate = (isEn ? 1.0 : natural ? 0.92 : 0.86) * (o.slow ? 0.7 : 1);
         u.onend = fin;
         u.onerror = fin;
         setTimeout(fin, est * 2.6 + 2500);

@@ -10,7 +10,8 @@
     name     course name shown everywhere
     native   the language's own name, in its own script
     glyph    one or two letters shown on the course badge
-    voice    browser speech language code used to pronounce words (e.g. "ar-SA")
+    voice    language code of the native voice (e.g. "ar-SA"); the voice cast is in language-voice.js.
+             After editing words or lines, run tools/language-audio/generate.py to record them.
     dir      "rtl" for right-to-left scripts, "ltr" otherwise
     color    accent colour for the course
     tagline  one short line
@@ -21,7 +22,7 @@
                       or { k, t: an English line, lang: "en" }
     lessons  list of { title, words: [ { w, tr, m, tip } ] }
                w   the word in its own script
-               tr  transliteration (how to say it), shown and spoken if no native voice exists
+               tr  transliteration (how to say it), shown; spoken only if no native voice exists
                m   meaning
                tip optional extra sentence the kids say in the video
 */

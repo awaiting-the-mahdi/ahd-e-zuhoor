@@ -157,6 +157,8 @@
 </div>
 
 <script src="../assets/js/language-data.js"></script>
+<script src="../assets/js/language-voice.js"></script>
+<script src="../assets/audio/lang/clips.js"></script>
 <script src="../assets/js/kids.js"></script>
 <script>
 (function(){
@@ -215,7 +217,9 @@ C.forEach(function(c,i){
     AZ.sfx.tap();state.course=c.id;mark(courseList,c.id);update();
     var k=i%2?kids.g2:kids.b2;k.jump();
     var lines=[{k:k,text:c.name+"! "+c.tagline+"."}];
-    if(c.voice.indexOf("en")!==0&&AZ.hasVoice(c.voice))lines.push({k:k===kids.g2?kids.b2:kids.g2,text:c.native,lang:c.voice});
+    var k2=k===kids.g2?kids.b2:kids.g2;
+    /* the language's own name, said by a native voice (recording first, then the device's native voice) */
+    if(c.voice.indexOf("en")!==0&&(AZ.hasRecording(c.native,c.voice,k2.type)||AZ.hasVoice(c.voice)))lines.push({k:k2,text:c.native,lang:c.voice});
     speak(document.getElementById("b2"),lines);
   };
   courseList.appendChild(b);
