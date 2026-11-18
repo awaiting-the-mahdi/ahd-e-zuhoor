@@ -16,7 +16,8 @@ canvas{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:
 #cap{min-height:3.4em;font-size:.85rem;color:var(--mut)}
 #cap b{display:block;font-family:'Cormorant Garamond',Georgia,serif;font-size:1.25rem;color:var(--gold)}
 #cap i{display:block;font:normal 1.2rem Amiri,serif;color:var(--fg)}
-.btns{display:flex;gap:8px;justify-content:center;margin:6px 0}
+.btns{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:6px 0}
+#b3{background:rgba(224,187,108,.16);color:#fff3d0}
 button{pointer-events:auto;background:rgba(5,8,22,.7);color:var(--gold);border:1px solid var(--gold);border-radius:99px;padding:8px 14px;font-size:.78rem}
 .note{font-size:.66rem;color:var(--mut);margin:4px auto 0;max-width:460px;line-height:1.35}
 .l{position:fixed;left:0;top:0;pointer-events:none;color:var(--gold);font-size:.66rem;white-space:nowrap;text-shadow:0 0 6px #000,0 0 12px #000;opacity:0;will-change:transform}
@@ -63,7 +64,7 @@ clip-path:circle(0px at var(--ox,50%) var(--oy,100%));transition:clip-path .75s 
 </head>
 <body>
 <div class="top"><div class="cnt" id="cnt">0</div><div class="sub">stars · the prophets (a.s.) and the Fourteen Infallibles</div></div>
-<div class="bot"><div id="cap"></div><div class="btns"><button id="b1">Zoom to the Fourteen</button><button id="b2">Whole sky</button></div>
+<div class="bot"><div id="cap"></div><div class="btns"><button id="b1">Zoom to the Fourteen</button><button id="b2">Whole sky</button><button id="b3" aria-haspopup="dialog">✦ Resemblances</button></div>
 <p class="note">The Fourteen and the prophets marked ✦ each have a resemblance in Imam al-Mahdi (a.t.f.s.) recorded in the books. 124,000 prophets (a.s.), among them the Holy Prophet (s.a.w.a.), together with Lady Fatima (s.a.) and the twelve Imams (a.s.), make 124,013, following the number narrated in tradition.</p></div>
 <svg id="beam" aria-hidden="true"><defs><linearGradient id="bg" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ffe9b8"/><stop offset="1" stop-color="#e0bb6c" stop-opacity=".25"/></linearGradient><filter id="gl"><feGaussianBlur stdDeviation="2.5"/></filter></defs><line id="bl2" stroke="#e0bb6c" stroke-width="6" filter="url(#gl)" opacity="0"/><line id="bl" stroke="url(#bg)" stroke-width="1.6" stroke-linecap="round" opacity="0"/><circle id="bd" r="3.2" fill="#fff6dc" opacity="0"/></svg>
 <div id="rc" class="rc" role="dialog" aria-labelledby="rcT" hidden><button class="rcx" id="rcx" aria-label="Close">×</button><div class="rch"><span class="rcs" aria-hidden="true">✦</span><div><h2 id="rcT"></h2><span class="ar" lang="ar" dir="rtl" id="rcA"></span></div></div><p class="rcto" id="rcTo"></p><div class="tags" id="rcG"></div><p class="sum" id="rcS"></p><div class="qs" id="rcQ"></div><p class="src">Words quoted exactly from the English translations in the library: <i>Kamal al-Din</i> (Shaykh as-Saduq), <i>Mikyal al-Makarim</i> (Sayyid Muhammad Taqi Musavi Isfahani) and <i>Al-Ghayba</i> (Shaykh al-Tusi). Tap a page reference to open it.</p></div>
@@ -156,10 +157,10 @@ else{var r=RD[s[3]];T.innerHTML='and its reflection in <b>Imam al-Mahdi (a.t.f.s
 G.innerHTML=r.tags.map(function(t){return '<span class="tag">'+esc(t)+'</span>';}).join('');
 Q.innerHTML=r.q.map(function(q,k){return '<blockquote class="q" style="transition-delay:'+(.35+k*.12)+'s"><p>'+esc(q.t)+'</p><footer>'+esc(q.by)+' · '+cite(q)+'</footer></blockquote>';}).join('');}
 rc.classList.remove('on');rc.hidden=false;rc.scrollTop=0;var b=rc.getBoundingClientRect();
-rc.style.setProperty('--ox',(X-b.left)+'px');rc.style.setProperty('--oy',(Y-b.top)+'px');void rc.offsetWidth;rc.classList.add('on');
+rc.style.setProperty('--ox',(X-b.left)+'px');rc.style.setProperty('--oy',(Y-b.top)+'px');void rc.offsetWidth;rc.classList.add('on');document.getElementById('rcx').focus({preventScroll:true});
 var g=document.createElement('div');g.className='ring';g.style.transform='';g.style.left=X+'px';g.style.top=Y+'px';document.body.appendChild(g);setTimeout(function(){g.remove();},1200);}
 document.getElementById('rcG').addEventListener('click',function(e){var b=e.target.closest('[data-j]');if(b)setSel(+b.dataset.j);});
-function closeCard(){rc.classList.remove('on');rc.hidden=true;}
+function closeCard(){var f=rc.contains(document.activeElement);rc.classList.remove('on');rc.hidden=true;if(f)document.getElementById('b3').focus({preventScroll:true});}
 document.getElementById('rcx').onclick=function(){setSel(-1);};
 addEventListener('keydown',function(e){if(e.key=='Escape'&&!rc.hidden)setSel(-1);});
 function setSel(i){sel=i;beamT=0;if(i<0){cap.innerHTML='Tap a bright star · drag to turn · pinch to zoom<br>Tap a <span style="color:var(--gold)">✦ prophet</span>, one of the Fourteen, or the Mahdi star, to see the resemblance';U.uSel.value=-1;closeCard();}
@@ -179,6 +180,7 @@ el.addEventListener('pointerup',function(e){delete ps[e.pointerId];lastD=0;if(!O
 if(moved<8){var b=-1,bd=42;sp.forEach(function(q,i){var d=Math.hypot(q[0]-e.clientX,q[1]-e.clientY);if(q[2]&&d<bd){bd=d;b=i;}});setSel(b);}});
 el.addEventListener('wheel',function(e){touched=true;tgt=cl(zin*.6,fit*2,tgt*(1+e.deltaY*.001));e.preventDefault();},{passive:false});
 document.getElementById('b1').onclick=function(){touched=true;tgt=zin;ph=.7;};
+document.getElementById('b3').onclick=function(){setSel(0);};
 document.getElementById('b2').onclick=function(){touched=true;tgt=fit;ph=.5;};
 var t0=performance.now(),last=t0;if(matchMedia('(prefers-reduced-motion:reduce)').matches)t0-=12000;
 function frame(now){requestAnimationFrame(frame);var t=(now-t0)/1000,dt=Math.min(.05,(now-last)/1000);last=now;
