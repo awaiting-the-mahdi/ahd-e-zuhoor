@@ -305,14 +305,6 @@ html.ur .rl .st{font-family:"Noto Nastaliq Urdu",serif;padding:.05rem .9rem}
 .rl .st.f{border-color:var(--em);color:var(--em);background:color-mix(in srgb,var(--em) 12%,transparent)}
 .rprog{height:6px;border-radius:6px;background:var(--card2);overflow:hidden;margin:0 0 1rem}
 .rprog i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--em));transition:width .6s}
-.fm{display:grid;gap:.8rem}
-.fm .rw{display:flex;gap:.6rem;flex-wrap:wrap}
-.fm label{font-size:.85rem;color:var(--muted)}
-.fm .rw label{display:flex;align-items:center;gap:.4rem;padding:.4rem .9rem;border:1px solid var(--line);border-radius:99px;cursor:pointer;color:var(--text)}
-.fm select,.fm textarea,.fm input[type=text]{width:100%;font:inherit;color:var(--text);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:.65rem .8rem}
-.fm textarea{min-height:130px;resize:vertical}
-.fm .out{min-height:1.4em;font-size:.9rem}
-.fm .out.ok{color:var(--em)}.fm .out.bad{color:#f0a48c}
 @media (max-width:560px){.reader .bar .lbl{display:none}.tl .m span{display:none}.tl{padding-bottom:0}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv,.hk,h1,.sub,.sheet{opacity:1!important;translate:none!important}.card3d{transition:none}.cal text{fill:var(--gold);stroke-dashoffset:0}}
 </style>
@@ -381,8 +373,6 @@ var T={
   cIntro:"The Imam wrote: \u201cIf our followers were united in heart in fulfilling the covenant upon them, the blessing of meeting us would not have been delayed.\u201d This corner is for keeping that covenant together.",
   pH:"Renew the covenant",pS:"Recite Du'a al-'Ahd, then light your lamp. Each lamp is one believer renewing their pledge to the Imam today.",pToday:"Lamps lit today",pAll:"Renewals so far",pBtn:"I renewed my covenant today",pDone:"Your lamp is lit for today ✓",pRead:"Read Du'a al-'Ahd →",pOff:"The lamp wall cannot be reached right now. Your renewal is still remembered on this device.",
   rH:"My reading journey",rS:"Mark the books of our library as you read them. This is private: it stays on your own device.",rSt:["Not started","Reading","Finished"],rOf:"{f} of {n} finished",
-  mH:"Ask a question or report an error",mS:"Found a mistake on any page, or have a question about the Imam? Send it here. Messages are read privately and are never published.",mQ:"A question",mE:"An error on the site",mPage:"Which page?",mText:"Your message",mContact:"Email or name, if you would like a reply (optional)",mSend:"Send",mSending:"Sending…",mOk:"Thank you. Your message has been received.",mBad:"It could not be sent right now. Please try again later.",
-  pages:[["","General"],["academy-marefat.html","The Hidden Sun (Marefat)"],["hadiths.html","Hadiths & Duas"],["research-archive.html","This archive"],["knowledge-library.html","Knowledge Library"],["who-is-imam.html","Who is Imam al-Mahdi?"],["academy-theology.html","School of Theology"],["other","Another page"]],
   sIntro:"The Imams named signs before the rising of the Qa'im so that hearts would hold firm when they came, and they warned us never to use them to set a date.",
   five:"The five definite signs",fiveSub:"Called <i>al-mahtum</i>, the certain: these will come.",hear:"Read the narration",promiseK:"Even the definite can change, but not him",
   others:"Other signs in the narrations",othSub:"Signs the Imams mentioned without counting them among the certain five.",caut:"Read the signs carefully",cautSub:"Each warning below comes from the Imams themselves.",lib:"our library",readLetter:"Read the letter →",
@@ -400,8 +390,6 @@ var T={
   cIntro:"امام نے لکھا: ”اگر ہمارے شیعہ اپنے اوپر لازم عہد کو پورا کرنے میں دل سے متحد ہوتے تو ہماری ملاقات کی سعادت ان سے مؤخر نہ ہوتی۔“ یہ گوشہ اسی عہد کو مل کر نبھانے کے لیے ہے۔",
   pH:"عہد کی تجدید کریں",pS:"دعائے عہد پڑھیں، پھر اپنا چراغ روشن کریں۔ ہر چراغ ایک مومن ہے جس نے آج امام سے اپنے عہد کی تجدید کی۔",pToday:"آج روشن چراغ",pAll:"اب تک کی تجدیدیں",pBtn:"میں نے آج اپنے عہد کی تجدید کی",pDone:"آج کے لیے آپ کا چراغ روشن ہے ✓",pRead:"دعائے عہد پڑھیں ←",pOff:"چراغوں کی دیوار اس وقت دستیاب نہیں۔ آپ کی تجدید اس آلے پر محفوظ ہے۔",
   rH:"میرا مطالعاتی سفر",rS:"ہماری لائبریری کی کتابوں کو پڑھتے ہوئے نشان لگائیں۔ یہ نجی ہے: آپ کے اپنے آلے پر رہتا ہے۔",rSt:["شروع نہیں کیا","پڑھ رہے ہیں","مکمل"],rOf:"{n} میں سے {f} مکمل",
-  mH:"سوال پوچھیں یا غلطی کی نشاندہی کریں",mS:"کسی صفحے پر غلطی ملی، یا امام کے بارے میں کوئی سوال ہے؟ یہاں بھیجیں۔ پیغامات نجی طور پر پڑھے جاتے ہیں اور کبھی شائع نہیں کیے جاتے۔",mQ:"ایک سوال",mE:"سائٹ پر کوئی غلطی",mPage:"کون سا صفحہ؟",mText:"آپ کا پیغام",mContact:"اگر جواب چاہیں تو ای میل یا نام (اختیاری)",mSend:"بھیجیں",mSending:"بھیجا جا رہا ہے…",mOk:"شکریہ۔ آپ کا پیغام موصول ہو گیا۔",mBad:"اس وقت پیغام نہیں بھیجا جا سکا۔ براہِ کرم بعد میں کوشش کریں۔",
-  pages:[["","عمومی"],["academy-marefat.html","پوشیدہ سورج (معرفت)"],["hadiths.html","احادیث اور دعائیں"],["research-archive.html","یہ آرشیو"],["knowledge-library.html","علمی کتب خانہ"],["who-is-imam.html","امام مہدی کون ہیں؟"],["academy-theology.html","مدرسۂ عقائد"],["other","کوئی اور صفحہ"]],
   sIntro:"ائمہ نے قائم کے قیام سے پہلے نشانیاں بتائیں تاکہ جب وہ ظاہر ہوں تو دل ثابت قدم رہیں، اور خبردار کیا کہ انہیں کبھی تاریخ مقرر کرنے کے لیے استعمال نہ کیا جائے۔",
   five:"پانچ یقینی نشانیاں",fiveSub:"جنہیں <i>محتوم</i> کہا گیا، یعنی یقینی: یہ ضرور آئیں گی۔",hear:"روایت پڑھیں",promiseK:"محتوم بھی بدل سکتا ہے، مگر امام کا آنا نہیں",
   others:"روایات میں دیگر نشانیاں",othSub:"وہ نشانیاں جن کا ائمہ نے ذکر کیا مگر انہیں پانچ یقینی نشانیوں میں شمار نہیں کیا۔",caut:"نشانیوں کو احتیاط سے پڑھیں",cautSub:"ذیل کی ہر تنبیہ خود ائمہ کی طرف سے ہے۔",lib:"ہماری لائبریری",readLetter:"توقیع پڑھیں ←",
@@ -558,10 +546,7 @@ ch+='<div class="box pledge rv"><h3>'+esc(T.pH)+'</h3><p class="bs'+u+'">'+esc(T
  '<div class="cnt"><div><b id="cToday">–</b><span>'+esc(T.pToday)+'</span></div><div><b id="cAll">–</b><span>'+esc(T.pAll)+'</span></div></div>'+
  '<button class="pbtn" id="pBtn" type="button">'+esc(T.pBtn)+'</button><p class="pnote'+u+'" id="pNote"><a href="hadiths.html'+(UR?"?lang=ur":"")+'#ahd">'+esc(T.pRead)+'</a></p></div>';
 ch+='<div class="box rv"><h3>'+esc(T.rH)+'</h3><p class="bs'+u+'">'+esc(T.rS)+'</p><div class="rprog"><i id="rBar"></i></div><p class="bs" id="rOf" style="margin:-.4rem auto 1rem"></p><ul class="rl" id="rl"></ul></div>';
-ch+='<div class="box rv"><h3>'+esc(T.mH)+'</h3><p class="bs'+u+'">'+esc(T.mS)+'</p><form class="fm" id="fm"><div class="rw"><label><input type="radio" name="ty" value="question" checked> '+esc(T.mQ)+'</label><label><input type="radio" name="ty" value="error"> '+esc(T.mE)+'</label></div>'+
- '<label>'+esc(T.mPage)+'<select id="fPage">'+T.pages.map(function(p){return '<option value="'+p[0]+'">'+esc(p[1])+'</option>'}).join("")+'</select></label>'+
- '<label>'+esc(T.mText)+'<textarea id="fText" maxlength="1500" required></textarea></label><label>'+esc(T.mContact)+'<input type="text" id="fContact" maxlength="200"></label>'+
- '<div><button class="pbtn" id="fSend" type="submit">'+esc(T.mSend)+'</button></div><p class="out" id="fOut" role="status"></p></form></div></div>';
+ch+='</div>';
 $("community").innerHTML=ch;
 function lamps(n){var w=$("lamps"),h="",k=Math.min(n,240);for(var i=0;i<k;i++){var x=(Math.sin(i*12.9898)*43758.5453)%1,y=(Math.sin(i*78.233)*12345.678)%1;h+='<i style="left:'+Math.abs(x*100).toFixed(1)+'%;top:'+Math.abs(y*100).toFixed(1)+'%;animation-delay:'+(-(i%7)*.4)+'s"></i>'}w.innerHTML=h}
 function showCounts(d){$("cToday").textContent=(d.today||0).toLocaleString();$("cAll").textContent=(d.pledges||0).toLocaleString();lamps(d.today||0)}
@@ -577,13 +562,6 @@ function drawR(){var f=0;$("rl").innerHTML=BOOKS.map(function(b){var s=RS[b[0]]|
  $("rBar").style.width=(f/BOOKS.length*100)+"%";$("rOf").textContent=T.rOf.replace("{f}",f).replace("{n}",BOOKS.length);
  [].forEach.call(document.querySelectorAll("#rl .st"),function(x){x.onclick=function(){RS[x.dataset.b]=((RS[x.dataset.b]||0)+1)%3;ls("az-reading",JSON.stringify(RS));drawR()}})}
 drawR();
-/* questions and error reports */
-$("fm").onsubmit=function(e){e.preventDefault();var o=$("fOut"),b=$("fSend"),t=$("fText").value.trim();if(t.length<5)return;
- b.disabled=true;b.textContent=T.mSending;o.className="out";o.textContent="";
- var ty=(document.querySelector("#fm input[name=ty]:checked")||{}).value||"question";
- fetch(API+"/api/community/message",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({type:ty,text:t,page:$("fPage").value,contact:$("fContact").value.trim(),lang:L})})
- .then(function(r){return r.json().then(function(d){if(!r.ok)throw d;return d})}).then(function(){o.className="out ok";o.textContent=T.mOk;$("fText").value=""})
- .catch(function(d){o.className="out bad";o.textContent=(d&&d.error&&!UR)?d.error:T.mBad}).then(function(){b.disabled=false;b.textContent=T.mSend})};
 
 /* ---------- tabs and deep links ---------- */
 var TABS={letters:"tL",deputies:"tD",signs:"tS",places:"tP",community:"tC"};

@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { handleCommunity, cleanMessage, today } from "../src/community.js";
+import { handleCommunity, today } from "../src/community.js";
 
 /* A tiny in-memory stand-in for Cloudflare D1, enough for the community queries. */
 function fakeDB() {
@@ -41,20 +41,10 @@ test("a pledge counts once per visitor per day", async () => {
   assert.equal(c.body.pledges, 2); assert.equal(c.body.today, 2);
   assert.ok(![...env.DB.t.pledges.keys()].some((k) => k.includes("1.1.1.1")), "no IP stored");
 });
-test("messages are validated and stored", async () => {
-  const env = { DB: fakeDB() };
-  const bad = await handleCommunity(req("POST", "1", { type: "x", text: "hello there" }), env, U("/api/community/message"), json, cors);
-  assert.equal(bad.status, 400);
-  const ok = await handleCommunity(req("POST", "1", { type: "error", text: "A word is misspelt in Nudba.", page: "hadiths#nudba" }), env, U("/api/community/message"), json, cors);
-  assert.equal(ok.status, 200); assert.equal(env.DB.t.messages.length, 1);
+test("the message route no longer exists", async () => {
+  const r = await handleCommunity(req("POST", "1", { type: "error", text: "hello there" }), { DB: fakeDB() }, U("/api/community/message"), json, cors);
+  assert.equal(r.status, 404);
 });
-test("messages are rate limited", async () => {
-  const env = { DB: fakeDB() }; let last;
-  for (let i = 0; i < 7; i++) last = await handleCommunity(req("POST", "9", { type: "question", text: "Question number " + i }), env, U("/api/community/message"), json, cors);
-  assert.equal(last.status, 429); assert.equal(env.DB.t.messages.length, 5);
-});
-test("cleanMessage trims and bounds", () => {
-  assert.equal(cleanMessage({ type: "question", text: "  a   b c d e  " }).text, "a b c d e");
-  assert.ok(cleanMessage({ type: "question", text: "x".repeat(1501) }).error);
+test("today is an ISO date", () => {
   assert.match(today(new Date("2026-11-18T10:00:00Z")), /^2026-11-18$/);
 });
