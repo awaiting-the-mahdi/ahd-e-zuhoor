@@ -113,3 +113,4 @@ Working notes kept while writing the Roman Urdu from the online text of Allama J
 - 4:155: bracketed "(hum ne un par la'nat ki)" removed.
 - 9:94: "tarah-tarah ke uzr (excuse) bayaan karenge"; the reworded garbled clause kept for now.
 - 13:33: bracketed "(un ke shareekon jaisi ho sakti hai)" removed.
+- 24:10: the closing clause is in the Urdu itself, so the brackets were removed: "to is tohmat ka anjaam bahut bura hota".
