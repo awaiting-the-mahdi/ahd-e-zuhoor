@@ -120,7 +120,7 @@ select.pill{appearance:none;padding-right:30px;background:rgba(13,20,52,.85) url
 .ip .va,.ip .bism,.ip .memo .va,.ip .tad .va,.ip .rec .va{font-family:"IndoPak","Amiri Quran",Amiri,serif;line-height:2.45;word-spacing:.05em}
 .ip .tj .va,.ip .rec.tjm .va{font-family:Amiri,serif;line-height:2.3}
 .va .n.pl{min-width:28px;height:28px;margin:0 6px;padding:0 0 0 2px}
-.va .n{display:inline-grid;place-items:center;min-width:36px;height:36px;padding:0 4px;margin:0 8px;border-radius:50%;border:1.5px solid var(--gold);font-family:Nunito;font-size:.78rem;font-weight:900;color:var(--gold);vertical-align:middle;cursor:pointer;background:none}
+.va .n{display:inline-flex;direction:ltr;align-items:center;justify-content:center;min-width:36px;height:36px;padding:0 4px;margin:0 8px;border-radius:50%;border:1.5px solid var(--gold);font-family:Nunito;font-size:.78rem;font-weight:900;color:var(--gold);vertical-align:middle;cursor:pointer;background:none}
 .tr{margin-top:6px;font-size:1rem;font-weight:700;color:#e3e7fb;line-height:1.6}
 .tr.ur{font-family:"Noto Nastaliq Urdu","IndoPak",Amiri,serif;direction:rtl;text-align:right;line-height:2.3;font-size:1.05rem;color:#d9ffe9}
 .tr small{display:inline-block;margin-right:8px;font-size:.62rem;font-weight:900;letter-spacing:.12em;color:var(--mut);text-transform:uppercase;font-family:Nunito}
@@ -558,8 +558,8 @@ function tafHtml(vn){
     return '<div class="tr tf"><small>Tafseer'+(t.from!==t.to?' · verses '+t.from+'–'+t.to:'')+'</small><div class="tfx">'+
       String(t.text).split(/\n\s*\n/).map(function(p){return '<p>'+esc(p.trim())+'</p>'}).join("")+'</div><button class="more" type="button">Read more</button></div>'}).join("");
 }
-/* Indo-Pak text draws its own verse number, so the play button becomes a small ▶ there */
-function vBtn(v,i){var ip=SCRIPT==="ip"&&v.arI;return '<button class="n'+(ip?' pl':'')+'" type="button" data-i="'+i+'" aria-label="Play verse '+v.n+'">'+(ip?'<svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4v16l13-8z"/></svg>':v.n)+'</button>'}
+/* the verse button plays the verse: ▶ with the number in Uthmani; just ▶ in Indo-Pak, whose font draws the number */
+function vBtn(v,i){var ip=SCRIPT==="ip"&&v.arI;return '<button class="n'+(ip?' pl':'')+'" type="button" data-i="'+i+'" aria-label="Play verse '+v.n+'">'+(ip?'<svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4v16l13-8z"/></svg>':'<svg width="8" height="8" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="margin-right:3px"><path d="M7 4v16l13-8z"/></svg>'+v.n)+'</button>'}
 function renderRead(){
   var h=S.verses.bism?'<div class="bism" lang="ar" dir="rtl">'+(S.verses.bismAr||"بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ")+'</div>':"";
   var ro=(window.AZ_ROMAN||{})[S.n];

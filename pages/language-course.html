@@ -364,12 +364,21 @@ muteBtn.onclick=function(){V.setMuted(!V.muted);drawMute()};drawMute();
 
 var SPK='<svg viewBox="0 0 24 24" fill="#0b1033"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12" stroke="#0b1033" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg>';
 
-/* pronounce a word: native voice if the device has one, otherwise the transliteration */
-function pron(w,o){
-  o=o||{};
-  var native=C.voice.indexOf("en")===0||AZ.hasVoice(C.voice);
-  return V.say(native?w.w:AZ.plain(w.tr),{kid:o.kid,lang:native?C.voice:"en-GB",who:o.who,slow:o.slow});
-}
+/* which voice reads this language on this device: its own, else a close one (Persian: Urdu), else none */
+function speakLang(){if(C.voice.indexOf("en")===0||AZ.hasVoice(C.voice))return C.voice;
+  return (C.voiceAlt||[]).filter(function(l){return AZ.hasVoice(l)})[0]||null}
+var noVoiceShown=false;
+function noVoiceNote(){if(noVoiceShown)return;noVoiceShown=true;var d=document.createElement("div");
+  d.setAttribute("role","status");d.style.cssText="position:fixed;left:12px;right:12px;bottom:70px;max-width:520px;margin:0 auto;z-index:60;padding:12px 16px;border-radius:14px;background:rgba(8,14,40,.96);border:1.5px solid #ffc94d;color:#ffe7a8;font-weight:800;font-size:.9rem;text-align:center";
+  d.textContent="This device has no "+C.name+" voice, so the lines are shown, not read aloud. Read along with the transliteration, or add a "+C.name+" voice in your device's speech settings.";
+  document.body.appendChild(d);setTimeout(function(){d.remove()},9000)}
+/* say a line in the language: native or close voice; otherwise the transliteration in English, or (for Persian) silently */
+function sayNative(text,tr,o){o=o||{};var l=speakLang();
+  if(l)return V.say(text,{kid:o.kid,lang:l,who:o.who,slow:o.slow});
+  if(C.noTranslitVoice){noVoiceNote();if(o.kid)o.kid.talk(true);return AZ.sleep(Math.min(3500,600+String(tr||text).length*70)).then(function(){if(o.kid)o.kid.talk(false)})}
+  return V.say(AZ.plain(tr||text),{kid:o.kid,lang:"en-GB",who:o.who,slow:o.slow})}
+/* pronounce a word */
+function pron(w,o){return sayNative(w.w,w.tr,o)}
 
 /* hero */
 var hG=new AZ.Kid(document.getElementById("hG"),"girl"), hB=new AZ.Kid(document.getElementById("hB"),"boy");
@@ -586,8 +595,7 @@ function playFrom(i){
       if(line.k==="both"){sB.talk(true);p=pron(line.w,{kid:sG,slow:P.slow}).then(function(){sB.talk(false)})}
       else p=pron(line.w,{kid:k,slow:P.slow});
     }else if(line.t){
-      var isEn=line.lang==="en", nat=isEn||C.voice.indexOf("en")===0||AZ.hasVoice(C.voice);
-      p=V.say(isEn||nat?line.t:AZ.plain(line.tr||line.t),{kid:k,lang:isEn?"en-GB":(nat?C.voice:"en-GB"),slow:P.slow});
+      p=line.lang==="en"?V.say(line.t,{kid:k,lang:"en-GB",slow:P.slow}):sayNative(line.t,line.tr,{kid:k,slow:P.slow});
     }else p=V.say(line.say||line.text,{kid:k,slow:P.slow});
     p.then(function(){return AZ.sleep(line.pron||(line.t&&line.lang!=="en")?900:350)}).then(function(){if(tok!==P.tok)return;if(k&&line.state)k.set("");step(i+1)});
   })(i);
@@ -673,8 +681,7 @@ function renderQ(){
   var qk=document.getElementById("qk");
   if(qk){qKid=new AZ.Kid(qk,kidType);qk.classList.add("pop")}else qKid=null;
   [].forEach.call(qBody.querySelectorAll("[data-say]"),function(b){
-    b.onclick=function(){var w=q.w;if(b.dataset.say==="slow"){var native=C.voice.indexOf("en")===0||AZ.hasVoice(C.voice);
-      var u=native?w.w.split("").join(" ").replace(/ /g,""):AZ.plain(w.tr);V.say(native?w.w:u,{lang:native?C.voice:"en-GB"})}else pron(w,{kid:qKid})};
+    b.onclick=function(){var w=q.w;if(b.dataset.say==="slow")sayNative(w.w,w.tr,{slow:true});else pron(w,{kid:qKid})};
   });
   if(q.type==="listen"||q.type==="meaning")setTimeout(function(){pron(q.w,{kid:qKid})},450);
   if(q.type==="match")bindMatch(q);
