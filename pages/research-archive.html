@@ -208,7 +208,6 @@ html.ur .life li::before{left:auto;right:.2rem}
 </head>
 <body>
 <canvas id="stars"></canvas>
-<a class="back" href="../index.html" id="back">← Home</a>
 
 <header class="hero">
   <svg class="geo" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width=".6" aria-hidden="true">
@@ -287,7 +286,7 @@ function indic(n){return String(n).replace(/\d/g,function(d){return"٠١٢٣٤٥
 var u=UR?" u":"";
 
 if(UR){document.documentElement.lang="ur";document.documentElement.classList.add("ur");document.title=T.hk}
-$("back").textContent=T.home;$("hk").textContent=T.hk;$("h1").textContent=T.h1;$("sub").textContent=T.sub;
+$("hk").textContent=T.hk;$("h1").textContent=T.h1;$("sub").textContent=T.sub;
 $("tL").textContent=T.tl;$("tD").textContent=T.td;$("lIntro").innerHTML=T.lIntro;$("dIntro").innerHTML=T.dIntro;
 $("rShare").textContent=T.share;$("rClose").setAttribute("aria-label",T.close);
 if(UR)["h1","sub","lIntro","dIntro","hk"].forEach(function(i){$(i).classList.add("u")});

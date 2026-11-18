@@ -1,38 +1,28 @@
-/* AHD-E-ZUHOOR — GLOBAL HAMBURGER MENU */
+/* AHD-E-ZUHOOR — HOME BUTTON (inner pages) AND HOME-PAGE SECTIONS OVERLAY */
 
-.az-menu-button {
+.az-home-button {
   position: fixed;
   top: 20px;
   right: 24px;
-  z-index: 1002;
+  z-index: 45; /* above page content, below each page's own dialogs */
   width: 48px;
   height: 48px;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 6px;
   border: 1px solid rgba(215,188,128,.55);
   border-radius: 50%;
   background: rgba(5,13,25,.82);
   backdrop-filter: blur(12px);
-  cursor: pointer;
+  color: #d7bc80;
+  text-decoration: none;
+  transition: border-color .25s ease, background .25s ease;
 }
 
-.az-menu-button span {
-  display: block;
-  width: 19px;
-  height: 1.5px;
-  background: #d7bc80;
-  transition: transform .3s ease, opacity .3s ease;
-}
-
-.az-menu-button[aria-expanded="true"] span:first-child {
-  transform: translateY(3.75px) rotate(45deg);
-}
-
-.az-menu-button[aria-expanded="true"] span:last-child {
-  transform: translateY(-3.75px) rotate(-45deg);
+.az-home-button:hover,
+.az-home-button:focus-visible {
+  border-color: #d7bc80;
+  background: rgba(30,45,70,.92);
 }
 
 .az-menu-overlay {
@@ -114,7 +104,7 @@
 }
 
 @media(max-width:600px) {
-  .az-menu-button {
+  .az-home-button {
     top: 14px;
     right: 15px;
     width: 43px;
@@ -146,7 +136,7 @@
 }
 
 @media(prefers-reduced-motion:reduce) {
-  .az-menu-button span,
+  .az-home-button,
   .az-menu-overlay,
   .az-menu-link {
     transition: none;

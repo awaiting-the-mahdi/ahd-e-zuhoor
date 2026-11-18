@@ -101,7 +101,7 @@
 
   /* ---------- Urdu ---------- */
   /* On a page that translates itself, only the shared parts (the site menu) are translated here. */
-  var SHARED = ".az-menu-button,.az-menu-overlay";
+  var SHARED = ".az-home-button,.az-menu-overlay";
   html.classList.add("az-ur");
   if (!own) { html.lang = "ur"; html.classList.add("az-ur-wait"); }
   var reveal = function () { html.classList.remove("az-ur-wait"); };
