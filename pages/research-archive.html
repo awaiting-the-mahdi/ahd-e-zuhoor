@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en" data-own-i18n>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#060b1c">
+<meta name="description" content="The letters (tawqi'at) of Imam al-Mahdi (atfs) and the four special deputies of the Minor Occultation, from Shaykh al-Tusi's Kitab al-Ghayba, in Arabic, English and Urdu.">
+<title>Research &amp; Preservation Archive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Inter:wght@400;500;600&family=Noto+Nastaliq+Urdu:wght@400;600&display=swap">
+<link rel="stylesheet" href="../assets/css/menu.css">
+<style>
+:root{--bg:#060b1c;--card:rgba(255,255,255,.045);--card2:rgba(255,255,255,.08);--line:rgba(224,184,98,.3);--gold:#e0b862;--gold2:#f3d79a;--text:#e9ecf5;--muted:#a3adc8;--em:#2fbf9b;--glow:rgba(224,184,98,.3);
+  --paper:#f1e3c0;--paper2:#e2cc98;--ink:#2e2110;--ink2:#6b5330}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#f7f3e8;--card:rgba(10,18,38,.04);--card2:rgba(10,18,38,.07);--line:rgba(150,110,30,.35);--gold:#94691a;--gold2:#6f4d0e;--text:#1a2340;--muted:#4c5675;--em:#0d7a60;--glow:rgba(154,113,32,.25)}}
+:root[data-theme="light"]{--bg:#f7f3e8;--card:rgba(10,18,38,.04);--card2:rgba(10,18,38,.07);--line:rgba(150,110,30,.35);--gold:#94691a;--gold2:#6f4d0e;--text:#1a2340;--muted:#4c5675;--em:#0d7a60;--glow:rgba(154,113,32,.25)}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.7 Inter,system-ui,sans-serif;overflow-x:hidden}
+body.locked{overflow:hidden}
+canvas#stars{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+main,header{position:relative;z-index:1}
+main{overflow-x:clip}
+.ar,[lang=ar]{font-family:Amiri,serif;direction:rtl}
+html.ur .u{font-family:"Noto Nastaliq Urdu",serif;direction:rtl;line-height:2.15;letter-spacing:0;font-style:normal}
+.back{position:fixed;top:18px;left:16px;z-index:1000;display:flex;align-items:center;gap:8px;padding:9px 14px;border-radius:99px;background:color-mix(in srgb,var(--bg) 72%,transparent);border:1px solid var(--line);
+  font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);text-decoration:none;backdrop-filter:blur(8px)}
+html.ur .back{letter-spacing:0;font-size:.85rem;padding:4px 14px}
+.back:hover{color:var(--gold)}
+
+/* hero */
+.hero{min-height:88svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:5rem 1.2rem 3rem;overflow:hidden;background:radial-gradient(ellipse at 50% 115%,var(--glow),transparent 60%)}
+.geo{position:absolute;width:min(92vw,620px);opacity:.1;animation:spin 150s linear infinite;color:var(--gold)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.cal{width:min(94vw,640px);height:auto;position:relative}
+.cal text{font-family:"Aref Ruqaa",Amiri,serif;font-size:96px;fill:transparent;stroke:var(--gold);stroke-width:1.2;stroke-dasharray:1100;stroke-dashoffset:1100;animation:draw 4s ease forwards,fillin 1.4s 3.4s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes fillin{to{fill:var(--gold)}}
+.hk{position:relative;font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);opacity:0;animation:up 1.2s 1s forwards}
+h1{font:600 clamp(2rem,7vw,3.3rem)/1.15 "Cormorant Garamond",serif;margin:.3rem 0;position:relative;opacity:0;animation:up 1.2s 1.4s forwards}
+html.ur h1{font-family:"Noto Nastaliq Urdu",serif;font-size:clamp(1.5rem,6vw,2.5rem);line-height:2}
+.sub{color:var(--muted);max-width:44ch;position:relative;opacity:0;animation:up 1.2s 2s forwards;margin:.4rem auto 0}
+@keyframes up{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+
+.tabs{position:sticky;top:0;z-index:20;display:flex;justify-content:center;gap:.4rem;padding:.8rem 1rem;background:linear-gradient(var(--bg) 70%,transparent)}
+.tab{background:transparent;color:var(--muted);border:1px solid var(--line);border-radius:99px;padding:.55rem 1.3rem;font:500 .95rem Inter,sans-serif;cursor:pointer;transition:.3s}
+.tab[aria-selected=true]{background:var(--gold);color:var(--bg);border-color:var(--gold);box-shadow:0 0 22px var(--glow)}
+html.ur .tab{font-family:"Noto Nastaliq Urdu",serif;padding:.2rem 1.3rem;font-size:1rem}
+section.pane{max-width:1000px;margin:0 auto;padding:1.5rem 1rem 5rem;scroll-margin-top:70px}
+section.pane[hidden]{display:none}
+.intro{max-width:64ch;margin:0 auto 2.4rem;text-align:center;color:var(--muted)}
+.intro b{color:var(--gold);font-weight:500}
+.rv{opacity:0;transform:translateY(26px);transition:opacity .9s,transform .9s}
+.rv.in{opacity:1;transform:none}
+
+/* letters timeline */
+.lt{position:relative;max-width:760px;margin:0 auto}
+.lt::before{content:"";position:absolute;top:0;bottom:0;left:22px;width:2px;background:linear-gradient(var(--gold),var(--em),transparent)}
+.era{position:relative;margin:2.2rem 0 1rem 56px;font:600 1.25rem "Cormorant Garamond",serif;color:var(--gold)}
+html.ur .era{font:600 1.05rem/2 "Noto Nastaliq Urdu",serif}
+.env{position:relative;display:block;width:calc(100% - 56px);margin:0 0 1.1rem 56px;text-align:start;cursor:pointer;color:var(--text);font:inherit;
+  background:linear-gradient(135deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:16px;padding:1.1rem 1.3rem 1.1rem 1.3rem;transition:transform .35s,box-shadow .35s,border-color .35s}
+.env:hover,.env:focus-visible{transform:translateX(6px);box-shadow:0 12px 32px var(--glow);border-color:var(--gold);outline:none}
+.env::before{content:"";position:absolute;left:-41px;top:1.35rem;width:16px;height:16px;border-radius:50%;background:var(--bg);border:2px solid var(--gold);box-shadow:0 0 12px var(--glow)}
+.env .y{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+html.ur .env .y{letter-spacing:0;font-size:.8rem}
+.env h3{margin:.15rem 0 .1rem;font:600 1.4rem/1.25 "Cormorant Garamond",serif}
+html.ur .env h3{font:600 1.1rem/2 "Noto Nastaliq Urdu",serif}
+.env .to{color:var(--muted);font-size:.9rem;margin:0}
+.env .peek{display:block;margin-top:.6rem;font:400 1.15rem/1.9 "Aref Ruqaa",Amiri,serif;color:var(--gold2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;direction:rtl;opacity:.85}
+.env .seal{position:absolute;top:.9rem;right:1rem;width:34px;height:34px;opacity:.85}
+html.ur .env .seal{right:auto;left:1rem}
+
+/* reader */
+.reader{position:fixed;inset:0;z-index:1500;background:radial-gradient(ellipse at 50% 0%,#1a1408,#05070f 70%);overflow-y:auto;opacity:0;visibility:hidden;transition:opacity .45s,visibility .45s;overscroll-behavior:contain}
+.reader.open{opacity:1;visibility:visible}
+.bar{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:.5rem;padding:.7rem 1rem;background:rgba(5,7,15,.82);backdrop-filter:blur(10px);border-bottom:1px solid rgba(224,184,98,.3)}
+.bar .sp{flex:1}
+.ib{background:transparent;color:#e0b862;border:1px solid rgba(224,184,98,.35);border-radius:99px;min-width:38px;height:38px;padding:0 .9rem;font:500 .85rem Inter,sans-serif;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:.35rem;transition:.25s}
+.ib:hover,.ib.on{border-color:#e0b862;background:rgba(255,255,255,.07)}
+html.ur .ib{font-family:"Noto Nastaliq Urdu",serif}
+.rd{max-width:860px;margin:0 auto;padding:2.2rem 1rem 6rem;color:#e9ecf5}
+.rd .head{text-align:center;margin-bottom:1.6rem}
+.rd .head .y{font-size:.72rem;letter-spacing:.25em;text-transform:uppercase;color:#e0b862}
+html.ur .rd .head .y{letter-spacing:0;font-size:.85rem}
+.rd .head h2{font:600 clamp(1.6rem,5vw,2.3rem)/1.2 "Cormorant Garamond",serif;margin:.2rem 0 .3rem}
+html.ur .rd .head h2{font:600 clamp(1.25rem,5vw,1.7rem)/2 "Noto Nastaliq Urdu",serif}
+.rd .head .to{color:#a3adc8;margin:0}
+.ctx{max-width:64ch;margin:0 auto 2.2rem;color:#c9cfe0;border:1px solid rgba(224,184,98,.3);border-radius:14px;padding:.9rem 1.2rem;background:rgba(255,255,255,.04);font-size:.95rem}
+
+/* the parchment */
+.sheet{position:relative;margin:0 auto;max-width:720px;padding:clamp(2rem,6vw,3.6rem) clamp(1.3rem,6vw,3.6rem) clamp(2.4rem,6vw,3.4rem);color:var(--ink);
+  background:
+    radial-gradient(ellipse at 20% 15%,rgba(255,255,255,.35),transparent 45%),
+    radial-gradient(ellipse at 85% 90%,rgba(120,80,20,.22),transparent 50%),
+    radial-gradient(circle at 50% 50%,transparent 55%,rgba(110,70,20,.38) 100%),
+    repeating-linear-gradient(0deg,rgba(90,60,20,.035) 0 2px,transparent 2px 5px),
+    linear-gradient(170deg,var(--paper),var(--paper2));
+  box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 0 1px rgba(90,60,20,.25),inset 0 0 60px rgba(110,70,20,.35);
+  border-radius:4px 10px 6px 12px/10px 4px 12px 6px;transform:rotate(-.4deg);opacity:0;translate:0 30px;transition:opacity 1s,translate 1s}
+.reader.open .sheet{opacity:1;translate:0 0}
+.sheet::before,.sheet::after{content:"";position:absolute;left:8%;right:8%;height:1px;background:linear-gradient(90deg,transparent,rgba(110,70,20,.45),transparent)}
+.sheet::before{top:1.1rem}.sheet::after{bottom:1.1rem}
+.sheet .bism{display:block;text-align:center;font:700 1.5rem "Aref Ruqaa",serif;color:var(--ink2);margin-bottom:.6rem}
+.sheet .tx{font:400 clamp(1.3rem,3.6vw,1.75rem)/2.15 "Aref Ruqaa",Amiri,serif;text-align:justify;text-align-last:center;direction:rtl;margin:0 0 1rem}
+.sheet .tx.v{font-family:Amiri,serif;font-size:clamp(1.25rem,3.4vw,1.6rem)}
+.sheet .tx .al{color:#7a4d10}
+.sheet .gap{display:block;text-align:center;color:var(--ink2);letter-spacing:.6em;margin:.4rem 0 1rem}
+.sheet .stamp{display:block;width:62px;height:62px;margin:1.4rem auto 0;opacity:.75}
+.cap{max-width:640px;margin:1.2rem auto 0;text-align:center;color:#a3adc8;font-size:.82rem;font-style:italic}
+html.ur .cap{font-style:normal}
+
+.keys{max-width:680px;margin:2.6rem auto 0}
+.keys h4,.trh{text-align:center;font:600 .74rem Inter,sans-serif;letter-spacing:.25em;text-transform:uppercase;color:#e0b862;margin:0 0 1rem}
+html.ur .keys h4,html.ur .trh{letter-spacing:0;font:600 .95rem/2 "Noto Nastaliq Urdu",serif}
+.key{position:relative;margin:0 0 .8rem;padding:.9rem 1.2rem .9rem 2.6rem;border-radius:14px;background:linear-gradient(90deg,rgba(224,184,98,.12),rgba(255,255,255,.03));border:1px solid rgba(224,184,98,.28);font:italic 500 1.2rem/1.5 "Cormorant Garamond",serif;color:#f3e7c9}
+.key::before{content:"\201C";position:absolute;left:.8rem;top:.15rem;font-size:2.6rem;color:#e0b862;opacity:.6}
+html.ur .key{font:400 1.02rem/2.2 "Noto Nastaliq Urdu",serif;padding:.7rem 2.6rem .7rem 1.2rem}
+html.ur .key::before{left:auto;right:.8rem}
+.trw{max-width:680px;margin:2.6rem auto 0}
+.trw p{color:#c9cfe0;font:500 1.14rem/1.7 "Cormorant Garamond",serif;margin:0 0 1rem}
+html.ur .trw p{font:400 1.02rem/2.2 "Noto Nastaliq Urdu",serif}
+.srcl{max-width:680px;margin:2.4rem auto 0;padding-top:1.1rem;border-top:1px solid rgba(224,184,98,.3);text-align:center;color:#a3adc8;font-size:.85rem}
+.srcl a{color:#e0b862}
+.nav2{display:flex;justify-content:space-between;gap:.8rem;max-width:680px;margin:2.4rem auto 0}
+.nav2 .ib{flex:1;height:auto;min-height:38px;padding:.55rem 1.1rem;border-radius:16px;justify-content:flex-start;text-align:start}
+.nav2 .ib:last-child{justify-content:flex-end;text-align:end}
+.nav2 small{display:block;color:#a3adc8;font-size:.7rem;letter-spacing:.15em;text-transform:uppercase}
+html.ur .nav2 small{letter-spacing:0}
+
+/* deputies */
+.tl{position:relative;margin:0 auto 3.4rem;max-width:900px;padding:2.4rem 0 1rem}
+.tl .track{position:relative;height:4px;border-radius:4px;background:linear-gradient(90deg,#e0b862 0%,#e0b862 64%,#d9a35a 64%,#d9a35a 94%,#2fbf9b 94%,#2fbf9b 100%);box-shadow:0 0 14px var(--glow)}
+.tl .m{position:absolute;top:2.4rem;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center}
+.tl .m i{display:block;width:14px;height:14px;border-radius:50%;background:var(--bg);border:2px solid var(--gold)}
+.tl .m b{position:absolute;top:-1.9rem;font:600 .95rem "Cormorant Garamond",serif;color:var(--gold);white-space:nowrap}
+.tl .m.m2 span{transform:translateX(-35%)}
+.tl .m.m3 span{top:2.7rem;transform:translateX(-30%)}
+.tl .m span{position:absolute;top:1.1rem;font-size:.72rem;color:var(--muted);white-space:nowrap;text-align:center;line-height:1.3}
+html.ur .tl .m span{font-family:"Noto Nastaliq Urdu",serif;line-height:1.9}
+.dg{display:grid;gap:1.1rem;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin-top:4.4rem}
+.dp{position:relative;text-align:center;padding:2.6rem 1.1rem 1.3rem;border-radius:120px 120px 18px 18px;border:1px solid var(--line);
+  background:radial-gradient(ellipse 80% 45% at 50% 0%,color-mix(in srgb,var(--gold) 16%,transparent),transparent 70%),var(--card);transition:transform .35s,box-shadow .35s}
+.dp:hover{transform:translateY(-6px);box-shadow:0 16px 40px var(--glow)}
+.dp .num{position:absolute;top:-22px;left:50%;translate:-50% 0;width:44px;height:44px;display:grid;place-items:center;color:var(--gold);font:700 1.1rem Amiri,serif}
+.dp .num::before,.dp .num::after{content:"";position:absolute;inset:5px;border:1px solid var(--gold);background:var(--bg)}
+.dp .num::after{transform:rotate(45deg)}
+.dp .num b{position:relative;z-index:1}
+.dp .lamp{width:46px;height:46px;margin:0 auto .4rem;filter:drop-shadow(0 0 10px var(--glow))}
+.dp .an{font:700 1.45rem/1.6 "Aref Ruqaa",Amiri,serif;color:var(--gold)}
+.dp h3{margin:.1rem 0 0;font:600 1.3rem/1.25 "Cormorant Garamond",serif}
+html.ur .dp h3{font:600 1.05rem/2 "Noto Nastaliq Urdu",serif}
+.dp .k{color:var(--muted);font-size:.85rem}
+.dp .role{margin:.6rem 0 .2rem;font:italic 500 1.05rem "Cormorant Garamond",serif;color:var(--gold2)}
+html.ur .dp .role{font:400 .9rem/2 "Noto Nastaliq Urdu",serif}
+.dp .span{font-size:.78rem;color:var(--muted)}
+.dp .open{margin-top:1rem;background:transparent;color:var(--gold);border:1px solid var(--gold);border-radius:99px;padding:.45rem 1.1rem;font:500 .85rem Inter,sans-serif;cursor:pointer;transition:.3s}
+.dp .open:hover,.dp.sel .open{background:var(--gold);color:var(--bg)}
+html.ur .dp .open{font-family:"Noto Nastaliq Urdu",serif;padding:.1rem 1.1rem}
+.story{max-width:760px;margin:2.2rem auto 0;border:1px solid var(--line);border-radius:22px;padding:clamp(1.3rem,4vw,2.4rem);background:linear-gradient(180deg,var(--card2),var(--card));scroll-margin-top:80px;animation:up .6s}
+.story[hidden]{display:none}
+.story .sh{display:flex;align-items:center;gap:.9rem;margin-bottom:1.2rem}
+.story .sh .an{font:700 1.7rem "Aref Ruqaa",Amiri,serif;color:var(--gold)}
+.story .sh h3{margin:0;font:600 1.6rem/1.2 "Cormorant Garamond",serif}
+html.ur .story .sh h3{font:600 1.2rem/2 "Noto Nastaliq Urdu",serif}
+.story .sh .k{color:var(--muted);font-size:.85rem}
+.q{margin:0 0 1.6rem;padding:1.3rem 1.4rem;border-radius:16px;background:rgba(224,184,98,.08);border:1px solid var(--line)}
+.q .ar{font:400 1.45rem/2.1 "Aref Ruqaa",Amiri,serif;color:var(--gold2);text-align:center;margin:0 0 .6rem}
+.q blockquote{margin:0;font:italic 500 1.2rem/1.55 "Cormorant Garamond",serif;text-align:center}
+html.ur .q blockquote{font:400 1.02rem/2.2 "Noto Nastaliq Urdu",serif}
+.q cite{display:block;text-align:center;color:var(--muted);font-size:.8rem;font-style:normal;margin-top:.5rem}
+.q cite a,.life a,.restb a{color:var(--gold)}
+.life{list-style:none;margin:0;padding:0}
+.life li{position:relative;padding:0 0 1.1rem 1.6rem;color:var(--text)}
+.life li::before{content:"";position:absolute;left:.2rem;top:.6rem;width:8px;height:8px;rotate:45deg;border:1px solid var(--gold)}
+html.ur .life li{padding:0 1.6rem 1.1rem 0}
+html.ur .life li::before{left:auto;right:.2rem}
+.life small,.restb small{display:block;color:var(--muted);font-size:.78rem;margin-top:.2rem}
+.restb{margin-top:.6rem;padding:1rem 1.2rem;border-radius:14px;border:1px dashed var(--line);color:var(--muted)}
+.restb b{color:var(--gold);font-weight:500}
+.final{margin:3rem auto 0;max-width:760px;text-align:center;padding:2.4rem 1.4rem;border-radius:24px;border:1px solid var(--gold);background:radial-gradient(circle at 50% 0%,var(--glow),transparent 70%),var(--card)}
+.final .ar{font:700 clamp(1.8rem,6vw,2.6rem)/1.7 "Aref Ruqaa",Amiri,serif;color:var(--gold);animation:pulse 4s ease-in-out infinite}
+@keyframes pulse{50%{text-shadow:0 0 24px var(--gold)}}
+.final p{color:var(--muted);max-width:56ch;margin:.6rem auto 0}
+.final a{color:var(--gold)}
+@media (max-width:560px){.reader .bar .lbl{display:none}.tl .m span{display:none}.tl{padding-bottom:0}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv,.hk,h1,.sub,.sheet{opacity:1!important;transform:none!important;translate:none!important}.cal text{fill:var(--gold);stroke-dashoffset:0}}
+</style>
+<script src="../assets/js/i18n.js"></script>
+</head>
+<body>
+<canvas id="stars"></canvas>
+<a class="back" href="../index.html" id="back">← Home</a>
+
+<header class="hero">
+  <svg class="geo" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-width=".6" aria-hidden="true">
+    <rect x="40" y="40" width="120" height="120"/><rect x="40" y="40" width="120" height="120" transform="rotate(45 100 100)"/>
+    <circle cx="100" cy="100" r="62"/><circle cx="100" cy="100" r="30"/>
+  </svg>
+  <svg class="cal" viewBox="0 0 640 160" role="img" aria-label="In the handwriting of our master"><text x="320" y="110" text-anchor="middle">بِخَطِّ مَوْلَانَا</text></svg>
+  <div class="hk" id="hk">Research &amp; Preservation Archive</div>
+  <h1 id="h1">Letters from the Hidden Imam</h1>
+  <p class="sub" id="sub">What the Imam of our time wrote during his occultation, and the four trusted men who carried his words.</p>
+</header>
+
+<main>
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" id="tL" aria-controls="letters" aria-selected="true">The Letters</button>
+    <button class="tab" role="tab" id="tD" aria-controls="deputies" aria-selected="false">The Four Deputies</button>
+  </div>
+  <section class="pane" id="letters" role="tabpanel" aria-labelledby="tL">
+    <p class="intro" id="lIntro"></p>
+    <div class="lt" id="lt"></div>
+  </section>
+  <section class="pane" id="deputies" role="tabpanel" aria-labelledby="tD" hidden>
+    <p class="intro" id="dIntro"></p>
+    <div class="tl" id="tl" aria-hidden="true"><div class="track"></div></div>
+    <div class="dg" id="dg"></div>
+    <div id="stories"></div>
+    <div class="final rv" id="final"></div>
+  </section>
+</main>
+
+<div class="reader" id="reader" role="dialog" aria-modal="true" aria-labelledby="rTitle">
+  <div class="bar">
+    <button class="ib" id="rClose" type="button" aria-label="Close">✕</button>
+    <span class="sp"></span>
+    <button class="ib" id="rShare" type="button"></button>
+  </div>
+  <article class="rd" id="rd"></article>
+</div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="rosette" viewBox="0 0 40 40"><g fill="none" stroke="currentColor" stroke-width="1.2"><rect x="9" y="9" width="22" height="22"/><rect x="9" y="9" width="22" height="22" transform="rotate(45 20 20)"/><circle cx="20" cy="20" r="6"/></g><circle cx="20" cy="20" r="2" fill="currentColor"/></symbol>
+  <symbol id="lamp" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"><path d="M24 4v6M18 10h12l3 6H15z"/><path d="M15 16c-3 8-2 16 9 22 11-6 12-14 9-22"/><path d="M20 38h8l-1 6h-6z"/></g><path d="M24 20c3 4 3 8 0 11-3-3-3-7 0-11z" fill="currentColor" opacity=".9"/></symbol>
+</svg>
+
+<script src="../assets/js/archive-data.js"></script>
+<script>
+(function(){
+"use strict";
+var UR=window.AZ_LANG==="ur",L=UR?"ur":"en",A=window.AZ_ARCHIVE;
+var T={
+ en:{home:"← Home",hk:"Research & Preservation Archive",h1:"Letters from the Hidden Imam",sub:"What the Imam of our time wrote during his occultation, and the four trusted men who carried his words.",
+  tl:"The Letters",td:"The Four Deputies",
+  lIntro:"During the Minor Occultation (260–329 AH) the Imam answered his followers in writing. The narrators say the replies came <b>“in his handwriting”</b>, the same hand they had known in his father's time. The papers themselves have not reached us; what reached us is their text, copied by trusted hands and preserved by al-Kulayni, al-Saduq and al-Tusi. Open a letter to read it.",
+  dIntro:"For almost seventy years, four men in Baghdad were the only door between the Imam and his followers. Each was named by the one before him at the Imam's command. Their story is told here from Shaykh al-Tusi's <b>Kitab al-Ghayba</b>.",
+  era1:"The Minor Occultation · 260–329 AH",era2:"The Major Occultation",
+  open:"Read his story",close:"Close",share:"Share",copied:"Link copied ✓",ctx:"About this letter",keys:"What it teaches",tr:"Translation",prev:"Previous",next:"Next",
+  cap:"The text as preserved in {src}. The original papers have not survived.",capT:"Passages as quoted in {src}.",
+  src:"Source",gh:"al-Ghayba (al-Tusi),",read:"Read on thaqalayn.net",rest:"Resting place",served:"Deputyship",duas:"Read the full ziyarat →",
+  m:[["260","Imam al-'Askari passes;<br>'Uthman ibn Sa'id"],["305","Muhammad ibn 'Uthman dies;<br>Husayn ibn Rawh"],["326","'Ali al-Samuri"],["329","Major Occultation"]],
+  fin:"With al-Samuri's last breath the door of deputyship closed. In his letter to Ishaq ibn Ya'qub the Imam had already told us where to turn: <a href=\"#ishaq\">“refer to the narrators of our hadith, for they are my proof over you”</a>."},
+ ur:{home:"← گھر",hk:"تحقیق و تحفظ کا آرشیو",h1:"پوشیدہ امام کے خطوط",sub:"ہمارے زمانے کے امام نے غیبت کے دوران کیا لکھا، اور وہ چار معتمد ہستیاں جنہوں نے ان کا کلام پہنچایا۔",
+  tl:"توقیعات",td:"چار نائبین",
+  lIntro:"غیبتِ صغریٰ (260–329 ہجری) کے دوران امام اپنے ماننے والوں کو تحریری جواب دیتے رہے۔ راوی کہتے ہیں کہ جواب <b>”ان کے اپنے ہاتھ کی تحریر میں“</b> آتے تھے، وہی تحریر جو وہ ان کے والد کے زمانے سے پہچانتے تھے۔ اصل کاغذ ہم تک نہیں پہنچے؛ ان کا متن پہنچا ہے، جسے معتمد ہاتھوں نے نقل کیا اور کلینی، صدوق اور طوسی نے محفوظ کیا۔ کوئی خط کھول کر پڑھیں۔",
+  dIntro:"تقریباً ستر برس تک بغداد کے چار افراد امام اور ان کے ماننے والوں کے درمیان واحد دروازہ رہے۔ ہر ایک کو امام کے حکم سے اس سے پہلے والے نے نامزد کیا۔ ان کی داستان یہاں شیخ طوسی کی <b>کتاب الغیبہ</b> سے بیان کی گئی ہے۔",
+  era1:"غیبتِ صغریٰ · 260–329 ہجری",era2:"غیبتِ کبریٰ",
+  open:"ان کی داستان پڑھیں",close:"بند کریں",share:"شیئر",copied:"لنک کاپی ہو گیا ✓",ctx:"اس خط کے بارے میں",keys:"اس کا پیغام",tr:"ترجمہ",prev:"پچھلا",next:"اگلا",
+  cap:"متن جیسا کہ {src} میں محفوظ ہے۔ اصل کاغذ باقی نہیں رہے۔",capT:"اقتباسات جیسا کہ {src} میں نقل ہوئے۔",
+  src:"ماخذ",gh:"الغیبہ (شیخ طوسی)،",read:"thaqalayn.net پر پڑھیں",rest:"آرام گاہ",served:"نیابت",duas:"مکمل زیارت پڑھیں ←",
+  m:[["260","رحلتِ امام عسکری؛<br>عثمان بن سعید"],["305","وفاتِ محمد بن عثمان؛<br>حسین بن روح"],["326","علی سمری"],["329","غیبتِ کبریٰ"]],
+  fin:"سمری کی آخری سانس کے ساتھ نیابت کا دروازہ بند ہو گیا۔ اسحاق بن یعقوب کے نام خط میں امام پہلے ہی بتا چکے تھے کہ کس کی طرف رجوع کریں: <a href=\"#ishaq\">”ہماری احادیث کے راویوں کی طرف رجوع کرو، کیونکہ وہ تم پر میری حجت ہیں“</a>۔"}
+}[L];
+var $=function(i){return document.getElementById(i)};
+function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function srcL(x){return UR?String(x).replace(/al-Ghayba \(al-Tusi\),?\s*/,"الغیبہ (شیخ طوسی)، ").replace(/nos?\.\s*/,"حدیث ").replace(/ch\.\s*/,"باب "):x}
+function indic(n){return String(n).replace(/\d/g,function(d){return"٠١٢٣٤٥٦٧٨٩"[d]})}
+var u=UR?" u":"";
+
+if(UR){document.documentElement.lang="ur";document.documentElement.classList.add("ur");document.title=T.hk}
+$("back").textContent=T.home;$("hk").textContent=T.hk;$("h1").textContent=T.h1;$("sub").textContent=T.sub;
+$("tL").textContent=T.tl;$("tD").textContent=T.td;$("lIntro").innerHTML=T.lIntro;$("dIntro").innerHTML=T.dIntro;
+$("rShare").textContent=T.share;$("rClose").setAttribute("aria-label",T.close);
+if(UR)["h1","sub","lIntro","dIntro","hk"].forEach(function(i){$(i).classList.add("u")});
+
+/* stars */
+(function(){var c=$("stars"),x=c.getContext("2d"),S=[],W,H;function size(){W=c.width=innerWidth;H=c.height=innerHeight;S=[];for(var i=0;i<100;i++)S.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.4+.3,v:Math.random()*.12+.02,p:Math.random()*6})}
+size();addEventListener("resize",size);var col=getComputedStyle(document.documentElement).getPropertyValue("--gold");
+function tick(t){x.clearRect(0,0,W,H);x.fillStyle=col;S.forEach(function(s){s.y-=s.v;if(s.y<0)s.y=H;x.globalAlpha=.2+.5*Math.abs(Math.sin(t/1600+s.p));x.beginPath();x.arc(s.x,s.y,s.r,0,6.3);x.fill()});requestAnimationFrame(tick)}
+if(!matchMedia("(prefers-reduced-motion: reduce)").matches)requestAnimationFrame(tick);else tick(0)})();
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}})},{threshold:.08});
+
+/* ---------- letters list ---------- */
+var LS=A.letters.slice().sort(function(a,b){return a.yr-b.yr});
+var h="",major=false;h+='<div class="era'+u+'">'+esc(T.era1)+'</div>';
+LS.forEach(function(l){
+ if(l.major&&!major){major=true;h+='<div class="era'+u+'">'+esc(T.era2)+'</div>'}
+ h+='<button class="env rv" type="button" data-id="'+l.id+'"><svg class="seal" style="color:var(--gold)"><use href="#rosette"/></svg>'+
+  '<span class="y">'+esc(UR?yearUr(l):l.year)+'</span><h3 class="'+(UR?"u":"")+'">'+esc(l.t[L])+'</h3><p class="to'+u+'">'+esc(l.to[L])+'</p>'+
+  '<span class="peek" lang="ar">'+esc(l.ar[0].replace(/^بسم الله الرحمن الرحيم\.?\s*/,"").replace(/^بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ\s*/,"").slice(0,90))+' …</span></button>'});
+$("lt").innerHTML=h;
+[].forEach.call(document.querySelectorAll(".env"),function(b){io.observe(b);b.onclick=function(){openLetter(b.dataset.id,true)}});
+function yearUr(l){return {doubters:"تقریباً 260 ہجری",ishaq:"دوسرے نائب کے ذریعے",condolence:"پہلے نائب کی وفات پر",son:"پہلے نائب کی وفات کے بعد",rawh:"6 شوال 305 ہجری",samuri:"شعبان 329 ہجری",himyari:"غیبتِ صغریٰ",mufid:"410 اور 412 ہجری"}[l.id]||l.year}
+
+/* ---------- letter reader ---------- */
+var R=$("reader"),RD=$("rd"),last=null;
+function hiAllah(s){return esc(s).replace(/(^|[\s،.(])((?:[وفب]?ال|ل)له(?:م)?)(?=[\s،.:)]|$)/g,'$1<span class="al">$2</span>')}
+function openLetter(id,push){var i=-1;LS.forEach(function(x,k){if(x.id===id)i=k});if(i<0)return;var l=LS[i];
+ var x='<div class="head"><div class="y">'+esc(UR?yearUr(l):l.year)+'</div><h2 id="rTitle" class="'+(UR?"u":"")+'">'+esc(l.t[L])+'</h2><p class="to'+u+'">'+esc(l.to[L])+'</p></div>';
+ x+='<div class="ctx'+u+'">'+esc(l.ctx[L])+'</div>';
+ var all=l.ar.join(""),voc=l.typed||(all.match(/[ً-ْ]/g)||[]).length>all.length*.15;
+ x+='<div class="sheet" lang="ar">';
+ l.ar.forEach(function(p,k){
+  var b=p.match(/^(بسم الله الرحمن الرحيم|بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ)\.?\s*/);
+  if(b){x+='<span class="bism">'+esc(b[1])+'</span>';p=p.slice(b[0].length)}
+  if(k>0)x+='<span class="gap" aria-hidden="true">· · ·</span>';
+  x+='<p class="tx'+(voc?" v":"")+'">'+hiAllah(p)+'</p>'});
+ x+='<svg class="stamp" style="color:#7a4d10" aria-hidden="true"><use href="#rosette"/></svg></div>';
+ x+='<p class="cap'+u+'">'+esc((l.typed?T.capT:T.cap).replace("{src}",l.src[L]))+'</p>';
+ if(l.keys&&l.keys.length){x+='<div class="keys"><h4>'+esc(T.keys)+'</h4>';l.keys.forEach(function(k){x+='<div class="key'+u+'">'+esc(k[L])+'</div>'});x+='</div>'}
+ x+='<div class="trw"><div class="trh">'+esc(T.tr)+'</div>';l.tr[L].forEach(function(p){x+='<p class="'+(UR?"u":"")+'">'+esc(p)+'</p>'});x+='</div>';
+ x+='<div class="srcl'+u+'"><b>'+esc(T.src)+':</b> '+esc(l.src[L])+(l.url?' · <a href="'+l.url+'" target="_blank" rel="noopener">'+esc(T.read)+'</a>':'')+(l.link?' · <a href="'+l.link+(UR?"":"")+'">'+esc(T.duas)+'</a>':'')+'</div>';
+ var pv=LS[i-1],nx=LS[i+1];
+ x+='<div class="nav2">'+(pv?'<button class="ib" type="button" data-go="'+pv.id+'"><span><small>'+esc(T.prev)+'</small><span class="'+(UR?"u":"")+'">'+esc(pv.t[L])+'</span></span></button>':'<span></span>')+(nx?'<button class="ib" type="button" data-go="'+nx.id+'"><span><small>'+esc(T.next)+'</small><span class="'+(UR?"u":"")+'">'+esc(nx.t[L])+'</span></span></button>':'')+'</div>';
+ RD.innerHTML=x;
+ [].forEach.call(RD.querySelectorAll("[data-go]"),function(b){b.onclick=function(){openLetter(b.dataset.go,true)}});
+ if(!R.classList.contains("open")){last=document.activeElement;R.classList.add("open");document.body.classList.add("locked")}
+ R.scrollTop=0;$("rClose").focus({preventScroll:true});
+ if(push&&location.hash!=="#"+id)history.pushState({l:id},"","#"+id);
+ document.title=l.t[L]+" · "+T.hk}
+function closeLetter(fromPop){if(!R.classList.contains("open"))return;R.classList.remove("open");document.body.classList.remove("locked");document.title=UR?T.hk:"Research & Preservation Archive";
+ if(!fromPop&&location.hash)history.pushState({},"",location.pathname+location.search);if(last&&last.focus)last.focus({preventScroll:true})}
+$("rClose").onclick=function(){closeLetter(false)};
+addEventListener("keydown",function(e){if(e.key==="Escape")closeLetter(false)});
+$("rShare").onclick=function(){var b=this;try{if(navigator.share){navigator.share({title:document.title,url:location.href});return}}catch(e){}
+ try{navigator.clipboard.writeText(location.href).then(function(){b.textContent=T.copied;setTimeout(function(){b.textContent=T.share},2000)})}catch(e){}};
+
+/* ---------- deputies ---------- */
+var pos=[0,64,94,100];
+var tl=$("tl");T.m.forEach(function(m,k){var d=document.createElement("div");d.className="m m"+k;d.style.left=pos[k]+"%";d.innerHTML='<b>'+m[0]+'</b><i></i><span>'+m[1]+'</span>';tl.appendChild(d)});
+var g="",st="";
+A.deputies.forEach(function(d){
+ g+='<div class="dp rv" id="dp-'+d.id+'"><span class="num"><b>'+indic(d.n)+'</b></span><svg class="lamp" style="color:var(--gold)"><use href="#lamp"/></svg>'+
+  '<div class="an" lang="ar">'+esc(d.ar)+'</div><h3 class="'+(UR?"u":"")+'">'+esc(d.name[L])+'</h3><div class="k'+u+'">'+esc(d.kunya[L])+'</div>'+
+  '<div class="role">'+esc(d.role[L])+'</div><div class="span'+u+'">'+esc(d.span[L])+'</div>'+
+  '<button class="open" type="button" data-d="'+d.id+'" aria-expanded="false" aria-controls="st-'+d.id+'">'+esc(T.open)+'</button></div>';
+ st+='<div class="story" id="st-'+d.id+'" hidden><div class="sh"><div class="an" lang="ar">'+esc(d.ar)+'</div><div><h3 class="'+(UR?"u":"")+'">'+esc(d.name[L])+'</h3><div class="k'+u+'">'+esc(d.kunya[L])+' · '+esc(T.served)+': '+esc(d.span[L])+'</div></div></div>'+
+  '<div class="q"><p class="ar" lang="ar">'+hiAllah(d.quote.ar)+'</p><blockquote class="'+(UR?"u":"")+'">'+esc(d.quote[L])+'</blockquote><cite class="'+(UR?"u":"")+'">'+esc(d.quote.who[L])+' · <a href="'+d.quote.url+'" target="_blank" rel="noopener">'+esc(srcL(d.quote.src))+'</a></cite></div>'+
+  '<ul class="life">'+d.life.map(function(x){return '<li class="'+(UR?"u":"")+'">'+esc(x[L])+'<small>'+esc(T.gh)+' <a href="'+x.url+'" target="_blank" rel="noopener">'+esc(srcL(x.src))+'</a></small></li>'}).join("")+'</ul>'+
+  '<div class="restb'+u+'"><b>'+esc(T.rest)+':</b> '+esc(d.rest[L])+'<small>'+esc(T.gh)+' <a href="'+d.rest.url+'" target="_blank" rel="noopener">'+esc(srcL(d.rest.src))+'</a></small></div></div>'});
+$("dg").innerHTML=g;$("stories").innerHTML=st;
+[].forEach.call(document.querySelectorAll(".dp"),function(x){io.observe(x)});
+[].forEach.call(document.querySelectorAll(".dp .open"),function(b){b.onclick=function(){
+ var id=b.dataset.d,s=$("st-"+id),was=!s.hidden;
+ [].forEach.call(document.querySelectorAll(".story"),function(y){y.hidden=true});
+ [].forEach.call(document.querySelectorAll(".dp"),function(y){y.classList.remove("sel");y.querySelector(".open").setAttribute("aria-expanded","false")});
+ if(!was){s.hidden=false;b.closest(".dp").classList.add("sel");b.setAttribute("aria-expanded","true");s.scrollIntoView({behavior:"smooth",block:"start"})}}});
+$("final").innerHTML='<div class="ar" lang="ar">لِلّٰهِ أَمْرٌ هُوَ بَالِغُهُ</div><p class="'+(UR?"u":"")+'">'+T.fin+'</p>';io.observe($("final"));
+$("final").querySelector("a").onclick=function(e){e.preventDefault();openLetter("ishaq",true)};
+
+/* ---------- tabs and deep links ---------- */
+function showTab(t){var d=t==="deputies";$("letters").hidden=d;$("deputies").hidden=!d;$("tL").setAttribute("aria-selected",!d);$("tD").setAttribute("aria-selected",d);
+ [].forEach.call(document.querySelectorAll("#"+(d?"deputies":"letters")+" .rv"),function(x){io.unobserve(x);io.observe(x)})}
+$("tL").onclick=function(){showTab("letters");if(location.hash==="#deputies")history.replaceState({},"",location.pathname+location.search)};
+$("tD").onclick=function(){showTab("deputies");history.replaceState({},"","#deputies")};
+addEventListener("popstate",function(){var h=location.hash.slice(1);if(h&&h!=="deputies"&&LS.some(function(x){return x.id===h}))openLetter(h,false);else closeLetter(true)});
+var h0=location.hash.slice(1);
+if(h0==="deputies")showTab("deputies");else if(LS.some(function(x){return x.id===h0}))openLetter(h0,false);
+})();
+</script>
+<script src="../assets/js/menu.js" defer></script>
+</body>
+</html>
