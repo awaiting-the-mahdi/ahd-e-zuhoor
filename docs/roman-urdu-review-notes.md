@@ -96,3 +96,11 @@ Working notes kept while writing the Roman Urdu from the online text of Allama J
 - 2:130 ملّاُ=ملت; 2:133 وقاُ=وقت; 2:154 مفِدہ=مردہ; 2:159,2:174 حُھپاتے=چھپاتے; 2:161 حالاُ=حالت; 2:164 مفِدہ=مردہ, لَسخر=مسخر; 2:173 مفِدار=مردار; 2:177 'and the prophets' (نبیین) missing in Urdu list — added 'aur ambiya'.
 - 2:187-189 Urdu in a different style with typos (ہو=وہ, معلام=معلوم) — likely substituted text; check printed Jawadi. 2:185 ماسِ=ماہ; 2:186 راسِ راست=راہ راست; 2:203 ذک»=ذکر; 2:216 اِرا=برا; 2:231-232 مدّاُ=مدت; 2:232 باعجُ=باعث; 2:235 اِردبار=بردبار.
 - 2:248 قدراُ=قدرت; 2:252 آیااُ=آیات; 2:255 کرس=کرسی, پبُ=پس, کِل=کل; 2:258 جلِتا=جلاتا; 2:260 مفِدوں=مردوں; 2:263 اِرد بار=بردبار; 2:271,2:283 حُھپا=چھپا; 2:282 مذِد=مرد; the end of 2:282 is cut off in the source ('...تو یہ اطاعت خدا سے نافرمانی') — Arabic continues 'and fear Allah; Allah teaches you; Allah knows all things'. Roman follows the truncated Urdu. 2:285 'kutub' (کتب) missing in Urdu list — added; صَنا=سنا.
+
+## Decisions (reviewed)
+
+- 85:6: kept as written.
+- 72:21: "na" added: "na kisi nuqsaan ka ikhtiyaar rakhta hoon aur na faaide ka".
+- 58:8: kept as written.
+- 41:47: Arabic "min akmamiha" = from their coverings (the sheaths of the blossoms); "ghilaafon se" kept.
+- 6:99: suggested reading "kuein" (wells) checked against the Arabic "nabata kulli shay'" (growth / vegetation of every kind). The Arabic is about plants, not wells, so "konplein" (shoots) kept for now.
