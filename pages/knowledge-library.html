@@ -414,6 +414,10 @@ $('#fp').onclick=function(){fs=Math.min(32,fs+2);$('#tx').style.setProperty('--f
 $('#th').onclick=function(){rd.classList.toggle('paper')};
 addEventListener('keydown',function(e){if(e.key=='Escape')close();if(rd.classList.contains('open')&&mode=='b'){if(e.key=='ArrowRight')flip(1);if(e.key=='ArrowLeft')flip(-1)}});
 $("#ls").onclick=listen;wire();layout();setTimeout(layout,300);
+/* deep link: knowledge-library.html#book=Al-Ghayba opens that book (matched by its PDF file name) */
+(function(){var m=/book=([\w-]+)/.exec(location.hash);if(!m)return;var k=m[1].toLowerCase(),i=-1;
+ BOOKS.forEach(function(b,j){if(i<0&&b.pdf&&b.pdf.toLowerCase().indexOf(k)>-1)i=j});
+ if(i>-1){go(i);setTimeout(function(){open(i)},400)}})();
 </script>
 <script src="../assets/js/menu.js"></script>
 </body>
