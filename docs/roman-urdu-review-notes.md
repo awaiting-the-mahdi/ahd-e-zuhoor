@@ -1,5 +1,7 @@
 # Roman Urdu review notes
 
+The same corrections are also made in the Urdu shown on the site (`assets/data/urdu/`, built with `tools/urdu-fixes/`). Where the Roman Urdu adds a gloss in English, the Urdu uses an Urdu word (9:94: عذر (بہانے)).
+
 Working notes kept while writing the Roman Urdu from the online text of Allama Jawadi's Urdu translation (api.alquran.cloud / tanzil.net). Each line records where the online Urdu had a typo, a gap or an unclear reading, and how the Roman Urdu handled it. To be checked against the printed Anwar-ul-Quran.
 
 - 72:21 possibly missing نہ

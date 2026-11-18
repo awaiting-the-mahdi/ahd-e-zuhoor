@@ -406,9 +406,12 @@ var ALLAH_RX=/(\u0644\u0650?\]?)\u0644(?:\u0651\u064E|\u064E\u0651)(\u0647[\u064
 function allahAlif(t){return String(t).replace(ALLAH_RX,"$1\u0644\u0651\u0670$2")}
 function load(n){
   if(cache[n])return Promise.resolve(cache[n]);
-  return fetch("https://api.alquran.cloud/v1/surah/"+n+"/editions/quran-uthmani,en.qarai,ur.jawadi").then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);return r.json()}).then(function(j){
+  /* Urdu: our corrected copy of Jawadi's translation (assets/data/urdu), falling back to the online text. */
+  var urFix=fetch("../assets/data/urdu/"+n+".json").then(function(r){if(!r.ok)throw 0;return r.json()}).catch(function(){return null});
+  return Promise.all([fetch("https://api.alquran.cloud/v1/surah/"+n+"/editions/quran-uthmani,en.qarai,ur.jawadi").then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);return r.json()}),urFix]).then(function(res){
+    var j=res[0],uf=Array.isArray(res[1])&&res[1].length===j.data[2].ayahs.length?res[1]:null;
     var ar=j.data[0].ayahs,en=j.data[1].ayahs,ur=j.data[2].ayahs;
-    var v=ar.map(function(a,i){return{n:a.numberInSurah,ar:allahAlif(a.text),en:en[i].text,ur:ur[i].text}});
+    var v=ar.map(function(a,i){return{n:a.numberInSurah,ar:allahAlif(a.text),en:en[i].text,ur:uf?uf[i]:ur[i].text}});
     // The API includes the basmala inside verse 1 of most surahs: show it separately.
     if(n!==1&&n!==9&&v.length){
       var plain=function(w){return w.replace(/[^\u0621-\u064A]/g,"").replace(/[\u0623\u0625\u0622\u0671]/g,"\u0627")};
