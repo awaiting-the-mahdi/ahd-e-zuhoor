@@ -68,8 +68,10 @@ html.az-ur .qn,html.az-ur .grp{letter-spacing:0}
 .q a{color:var(--gold)}
 .src{margin:12px 0 0;font-size:.68rem;color:var(--mut);line-height:1.4}
 @media (prefers-reduced-motion:reduce){.rc{transition:none}.q{transition:none}.ring,.rcs{animation:none}}
-html .az-lang{top:calc(20px + env(safe-area-inset-top,0px));bottom:auto;left:16px}
-@media(max-width:600px){html .az-lang{top:calc(15px + env(safe-area-inset-top,0px));left:14px}}
+html .az-lang{top:calc(94px + env(safe-area-inset-top,0px));bottom:auto;left:50%;transform:translateX(-50%);box-shadow:none;background:rgba(5,13,25,.55)}
+html .az-lang button{padding:3px 10px;font-size:12px}
+html .az-lang button[lang=ur]{padding:0 10px 3px}
+@media(max-width:600px){html .az-lang{top:calc(72px + env(safe-area-inset-top,0px))}}
 #err{display:none;position:fixed;inset:0;align-items:center;justify-content:center;text-align:center;padding:24px}
 </style>
 <script src="../assets/js/i18n.js"></script>

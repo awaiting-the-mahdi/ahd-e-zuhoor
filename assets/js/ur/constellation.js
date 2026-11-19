@@ -148,7 +148,7 @@ AZ_UR.add({
     "امام عسکری (ع) بھی یہی ہیبت رکھتے تھے۔ جب انہوں نے اپنے فرزند کو پیروکاروں کو دکھایا تو وہ بچہ سب سے زیادہ اُن سے مشابہ تھا۔",
   /* captions and notes with markup */
   "Tap a bright star · drag to turn · pinch to zoom<br>Tap a <span style=\"color:var(--gold)\">✦ prophet</span>, one of the Fourteen, or the Mahdi star, to see the resemblance":
-    "روشن ستارے کو چھوئیں · گھمانے کے لیے کھینچیں · زوم کے لیے چٹکی بھریں<br>مشابہت دیکھنے کے لیے <span style=\"color:var(--gold)\">✦ نبی</span>، چودہ معصومین میں سے کسی، یا مہدی کے ستارے کو چھوئیں",
+    "مشابہت دیکھنے کے لیے <span style=\"color:var(--gold)\">✦ نبی</span>، چودہ معصومین میں سے کسی، یا مہدی کے ستارے کو چھوئیں",
   "and its reflection in <b>Imam al-Mahdi (a.t.f.s.)</b>": "اور اس کا عکس <b>امام مہدی (عج)</b> میں",
   "Words quoted exactly from the English translations in the library: <i>Kamal al-Din</i> (Shaykh as-Saduq), <i>Mikyal al-Makarim</i> (Sayyid Muhammad Taqi Musavi Isfahani) and <i>Al-Ghayba</i> (Shaykh al-Tusi). Tap a page reference to open it.":
     "اقتباسات لائبریری میں موجود انگریزی ترجموں سے لفظ بہ لفظ لیے گئے ہیں: <i>کمال الدین</i> (شیخ صدوق)، <i>مکیال المکارم</i> (سید محمد تقی موسوی اصفہانی) اور <i>الغیبہ</i> (شیخ طوسی)۔ اردو اقتباسات ہمارا اپنا ترجمہ ہیں جو انگریزی ترجمے سے کیا گیا ہے، کسی شائع شدہ اردو ترجمے کے الفاظ نہیں؛ کتاب کے اصل الفاظ ہر اقتباس کے نیچے ”انگریزی متن“ میں موجود ہیں۔ صفحہ کھولنے کے لیے حوالے کو چھوئیں۔",
