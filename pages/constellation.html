@@ -54,6 +54,7 @@ body.rc-open .bot{visibility:hidden}
 .qs{display:grid;gap:10px}
 .qn{margin:0 0 8px;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold)}
 html.az-ur .sum:before{content:'خلاصہ · '}
+.sum.ro:before{content:'Khulasa · '}
 html.az-ur .rc,html.az-ur .rc .tags{direction:rtl}
 html.az-ur .q{border-left:0;border-right:2px solid var(--gold);border-radius:12px 0 0 12px}
 html.az-ur .rcx{float:left;margin:-6px 8px 0 -6px}
@@ -176,7 +177,7 @@ if(i==0){T.innerHTML='Whose qualities are found in him, according to the books. 
 var nm=function(t){return esc(t[1].replace(/^(Prophet|Imam|Lady) /,'').replace(/ \(.*$/,'').replace(/,.*$/,''));},h2='';
 S.forEach(function(t,j){if(!j||!RD[t[3]])return;var b='<button class="tag" data-j="'+j+'">'+nm(t)+'</button>';if(j<14)h+=b;else h2+=b;});
 G.innerHTML='<div class="grp">The Fourteen</div>'+h+'<div class="grp">The prophets (a.s.)</div>'+h2;}
-else{var r=RD[s[3]];T.innerHTML='and its reflection in <b>Imam al-Mahdi (a.t.f.s.)</b>';Sm.hidden=false;document.getElementById('rcN').hidden=false;Sm.textContent=r.sum;
+else{var r=RD[s[3]];T.innerHTML='and its reflection in <b>Imam al-Mahdi (a.t.f.s.)</b>';Sm.hidden=false;document.getElementById('rcN').hidden=false;var ro=window.AZ_RO&&r.sumRo;Sm.textContent=ro||r.sum;if(ro)Sm.setAttribute('data-no-ro','');else Sm.removeAttribute('data-no-ro');Sm.dir=ro?'ltr':'';Sm.classList.toggle('ro',!!window.AZ_RO);
 G.innerHTML=r.tags.map(function(t){return '<span class="tag">'+esc(t)+'</span>';}).join('');
 Q.innerHTML=r.q.map(function(q,k){return '<blockquote class="q" style="transition-delay:'+(.35+k*.12)+'s">'+(UR&&q.u?'<p class="uq" lang="ur" dir="rtl" data-ur>'+esc(q.u)+'</p><details data-no-ur><summary lang="ur" data-ur>انگریزی متن — کتاب کے الفاظ</summary><p lang="en" dir="ltr">'+esc(q.t)+'</p></details>':'<p lang="en" dir="ltr" data-no-ur>'+esc(q.t)+'</p>')+'<footer><span>'+esc(q.by)+'</span> · '+cite(q)+'</footer></blockquote>';}).join('');}
 rc.classList.remove('on');rc.hidden=false;rc.scrollTop=0;var b=rc.getBoundingClientRect();
