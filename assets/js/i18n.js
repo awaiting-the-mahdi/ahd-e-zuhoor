@@ -7,7 +7,8 @@
   (from index.html: assets/js/i18n.js).
 
   How it works
-  - The visitor's choice is kept in localStorage ("az-lang") and can be set with ?lang=ur or ?lang=en.
+  - The visitor's choice is kept in localStorage ("az-lang") and can be set with ?lang=en, ?lang=ur or ?lang=ro.
+  - The language picker shows only the chosen language; tapping it opens English / اردو / Roman.
   - In Urdu, the page loads assets/js/ur/common.js and assets/js/ur/<page>.js. Each calls
         AZ_UR.add({ "Exact English text": "اردو متن", ... })
     and optionally AZ_UR.patterns([ [/^Question (\d+) of (\d+)$/, "سوال $1 از $2"] ]).
@@ -68,12 +69,24 @@
 
   /* ---------- styles + button ---------- */
   var css =
-    ".az-lang{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom,0px));left:16px;z-index:1003;box-shadow:0 6px 20px rgba(0,0,0,.35);padding:3px;border-radius:99px;display:flex;gap:2px;" +
-    "border:1px solid rgba(215,188,128,.55);background:rgba(5,13,25,.82);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}" +
-    ".az-lang button{border:0;margin:0;background:none;color:#f3e2b5;cursor:pointer;padding:4px 11px;border-radius:99px;font:500 12.5px/1.4 Inter,system-ui,sans-serif;letter-spacing:0;text-transform:none}" +
-    ".az-lang button[lang=ur]{font-family:'Noto Nastaliq Urdu',serif;font-size:12.5px;line-height:1.4;padding:0 11px 4px}" +
-    ".az-lang button:hover{background:rgba(215,188,128,.12)}" +
-    ".az-lang button[aria-pressed=true]{background:rgba(215,188,128,.26);color:#fff;cursor:default}" +
+    ".az-lang{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom,0px));left:16px;z-index:1003}" +
+    ".az-lang button{border:0;margin:0;background:none;color:#f3e2b5;cursor:pointer;font:500 12.5px/1.4 Inter,system-ui,sans-serif;letter-spacing:0;text-transform:none}" +
+    ".az-lang button[lang=ur]{font-family:'Noto Nastaliq Urdu',serif;line-height:1.4}" +
+    ".az-lang .az-cur{display:inline-flex;align-items:center;gap:6px;padding:6px 13px;border-radius:99px;border:1px solid rgba(215,188,128,.55);background:rgba(5,13,25,.82);" +
+    "box-shadow:0 6px 20px rgba(0,0,0,.35);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}" +
+    ".az-lang .az-cur[lang=ur]{padding:2px 13px 6px}" +
+    ".az-lang .az-cur:hover{border-color:#e8c77d}" +
+    ".az-lang .az-cur i{font-style:normal;font-size:9px;opacity:.75;transition:transform .2s}" +
+    ".az-lang.open .az-cur i{transform:rotate(180deg)}" +
+    ".az-lang .az-cur[lang=ur] i{margin-top:5px}" +
+    ".az-lang .az-menu{position:absolute;left:0;bottom:calc(100% + 6px);min-width:100%;display:none;flex-direction:column;gap:2px;padding:4px;border-radius:14px;" +
+    "border:1px solid rgba(215,188,128,.55);background:rgba(5,13,25,.94);box-shadow:0 10px 30px rgba(0,0,0,.45);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}" +
+    ".az-lang.down .az-menu{bottom:auto;top:calc(100% + 6px)}" +
+    ".az-lang.open .az-menu{display:flex}" +
+    ".az-lang .az-menu button{text-align:left;padding:6px 14px;border-radius:10px;white-space:nowrap}" +
+    ".az-lang .az-menu button[lang=ur]{padding:2px 14px 6px}" +
+    ".az-lang .az-menu button:hover,.az-lang .az-menu button:focus-visible{background:rgba(215,188,128,.14);outline:none}" +
+    ".az-lang .az-menu button[aria-checked=true]{background:rgba(215,188,128,.26);color:#fff}" +
     "html.az-ur-wait body{opacity:0}" +
     "html.az-ur body{transition:opacity .25s}" +
     "html.az-ur [data-ur]{font-family:'Noto Nastaliq Urdu',serif!important;letter-spacing:0!important;text-transform:none!important;font-style:normal!important;line-height:1.95}" +
@@ -81,24 +94,45 @@
   var st = document.createElement("style"); st.textContent = css;
   (document.head || html).appendChild(st);
 
-  /* English | اردو | Roman */
+  /* language picker: shows the chosen language; tap it to see English, اردو and Roman */
   function addButton() {
     var old = document.getElementById("langBtn"); if (old) old.remove();
     if (document.querySelector(".az-lang")) return;
+    var OPTS = [["en", "English", "en", "Read in English"], ["ur", "اردو", "ur", "اردو میں پڑھیں"], ["ro", "Roman", "en", "Roman Urdu mein parhein"]];
+    var curO = OPTS.filter(function (o) { return o[0] === CHOICE; })[0] || OPTS[0];
     var box = document.createElement("div");
-    box.className = "az-lang"; box.setAttribute("role", "group"); box.setAttribute("aria-label", "Language");
-    box.setAttribute("data-no-ur", ""); box.setAttribute("data-no-ro", "");
-    [["en", "English", "en", "Read in English"], ["ur", "اردو", "ur", "اردو میں پڑھیں"], ["ro", "Roman", "en", "Roman Urdu mein parhein"]].forEach(function (o) {
+    box.className = "az-lang"; box.setAttribute("data-no-ur", ""); box.setAttribute("data-no-ro", "");
+    var cur = document.createElement("button");
+    cur.type = "button"; cur.className = "az-cur"; cur.lang = curO[2];
+    cur.setAttribute("aria-haspopup", "menu"); cur.setAttribute("aria-expanded", "false");
+    cur.setAttribute("aria-label", "Language: " + curO[1]);
+    cur.innerHTML = "<span></span><i aria-hidden=\"true\">▼</i>"; cur.firstChild.textContent = curO[1];
+    var menu = document.createElement("div");
+    menu.className = "az-menu"; menu.setAttribute("role", "menu");
+    OPTS.forEach(function (o) {
       var b = document.createElement("button");
       b.type = "button"; b.textContent = o[1]; b.lang = o[2]; b.setAttribute("aria-label", o[3]);
-      b.setAttribute("aria-pressed", CHOICE === o[0] ? "true" : "false");
+      b.setAttribute("role", "menuitemradio"); b.setAttribute("aria-checked", CHOICE === o[0] ? "true" : "false");
       b.addEventListener("click", function () {
+        close();
         if (CHOICE === o[0]) return;
         try { localStorage.setItem(KEY, o[0]); } catch (e) {}
         var u = new URL(location.href); u.searchParams.set("lang", o[0]); location.href = u.toString();
       });
-      box.appendChild(b);
+      menu.appendChild(b);
     });
+    function close() { box.classList.remove("open"); cur.setAttribute("aria-expanded", "false"); }
+    cur.addEventListener("click", function (e) {
+      e.stopPropagation();
+      if (box.classList.contains("open")) { close(); return; }
+      /* open downwards when the picker sits in the top half of the screen */
+      box.classList.toggle("down", cur.getBoundingClientRect().top < innerHeight / 2);
+      box.classList.add("open"); cur.setAttribute("aria-expanded", "true");
+      var on = menu.querySelector("[aria-checked=true]"); if (on) on.focus();
+    });
+    document.addEventListener("click", function (e) { if (!box.contains(e.target)) close(); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && box.classList.contains("open")) { close(); cur.focus(); } });
+    box.appendChild(menu); box.appendChild(cur);
     document.body.appendChild(box);
   }
 

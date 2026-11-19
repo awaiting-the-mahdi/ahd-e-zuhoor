@@ -73,9 +73,9 @@ html.az-ur .qn,html.az-ur .grp{letter-spacing:0}
 .src{margin:12px 0 0;font-size:.68rem;color:var(--mut);line-height:1.4}
 @media (prefers-reduced-motion:reduce){.rc{transition:none}.q{transition:none}.ring,.rcs{animation:none}}
 /* the language switch sits in the header, under the subtitle */
-html .top .az-lang{position:static;transform:none;display:inline-flex;margin:8px auto 0;pointer-events:auto;box-shadow:none;background:rgba(5,13,25,.55)}
-html .az-lang button{padding:3px 10px;font-size:12px}
-html .az-lang button[lang=ur]{padding:0 10px 3px}
+html .top .az-lang{position:relative;display:inline-block;margin:8px auto 0;pointer-events:auto}
+html .top .az-lang .az-cur{padding:4px 11px;font-size:12px;box-shadow:none;background:rgba(5,13,25,.55)}
+html .top .az-lang .az-cur[lang=ur]{padding:1px 11px 4px}
 #err{display:none;position:fixed;inset:0;align-items:center;justify-content:center;text-align:center;padding:24px}
 </style>
 <script src="../assets/js/i18n.js"></script>
