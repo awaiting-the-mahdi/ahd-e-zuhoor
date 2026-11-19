@@ -1,6 +1,6 @@
 /* Urdu — Knowledge Library (interface, books, chapter titles) */
 AZ_UR.add({
-  "The Muntazir Athenaeum": "منتظر کتب خانہ",
+  "The Muntazir Athenaeum": "کتب خانۂ منتظر",
   "Swipe, scroll or tap to browse the shelf": "شیلف دیکھنے کے لیے سوائپ، اسکرول یا ٹیپ کریں",
   "Hover or tap a book to see its threads · tap again to read": "کسی کتاب کے موضوعات دیکھنے کے لیے اس پر ٹیپ کریں · پڑھنے کے لیے دوبارہ ٹیپ کریں",
   "📜 Scroll mode": "📜 اسکرول انداز", "📖 Book style": "📖 کتابی انداز",

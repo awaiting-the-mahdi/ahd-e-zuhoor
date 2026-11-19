@@ -9,7 +9,7 @@ AZ_UR.add({
   "A GUIDED KNOWLEDGE ECOSYSTEM": "ایک رہنما علمی نظام",
   "KNOWLEDGE · RECOGNITION · PREPARATION": "علم · معرفت · تیاری",
   "AHD-E-<span>ZUHOOR</span>": "عہدِ <span>ظہور</span>",
-  "A journey through knowledge, towards recognition of the Imam of our time.": "علم کے راستے، اپنے زمانے کے امام کی معرفت کی طرف ایک سفر۔",
+  "A journey through knowledge, towards recognition of the Imam of our time.": "علم کے سہارے، معرفتِ امامِ زمانہ (عج) کی طرف ایک سفر۔",
   "EXPLORE NOW <span>↗</span>": "ابھی دریافت کریں <span>↗</span>",
   "Masjid al-Sahlah in Kufa, Iraq": "مسجدِ سہلہ، کوفہ، عراق"
 });
