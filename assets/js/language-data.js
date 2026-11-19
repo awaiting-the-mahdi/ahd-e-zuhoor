@@ -15,8 +15,11 @@
     dir      "rtl" for right-to-left scripts, "ltr" otherwise
     color    accent colour for the course
     tagline  one short line
-    scenes   role-play videos: list of { title, place, lines }
+    scenes   role-play videos: list of { title, place, voice, dialect, lines }
                place  library | garden | masjid  (the backdrop)
+               voice  optional: the dialect's voice code, when the video is in a spoken dialect
+                      (e.g. "ar-IQ" for Iraqi Arabic); otherwise the course voice
+               dialect optional: the dialect's name, shown on the video card
                lines  { k: "z" (Zahra) or "a" (Ali), t: the line in the course language,
                         tr: transliteration, en: English translation, q: Qur'an reference (see below) }
                       or { k, t: an English line, lang: "en" }
@@ -49,85 +52,29 @@ window.AZ_COURSES = [
       {
         "title": "In the Library",
         "place": "library",
+        "voice": "ar-IQ",
+        "dialect": "Iraqi Arabic",
         "lines": [
-          {
-            "k": "a",
-            "t": "السَّلامُ عَلَيْكُم يا زَهْراء.",
-            "tr": "as-salāmu ʿalaykum yā Zahrāʾ.",
-            "en": "Peace be upon you, Zahra."
-          },
-          {
-            "k": "z",
-            "t": "وَعَلَيْكُمُ السَّلام يا عَلِيّ.",
-            "tr": "wa ʿalaykumu s-salām yā ʿAlī.",
-            "en": "And peace be upon you, Ali."
-          },
-          {
-            "k": "a",
-            "t": "ماذا تَقْرَئين؟",
-            "tr": "mādhā taqraʾīn?",
-            "en": "What are you reading?"
-          },
-          {
-            "k": "z",
-            "t": "أَقْرَأُ كِتابًا عَنِ النُّجوم.",
-            "tr": "aqraʾu kitāban ʿani n-nujūm.",
-            "en": "I'm reading a book about the stars."
-          },
-          {
-            "k": "a",
-            "t": "هَلْ أَسْتَطيعُ أَنْ أَقْرَأَ مَعَكِ؟",
-            "tr": "hal astaṭīʿu an aqraʾa maʿaki?",
-            "en": "Can I read with you?"
-          },
-          {
-            "k": "z",
-            "t": "نَعَم، طَبْعًا!",
-            "tr": "naʿam, ṭabʿan!",
-            "en": "Yes, of course!"
-          },
-          {
-            "k": "a",
-            "t": "شُكْرًا يا زَهْراء.",
-            "tr": "shukran yā Zahrāʾ.",
-            "en": "Thank you, Zahra."
-          },
-          {
-            "k": "z",
-            "t": "عَفْوًا.",
-            "tr": "ʿafwan.",
-            "en": "You're welcome."
-          }
+          { "k": "a", "t": "السلام عليكم زهراء!", "tr": "as-salāmu ʿalaykum Zahrāʾ!", "en": "Peace be upon you, Zahra!" },
+          { "k": "z", "t": "وعليكم السلام علي! شلونك؟", "tr": "w-ʿalaykum is-salām ʿAli! shlōnak?", "en": "And peace be upon you, Ali! How are you?" },
+          { "k": "a", "t": "الحمد لله زين. شدتقرين؟", "tr": "il-ḥamdu lillāh zēn. shdatiqrīn?", "en": "Good, praise be to God. What are you reading?" },
+          { "k": "z", "t": "دا أقرا كتاب عن النجوم.", "tr": "da-aqra ktāb ʿan in-njūm.", "en": "I'm reading a book about the stars." },
+          { "k": "a", "t": "أگدر أقرا وياچ؟", "tr": "agdar aqra wiyyāch?", "en": "Can I read with you?" },
+          { "k": "z", "t": "إي أكيد! تفضّل اگعد.", "tr": "ī akīd! tfaḍḍal igʿid.", "en": "Yes, of course! Go ahead, sit down." },
+          { "k": "a", "t": "الله يخليچ زهراء.", "tr": "allah ykhallīch Zahrāʾ.", "en": "Thank you, Zahra (literally: may God keep you)." },
+          { "k": "z", "t": "تدلّل.", "tr": "tdallal.", "en": "You're most welcome (literally: be my honoured guest)." }
         ]
       },
       {
         "title": "In the Garden at Night",
         "place": "garden",
+        "voice": "ar-IQ",
+        "dialect": "Iraqi Arabic",
         "lines": [
-          {
-            "k": "z",
-            "t": "اُنْظُرْ يا عَلِيّ، السَّماءُ جَميلة!",
-            "tr": "unẓur yā ʿAlī, as-samāʾu jamīla!",
-            "en": "Look, Ali, the sky is beautiful!"
-          },
-          {
-            "k": "a",
-            "t": "نَعَم، وَالنُّجومُ كَثيرة.",
-            "tr": "naʿam, wa-n-nujūmu kathīra.",
-            "en": "Yes, and there are so many stars."
-          },
-          {
-            "k": "z",
-            "t": "سُبْحانَ الله!",
-            "tr": "subḥāna llāh!",
-            "en": "Glory be to God!"
-          },
-          {
-            "k": "a",
-            "t": "الحَمْدُ لِلّٰه عَلى هذا الجَمال.",
-            "tr": "al-ḥamdu lillāhi ʿalā hādhā l-jamāl.",
-            "en": "Praise be to God for this beauty."
-          }
+          { "k": "z", "t": "علي، باوع السما شگد حلوة!", "tr": "ʿAli, bāwiʿ is-sima shgadd ḥilwa!", "en": "Ali, look how beautiful the sky is!" },
+          { "k": "a", "t": "إي والله، والنجوم هواية!", "tr": "ī wallāh, w-in-njūm hwāya!", "en": "Yes, truly, and there are so many stars!" },
+          { "k": "z", "t": "سبحان الله!", "tr": "subḥān allāh!", "en": "Glory be to God!" },
+          { "k": "a", "t": "الحمد لله على هالجمال.", "tr": "il-ḥamdu lillāh ʿala hal-jamāl.", "en": "Praise be to God for all this beauty." }
         ]
       }
     ],
@@ -275,54 +222,14 @@ window.AZ_COURSES = [
         "title": "In the Library",
         "place": "library",
         "lines": [
-          {
-            "k": "a",
-            "t": "السلام علیکم زہرا!",
-            "tr": "assalāmu ʿalaikum Zahrā!",
-            "en": "Peace be upon you, Zahra!"
-          },
-          {
-            "k": "z",
-            "t": "وعلیکم السلام علی! آپ کیسے ہیں؟",
-            "tr": "waʿalaikum assalām Ali! āp kaise haiṅ?",
-            "en": "And peace be upon you, Ali! How are you?"
-          },
-          {
-            "k": "a",
-            "t": "میں ٹھیک ہوں، شکریہ۔ آپ کیا پڑھ رہی ہیں؟",
-            "tr": "maiṅ ṭhīk hūṅ, shukriya. āp kyā paṛh rahī haiṅ?",
-            "en": "I'm fine, thank you. What are you reading?"
-          },
-          {
-            "k": "z",
-            "t": "میں ستاروں کے بارے میں ایک کتاب پڑھ رہی ہوں۔",
-            "tr": "maiṅ sitāroṅ ke bāre meṅ ek kitāb paṛh rahī hūṅ.",
-            "en": "I'm reading a book about the stars."
-          },
-          {
-            "k": "a",
-            "t": "کیا میں آپ کے ساتھ پڑھ سکتا ہوں؟",
-            "tr": "kyā maiṅ āp ke sāth paṛh saktā hūṅ?",
-            "en": "Can I read with you?"
-          },
-          {
-            "k": "z",
-            "t": "جی ہاں، ضرور!",
-            "tr": "jī hāṅ, zarūr!",
-            "en": "Yes, of course!"
-          },
-          {
-            "k": "a",
-            "t": "شکریہ زہرا۔",
-            "tr": "shukriya Zahrā.",
-            "en": "Thank you, Zahra."
-          },
-          {
-            "k": "z",
-            "t": "کوئی بات نہیں۔",
-            "tr": "koī bāt nahīṅ.",
-            "en": "No problem."
-          }
+          { "k": "a", "t": "السلام علیکم زہرا!", "tr": "assalāmu ʿalaikum Zahra!", "en": "Peace be upon you, Zahra!" },
+          { "k": "z", "t": "وعلیکم السلام علی! کیسے ہو؟", "tr": "waʿalaikum assalām Ali! kaise ho?", "en": "And peace be upon you, Ali! How are you?" },
+          { "k": "a", "t": "میں ٹھیک ہوں، الحمدللہ۔ تم کیا پڑھ رہی ہو؟", "tr": "main ṭhīk hūn, alḥamdulillāh. tum kyā paṛh rahī ho?", "en": "I'm fine, praise be to God. What are you reading?" },
+          { "k": "z", "t": "ستاروں کے بارے میں ایک کتاب پڑھ رہی ہوں۔", "tr": "sitāron ke bāre mein ek kitāb paṛh rahī hūn.", "en": "I'm reading a book about the stars." },
+          { "k": "a", "t": "کیا میں بھی تمہارے ساتھ پڑھ لوں؟", "tr": "kyā main bhī tumhāre sāth paṛh lūn?", "en": "Can I read with you too?" },
+          { "k": "z", "t": "ہاں ہاں، کیوں نہیں! آؤ، بیٹھو۔", "tr": "hān hān, kyūn nahīn! āo, baiṭho.", "en": "Yes, of course, why not! Come, sit down." },
+          { "k": "a", "t": "بہت شکریہ زہرا۔", "tr": "bahut shukriya Zahra.", "en": "Thanks a lot, Zahra." },
+          { "k": "z", "t": "کوئی بات نہیں۔", "tr": "koī bāt nahīn.", "en": "No problem." }
         ]
       }
     ],
@@ -453,23 +360,23 @@ window.AZ_COURSE_ENGLISH = {
       "lines": [
         { "k": "a", "t": "Assalamu alaykum, Zahra!", "tr": "اَلسّلامُ علیکم، زہرا!", "en": "السلام علیکم، زہرا!" },
         { "k": "z", "t": "Wa alaykum assalam, Ali! How are you?", "tr": "وعلیکم السلام، علی! ہاؤ آر یو؟", "en": "وعلیکم السلام، علی! آپ کیسے ہیں؟" },
-        { "k": "a", "t": "I am fine, thank you. What are you reading?", "tr": "آئی ایم فائن، تھینک یو۔ وَٹ آر یو رِیڈنگ؟", "en": "میں ٹھیک ہوں، شکریہ۔ آپ کیا پڑھ رہی ہیں؟" },
-        { "k": "z", "t": "I am reading a book about the stars.", "tr": "آئی ایم رِیڈنگ اے بُک اَباؤٹ دی اسٹارز۔", "en": "میں ستاروں کے بارے میں ایک کتاب پڑھ رہی ہوں۔" },
-        { "k": "a", "t": "Can I read with you?", "tr": "کین آئی رِیڈ وِد یو؟", "en": "کیا میں آپ کے ساتھ پڑھ سکتا ہوں؟" },
-        { "k": "z", "t": "Yes, of course! Please sit down.", "tr": "یس، آف کورس! پلیز سِٹ ڈاؤن۔", "en": "جی ہاں، ضرور! براہِ کرم بیٹھ جائیں۔" },
-        { "k": "a", "t": "Thank you, Zahra.", "tr": "تھینک یو، زہرا۔", "en": "شکریہ، زہرا۔" },
-        { "k": "z", "t": "You are welcome.", "tr": "یو آر ویلکم۔", "en": "کوئی بات نہیں۔" }
+        { "k": "a", "t": "I'm good, thanks! What are you reading?", "tr": "آئم گُڈ، تھینکس! وَٹ آر یو رِیڈنگ؟", "en": "میں ٹھیک ہوں، شکریہ! آپ کیا پڑھ رہی ہیں؟" },
+        { "k": "z", "t": "It's a book about the stars.", "tr": "اِٹس اے بُک اَباؤٹ دی اسٹارز۔", "en": "یہ ستاروں کے بارے میں ایک کتاب ہے۔" },
+        { "k": "a", "t": "Can I read it with you?", "tr": "کین آئی رِیڈ اِٹ وِد یو؟", "en": "کیا میں بھی آپ کے ساتھ پڑھ سکتا ہوں؟" },
+        { "k": "z", "t": "Sure! Come and sit down.", "tr": "شیور! کَم اینڈ سِٹ ڈاؤن۔", "en": "ضرور! آئیں، بیٹھ جائیں۔" },
+        { "k": "a", "t": "Thanks, Zahra.", "tr": "تھینکس، زہرا۔", "en": "شکریہ، زہرا۔" },
+        { "k": "z", "t": "No problem!", "tr": "نو پرابلم!", "en": "کوئی بات نہیں!" }
       ]
     },
     {
       "title": "At the Masjid",
       "place": "masjid",
       "lines": [
-        { "k": "z", "t": "Look, Ali! The masjid is so beautiful.", "tr": "لُک، علی! دی مسجد اِز سو بیوٹیفُل۔", "en": "دیکھیں علی! مسجد کتنی خوبصورت ہے۔" },
-        { "k": "a", "t": "It is time to pray. Let us make wudu.", "tr": "اِٹ اِز ٹائم ٹو پرے۔ لیٹ اَس میک وضو۔", "en": "نماز کا وقت ہو گیا ہے۔ آئیں وضو کر لیں۔" },
-        { "k": "z", "t": "After the prayer, we will read the Qur'an.", "tr": "آفٹر دی پریئر، وی وِل رِیڈ دی قرآن۔", "en": "نماز کے بعد ہم قرآن پڑھیں گے۔" },
-        { "k": "a", "t": "And we will pray for Imam al-Mahdi.", "tr": "اینڈ وی وِل پرے فار امام المہدی۔", "en": "اور ہم امام مہدی کے لیے دعا کریں گے۔" },
-        { "k": "z", "t": "Yes. May Allah hasten his return.", "tr": "یس۔ مے اللہ ہیسن ہِز رِٹرن۔", "en": "جی ہاں۔ اللہ ان کے ظہور میں جلدی فرمائے۔" },
+        { "k": "z", "t": "Wow, look, Ali! The masjid is so beautiful.", "tr": "واؤ، لُک، علی! دی مسجد اِز سو بیوٹیفُل۔", "en": "واہ، دیکھیں علی! مسجد کتنی خوبصورت ہے۔" },
+        { "k": "a", "t": "It's time to pray. Let's go and make wudu.", "tr": "اِٹس ٹائم ٹو پرے۔ لیٹس گو اینڈ میک وضو۔", "en": "نماز کا وقت ہو گیا ہے۔ چلیں وضو کر لیں۔" },
+        { "k": "z", "t": "After salah, let's read some Qur'an.", "tr": "آفٹر صلاۃ، لیٹس رِیڈ سَم قرآن۔", "en": "نماز کے بعد تھوڑا قرآن پڑھتے ہیں۔" },
+        { "k": "a", "t": "And let's make dua for Imam al-Mahdi.", "tr": "اینڈ لیٹس میک دُعا فار امام المہدی۔", "en": "اور امام مہدی کے لیے دعا کرتے ہیں۔" },
+        { "k": "z", "t": "Yes! May Allah hasten his return.", "tr": "یس! مے اللہ ہیسن ہِز رِٹرن۔", "en": "جی ہاں! اللہ ان کے ظہور میں جلدی فرمائے۔" },
         { "k": "a", "t": "Ameen!", "tr": "آمین!", "en": "آمین!" }
       ]
     }

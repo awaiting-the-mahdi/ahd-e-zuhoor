@@ -18,6 +18,8 @@
   var VOICES = {
     /* Modern Standard / Hijazi Saudi Arabic */
     "ar-SA": { girl: "ar-SA-ZariyahNeural", boy: "ar-SA-HamedNeural" },
+    /* spoken Iraqi Arabic (the Arabic role-play videos) */
+    "ar-IQ": { girl: "ar-IQ-RanaNeural", boy: "ar-IQ-BasselNeural" },
     /* Tehrani Persian */
     "fa-IR": { girl: "fa-IR-DilaraNeural", boy: "fa-IR-FaridNeural" },
     /* Pakistani Urdu */
@@ -98,7 +100,7 @@
       });
     });
     (C.scenes || []).forEach(function (sc) {
-      sc.lines.forEach(function (l) { add(l.t, l.lang === "en" ? "en-GB" : native, WHO[l.k] || "girl"); });
+      sc.lines.forEach(function (l) { add(l.t, l.lang === "en" ? "en-GB" : (sc.voice || native), WHO[l.k] || "girl"); });
     });
     /* hero and tab greetings on the course page */
     [["girl", "Welcome to " + C.name + "! Watch an episode, take a quiz, or explore the vocabulary."],
