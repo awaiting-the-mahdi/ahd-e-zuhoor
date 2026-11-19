@@ -96,8 +96,8 @@ AZ_UR.add({
     "شیخ صدوق گزشتہ غیبتوں کا بیان حضرت ادریس (ع) سے شروع کرتے ہیں: وہ اتنی مدت پوشیدہ رہے کہ اُن کے پیروکار ایک ظالم کے ہاتھوں مصیبت میں رہے، اور نسل در نسل وعدہ شدہ نجات کا انتظار کرتے رہے۔",
   "Nuh shares the Imam's long life. His followers were also tested by repeated delays of the promised relief, until only a few stayed firm.":
     "حضرت نوح (ع) امام کی طرح طویل عمر رکھتے ہیں۔ اُن کے پیروکار بھی وعدہ شدہ نجات میں بار بار کی تاخیر سے آزمائے گئے، یہاں تک کہ تھوڑے ہی ثابت قدم رہے۔",
-  "Nuh foretold an occultation and a descendant, Hud, through whom victory would come. The believers waited so long that most of their hearts hardened.":
-    "حضرت نوح (ع) نے ایک غیبت اور اپنی اولاد میں سے ہود (ع) کی خبر دی جن کے ذریعے کامیابی آئے گی۔ مؤمنین نے اتنا طویل انتظار کیا کہ اکثر کے دل سخت ہو گئے۔",
+  "Hazrat Nuh (a.s.) gave the glad tidings of an occultation and of an heir from his progeny, Hazrat Hud (a.s.), through whom victory and divine help were to come. The believers waited so long that the hearts of most of them hardened.":
+    "حضرت نوح (ع) نے ایک غیبت اور اپنی نسل میں سے ایک وارث، حضرت ہود (ع)، کی بشارت دی، جن کے ذریعے فتح اور نصرت حاصل ہونی تھی۔ مومنین نے اتنا لمبا انتظار کیا کہ اُن میں سے اکثریت کے دل سخت ہو گئے۔",
   "Salih returned after his occultation and his people did not know his face. They had split into deniers, doubters and the firm, and only the firm believers knew him by the signs.":
     "حضرت صالح (ع) غیبت کے بعد لوٹے تو قوم نے اُن کا چہرہ نہ پہچانا۔ لوگ منکر، شک کرنے والے اور ثابت قدم، تین گروہوں میں بٹ چکے تھے، اور صرف ثابت قدم مؤمنوں نے نشانیوں سے انہیں پہچانا۔",
   "Ibrahim's pregnancy and birth were hidden from a tyrant searching for him, and he grew up out of sight. Saduq says this exactly resembles the occultation of the Qaim.":
