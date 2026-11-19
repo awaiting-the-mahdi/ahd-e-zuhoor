@@ -344,11 +344,7 @@ dialog.imam[open]{animation:up .6s cubic-bezier(.2,.8,.2,1)}
 .review{max-width:620px;margin:40px auto 0;font-size:.74rem;color:var(--dim);line-height:1.6}
 
 /* language switch */
-.lang{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom,0px));left:16px;z-index:1000;box-shadow:0 6px 20px rgba(0,0,0,.35);padding:7px 16px;border-radius:99px;border:1px solid var(--line);background:rgba(3,4,13,.6);color:var(--gold2);cursor:pointer;backdrop-filter:blur(8px);font:500 .95rem var(--sans)}
-.lang[lang=ur]{font-family:"Noto Nastaliq Urdu",serif;font-size:.8rem;line-height:1.7;padding:1px 14px}
-.lang[lang=en]{font-family:"Inter",system-ui,sans-serif;font-size:.78rem;line-height:1.4;padding:6px 14px}
 .hold .dot{left:auto;inset-inline-start:10px}
-.lang:hover{border-color:var(--gold)}
 /* listen */
 .say{display:inline-flex;align-items:center;gap:7px;margin:8px auto 4px;padding:5px 13px 5px 9px;border-radius:99px;border:1px solid rgba(232,199,125,.35);background:rgba(3,4,13,.45);color:var(--gold);cursor:pointer;font:500 .72rem var(--sans);letter-spacing:.08em}
 .say svg{width:16px;height:16px}
@@ -393,7 +389,6 @@ html[lang=ur] .life .val{right:auto;left:8px}
 <div class="bar" id="bar" aria-hidden="true"></div>
 
 <a class="back" href="academy.html">← Academy</a>
-<button class="lang" id="langBtn" type="button" lang="ur" aria-label="اردو میں پڑھیں">اردو</button>
 <nav class="rail" id="rail" aria-label="Journey chapters"></nav>
 
 <main>
@@ -638,7 +633,6 @@ function tt(k,v){var x=TEN[k];if(LANG==="ur"){var u=UR.t[k];if(u===undefined&&ty
 if(LANG==="ur"){
   document.documentElement.lang="ur";document.documentElement.dir="rtl";
   [].forEach.call(document.querySelectorAll("body *"),function(el){if(el.tagName==="SCRIPT")return;var k=el.innerHTML.trim();if(k&&UR.ui[k]!==undefined)el.innerHTML=UR.ui[k]});
-  var lb=document.getElementById("langBtn");lb.textContent="English";lb.lang="en";lb.setAttribute("aria-label","Read in English");
   document.title="پوشیدہ سورج";
 }
 var reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -888,11 +882,6 @@ document.addEventListener("click",function(e){var b=e.target.closest&&e.target.c
     for(var a=a0;a<=a1;a++)qList.push("https://everyayah.com/data/Alafasy_128kbps/"+String(s).padStart(3,"0")+String(a).padStart(3,"0")+".mp3");nextAyah()}
   else{try{var u=new SpeechSynthesisUtterance(b.dataset.say),vs=voices();u.lang=vs[0]?vs[0].lang:"ar-SA";if(vs[0])u.voice=vs[0];u.rate=.78;u.onend=u.onerror=resetSay;speechSynthesis.speak(u)}catch(err){resetSay()}}
 });
-
-/* ---------- language switch ---------- */
-$("langBtn").onclick=function(){var to=LANG==="ur"?"en":"ur";try{localStorage.setItem("az-lang",to)}catch(e){}
-  var on=null;chaps.forEach(function(c){if(c.getBoundingClientRect().top<innerHeight*.4)on=c.id});
-  var h=document.body.classList.contains("begun")&&on?"#"+on:"";location.href=location.pathname+"?lang="+to+h};
 
 /* ---------- reveal, rail, dawn ---------- */
 var io;
