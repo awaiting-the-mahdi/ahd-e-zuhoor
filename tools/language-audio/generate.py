@@ -42,6 +42,8 @@ async def record(item, sem):
                 return True
             except Exception as e:  # network hiccup: try again
                 if attempt == 3:
+                    if os.path.exists(dest + ".part"):
+                        os.remove(dest + ".part")
                     print("  FAIL", item["key"], item["voice"], item["text"][:50], "-", e, file=sys.stderr)
                 await asyncio.sleep(2 * (attempt + 1))
     return False
