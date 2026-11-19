@@ -326,11 +326,16 @@
 </div>
 
 <script src="../assets/js/language-data.js"></script>
+<script src="../assets/js/language-voice.js"></script>
+<script src="../assets/audio/lang/clips.js"></script>
+<script src="../assets/audio/quran/clips.js"></script>
 <script src="../assets/js/kids.js"></script>
 <script>
 (function(){
 "use strict";
-var V=AZ.voice, S=AZ.store;
+var V=AZ.voice, S=AZ.store, LV=window.AZ_LANGVOICE;
+/* language courses speak at the voices' natural pitch, so pronunciation stays authentic */
+V.natural=true;
 var params=new URLSearchParams(location.search);
 var cid=params.get("c")||S.get("lang-course","arabic");
 if(window.AZ_COURSE_ALIAS&&AZ_COURSE_ALIAS[cid])cid=AZ_COURSE_ALIAS[cid];
@@ -364,21 +369,16 @@ muteBtn.onclick=function(){V.setMuted(!V.muted);drawMute()};drawMute();
 
 var SPK='<svg viewBox="0 0 24 24" fill="#0b1033"><path d="M4 9h4l5-4v14l-5-4H4z"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12" stroke="#0b1033" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg>';
 
-/* which voice reads this language on this device: its own, else a close one (Persian: Urdu), else none */
-function speakLang(){if(C.voice.indexOf("en")===0||AZ.hasVoice(C.voice))return C.voice;
-  return (C.voiceAlt||[]).filter(function(l){return AZ.hasVoice(l)})[0]||null}
-var noVoiceShown=false;
-function noVoiceNote(){if(noVoiceShown)return;noVoiceShown=true;var d=document.createElement("div");
-  d.setAttribute("role","status");d.style.cssText="position:fixed;left:12px;right:12px;bottom:70px;max-width:520px;margin:0 auto;z-index:60;padding:12px 16px;border-radius:14px;background:rgba(8,14,40,.96);border:1.5px solid #ffc94d;color:#ffe7a8;font-weight:800;font-size:.9rem;text-align:center";
-  d.textContent="This device has no "+C.name+" voice, so the lines are shown, not read aloud. Read along with the transliteration, or add a "+C.name+" voice in your device's speech settings.";
-  document.body.appendChild(d);setTimeout(function(){d.remove()},9000)}
-/* say a line in the language: native or close voice; otherwise the transliteration in English, or (for Persian) silently */
-function sayNative(text,tr,o){o=o||{};var l=speakLang();
-  if(l)return V.say(text,{kid:o.kid,lang:l,who:o.who,slow:o.slow});
-  if(C.noTranslitVoice){noVoiceNote();if(o.kid)o.kid.talk(true);return AZ.sleep(Math.min(3500,600+String(tr||text).length*70)).then(function(){if(o.kid)o.kid.talk(false)})}
-  return V.say(AZ.plain(tr||text),{kid:o.kid,lang:"en-GB",who:o.who,slow:o.slow})}
-/* pronounce a word */
-function pron(w,o){return sayNative(w.w,w.tr,o)}
+/* can the native text itself be spoken: a native speaker's recording, or a native voice on the device */
+function canNative(text,who){return C.voice.indexOf("en")===0||AZ.hasRecording(text,C.voice,who)||AZ.hasVoice(C.voice)}
+/* pronounce a word in the native voice; only with neither a recording nor a native voice, read the transliteration */
+function pron(w,o){
+  o=o||{};
+  /* a Qur'anic word: the reciter's own recitation */
+  var rq=LV.quran(w.q);if(rq)return V.play(rq,{kid:o.kid,slow:o.slow});
+  var who=o.who||(o.kid&&o.kid.type)||"girl", native=canNative(w.w,who);
+  return V.say(native?w.w:AZ.plain(w.tr),{kid:o.kid,lang:native?C.voice:"en-GB",who:who,slow:o.slow});
+}
 
 /* hero */
 var hG=new AZ.Kid(document.getElementById("hG"),"girl"), hB=new AZ.Kid(document.getElementById("hB"),"boy");
@@ -428,7 +428,6 @@ var board=document.getElementById("board"), bw=document.getElementById("bw"), bt
 var caption=document.getElementById("caption"), seek=document.getElementById("seek"), bigPlay=document.getElementById("bigPlay"), pPlay=document.getElementById("pPlay");
 var starsStarted=false;
 var P={lines:[],i:0,playing:false,tok:0,lesson:0,scene:null,slow:false};
-var GREET={persian:["سلام","salām"],urdu:["السلام علیکم","assalāmu ʿalaikum"]}[C.id]||["السَّلامُ عَلَيْكُم","as-salāmu ʿalaykum"];
 
 /* ---- scene backdrops ---- */
 function rng(seed){return function(){seed=(seed*16807)%2147483647;return seed/2147483647}}
@@ -506,7 +505,7 @@ function openScene(si){
   var sc=C.scenes[si];
   AZ.sfx.tap();
   P.scene=si;P.lesson=-1;P.i=0;P.playing=false;P.tok++;
-  P.lines=sc.lines.map(function(l){return{k:l.k==="z"?"g":"b",t:l.t,tr:l.tr,en:l.en,lang:l.lang}});
+  P.lines=sc.lines.map(function(l){return{k:l.k==="z"?"g":"b",t:l.t,tr:l.tr,en:l.en,lang:l.lang,q:l.q}});
   document.getElementById("pTitle").innerHTML=sc.title+' <small>Role-play with Zahra &amp; Ali</small>';
   document.getElementById("backdrop").innerHTML=backdrop(sc.place);
   document.getElementById("placeChip").textContent=PLACE[sc.place]||sc.place;
@@ -516,27 +515,7 @@ function openScene(si){
   bigPlay.style.display="";showLine(0,true);drawPlay();
 }
 
-function buildScript(li){
-  var l=C.lessons[li], L=[];
-  L.push({k:"b",t:GREET[0],tr:GREET[1],en:"Peace be upon you!",state:"wave",title:true,native:true});
-  L.push({k:"g",text:"Welcome to "+C.name+", episode "+(li+1)+": "+l.title+".",title:true});
-  L.push({k:"g",text:"Today we'll learn "+l.words.length+" new words. Are you ready?",title:true});
-  L.push({k:"b",text:"Ready!",state:"cheer",title:true});
-  l.words.forEach(function(w,i){
-    var q=i%2?"b":"g", a=i%2?"g":"b";
-    L.push({k:q,text:"Here's word number "+(i+1)+".",w:w,show:1});
-    L.push({k:q,pron:true,w:w,show:1});
-    L.push({k:a,text:"Hmm... what does it mean?",state:"think",w:w,show:1});
-    L.push({k:q,text:"You say it like this: “"+w.tr+"”.",say:"You say it like this: "+AZ.plain(w.tr),w:w,show:2});
-    L.push({k:a,text:"Oh, I know! It means “"+w.m+"”!",state:"cheer",sfx:true,w:w,show:3});
-    if(w.tip)L.push({k:q,text:w.tip,w:w,show:3});
-    L.push({k:q,text:"Let's say it together!",w:w,show:3});
-    L.push({k:"both",pron:true,w:w,show:3});
-  });
-  L.push({k:"g",text:"Great job! Now try the quiz to remember these words.",state:"wave",end:true});
-  L.push({k:"b",text:"See you in the next episode!",state:"wave",end:true});
-  return L;
-}
+function buildScript(li){return LV.script(C,li)}
 function openPlayer(li){
   AZ.sfx.tap();
   P.lesson=li;P.scene=null;P.lines=buildScript(li);P.i=0;P.playing=false;P.tok++;
@@ -571,7 +550,7 @@ function showLine(i,silent){
   var txt=line.pron?wHTML(line.w)+(RTL||C.voice.indexOf("en")!==0||C.id==="english"?' <span style="color:var(--gold)">('+line.w.tr+')</span>':""):line.text;
   if(line.t){
     if(line.lang==="en")txt=line.t;
-    else txt='<bdi data-no-ur class="nat"'+(RTL?' lang="ar" dir="rtl"':'')+'>'+line.t+'</bdi>'+(line.tr?'<span class="ctr">'+line.tr+'</span>':'')+(line.en?'<span class="cen">'+line.en+'</span>':'');
+    else txt='<bdi data-no-ur class="nat"'+(RTL?' lang="ar" dir="rtl"':'')+'>'+line.t+'</bdi>'+(line.tr?'<span class="ctr">'+line.tr+'</span>':'')+(line.en?'<span class="cen">'+line.en+'</span>':'')+(LV.quran(line.q)?'<span class="ctr">Recited by Mishary Alafasy · Qur\'an '+line.q.split(":").slice(0,2).join(":")+'</span>':'');
   }
   caption.innerHTML='<span class="who '+(line.k==="b"?"boy":"")+'">'+who+'</span><span>'+txt+'</span>';
   if(silent)return;
@@ -594,9 +573,16 @@ function playFrom(i){
     if(line.pron){
       if(line.k==="both"){sB.talk(true);p=pron(line.w,{kid:sG,slow:P.slow}).then(function(){sB.talk(false)})}
       else p=pron(line.w,{kid:k,slow:P.slow});
+    }else if(line.t&&LV.quran(line.q)){
+      p=V.play(LV.quran(line.q),{kid:k,slow:P.slow});
     }else if(line.t){
-      p=line.lang==="en"?V.say(line.t,{kid:k,lang:"en-GB",slow:P.slow}):sayNative(line.t,line.tr,{kid:k,slow:P.slow});
-    }else p=V.say(line.say||line.text,{kid:k,slow:P.slow});
+      var isEn=line.lang==="en", nat=isEn||canNative(line.t,k?k.type:"girl");
+      p=V.say(isEn||nat?line.t:AZ.plain(line.tr||line.t),{kid:k,lang:isEn?"en-GB":(nat?C.voice:"en-GB"),slow:P.slow});
+    }else{
+      p=V.say(line.say||line.text,{kid:k,slow:P.slow});
+      /* "You say it like this:" is followed by the word itself, slowly, in the native voice */
+      if(line.slowPron)p=p.then(function(){return AZ.sleep(250)}).then(function(){if(tok===P.tok)return pron(line.w,{kid:k,slow:true})});
+    }
     p.then(function(){return AZ.sleep(line.pron||(line.t&&line.lang!=="en")?900:350)}).then(function(){if(tok!==P.tok)return;if(k&&line.state)k.set("");step(i+1)});
   })(i);
 }
@@ -628,7 +614,7 @@ var qsG=new AZ.Kid(document.getElementById("qsG"),"girl"), qsB=new AZ.Kid(docume
 
 var quiz=document.getElementById("quiz"), qBody=document.getElementById("qBody"), qFoot=document.getElementById("qFoot"), qMsg=document.getElementById("qMsg"), qCheck=document.getElementById("qCheck");
 var Q=null;
-var PRAISE=["Excellent!","Mashallah!","Brilliant!","Well done!","Amazing!","Super!"];
+var PRAISE=LV.PRAISE;
 function pool(){return qScope<0?ALL:C.lessons[qScope].words}
 function distract(w,n,key){
   var others=AZ.shuffle(ALL.filter(function(x){return x!==w&&x[key]!==w[key]}));
@@ -681,7 +667,7 @@ function renderQ(){
   var qk=document.getElementById("qk");
   if(qk){qKid=new AZ.Kid(qk,kidType);qk.classList.add("pop")}else qKid=null;
   [].forEach.call(qBody.querySelectorAll("[data-say]"),function(b){
-    b.onclick=function(){var w=q.w;if(b.dataset.say==="slow")sayNative(w.w,w.tr,{slow:true});else pron(w,{kid:qKid})};
+    b.onclick=function(){pron(q.w,{kid:qKid,slow:b.dataset.say==="slow"})};
   });
   if(q.type==="listen"||q.type==="meaning")setTimeout(function(){pron(q.w,{kid:qKid})},450);
   if(q.type==="match")bindMatch(q);

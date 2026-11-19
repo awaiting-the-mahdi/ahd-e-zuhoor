@@ -263,12 +263,19 @@
     var base = lang.split("-")[0].toLowerCase();
     var list = voices.filter(function (v) { return (v.lang || "").toLowerCase().replace("_", "-").indexOf(base) === 0; });
     if (!list.length) return null;
+    /* language courses: the device's copy of the cast's own native voice (e.g. Edge's "Microsoft Zariyah Online") */
+    var LV = window.AZ_LANGVOICE, cast = LV && LV.voiceFor(lang, gender || "girl");
+    if (cast) {
+      var nm = cast.split("-")[2].replace(/Neural$/, "").toLowerCase();
+      var same = list.filter(function (v) { return v.name.toLowerCase().indexOf(nm) >= 0; });
+      if (same.length) return same[0];
+    }
     var exact = list.filter(function (v) { return (v.lang || "").toLowerCase().replace("_", "-") === lang.toLowerCase(); });
     if (exact.length) list = exact.concat(list);
     if (gender) {
       var want = gender === "girl"
-        ? /female|woman|girl|child|kid|samantha|victoria|karen|moira|tessa|serena|zira|aria|jenny|ana|libby|sonia|maisie|zariyah|amina|salma|laila|layla|mona|hoda|mariam|maryam|amira|fatima|dilara|shirin|uzma|gul|google uk english female|google us english/i
-        : /male|man|boy|child|kid|daniel|alex|fred|oliver|guy|ryan|david|mark|thomas|hamed|majed|maged|tarik|naayf|shakir|bassel|omar|farid|asad|salman|google uk english male/i;
+        ? /female|woman|girl|child|kid|samantha|victoria|karen|moira|tessa|serena|zira|aria|jenny|ana|libby|sonia|maisie|zariyah|amina|salma|laila|mona|dilara|uzma|gul|google uk english female|google us english/i
+        : /male|man|boy|child|kid|daniel|alex|fred|oliver|guy|ryan|david|mark|thomas|hamed|majed|maged|tarik|naayf|farid|asad|salman|google uk english male/i;
       var avoid = gender === "girl" ? /\bmale\b|\bman\b/i : /female|woman/i;
       var hit = list.filter(function (v) { return want.test(v.name) && !avoid.test(v.name); });
       var kidV = hit.filter(function (v) { return /child|kid|ana\b|maisie/i.test(v.name); });
@@ -282,38 +289,85 @@
   }
   AZ.hasVoice = function (lang) { return !!pick(lang); };
 
+  /* recorded clips (language courses) */
+  var audioEl = null, audioFin = null;
+  function stopAll() {
+    if (synth) synth.cancel();
+    if (audioEl) { try { audioEl.pause(); } catch (e) {} audioEl = null; }
+    if (audioFin) { var f = audioFin; audioFin = null; f(); }
+  }
+  function playClip(url, slow, fin) {
+    try {
+      stopAll();
+      var a = new Audio(url);
+      a.preservesPitch = true; a.mozPreservesPitch = true; a.webkitPreservesPitch = true;
+      a.playbackRate = slow ? 0.72 : 1;
+      audioEl = a; audioFin = fin;
+      function end() { if (audioEl === a) { audioEl = null; audioFin = null; } fin(); }
+      a.onended = end; a.onerror = end;
+      var pr = a.play();
+      if (pr && pr.catch) pr.catch(end);
+      setTimeout(end, 20000);
+      return true;
+    } catch (e) { return false; }
+  }
+  AZ.hasRecording = function (text, lang, who) {
+    return !!(window.AZ_LANGVOICE && window.AZ_LANGVOICE.clip(text, lang, who || "girl"));
+  };
+
   AZ.voice = {
     get muted() { return muted; },
     setMuted: function (m) {
       muted = !!m;
       try { localStorage.setItem("az-muted", muted ? "1" : "0"); } catch (e) {}
-      if (muted && synth) synth.cancel();
+      if (muted) stopAll();
     },
-    stop: function () { if (synth) synth.cancel(); },
+    /* play(url, {kid, slow}) -> Promise: a recording (e.g. a Qur'an recitation), with the kid's mouth moving */
+    play: function (url, o) {
+      o = o || {};
+      var kid = o.kid;
+      return new Promise(function (res) {
+        var done = false;
+        function fin() { if (done) return; done = true; if (kid) kid.talk(false); res(); }
+        if (kid) kid.talk(true);
+        if (muted) { setTimeout(fin, 1500); return; }
+        if (!playClip(url, o.slow, fin)) setTimeout(fin, 1500);
+      });
+    },
+    /* natural: speak at the voice's own pitch (language courses, where pronunciation must be authentic) */
+    natural: false,
+    stop: function () { stopAll(); },
     /* say(text, {who:"girl"|"boy", lang:"en-GB", kid:Kid}) -> Promise */
     say: function (text, o) {
       o = o || {};
       var kid = o.kid, lang = o.lang || "en-GB", who = o.who || (kid && kid.type) || "girl";
+      /* language courses: a narration line written in Urdu is spoken by the Urdu voice */
+      if (!o.lang && window.AZ_LANGVOICE) lang = window.AZ_LANGVOICE.narrLang(text);
       /* site in Urdu: the guides speak their narration in Urdu when the device has an Urdu voice */
       if (window.AZ_LANG === "ur" && lang === "en-GB" && window.AZ_UR && pick("ur-PK")) {
         var ut = window.AZ_UR.t(text);
         if (ut !== text) { text = ut; lang = "ur-PK"; }
       }
       var est = Math.max(900, text.length * 62 + 500);
+      var natural = AZ.voice.natural;
+      var rec = window.AZ_LANGVOICE ? window.AZ_LANGVOICE.clip(text, lang, who) : null;
       return new Promise(function (res) {
         var done = false;
         function fin() { if (done) return; done = true; if (kid) kid.talk(false); res(); }
         if (kid) kid.talk(true);
-        if (muted || !synth) { setTimeout(fin, muted ? est * 0.8 : est); return; }
+        if (muted) { setTimeout(fin, est * 0.8); return; }
+        /* a native speaker's recording, when there is one */
+        if (rec && playClip(rec, o.slow, fin)) return;
+        if (!synth) { setTimeout(fin, est); return; }
         var u = new SpeechSynthesisUtterance(text);
         var v = pick(lang, who);
         if (v) u.voice = v;
         u.lang = v ? v.lang : lang;
         var isEn = lang.indexOf("en") === 0;
-        /* one voice for both guides on this device: make Zahra higher and Ali lower so they never sound the same */
+        /* one voice for both guides on this device: keep Zahra higher and Ali lower so they never sound the same */
         var same = !v || pick(lang, "girl") === pick(lang, "boy");
-        u.pitch = who === "girl" ? (same ? 1.9 : 1.85) : (same ? 1.05 : 1.6);
-        u.rate = (isEn ? 1.0 : 0.86) * (o.slow ? 0.7 : 1) * (same && who !== "girl" ? 0.94 : 1);
+        u.pitch = natural ? (who === "girl" ? (same ? 1.25 : 1.1) : (same ? 0.9 : 1.0)) : (who === "girl" ? (same ? 1.9 : 1.85) : (same ? 1.05 : 1.6));
+        u.rate = (isEn ? 1.0 : natural ? 0.92 : 0.86) * (o.slow ? 0.7 : 1);
         u.onend = fin;
         u.onerror = fin;
         setTimeout(fin, est * 2.6 + 2500);

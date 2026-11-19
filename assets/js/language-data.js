@@ -10,20 +10,30 @@
     name     course name shown everywhere
     native   the language's own name, in its own script
     glyph    one or two letters shown on the course badge
-    voice    browser speech language code used to pronounce words (e.g. "ar-SA")
+    voice    language code of the native voice (e.g. "ar-SA"); the voice cast is in language-voice.js.
+             After editing words or lines, run tools/language-audio/generate.py to record them.
     dir      "rtl" for right-to-left scripts, "ltr" otherwise
     color    accent colour for the course
     tagline  one short line
     scenes   role-play videos: list of { title, place, lines }
                place  library | garden | masjid  (the backdrop)
                lines  { k: "z" (Zahra) or "a" (Ali), t: the line in the course language,
-                        tr: transliteration, en: English translation }
+                        tr: transliteration, en: English translation, q: Qur'an reference (see below) }
                       or { k, t: an English line, lang: "en" }
     lessons  list of { title, words: [ { w, tr, m, tip } ] }
                w   the word in its own script
-               tr  transliteration (how to say it), shown and spoken if no native voice exists
+               tr  transliteration (how to say it), shown; spoken only if no native voice exists
                m   meaning
                tip optional extra sentence the kids say in the video
+               q   optional Qur'an reference (see below)
+
+  Qur'an recitation (q, on a scene line or a word)
+    The text is then played from a real reciter instead of a speech voice:
+      "1:2"         the whole verse (Surah 1, verse 2), recited by Mishary Alafasy
+      "2:5:4-5"     words 4 to 5 of that verse, cut from Alafasy's recitation of it
+      "1:2:3"       one word on its own, from Quran.com's word-by-word recitation
+    Word numbers are as on quran.com. After adding or changing one, run
+    tools/language-audio/quran.py to download it.
 */
 window.AZ_COURSES = [
   {
@@ -158,6 +168,7 @@ window.AZ_COURSES = [
           {
             "k": "a",
             "t": "بِسْمِ اللّٰهِ الرَّحْمَٰنِ الرَّحِيمِ",
+            "q": "1:1",
             "tr": "bismi llāhi r-raḥmāni r-raḥīm",
             "en": "In the name of Allah, the Most Gracious, the Most Merciful."
           },
@@ -174,6 +185,7 @@ window.AZ_COURSES = [
           {
             "k": "z",
             "t": "الْحَمْدُ لِلّٰهِ رَبِّ الْعَالَمِينَ",
+            "q": "1:2",
             "tr": "al-ḥamdu lillāhi rabbi l-ʿālamīn",
             "en": "All praise is for Allah, Lord of the worlds."
           },
@@ -192,13 +204,13 @@ window.AZ_COURSES = [
     ],
     lessons: [
       { title: "Words from Al-Fatiha", words: [
-        { w: "الْحَمْد", tr: "al-ḥamd", m: "All praise", tip: "Al-ḥamdu lillāh means: all praise belongs to Allah." },
-        { w: "رَبّ", tr: "rabb", m: "Lord", tip: "Rabb al-ʿālamīn means Lord of all the worlds." },
-        { w: "يَوْم", tr: "yawm", m: "Day" },
-        { w: "صِرَاط", tr: "ṣirāṭ", m: "Path", tip: "In Al-Fatiha we ask: guide us to the straight path, aṣ-ṣirāṭ al-mustaqīm." }
+        { w: "الْحَمْد", q: "1:2:1", tr: "al-ḥamd", m: "All praise", tip: "Al-ḥamdu lillāh means: all praise belongs to Allah." },
+        { w: "رَبّ", q: "1:2:3", tr: "rabb", m: "Lord", tip: "Rabb al-ʿālamīn means Lord of all the worlds." },
+        { w: "يَوْم", q: "1:4:2", tr: "yawm", m: "Day" },
+        { w: "صِرَاط", q: "1:7:1", tr: "ṣirāṭ", m: "Path", tip: "In Al-Fatiha we ask: guide us to the straight path, aṣ-ṣirāṭ al-mustaqīm." }
       ]},
       { title: "Common Qur'anic Words", words: [
-        { w: "هُدًى", tr: "hudā", m: "Guidance", tip: "The Qur'an calls itself hudan lil-muttaqīn, a guidance for the God-conscious." },
+        { w: "هُدًى", q: "20:10:18", tr: "hudā", m: "Guidance", tip: "The Qur'an calls itself hudan lil-muttaqīn, a guidance for the God-conscious." },
         { w: "رَحْمَة", tr: "raḥma", m: "Mercy" },
         { w: "سَمَاء", tr: "samāʾ", m: "Sky, heaven" },
         { w: "أَرْض", tr: "arḍ", m: "Earth" }
@@ -351,6 +363,7 @@ window.AZ_COURSES = [
           {
             "k": "a",
             "t": "مِنْ رَبِّهِمْ",
+            "q": "2:5:4-5",
             "tr": "mir-rabbihim",
             "en": "from their Lord"
           },
@@ -367,6 +380,7 @@ window.AZ_COURSES = [
           {
             "k": "a",
             "t": "مِنْ بَعْدِ",
+            "q": "2:27:5-6",
             "tr": "mim-baʿdi",
             "en": "after"
           },
@@ -383,6 +397,7 @@ window.AZ_COURSES = [
           {
             "k": "a",
             "t": "مِنْ هَادٍ",
+            "q": "13:33:38-39",
             "tr": "min hād",
             "en": "any guide"
           },
