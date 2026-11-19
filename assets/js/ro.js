@@ -82,6 +82,11 @@
       var sent = (capStart !== false && !/[A-Za-z0-9\u0600-\u06FF]/.test(all)) || /:\s*[“"]$/.test(all) ||
         (/[.?!]["”’)]?\s+["“(]?$/.test(all) && !/\([a-z.]+\)\s*$/.test(all));
       var r = word(parts[i], words[wi - 1] || null, words[wi + 1] || null, sent);
+      /* the prefix بے is written joined to its word: beshak, behad, beqarar */
+      if (words[wi] === "بے" && words[wi + 1] && !/^(میں|اور|کا|کی|کے|سے|ہے|ہیں|کو|پر|نے|تک)$/.test(words[wi + 1]) && /^[\s\u200c]+$/.test(parts[i + 1] || "")) {
+        var nx = word(parts[i + 2], "بے", words[wi + 2] || null, false);
+        r = (sent ? "Be" : "be") + nx.charAt(0).toLowerCase() + nx.slice(1); i += 2; wi++;
+      }
       if (r.charAt(0) === "(" && /\($/.test(out) && /^\)/.test(parts[i + 1] || "")) r = r.slice(1, -1);
       if (sent) r = r.charAt(0).toUpperCase() + r.slice(1);
       out += r; wi++;
