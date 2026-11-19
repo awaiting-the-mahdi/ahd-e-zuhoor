@@ -87,6 +87,8 @@ html .az-lang{top:calc(20px + env(safe-area-inset-top,0px));bottom:auto;left:16p
 <script>
 (function(){
 var N=124013,R=26,R0=5,GA=2.39996323;
+/* star labels shown on the sky where they differ from the internal key (s[3] keys the resemblance data) */
+var LBL={Prophet:'Muhammad (s.a.w.s.)'};
 var S=[[0,'Imam al-Mahdi (a.t.f.s.)','الإمام المهدي','Mahdi'],
 [1,'Holy Prophet Muhammad (s.a.w.a.)','النبي محمد','Prophet'],
 [2,'Lady Fatima al-Zahra (s.a.)','فاطمة الزهراء','Zahra'],
@@ -154,7 +156,7 @@ sc.add(new THREE.Mesh(pg,new THREE.ShaderMaterial({transparent:true,blending:THR
 vertexShader:'varying vec2 u;void main(){u=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
 fragmentShader:'varying vec2 u;void main(){float d=length(u-.5)*2.;vec3 c=mix(vec3(.5,.35,.1),vec3(.1,.15,.5),smoothstep(0.,.6,d));gl_FragColor=vec4(c,exp(-d*3.5)*.4*(1.-smoothstep(.8,1.,d)));}'})));
 var cap=document.getElementById('cap'),cntEl=document.getElementById('cnt'),labs=[];
-S.forEach(function(s,i){var d=document.createElement('div');d.className='l'+(i?(i<14?'':' p'):' m');d.innerHTML=i?s[3]:s[3]+'<i lang="ar" dir="rtl">'+s[2]+'</i>';document.body.appendChild(d);labs.push(d);});
+S.forEach(function(s,i){var d=document.createElement('div');d.className='l'+(i?(i<14?'':' p'):' m');d.innerHTML=i?(LBL[s[3]]||s[3]):s[3]+'<i lang="ar" dir="rtl">'+s[2]+'</i>';document.body.appendChild(d);labs.push(d);});
 var UR=window.AZ_LANG==='ur',vo=0,rc=document.getElementById('rc'),bl=document.getElementById('bl'),bl2=document.getElementById('bl2'),bd=document.getElementById('bd'),sel=-1,beamT=0;
 function esc(x){return String(x).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
 var BK={1:['Kamaluddin-Vol-1.pdf','Kamal al-Din, vol. 1'],2:['Kamaluddin-Vol-2.pdf','Kamal al-Din, vol. 2'],mk1:['Mikyal-al-Makarim-Vol-1.pdf','Mikyal al-Makarim, vol. 1'],gh:['Al-Ghayba.pdf','Al-Ghayba (Shaykh al-Tusi)']};

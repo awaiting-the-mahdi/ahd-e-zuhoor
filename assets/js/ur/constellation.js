@@ -9,7 +9,7 @@ AZ_UR.add({
   "Your browser could not start WebGL, which this page needs.": "آپ کا براؤزر WebGL شروع نہیں کر سکا، جس کی اس صفحے کو ضرورت ہے۔",
   "Tap a bright star · drag to turn · pinch to zoom": "روشن ستارے کو چھوئیں · گھمانے کے لیے کھینچیں · زوم کے لیے چٹکی بھریں",
   "Imam al-Mahdi (a.t.f.s.)": "امام مہدی (عج)", "Mahdi": "مہدی",
-  "Holy Prophet Muhammad (s.a.w.a.)": "رسولِ اکرم حضرت محمد (ص)", "Prophet": "رسولِ خدا",
+  "Holy Prophet Muhammad (s.a.w.a.)": "رسولِ اکرم حضرت محمد (ص)", "Prophet": "رسولِ خدا", "Muhammad (s.a.w.s.)": "محمد (ص)",
   "Lady Fatima al-Zahra (s.a.)": "بی بی فاطمہ زہرا (س)", "Zahra": "زہرا",
   "Imam Ali (a.s.)": "امام علی (ع)", "Ali": "علی",
   "Imam al-Hasan (a.s.)": "امام حسن (ع)", "Hasan": "حسن",
