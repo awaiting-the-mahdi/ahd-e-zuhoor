@@ -322,6 +322,18 @@
       try { localStorage.setItem("az-muted", muted ? "1" : "0"); } catch (e) {}
       if (muted) stopAll();
     },
+    /* play(url, {kid, slow}) -> Promise: a recording (e.g. a Qur'an recitation), with the kid's mouth moving */
+    play: function (url, o) {
+      o = o || {};
+      var kid = o.kid;
+      return new Promise(function (res) {
+        var done = false;
+        function fin() { if (done) return; done = true; if (kid) kid.talk(false); res(); }
+        if (kid) kid.talk(true);
+        if (muted) { setTimeout(fin, 1500); return; }
+        if (!playClip(url, o.slow, fin)) setTimeout(fin, 1500);
+      });
+    },
     /* natural: speak at the voice's own pitch (language courses, where pronunciation must be authentic) */
     natural: false,
     stop: function () { stopAll(); },
@@ -329,6 +341,8 @@
     say: function (text, o) {
       o = o || {};
       var kid = o.kid, lang = o.lang || "en-GB", who = o.who || (kid && kid.type) || "girl";
+      /* language courses: a narration line written in Urdu is spoken by the Urdu voice */
+      if (!o.lang && window.AZ_LANGVOICE) lang = window.AZ_LANGVOICE.narrLang(text);
       /* site in Urdu: the guides speak their narration in Urdu when the device has an Urdu voice */
       if (window.AZ_LANG === "ur" && lang === "en-GB" && window.AZ_UR && pick("ur-PK")) {
         var ut = window.AZ_UR.t(text);

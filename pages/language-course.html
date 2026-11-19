@@ -328,6 +328,7 @@
 <script src="../assets/js/language-data.js"></script>
 <script src="../assets/js/language-voice.js"></script>
 <script src="../assets/audio/lang/clips.js"></script>
+<script src="../assets/audio/quran/clips.js"></script>
 <script src="../assets/js/kids.js"></script>
 <script>
 (function(){
@@ -373,6 +374,8 @@ function canNative(text,who){return C.voice.indexOf("en")===0||AZ.hasRecording(t
 /* pronounce a word in the native voice; only with neither a recording nor a native voice, read the transliteration */
 function pron(w,o){
   o=o||{};
+  /* a Qur'anic word: the reciter's own recitation */
+  var rq=LV.quran(w.q);if(rq)return V.play(rq,{kid:o.kid,slow:o.slow});
   var who=o.who||(o.kid&&o.kid.type)||"girl", native=canNative(w.w,who);
   return V.say(native?w.w:AZ.plain(w.tr),{kid:o.kid,lang:native?C.voice:"en-GB",who:who,slow:o.slow});
 }
@@ -502,7 +505,7 @@ function openScene(si){
   var sc=C.scenes[si];
   AZ.sfx.tap();
   P.scene=si;P.lesson=-1;P.i=0;P.playing=false;P.tok++;
-  P.lines=sc.lines.map(function(l){return{k:l.k==="z"?"g":"b",t:l.t,tr:l.tr,en:l.en,lang:l.lang}});
+  P.lines=sc.lines.map(function(l){return{k:l.k==="z"?"g":"b",t:l.t,tr:l.tr,en:l.en,lang:l.lang,q:l.q}});
   document.getElementById("pTitle").innerHTML=sc.title+' <small>Role-play with Zahra &amp; Ali</small>';
   document.getElementById("backdrop").innerHTML=backdrop(sc.place);
   document.getElementById("placeChip").textContent=PLACE[sc.place]||sc.place;
@@ -547,7 +550,7 @@ function showLine(i,silent){
   var txt=line.pron?wHTML(line.w)+(RTL||C.voice.indexOf("en")!==0||C.id==="english"?' <span style="color:var(--gold)">('+line.w.tr+')</span>':""):line.text;
   if(line.t){
     if(line.lang==="en")txt=line.t;
-    else txt='<bdi data-no-ur class="nat"'+(RTL?' lang="ar" dir="rtl"':'')+'>'+line.t+'</bdi>'+(line.tr?'<span class="ctr">'+line.tr+'</span>':'')+(line.en?'<span class="cen">'+line.en+'</span>':'');
+    else txt='<bdi data-no-ur class="nat"'+(RTL?' lang="ar" dir="rtl"':'')+'>'+line.t+'</bdi>'+(line.tr?'<span class="ctr">'+line.tr+'</span>':'')+(line.en?'<span class="cen">'+line.en+'</span>':'')+(LV.quran(line.q)?'<span class="ctr">Recited by Mishary Alafasy · Qur\'an '+line.q.split(":").slice(0,2).join(":")+'</span>':'');
   }
   caption.innerHTML='<span class="who '+(line.k==="b"?"boy":"")+'">'+who+'</span><span>'+txt+'</span>';
   if(silent)return;
@@ -570,6 +573,8 @@ function playFrom(i){
     if(line.pron){
       if(line.k==="both"){sB.talk(true);p=pron(line.w,{kid:sG,slow:P.slow}).then(function(){sB.talk(false)})}
       else p=pron(line.w,{kid:k,slow:P.slow});
+    }else if(line.t&&LV.quran(line.q)){
+      p=V.play(LV.quran(line.q),{kid:k,slow:P.slow});
     }else if(line.t){
       var isEn=line.lang==="en", nat=isEn||canNative(line.t,k?k.type:"girl");
       p=V.say(isEn||nat?line.t:AZ.plain(line.tr||line.t),{kid:k,lang:isEn?"en-GB":(nat?C.voice:"en-GB"),slow:P.slow});

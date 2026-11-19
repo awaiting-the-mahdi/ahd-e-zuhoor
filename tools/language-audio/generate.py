@@ -23,13 +23,20 @@ def lines():
     return json.loads(subprocess.check_output(["node", js], cwd=ROOT))
 
 
+# behind an HTTPS proxy (HTTPS_PROXY), connect through it and trust its CA bundle (SSL_CERT_FILE)
+PROXY = os.environ.get("HTTPS_PROXY") or os.environ.get("https_proxy") or None
+if os.environ.get("SSL_CERT_FILE"):
+    import certifi
+    certifi.where = lambda: os.environ["SSL_CERT_FILE"]
+
+
 async def record(item, sem):
     import edge_tts
     dest = os.path.join(OUT, item["key"] + ".mp3")
     async with sem:
         for attempt in range(4):
             try:
-                await edge_tts.Communicate(item["text"], item["voice"]).save(dest + ".part")
+                await edge_tts.Communicate(item["text"], item["voice"], proxy=PROXY).save(dest + ".part")
                 os.replace(dest + ".part", dest)
                 print("  ok ", item["key"], item["voice"], item["text"][:50])
                 return True

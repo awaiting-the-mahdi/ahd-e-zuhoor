@@ -37,6 +37,9 @@
 
   function clean(text) { return String(text).normalize("NFC").replace(/\s+/g, " ").trim(); }
 
+  /* narration is English, except lines written wholly in Urdu script (the English course for Urdu speakers) */
+  function narrLang(text) { return /[\u0600-\u06FF]/.test(text) && !/[A-Za-z]/.test(text) ? "ur-PK" : "en-GB"; }
+
   /* FNV-1a over UTF-16 code units: the generator computes the same value in Python */
   function key(voice, text) {
     var s = voice + "|" + clean(text), h = 0x811c9dc5;
@@ -91,7 +94,7 @@
       script(C, li).forEach(function (line) {
         var who = WHO[line.k] || "girl";
         if (line.t) add(line.t, native, who);
-        else if (!line.pron) add(line.say || line.text, "en-GB", who);
+        else if (!line.pron) { var nt = line.say || line.text; add(nt, narrLang(nt), who); }
       });
     });
     (C.scenes || []).forEach(function (sc) {
@@ -125,5 +128,12 @@
     return have[k] ? base + k + ".mp3" : null;
   }
 
-  root.AZ_LANGVOICE = { VOICES: VOICES, PRAISE: PRAISE, voiceFor: voiceFor, key: key, clean: clean, greet: greet, script: script, utterances: utterances, clip: clip };
+  /* a real Qur'an recitation for a reference like "1:2" or "2:5:4-5" (see language-data.js), or null */
+  var qbase = base.replace(/lang\/$/, "quran/");
+  function quran(ref) {
+    var have = root.AZ_QURAN_CLIPS;
+    return ref && have && have[ref] && qbase ? qbase + String(ref).replace(/:/g, "_") + ".mp3" : null;
+  }
+
+  root.AZ_LANGVOICE = { VOICES: VOICES, quran: quran, narrLang: narrLang, PRAISE: PRAISE, voiceFor: voiceFor, key: key, clean: clean, greet: greet, script: script, utterances: utterances, clip: clip };
 })(typeof window !== "undefined" ? window : globalThis);
