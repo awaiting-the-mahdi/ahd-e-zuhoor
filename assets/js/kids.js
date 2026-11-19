@@ -274,8 +274,8 @@
     if (exact.length) list = exact.concat(list);
     if (gender) {
       var want = gender === "girl"
-        ? /female|woman|girl|child|kid|samantha|victoria|karen|moira|tessa|serena|zira|aria|jenny|ana|libby|sonia|maisie|zariyah|amina|salma|laila|mona|dilara|uzma|gul|google uk english female|google us english/i
-        : /male|man|boy|child|kid|daniel|alex|fred|oliver|guy|ryan|david|mark|thomas|hamed|majed|maged|tarik|naayf|farid|asad|salman|google uk english male/i;
+        ? /female|woman|girl|child|kid|samantha|victoria|karen|moira|tessa|serena|zira|aria|jenny|ana|libby|sonia|maisie|zariyah|amina|salma|laila|layla|mona|hoda|mariam|maryam|amira|fatima|dilara|shirin|uzma|gul|google uk english female|google us english/i
+        : /male|man|boy|child|kid|daniel|alex|fred|oliver|guy|ryan|david|mark|thomas|hamed|majed|maged|tarik|naayf|shakir|bassel|omar|farid|asad|salman|google uk english male/i;
       var avoid = gender === "girl" ? /\bmale\b|\bman\b/i : /female|woman/i;
       var hit = list.filter(function (v) { return want.test(v.name) && !avoid.test(v.name); });
       var kidV = hit.filter(function (v) { return /child|kid|ana\b|maisie/i.test(v.name); });
@@ -364,10 +364,13 @@
         if (v) u.voice = v;
         u.lang = v ? v.lang : lang;
         var isEn = lang.indexOf("en") === 0;
-        /* one voice for both guides on this device: keep Zahra higher and Ali lower so they never sound the same */
+        /* one voice for both guides on this device: make Zahra higher and Ali lower so they never sound the same */
         var same = !v || pick(lang, "girl") === pick(lang, "boy");
-        u.pitch = natural ? (who === "girl" ? (same ? 1.25 : 1.1) : (same ? 0.9 : 1.0)) : (who === "girl" ? (same ? 1.9 : 1.85) : (same ? 1.05 : 1.6));
-        u.rate = (isEn ? 1.0 : natural ? 0.92 : 0.86) * (o.slow ? 0.7 : 1);
+        /* natural (language courses): stay near the voice's own pitch so pronunciation stays authentic */
+        u.pitch = natural
+          ? (who === "girl" ? (same ? 1.25 : 1.1) : (same ? 0.9 : 1.0))
+          : (who === "girl" ? (same ? 1.9 : 1.85) : (same ? 1.05 : 1.6));
+        u.rate = (isEn ? 1.0 : natural ? 0.92 : 0.86) * (o.slow ? 0.7 : 1) * (same && who !== "girl" ? 0.94 : 1);
         u.onend = fin;
         u.onerror = fin;
         setTimeout(fin, est * 2.6 + 2500);
