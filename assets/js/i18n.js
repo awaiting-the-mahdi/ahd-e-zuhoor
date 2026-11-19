@@ -127,7 +127,8 @@
   var reveal = function () { html.classList.remove("az-ur-wait"); };
   setTimeout(reveal, 2500);
   /* Roman: load the word list and the romanizer; roman() runs once the Urdu is in place */
-  var roReady = RO ? load(BASE + "ro/words.js").then(function () { return load(BASE + "ro.js"); }) : null;
+  var RO_V = "3"; /* raise when ro.js or ro/words.js change, so browsers fetch the new files */
+  var roReady = RO ? load(BASE + "ro/words.js?v=" + RO_V).then(function () { return load(BASE + "ro.js?v=" + RO_V); }) : null;
   function roman() { if (!RO) return Promise.resolve(); return roReady.then(function () { if (window.AZ_ROMANIZE) window.AZ_ROMANIZE.start(); }); }
 
   var font = document.createElement("link");
