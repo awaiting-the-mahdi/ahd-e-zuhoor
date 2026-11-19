@@ -1,5 +1,7 @@
 /*
-  AHD-E-ZUHOOR — site-wide English / اردو switch.
+  AHD-E-ZUHOOR — site-wide English / اردو / Roman Urdu switch.
+  Roman (?lang=ro) builds the page in Urdu, then assets/js/ro.js writes it in Roman letters
+  (word list: assets/js/ro/words.js). The language courses stay in English in Roman mode.
 
   Load this file in the <head> of every page:  <script src="../assets/js/i18n.js"></script>
   (from index.html: assets/js/i18n.js).
@@ -24,12 +26,12 @@
     var q = null;
     try { q = new URLSearchParams(location.search).get("lang"); } catch (e) {}
     try {
-      if (q === "ur" || q === "en") { localStorage.setItem(KEY, q); return q; }
-      return localStorage.getItem(KEY) === "ur" ? "ur" : "en";
-    } catch (e) { return q === "ur" ? "ur" : "en"; }
+      if (q === "ur" || q === "en" || q === "ro") { localStorage.setItem(KEY, q); return q; }
+      var v = localStorage.getItem(KEY);
+      return v === "ur" || v === "ro" ? v : "en";
+    } catch (e) { return q === "ur" || q === "ro" ? q : "en"; }
   }
-  var LANG = readLang();
-  window.AZ_LANG = LANG;
+  var CHOICE = readLang();
 
   var me = document.currentScript;
   var BASE = me && me.src ? me.src.replace(/i18n\.js(\?.*)?$/, "") : "assets/js/";
@@ -37,6 +39,13 @@
   var PAGE = file.replace(/\.html?$/, "") || "index";
   var html = document.documentElement;
   var own = html.hasAttribute("data-own-i18n");
+  /* Roman Urdu: the page is built in Urdu and then written in Roman letters by assets/js/ro.js.
+     The language courses stay in English in Roman mode. */
+  var COURSE = /^(language-course|academy-languages)$/.test(PAGE);
+  var RO = CHOICE === "ro" && !COURSE;
+  var LANG = CHOICE === "ro" ? (COURSE ? "en" : "ur") : CHOICE;
+  window.AZ_LANG = LANG;
+  window.AZ_RO = RO;
 
   /* ---------- dictionary ---------- */
   var DICT = Object.create(null), HTMLD = Object.create(null), PATS = [];
@@ -59,11 +68,12 @@
 
   /* ---------- styles + button ---------- */
   var css =
-    ".az-lang{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom,0px));left:16px;z-index:1003;box-shadow:0 6px 20px rgba(0,0,0,.35);padding:6px 15px;border-radius:99px;" +
-    "border:1px solid rgba(215,188,128,.55);background:rgba(5,13,25,.82);color:#f3e2b5;cursor:pointer;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);" +
-    "font:500 13px/1.4 Inter,system-ui,sans-serif;letter-spacing:0}" +
-    ".az-lang[lang=ur]{font-family:'Noto Nastaliq Urdu',serif;font-size:13px;line-height:1.9;padding:1px 15px}" +
-    ".az-lang:hover{border-color:#e8c77d}" +
+    ".az-lang{position:fixed;bottom:calc(16px + env(safe-area-inset-bottom,0px));left:16px;z-index:1003;box-shadow:0 6px 20px rgba(0,0,0,.35);padding:3px;border-radius:99px;display:flex;gap:2px;" +
+    "border:1px solid rgba(215,188,128,.55);background:rgba(5,13,25,.82);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}" +
+    ".az-lang button{border:0;margin:0;background:none;color:#f3e2b5;cursor:pointer;padding:4px 11px;border-radius:99px;font:500 12.5px/1.4 Inter,system-ui,sans-serif;letter-spacing:0;text-transform:none}" +
+    ".az-lang button[lang=ur]{font-family:'Noto Nastaliq Urdu',serif;font-size:12.5px;line-height:1.4;padding:0 11px 4px}" +
+    ".az-lang button:hover{background:rgba(215,188,128,.12)}" +
+    ".az-lang button[aria-pressed=true]{background:rgba(215,188,128,.26);color:#fff;cursor:default}" +
     "html.az-ur-wait body{opacity:0}" +
     "html.az-ur body{transition:opacity .25s}" +
     "html.az-ur [data-ur]{font-family:'Noto Nastaliq Urdu',serif!important;letter-spacing:0!important;text-transform:none!important;font-style:normal!important;line-height:1.95}" +
@@ -71,43 +81,57 @@
   var st = document.createElement("style"); st.textContent = css;
   (document.head || html).appendChild(st);
 
+  /* English | اردو | Roman */
   function addButton() {
-    if (document.getElementById("langBtn") || document.querySelector(".az-lang")) return;
-    var b = document.createElement("button");
-    b.type = "button"; b.className = "az-lang";
-    if (LANG === "ur") { b.textContent = "English"; b.lang = "en"; b.setAttribute("aria-label", "Read in English"); }
-    else { b.textContent = "اردو"; b.lang = "ur"; b.setAttribute("aria-label", "اردو میں پڑھیں"); }
-    b.addEventListener("click", function () {
-      var to = LANG === "ur" ? "en" : "ur";
-      try { localStorage.setItem(KEY, to); } catch (e) {}
-      var u = new URL(location.href); u.searchParams.set("lang", to); location.href = u.toString();
+    var old = document.getElementById("langBtn"); if (old) old.remove();
+    if (document.querySelector(".az-lang")) return;
+    var box = document.createElement("div");
+    box.className = "az-lang"; box.setAttribute("role", "group"); box.setAttribute("aria-label", "Language");
+    box.setAttribute("data-no-ur", ""); box.setAttribute("data-no-ro", "");
+    [["en", "English", "en", "Read in English"], ["ur", "اردو", "ur", "اردو میں پڑھیں"], ["ro", "Roman", "en", "Roman Urdu mein parhein"]].forEach(function (o) {
+      var b = document.createElement("button");
+      b.type = "button"; b.textContent = o[1]; b.lang = o[2]; b.setAttribute("aria-label", o[3]);
+      b.setAttribute("aria-pressed", CHOICE === o[0] ? "true" : "false");
+      b.addEventListener("click", function () {
+        if (CHOICE === o[0]) return;
+        try { localStorage.setItem(KEY, o[0]); } catch (e) {}
+        var u = new URL(location.href); u.searchParams.set("lang", o[0]); location.href = u.toString();
+      });
+      box.appendChild(b);
     });
-    document.body.appendChild(b);
+    document.body.appendChild(box);
   }
 
   /* keep links inside the site in the chosen language even where storage is blocked */
   function keepLangInLinks() {
-    if (LANG !== "ur") return;
+    if (CHOICE === "en") return;
     [].forEach.call(document.querySelectorAll("a[href]"), function (a) {
       var h = a.getAttribute("href");
-      if (!h || /^(https?:|mailto:|tel:|#|javascript:)/i.test(h) || !/\.html?(#|$)/.test(h) || /[?&]lang=/.test(h)) return;
-      a.setAttribute("href", h.replace(/(\.html?)(#|$)/, "$1?lang=ur$2"));
+      if (!h || /^(https?:|mailto:|tel:|#|javascript:)/i.test(h)) return;
+      if (CHOICE === "ro" && /[?&]lang=ur\b/.test(h)) { a.setAttribute("href", h.replace(/([?&]lang=)ur\b/, "$1ro")); return; }
+      if (!/\.html?(#|$)/.test(h) || /[?&]lang=/.test(h)) return;
+      a.setAttribute("href", h.replace(/(\.html?)(#|$)/, "$1?lang=" + CHOICE + "$2"));
     });
   }
 
   function onReady(fn) { if (document.readyState !== "loading") fn(); else document.addEventListener("DOMContentLoaded", fn); }
 
-  if (LANG !== "ur") { onReady(addButton); return; }
+  if (LANG !== "ur") { onReady(function () { addButton(); keepLangInLinks(); }); return; }
 
   /* ---------- Urdu ---------- */
   /* On a page that translates itself, only the shared parts (the site menu) are translated here. */
   var SHARED = ".az-home-button,.az-menu-overlay";
-  html.classList.add("az-ur");
-  if (!own) { html.lang = "ur"; html.classList.add("az-ur-wait"); }
+  if (!RO) html.classList.add("az-ur");
+  if (!own && !RO) html.lang = "ur";
+  if (!own || RO) html.classList.add("az-ur-wait");
   var reveal = function () { html.classList.remove("az-ur-wait"); };
-  if (!own) setTimeout(reveal, 2500);
+  setTimeout(reveal, 2500);
+  /* Roman: load the word list and the romanizer; roman() runs once the Urdu is in place */
+  var roReady = RO ? load(BASE + "ro/words.js").then(function () { return load(BASE + "ro.js"); }) : null;
+  function roman() { if (!RO) return Promise.resolve(); return roReady.then(function () { if (window.AZ_ROMANIZE) window.AZ_ROMANIZE.start(); }); }
 
   var font = document.createElement("link");
+  if (RO) font.media = "print";
   font.rel = "stylesheet";
   font.href = "https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;600&family=Amiri:wght@400;700&display=swap";
   (document.head || html).appendChild(font);
@@ -122,10 +146,11 @@
   var INLINE = /^(B|STRONG|EM|I|SMALL|SPAN|BR|A|SUP|SUB|U|MARK)$/;
   /* letters used in Urdu but not in Arabic: Urdu text a page writes itself also gets the Urdu font */
   var URDU_CHARS = /[ٹڈڑںھہۂۃےۓ]/;
-  function markUr(el) { if (el && el.nodeType === 1 && !el.hasAttribute("lang")) { el.setAttribute("data-ur", ""); if (!el.hasAttribute("dir")) el.setAttribute("dir", "rtl"); } }
+  function markUr(el) { if (RO) return; if (el && el.nodeType === 1 && !el.hasAttribute("lang")) { el.setAttribute("data-ur", ""); if (!el.hasAttribute("dir")) el.setAttribute("dir", "rtl"); } }
   function doText(n) {
     var raw = n.nodeValue; if (!raw || !/[A-Za-z\u0600-\u06FF]/.test(raw)) return;
     var p = n.parentElement; if (!p || /^(SCRIPT|STYLE|TEXTAREA|CODE|PRE)$/.test(p.tagName) || p.closest("[data-no-ur]")) return;
+    if (RO && window.AZ_ROMANIZE && window.AZ_ROMANIZE.done(n)) return;
     var u = tr(norm(raw));
     if (u === null) { if (URDU_CHARS.test(raw) && !p.closest("[lang]:not([lang=ur])")) markUr(p); return; }
     var lead = raw.match(/^\s*/)[0], trail = raw.match(/\s*$/)[0];
@@ -134,6 +159,7 @@
   function doAttrs(el) {
     ["placeholder", "aria-label", "title", "alt"].forEach(function (a) {
       var v = el.getAttribute && el.getAttribute(a); if (!v || !/[A-Za-z]/.test(v)) return;
+      if (RO && window.AZ_ROMANIZE && window.AZ_ROMANIZE.doneAttr(el, a)) return;
       var u = tr(norm(v)); if (u !== null && u !== v) el.setAttribute(a, u);
     });
   }
@@ -174,6 +200,7 @@
       addButton();
       shared.then(function () {
         doShared(document.body); keepLangInLinks();
+        roman().then(reveal);
         new MutationObserver(function (muts) {
           if (busy) return;
           muts.forEach(function (m) {
@@ -200,7 +227,7 @@
       if (document.title) { var t = tr(norm(document.title)); if (t) document.title = t; }
       walk(document.body);
       keepLangInLinks();
-      reveal();
+      roman().then(reveal);
       new MutationObserver(function (muts) {
         if (busy) return;
         muts.forEach(function (m) {

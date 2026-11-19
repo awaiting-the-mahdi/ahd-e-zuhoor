@@ -115,9 +115,14 @@ select.pill{appearance:none;padding-right:30px;background:rgba(13,20,52,.85) url
 .verse{padding:16px 10px;border-bottom:1px solid var(--line);border-radius:14px;transition:background .4s,box-shadow .4s;scroll-margin-top:90px}
 .verse.now{background:linear-gradient(90deg,rgba(79,207,143,.14),transparent);box-shadow:inset 3px 0 0 var(--em);border-bottom-color:transparent}
 .va{font-family:"Amiri Quran",Amiri,serif;font-size:clamp(1.55rem,4.2vw,2rem);line-height:2.15;direction:rtl;text-align:right}
-.va .n{display:inline-grid;place-items:center;min-width:36px;height:36px;padding:0 4px;margin:0 8px;border-radius:50%;border:1.5px solid var(--gold);font-family:Nunito;font-size:.78rem;font-weight:900;color:var(--gold);vertical-align:middle;cursor:pointer;background:none}
+/* Indo-Pak script (text and font: QuranWBW / Quran.com, by Ayman Siddiqui and R. Siddiqua) */
+@font-face{font-family:"IndoPak";src:local("AlQuran IndoPak by QuranWBW"),url("../assets/fonts/indopak-nastaleeq.woff2") format("woff2"),url("../assets/fonts/indopak-nastaleeq.woff") format("woff");font-display:swap}
+.ip .va,.ip .bism,.ip .memo .va,.ip .tad .va,.ip .rec .va{font-family:"IndoPak","Amiri Quran",Amiri,serif;line-height:2.45;word-spacing:.05em}
+.ip .tj .va,.ip .rec.tjm .va{font-family:Amiri,serif;line-height:2.3}
+.va .n.pl{min-width:28px;height:28px;margin:0 6px;padding:0 0 0 2px}
+.va .n{display:inline-flex;direction:ltr;align-items:center;justify-content:center;min-width:36px;height:36px;padding:0 4px;margin:0 8px;border-radius:50%;border:1.5px solid var(--gold);font-family:Nunito;font-size:.78rem;font-weight:900;color:var(--gold);vertical-align:middle;cursor:pointer;background:none}
 .tr{margin-top:6px;font-size:1rem;font-weight:700;color:#e3e7fb;line-height:1.6}
-.tr.ur{font-family:"Noto Nastaliq Urdu",serif;direction:rtl;text-align:right;line-height:2.3;font-size:1.05rem;color:#d9ffe9}
+.tr.ur{font-family:"Noto Nastaliq Urdu","IndoPak",Amiri,serif;direction:rtl;text-align:right;line-height:2.3;font-size:1.05rem;color:#d9ffe9}
 .tr small{display:inline-block;margin-right:8px;font-size:.62rem;font-weight:900;letter-spacing:.12em;color:var(--mut);text-transform:uppercase;font-family:Nunito}
 .tr.ur small{margin-right:0;margin-left:8px}
 .tr.ro{color:#ffe7a8;font-style:italic}
@@ -265,6 +270,8 @@ select.pill{appearance:none;padding-right:30px;background:rgba(13,20,52,.85) url
       </div>
       <div class="pinfo" id="pinfo">Press play to listen</div>
       <label class="check"><input type="checkbox" id="follow" checked> Scroll with the recitation</label>
+      <span class="lab">Script</span>
+      <div class="opts" id="scOpts"><button class="tchip" type="button" data-sc="ip">Indo-Pak</button><button class="tchip" type="button" data-sc="uth">Uthmani</button></div>
       <span class="lab">Translations</span>
       <div class="opts" id="trOpts"></div>
       <div class="navs"><button type="button" id="prevS">← Previous</button><button type="button" id="nextS">Next →</button></div>
@@ -282,7 +289,7 @@ select.pill{appearance:none;padding-right:30px;background:rgba(13,20,52,.85) url
       <section class="panel tad" data-p="tad" id="pTad"></section>
       <section class="panel tj" data-p="tj" id="pTj"></section>
       <section class="panel rec" data-p="rec" id="pRec"></section>
-      <p class="credits">Arabic text: Uthmani script (Tanzil). English translation: Ali Quli Qarai. Urdu translation: Allama Syed Zeeshan Haider Jawadi. Text served by api.alquran.cloud; recitations and word timings from everyayah.com and Quran.com. Tajweed colours: Tanzil tajweed edition (Global Quran). Word-by-word meanings: Quran.com.</p>
+      <p class="credits">Arabic text: Indo-Pak script (Naskh Nastaleeq text and font by Ayman Siddiqui and R. Siddiqua for QuranWBW.com and Quran.com) and Uthmani script (Tanzil). English translation: Ali Quli Qarai. Urdu translation: Allama Syed Zeeshan Haider Jawadi. Text served by api.alquran.cloud; recitations and word timings from everyayah.com and Quran.com. Tajweed colours: Tanzil tajweed edition (Global Quran). Word-by-word meanings: Quran.com.</p>
     </main>
   </div>
 </section>
@@ -425,6 +432,13 @@ var TAF=window.AZ_TAFSEER_EN||{},hasTaf=Object.keys(TAF).length>0;
 var TR=[{id:"en",label:"English"},{id:"ur",label:"اردو"},{id:"ro",label:"Roman Urdu"}].concat(hasTaf?[{id:"tf",label:"Tafseer"}]:[]);
 var trOn=store("tr")||{en:true,ur:true,ro:true};if(trOn.tf===undefined)trOn.tf=true;
 var trOpts=document.getElementById("trOpts");
+/* script: Indo-Pak (default) or Uthmani. The tajweed colours exist only in Uthmani. */
+var SCRIPT=store("script")||"ip";
+function applyScriptClass(){document.documentElement.classList.toggle("ip",SCRIPT==="ip");document.querySelectorAll("#scOpts [data-sc]").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.sc===SCRIPT)})}
+function useScript(v){v.forEach(function(x){x.ar=SCRIPT==="ip"&&x.arI?x.arI:x.arU});v.bismAr=SCRIPT==="ip"&&v.ipOk?"بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِیْمِ":"بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ"}
+document.querySelectorAll("#scOpts [data-sc]").forEach(function(b){b.onclick=function(){if(SCRIPT===b.dataset.sc)return;SCRIPT=b.dataset.sc;store("script",SCRIPT);applyScriptClass();
+  if(S.verses.length){useScript(S.verses);renderRead();renderMemo();renderTad();if(document.getElementById("pRec").innerHTML){recStop();renderRec()}}}});
+applyScriptClass();
 TR.forEach(function(t){var b=document.createElement("button");b.type="button";b.className="tchip";b.textContent=t.label;
   if(t.soon){b.disabled=true;b.title="Roman Urdu translation coming soon";b.setAttribute("aria-pressed","false")}
   else{b.setAttribute("aria-pressed",!!trOn[t.id]);b.onclick=function(){trOn[t.id]=!trOn[t.id];store("tr",trOn);b.setAttribute("aria-pressed",trOn[t.id]);applyTr()}}
@@ -447,7 +461,8 @@ function load(n){
   if(cache[n])return Promise.resolve(cache[n]);
   /* Urdu: our corrected copy of Jawadi's translation (assets/data/urdu), falling back to the online text. */
   var urFix=fetch("../assets/data/urdu/"+n+".json").then(function(r){if(!r.ok)throw 0;return r.json()}).catch(function(){return null});
-  return Promise.all([fetch("https://api.alquran.cloud/v1/surah/"+n+"/editions/quran-uthmani,en.qarai,ur.jawadi").then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);return r.json()}),urFix]).then(function(res){
+  var ipTx=fetch("../assets/data/indopak/"+n+".json").then(function(r){if(!r.ok)throw 0;return r.json()}).catch(function(){return null});
+  return Promise.all([fetch("https://api.alquran.cloud/v1/surah/"+n+"/editions/quran-uthmani,en.qarai,ur.jawadi").then(function(r){if(!r.ok)throw new Error("HTTP "+r.status);return r.json()}),urFix,ipTx]).then(function(res){
     var j=res[0],uf=Array.isArray(res[1])&&res[1].length===j.data[2].ayahs.length?res[1]:null;
     var ar=j.data[0].ayahs,en=j.data[1].ayahs,ur=j.data[2].ayahs;
     var v=ar.map(function(a,i){return{n:a.numberInSurah,ar:allahAlif(a.text),en:en[i].text,ur:uf?uf[i]:ur[i].text}});
@@ -458,6 +473,8 @@ function load(n){
       if(words.length>4&&plain(words[0])==="بسم")v[0].ar=words.slice(4).join(" ");
       v.bism=true;
     }
+    var ip=Array.isArray(res[2])&&res[2].length===v.length?res[2]:null;v.ipOk=!!ip;
+    v.forEach(function(x,i){x.arU=x.ar;x.arI=ip?ip[i]:null});useScript(v);
     cache[n]=v;return v;
   });
 }
@@ -541,11 +558,13 @@ function tafHtml(vn){
     return '<div class="tr tf"><small>Tafseer'+(t.from!==t.to?' · verses '+t.from+'–'+t.to:'')+'</small><div class="tfx">'+
       String(t.text).split(/\n\s*\n/).map(function(p){return '<p>'+esc(p.trim())+'</p>'}).join("")+'</div><button class="more" type="button">Read more</button></div>'}).join("");
 }
+/* the verse button plays the verse: ▶ with the number in Uthmani; just ▶ in Indo-Pak, whose font draws the number */
+function vBtn(v,i){var ip=SCRIPT==="ip"&&v.arI;return '<button class="n'+(ip?' pl':'')+'" type="button" data-i="'+i+'" aria-label="Play verse '+v.n+'">'+(ip?'<svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4v16l13-8z"/></svg>':'<svg width="8" height="8" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="margin-right:3px"><path d="M7 4v16l13-8z"/></svg>'+v.n)+'</button>'}
 function renderRead(){
-  var h=S.verses.bism?'<div class="bism" lang="ar" dir="rtl">بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>':"";
+  var h=S.verses.bism?'<div class="bism" lang="ar" dir="rtl">'+(S.verses.bismAr||"بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ")+'</div>':"";
   var ro=(window.AZ_ROMAN||{})[S.n];
   h+='<p class="whint">Tap any Arabic word to see its meaning.</p>';
-  S.verses.forEach(function(v,i){h+='<div class="verse" id="v'+v.n+'"><div class="va" lang="ar">'+wordsHtml(v.ar)+' <button class="n" type="button" data-i="'+i+'" aria-label="Play verse '+v.n+'">'+v.n+'</button></div>'+
+  S.verses.forEach(function(v,i){h+='<div class="verse" id="v'+v.n+'"><div class="va" lang="ar">'+wordsHtml(v.ar)+' '+vBtn(v,i)+'</div>'+
     '<div class="tr en"><small>English</small>'+esc(v.en)+'</div><div class="tr ur" lang="ur"><small>اردو</small>'+esc(v.ur)+'</div>'+
     (ro&&ro[i]?'<div class="tr ro"><small>Roman Urdu</small>'+esc(ro[i])+'</div>':'')+tafHtml(v.n)+'</div>'});
   var p=document.getElementById("pRead");p.innerHTML=h;applyTr();
@@ -592,7 +611,7 @@ var level=0;
 function renderMemo(){
   var p=document.getElementById("pMemo");
   var h='<div class="controls"><b>Hide words:</b><button class="tchip" data-l="0" type="button">None</button><button class="tchip" data-l="1" type="button">Some</button><button class="tchip" data-l="2" type="button">Most</button><button class="tchip" data-l="3" type="button">All</button></div><p class="note">Recite from memory, then tap a hidden word to check it. Use the verse numbers to hear a verse again.</p>';
-  S.verses.forEach(function(v,i){h+='<div class="verse"><div class="va" lang="ar">'+v.ar.split(/\s+/).map(function(w,k){return '<span class="w" data-k="'+k+'">'+esc(w)+'</span>'}).join(" ")+' <button class="n" type="button" data-i="'+i+'">'+v.n+'</button></div></div>'});
+  S.verses.forEach(function(v,i){h+='<div class="verse"><div class="va" lang="ar">'+v.ar.split(/\s+/).map(function(w,k){return '<span class="w" data-k="'+k+'">'+esc(w)+'</span>'}).join(" ")+' '+vBtn(v,i)+'</div></div>'});
   p.innerHTML=h;
   p.querySelectorAll("[data-l]").forEach(function(b){b.onclick=function(){level=+b.dataset.l;applyMemo()}});
   p.querySelectorAll(".w").forEach(function(w){w.onclick=function(){if(w.classList.contains("hide")){w.classList.remove("hide");w.classList.add("shown")}}});
@@ -692,7 +711,7 @@ function playOne(i){stop();S.idx=i;setProg();audio.src=audioUrl(rec(),S.n,S.vers
    their recitation with the Qari's, rule by rule. */
 var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
 var RC={mode:store("rec-mode")||"plain",on:false,vi:0,wi:0,sr:null,mr:null,stream:null,chunks:[],clips:{},helped:0};
-function nrm(w){return String(w).replace(/[ؐ-ًؚ-ٰٟۖ-ۭـ]/g,"").replace(/[ٱأإآ]/g,"ا").replace(/ى/g,"ي").replace(/ة/g,"ه").replace(/ؤ/g,"و").replace(/ئ/g,"ي").replace(/ء/g,"").replace(/[^ء-ي]/g,"")}
+function nrm(w){return String(w).replace(/[یےۓ]/g,"ي").replace(/ک/g,"ك").replace(/[ہۃۂ]/g,"ه").replace(/[ؐ-ًؚ-ٰٟۖ-ۭـ]/g,"").replace(/[ٱأإآ]/g,"ا").replace(/ى/g,"ي").replace(/ة/g,"ه").replace(/ؤ/g,"و").replace(/ئ/g,"ي").replace(/ء/g,"").replace(/[^ء-ي]/g,"")}
 function lev(a,b){var m=a.length,n=b.length,d=[],i,j;for(i=0;i<=m;i++){d[i]=[i]}for(j=1;j<=n;j++)d[0][j]=j;for(i=1;i<=m;i++)for(j=1;j<=n;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return d[m][n]}
 /* Uthmani spelling differs from modern spelling (الصلوة / الصلاة): compare a looser form too */
 function loose(w){return w.replace(/و(?=ه$)/,"ا").replace(/ا/g,"").replace(/ي/g,"")}
@@ -723,7 +742,7 @@ function splitTj(t){return String(t).replace(/^\ufeff/,"").replace(/\u200c/g," "
 function buildRecVerses(tja){
   var n=S.n,tj=RC.mode==="tj",saved=store("rec-"+RC.mode+"-"+n)||{},h="";recWords=[];RC.clips={};
   S.verses.forEach(function(v,i){
-    var plain=v.ar.split(/\s+/).filter(function(w){return /[ء-يٱ-ۓ]/.test(w)}),parts=null,rules={};
+    var plain=(tj?(v.arU||v.ar):v.ar).split(/\s+/).filter(function(w){return /[ء-يٱ-ۓ]/.test(w)}),parts=null,rules={};
     if(tj&&tja&&tja[i]){parts=splitTj(tja[i]).filter(function(t){return /[\u0621-\u064A\u0671-\u06D3]/.test(t)});if(parts.length!==plain.length)parts=null}
     h+='<div class="rv2" id="rv-'+i+'"><div class="va" lang="ar">'+plain.map(function(w,k){var html=parts?tjHtml(parts[k],rules):esc(w);return '<span class="x h" data-v="'+i+'" data-k="'+k+'">'+html+'</span>'}).join(" ")+'</div>'+
       '<div class="vfoot"><button class="tchip" type="button" data-play="'+i+'">▶ Qari · verse '+v.n+'</button>'+(tj?'<button class="tchip" type="button" data-mine="'+i+'" hidden>▶ My recitation</button>':'')+'<span class="vs" style="font-weight:800;font-size:.8rem;color:var(--mut)"></span></div>'+

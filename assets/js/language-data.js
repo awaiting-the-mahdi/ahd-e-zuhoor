@@ -223,6 +223,10 @@ window.AZ_COURSES = [
     native: "فارسی",
     glyph: "فا",
     voice: "fa-IR",
+    /* most devices have no Persian voice: an Urdu voice reads the same script closely.
+       With neither, the lines are not read out in English; the transliteration is shown instead. */
+    voiceAlt: ["ur-PK", "ur-IN", "ur"],
+    noTranslitVoice: true,
     dir: "rtl",
     color: "#a78bfa",
     tagline: "A language of poetry and scholarship",
@@ -231,63 +235,23 @@ window.AZ_COURSES = [
         "title": "In the Library",
         "place": "library",
         "lines": [
-          {
-            "k": "a",
-            "t": "سلام زهرا!",
-            "tr": "salām Zahrā!",
-            "en": "Hello Zahra!"
-          },
-          {
-            "k": "z",
-            "t": "سلام علی! حالت چطوره؟",
-            "tr": "salām Ali! hālet chetore?",
-            "en": "Hi Ali! How are you?"
-          },
-          {
-            "k": "a",
-            "t": "خوبم، ممنون. چی می‌خونی؟",
-            "tr": "khubam, mamnun. chi mikhuni?",
-            "en": "I'm good, thanks. What are you reading?"
-          },
-          {
-            "k": "z",
-            "t": "یه کتاب درباره‌ی ستاره‌ها می‌خونم.",
-            "tr": "ye ketāb darbāre-ye setāre-hā mikhunam.",
-            "en": "I'm reading a book about the stars."
-          },
-          {
-            "k": "a",
-            "t": "می‌تونم با تو بخونم؟",
-            "tr": "mitunam bā to bekhunam?",
-            "en": "Can I read with you?"
-          },
-          {
-            "k": "z",
-            "t": "آره، حتماً!",
-            "tr": "āre, hatman!",
-            "en": "Yes, of course!"
-          },
-          {
-            "k": "a",
-            "t": "مرسی زهرا.",
-            "tr": "mersi Zahrā.",
-            "en": "Thanks, Zahra."
-          },
-          {
-            "k": "z",
-            "t": "خواهش می‌کنم.",
-            "tr": "khāhesh mikonam.",
-            "en": "You're welcome."
-          }
+          { "k": "a", "t": "سلام زهرا!", "tr": "salām Zahrā!", "en": "Hello Zahra!" },
+          { "k": "z", "t": "سلام علی جان! حالت چطوره؟", "tr": "salām Ali jān! hālet chetore?", "en": "Hi Ali, dear! How are you?" },
+          { "k": "a", "t": "خوبم، الحمدلله. چی می‌خونی؟", "tr": "khubam, alhamdolellāh. chi mikhuni?", "en": "I'm well, praise be to God. What are you reading?" },
+          { "k": "z", "t": "یه کتاب درباره‌ی ستاره‌ها می‌خونم.", "tr": "ye ketāb darbāre-ye setāre-hā mikhunam.", "en": "I'm reading a book about the stars." },
+          { "k": "a", "t": "می‌شه منم باهات بخونم؟", "tr": "mishe manam bāhāt bekhunam?", "en": "May I read it with you too?" },
+          { "k": "z", "t": "آره، حتماً! بیا بشین.", "tr": "āre, hatman! biyā beshin.", "en": "Yes, of course! Come, sit down." },
+          { "k": "a", "t": "دستت درد نکنه، زهرا جان.", "tr": "dastet dard nakone, Zahrā jān.", "en": "Thank you, dear Zahra (literally: may your hand not hurt)." },
+          { "k": "z", "t": "خواهش می‌کنم، قابلی نداره.", "tr": "khāhesh mikonam, qābeli nadāre.", "en": "You're welcome, it's nothing at all." }
         ]
       }
     ],
     lessons: [
       { title: "Greetings", words: [
         { w: "سلام", tr: "salām", m: "Hello" },
-        { w: "متشکرم", tr: "motashakkeram", m: "Thank you" },
-        { w: "بله", tr: "bale", m: "Yes" },
-        { w: "نه", tr: "na", m: "No" }
+        { w: "ممنون", tr: "mamnun", m: "Thank you" },
+        { w: "خداحافظ", tr: "khodāhāfez", m: "Goodbye" },
+        { w: "بله", tr: "bale", m: "Yes" }
       ]},
       { title: "Words of the Heart", words: [
         { w: "دانش", tr: "dānesh", m: "Knowledge" },
