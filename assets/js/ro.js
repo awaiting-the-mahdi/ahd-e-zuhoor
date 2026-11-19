@@ -71,6 +71,9 @@
   }
 
   /* Roman text for one Urdu string. capStart: capitalise the first word. */
+  /* two Urdu words written as one Roman word */
+  var JOIN = { "آن لائن": "online", "ان شاء": "In sha", "بات چیت": "baat cheet" };
+  function sent0(all) { return !/[A-Za-z0-9]/.test(all) || /[.?!]["”’)]?\s+["“(]?$/.test(all); }
   function roman(s, capStart, ctx) {
     var parts = punct(s).split(WORD), out = "", i, words = [], wi = 0;
     ctx = ctx ? punct(ctx) : "";
@@ -78,6 +81,10 @@
     for (i = 0; i < parts.length; i++) {
       if (i % 2 === 0) { out += parts[i]; continue; }
       if (words[wi] === "بی" && words[wi + 1] === "بی" && /^\s+$/.test(parts[i + 1] || "")) { parts[i + 1] = ""; parts[i + 2] = "بی بی"; wi++; continue; }
+      if (JOIN[words[wi] + " " + words[wi + 1]] && /^[\s\u200c]+$/.test(parts[i + 1] || "")) {
+        var jr = JOIN[words[wi] + " " + words[wi + 1]];
+        out += (sent0(ctx + out) ? jr.charAt(0).toUpperCase() + jr.slice(1) : jr); i += 2; wi += 2; continue;
+      }
       var all = ctx + out;
       var sent = (capStart !== false && !/[A-Za-z0-9\u0600-\u06FF]/.test(all)) || /:\s*[“"]$/.test(all) ||
         (/[.?!]["”’)]?\s+["“(]?$/.test(all) && !/\([a-z.]+\)\s*$/.test(all));
