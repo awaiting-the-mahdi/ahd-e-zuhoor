@@ -46,7 +46,7 @@
     return null;
   }
   /* words whose spelling depends on the word before or after */
-  var AFTER = { "امام زمانہ": "Zamana", "امام زمانے": "Zamane", "عہد ظہور": "Zuhoor", "اہل سنت": "Sunnat", "صاحب زمان": "Zaman", "صاحب الزمان": "al-Zaman", "کتب خانہ": "Khana", "خانہ منتظر": "Muntazir" };
+  var AFTER = { "امام زمانہ": "Zamana", "امام زمانے": "Zamane", "عہد ظہور": "Zuhoor", "اہل سنت": "Sunnat", "کم عمری": "umri", "صاحب زمان": "Zaman", "صاحب الزمان": "al-Zaman", "کتب خانہ": "Khana", "خانہ منتظر": "Muntazir" };
   var BEFORE = { "صحیح مسلم": "Sahih", "صحیح بخاری": "Sahih", "صحیح ترمذی": "Sahih", "سنن ترمذی": "Sunan", "غیبت کبری": "Ghaibat", "غیبت صغری": "Ghaibat" };
   var KYA_NEXT = /^(آپ|تم|وہ|یہ|ہم|کوئی|کبھی|کسی|میں|اس|ان|ہمارے|ہماری|تمہارے|تمہاری)$/;
   function word(raw, prev, next, sent) {
@@ -86,6 +86,16 @@
       if (words[wi] === "بے" && words[wi + 1] && !/^(میں|اور|کا|کی|کے|سے|ہے|ہیں|کو|پر|نے|تک)$/.test(words[wi + 1]) && /^[\s\u200c]+$/.test(parts[i + 1] || "")) {
         var nx = word(parts[i + 2], "بے", words[wi + 2] || null, false);
         r = (sent ? "Be" : "be") + nx.charAt(0).toLowerCase() + nx.slice(1); i += 2; wi++;
+      }
+      /* ذمہ داری is one word: zimmedaari */
+      if (words[wi] === "ذمہ" && /^دار/.test(words[wi + 1] || "") && /^[\s\u200c]+$/.test(parts[i + 1] || "")) {
+        r = (sent ? "Zimme" : "zimme") + word(parts[i + 2], "ذمہ", words[wi + 2] || null, false); i += 2; wi++;
+      }
+      /* جلد: "jild" (a volume) before a number, otherwise "jald" (soon) */
+      if (words[wi] === "جلد") r = /^\s*\d/.test(parts[i + 1] || "") ? "jild" : "jald";
+      /* the future ending is joined to its verb: uthaeinge, hoga */
+      while (/^(گے|گی|گا)$/.test(words[wi + 1] || "") && /^[\s\u200c]+$/.test(parts[i + 1] || "")) {
+        r += word(parts[i + 2], words[wi], words[wi + 2] || null, false); i += 2; wi++;
       }
       if (r.charAt(0) === "(" && /\($/.test(out) && /^\)/.test(parts[i + 1] || "")) r = r.slice(1, -1);
       if (sent) r = r.charAt(0).toUpperCase() + r.slice(1);
