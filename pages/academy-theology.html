@@ -649,7 +649,7 @@ new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting
 var G=window.AZ_MAHDAWIYYAH;if(!G)return;
 var UR=window.AZ_LANG==="ur",L=UR?"ur":"en",gsky=document.getElementById("gsky"),gsvg=document.getElementById("gsvg"),gcard=document.getElementById("gcard"),els=[];
 var TX={en:{eye:"The Imam of our time",h:"Guardians of the <em>Ghaybah</em>",sub:"For more than a thousand years, these scholars kept the knowledge of the hidden Imam alive. Tap a star to meet them.",e1:"4th–5th century AH",e2:"11th–15th century AH",book:"Their book on the Imam",lib:"Read it in our library →"},
- ur:{eye:"ہمارے زمانے کے امام",h:"<em>غیبت</em> کے نگہبان",sub:"ایک ہزار سال سے زیادہ عرصے تک ان علماء نے پوشیدہ امام کے علم کو زندہ رکھا۔ ان سے ملنے کے لیے کسی ستارے کو چھوئیں۔",e1:"چوتھی–پانچویں صدی ہجری",e2:"گیارہویں–پندرہویں صدی ہجری",book:"امام پر ان کی کتاب",lib:"ہماری لائبریری میں پڑھیں ←"}}[L];
+ ur:{eye:"ہمارے زمانے کے امام",h:"<em>غیبت</em> کے نگہبان",sub:"ایک ہزار سال سے زیادہ عرصے سے یہ علماء غائب امام (عج) کے بارے میں علم کو زندہ رکھے ہوئے ہیں۔ کسی ستارے کو چھو کر ان سے ملیے۔",e1:"چوتھی–پانچویں صدی ہجری",e2:"گیارہویں–پندرہویں صدی ہجری",book:"امام پر ان کی کتاب",lib:"ہمارے کتب خانے میں پڑھیے ←"}}[L];
 function set(id,h){var e=document.getElementById(id);e.innerHTML=h;e.setAttribute("data-no-ur","")}
 set("gEye",TX.eye);set("gH",TX.h);set("gSub",TX.sub);set("gE1",TX.e1);set("gE2",TX.e2);
 function e(t){return String(t).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}

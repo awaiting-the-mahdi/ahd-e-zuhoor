@@ -46,7 +46,7 @@
     return null;
   }
   /* words whose spelling depends on the word before or after */
-  var AFTER = { "امام زمانہ": "Zamana", "امام زمانے": "Zamane", "عہد ظہور": "Zuhoor", "اہل سنت": "Sunnat", "صاحب زمان": "Zaman", "صاحب الزمان": "al-Zaman", "کتب خانہ": "Khana", "خانہ منتظر": "Muntazir" };
+  var AFTER = { "امام زمانہ": "Zamana", "امام زمانے": "Zamane", "عہد ظہور": "Zuhoor", "اہل سنت": "Sunnat", "کم عمری": "umri", "صاحب زمان": "Zaman", "صاحب الزمان": "al-Zaman", "کتب خانہ": "Khana", "خانہ منتظر": "Muntazir" };
   var BEFORE = { "صحیح مسلم": "Sahih", "صحیح بخاری": "Sahih", "صحیح ترمذی": "Sahih", "سنن ترمذی": "Sunan", "غیبت کبری": "Ghaibat", "غیبت صغری": "Ghaibat" };
   var KYA_NEXT = /^(آپ|تم|وہ|یہ|ہم|کوئی|کبھی|کسی|میں|اس|ان|ہمارے|ہماری|تمہارے|تمہاری)$/;
   function word(raw, prev, next, sent) {
@@ -71,6 +71,9 @@
   }
 
   /* Roman text for one Urdu string. capStart: capitalise the first word. */
+  /* two Urdu words written as one Roman word */
+  var JOIN = { "آن لائن": "online", "ان شاء": "In sha", "بات چیت": "baat cheet" };
+  function sent0(all) { return !/[A-Za-z0-9]/.test(all) || /[.?!]["”’)]?\s+["“(]?$/.test(all); }
   function roman(s, capStart, ctx) {
     var parts = punct(s).split(WORD), out = "", i, words = [], wi = 0;
     ctx = ctx ? punct(ctx) : "";
@@ -78,6 +81,10 @@
     for (i = 0; i < parts.length; i++) {
       if (i % 2 === 0) { out += parts[i]; continue; }
       if (words[wi] === "بی" && words[wi + 1] === "بی" && /^\s+$/.test(parts[i + 1] || "")) { parts[i + 1] = ""; parts[i + 2] = "بی بی"; wi++; continue; }
+      if (JOIN[words[wi] + " " + words[wi + 1]] && /^[\s\u200c]+$/.test(parts[i + 1] || "")) {
+        var jr = JOIN[words[wi] + " " + words[wi + 1]];
+        out += (sent0(ctx + out) ? jr.charAt(0).toUpperCase() + jr.slice(1) : jr); i += 2; wi += 2; continue;
+      }
       var all = ctx + out;
       var sent = (capStart !== false && !/[A-Za-z0-9\u0600-\u06FF]/.test(all)) || /:\s*[“"]$/.test(all) ||
         (/[.?!]["”’)]?\s+["“(]?$/.test(all) && !/\([a-z.]+\)\s*$/.test(all));
@@ -86,6 +93,16 @@
       if (words[wi] === "بے" && words[wi + 1] && !/^(میں|اور|کا|کی|کے|سے|ہے|ہیں|کو|پر|نے|تک)$/.test(words[wi + 1]) && /^[\s\u200c]+$/.test(parts[i + 1] || "")) {
         var nx = word(parts[i + 2], "بے", words[wi + 2] || null, false);
         r = (sent ? "Be" : "be") + nx.charAt(0).toLowerCase() + nx.slice(1); i += 2; wi++;
+      }
+      /* ذمہ داری is one word: zimmedaari */
+      if (words[wi] === "ذمہ" && /^دار/.test(words[wi + 1] || "") && /^[\s\u200c]+$/.test(parts[i + 1] || "")) {
+        r = (sent ? "Zimme" : "zimme") + word(parts[i + 2], "ذمہ", words[wi + 2] || null, false); i += 2; wi++;
+      }
+      /* جلد: "jild" (a volume) before a number, otherwise "jald" (soon) */
+      if (words[wi] === "جلد") r = /^\s*\d/.test(parts[i + 1] || "") ? "jild" : "jald";
+      /* the future ending is joined to its verb: uthaeinge, hoga */
+      while (/^(گے|گی|گا)$/.test(words[wi + 1] || "") && /^[\s\u200c]+$/.test(parts[i + 1] || "")) {
+        r += word(parts[i + 2], words[wi], words[wi + 2] || null, false); i += 2; wi++;
       }
       if (r.charAt(0) === "(" && /\($/.test(out) && /^\)/.test(parts[i + 1] || "")) r = r.slice(1, -1);
       if (sent) r = r.charAt(0).toUpperCase() + r.slice(1);

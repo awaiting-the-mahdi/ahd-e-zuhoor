@@ -34,6 +34,9 @@ box-shadow:0 0 0 1px rgba(224,187,108,.12) inset,0 0 40px rgba(224,187,108,.22),
 clip-path:circle(0px at var(--ox,50%) var(--oy,100%));transition:clip-path .75s cubic-bezier(.2,.7,.2,1);overscroll-behavior:contain}
 .rc.on{clip-path:circle(160% at var(--ox,50%) var(--oy,100%))}
 .rc[hidden]{display:none}
+/* once open, drop the reveal mask: iOS Safari does not clip scrolled content under a clip-path */
+.rc.on.done{clip-path:none}
+body.rc-open .bot{visibility:hidden}
 .rcx{position:sticky;float:right;top:0;margin:-6px -6px 0 8px;width:36px;height:36px;padding:0;font-size:1.3rem;line-height:1;border-radius:50%}
 .rch{display:flex;align-items:center;gap:12px}
 .rcs{flex:none;width:46px;height:46px;display:grid;place-items:center;border-radius:50%;color:#fff6dc;font-size:1.4rem;background:radial-gradient(circle,rgba(255,236,190,.9),rgba(224,187,108,.35) 45%,transparent 70%);animation:pulse 2.4s ease-in-out infinite}
@@ -51,6 +54,7 @@ clip-path:circle(0px at var(--ox,50%) var(--oy,100%));transition:clip-path .75s 
 .qs{display:grid;gap:10px}
 .qn{margin:0 0 8px;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold)}
 html.az-ur .sum:before{content:'خلاصہ · '}
+.sum.ro:before{content:'Khulasa · '}
 html.az-ur .rc,html.az-ur .rc .tags{direction:rtl}
 html.az-ur .q{border-left:0;border-right:2px solid var(--gold);border-radius:12px 0 0 12px}
 html.az-ur .rcx{float:left;margin:-6px 8px 0 -6px}
@@ -68,8 +72,10 @@ html.az-ur .qn,html.az-ur .grp{letter-spacing:0}
 .q a{color:var(--gold)}
 .src{margin:12px 0 0;font-size:.68rem;color:var(--mut);line-height:1.4}
 @media (prefers-reduced-motion:reduce){.rc{transition:none}.q{transition:none}.ring,.rcs{animation:none}}
-html .az-lang{top:calc(20px + env(safe-area-inset-top,0px));bottom:auto;left:16px}
-@media(max-width:600px){html .az-lang{top:calc(15px + env(safe-area-inset-top,0px));left:14px}}
+/* the language switch sits in the header, under the subtitle */
+html .top .az-lang{position:static;transform:none;display:inline-flex;margin:8px auto 0;pointer-events:auto;box-shadow:none;background:rgba(5,13,25,.55)}
+html .az-lang button{padding:3px 10px;font-size:12px}
+html .az-lang button[lang=ur]{padding:0 10px 3px}
 #err{display:none;position:fixed;inset:0;align-items:center;justify-content:center;text-align:center;padding:24px}
 </style>
 <script src="../assets/js/i18n.js"></script>
@@ -77,6 +83,9 @@ html .az-lang{top:calc(20px + env(safe-area-inset-top,0px));bottom:auto;left:16p
 </head>
 <body>
 <div class="top"><div class="cnt" id="cnt">0</div><div class="sub">stars · the prophets (a.s.) and the Fourteen Infallibles</div></div>
+<script>/* put the site's language switch (added by i18n.js) into the header */
+(function(){function mv(){var b=document.querySelector('.az-lang'),t=document.querySelector('.top');if(b&&t&&b.parentNode!==t){t.appendChild(b);return true}return !!(b&&t)}
+document.addEventListener('DOMContentLoaded',function(){if(!mv()){var n=0,iv=setInterval(function(){if(mv()||++n>40)clearInterval(iv)},50)}})})();</script>
 <div class="bot"><div id="cap"></div><div class="btns"><button id="b1">Zoom to the Fourteen</button><button id="b2">Whole sky</button><button id="b3" aria-haspopup="dialog">✦ Resemblances</button></div>
 <p class="note">The Fourteen and the prophets marked ✦ each have a resemblance in Imam al-Mahdi (a.t.f.s.) recorded in the books. 124,000 prophets (a.s.), among them the Holy Prophet (s.a.w.a.), together with Lady Fatima (s.a.) and the twelve Imams (a.s.), make 124,013, following the number narrated in tradition.</p></div>
 <svg id="beam" aria-hidden="true"><defs><linearGradient id="bg" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#ffe9b8"/><stop offset="1" stop-color="#e0bb6c" stop-opacity=".25"/></linearGradient><filter id="gl"><feGaussianBlur stdDeviation="2.5"/></filter></defs><line id="bl2" stroke="#e0bb6c" stroke-width="6" filter="url(#gl)" opacity="0"/><line id="bl" stroke="url(#bg)" stroke-width="1.6" stroke-linecap="round" opacity="0"/><circle id="bd" r="3.2" fill="#fff6dc" opacity="0"/></svg>
@@ -168,14 +177,14 @@ if(i==0){T.innerHTML='Whose qualities are found in him, according to the books. 
 var nm=function(t){return esc(t[1].replace(/^(Prophet|Imam|Lady) /,'').replace(/ \(.*$/,'').replace(/,.*$/,''));},h2='';
 S.forEach(function(t,j){if(!j||!RD[t[3]])return;var b='<button class="tag" data-j="'+j+'">'+nm(t)+'</button>';if(j<14)h+=b;else h2+=b;});
 G.innerHTML='<div class="grp">The Fourteen</div>'+h+'<div class="grp">The prophets (a.s.)</div>'+h2;}
-else{var r=RD[s[3]];T.innerHTML='and its reflection in <b>Imam al-Mahdi (a.t.f.s.)</b>';Sm.hidden=false;document.getElementById('rcN').hidden=false;Sm.textContent=r.sum;
+else{var r=RD[s[3]];T.innerHTML='and its reflection in <b>Imam al-Mahdi (a.t.f.s.)</b>';Sm.hidden=false;document.getElementById('rcN').hidden=false;var ro=window.AZ_RO&&r.sumRo;Sm.textContent=ro||r.sum;if(ro)Sm.setAttribute('data-no-ro','');else Sm.removeAttribute('data-no-ro');Sm.dir=ro?'ltr':'';Sm.classList.toggle('ro',!!window.AZ_RO);
 G.innerHTML=r.tags.map(function(t){return '<span class="tag">'+esc(t)+'</span>';}).join('');
 Q.innerHTML=r.q.map(function(q,k){return '<blockquote class="q" style="transition-delay:'+(.35+k*.12)+'s">'+(UR&&q.u?'<p class="uq" lang="ur" dir="rtl" data-ur>'+esc(q.u)+'</p><details data-no-ur><summary lang="ur" data-ur>انگریزی متن — کتاب کے الفاظ</summary><p lang="en" dir="ltr">'+esc(q.t)+'</p></details>':'<p lang="en" dir="ltr" data-no-ur>'+esc(q.t)+'</p>')+'<footer><span>'+esc(q.by)+'</span> · '+cite(q)+'</footer></blockquote>';}).join('');}
 rc.classList.remove('on');rc.hidden=false;rc.scrollTop=0;var b=rc.getBoundingClientRect();
-rc.style.setProperty('--ox',(X-b.left)+'px');rc.style.setProperty('--oy',(Y-b.top)+'px');void rc.offsetWidth;rc.classList.add('on');document.getElementById('rcx').focus({preventScroll:true});
+rc.style.setProperty('--ox',(X-b.left)+'px');rc.style.setProperty('--oy',(Y-b.top)+'px');void rc.offsetWidth;rc.classList.remove('done');rc.classList.add('on');document.body.classList.add('rc-open');clearTimeout(rc._d);rc._d=setTimeout(function(){rc.classList.add('done');},800);document.getElementById('rcx').focus({preventScroll:true});
 var g=document.createElement('div');g.className='ring';g.style.transform='';g.style.left=X+'px';g.style.top=Y+'px';document.body.appendChild(g);setTimeout(function(){g.remove();},1200);}
 document.getElementById('rcG').addEventListener('click',function(e){var b=e.target.closest('[data-j]');if(b)setSel(+b.dataset.j);});
-function closeCard(){var f=rc.contains(document.activeElement);rc.classList.remove('on');rc.hidden=true;if(f)document.getElementById('b3').focus({preventScroll:true});}
+function closeCard(){var f=rc.contains(document.activeElement);clearTimeout(rc._d);rc.classList.remove('on','done');document.body.classList.remove('rc-open');rc.hidden=true;if(f)document.getElementById('b3').focus({preventScroll:true});}
 document.getElementById('rcx').onclick=function(){setSel(-1);};
 addEventListener('keydown',function(e){if(e.key=='Escape'&&!rc.hidden)setSel(-1);});
 function setSel(i){sel=i;beamT=0;if(i<0){cap.innerHTML='Tap a bright star · drag to turn · pinch to zoom<br>Tap a <span style="color:var(--gold)">✦ prophet</span>, one of the Fourteen, or the Mahdi star, to see the resemblance';U.uSel.value=-1;closeCard();}
