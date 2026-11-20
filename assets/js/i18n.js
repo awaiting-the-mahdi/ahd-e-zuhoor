@@ -44,6 +44,10 @@
      The language courses stay in English in Roman mode. */
   var COURSE = /^(language-course|academy-languages)$/.test(PAGE);
   var RO = CHOICE === "ro" && !COURSE;
+  /* installable web app: the service worker (sw.js at the site root) only keeps copies of pages for offline use */
+  if ("serviceWorker" in navigator && /^https?:/.test(location.protocol)) {
+    addEventListener("load", function () { navigator.serviceWorker.register(BASE + "../../sw.js").catch(function () {}); });
+  }
   var LANG = CHOICE === "ro" ? (COURSE ? "en" : "ur") : CHOICE;
   window.AZ_LANG = LANG;
   window.AZ_RO = RO;
