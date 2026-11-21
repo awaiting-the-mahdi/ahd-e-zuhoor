@@ -862,3 +862,148 @@ button {
     transform: none;
   }
 }
+/* HOMEPAGE — SEARCH */
+
+.site-search {
+  width: min(560px, 100%);
+  margin: 28px auto 0;
+  text-align: start;
+}
+
+.ss-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 18px;
+  border: 1px solid rgba(215, 188, 128, 0.45);
+  border-radius: 40px;
+  background: rgba(5, 13, 25, 0.55);
+  color: var(--gold);
+  transition: border-color var(--motion-fast) var(--ease-refined), box-shadow var(--motion-fast) var(--ease-refined);
+}
+
+.ss-box:focus-within {
+  border-color: var(--gold);
+  box-shadow: var(--gold-glow-interactive);
+}
+
+.ss-box svg {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  opacity: 0.85;
+}
+
+.ss-box input {
+  flex: 1;
+  min-width: 0;
+  padding: 14px 0;
+  border: 0;
+  background: none;
+  color: var(--ivory);
+  font: 400 0.95rem var(--sans);
+  outline: none;
+}
+
+.ss-box input::placeholder {
+  color: var(--muted);
+  opacity: 0.85;
+}
+
+.ss-box input::-webkit-search-cancel-button {
+  filter: sepia(1) saturate(2);
+}
+
+.ss-res {
+  margin-top: 10px;
+  max-height: min(60vh, 560px);
+  overflow: auto;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: rgba(5, 13, 25, 0.92);
+  overscroll-behavior: contain;
+}
+
+.ss-res ul {
+  margin: 0;
+  padding: 4px;
+  list-style: none;
+}
+
+.ss-item {
+  display: block;
+  padding: 11px 14px;
+  border-radius: 12px;
+  color: var(--ivory);
+  text-decoration: none;
+}
+
+.ss-item:hover,
+.ss-item.on,
+.ss-item:focus-visible {
+  background: rgba(215, 188, 128, 0.1);
+  outline: none;
+}
+
+.ss-kind {
+  display: block;
+  color: var(--gold);
+  font: 600 0.62rem var(--sans);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.ss-t {
+  display: block;
+  margin-top: 3px;
+  font: 500 1rem/1.35 var(--serif);
+}
+
+.ss-s {
+  display: block;
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.ss-count,
+.ss-none,
+.ss-try {
+  margin: 0;
+  padding: 12px 18px 6px;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.ss-none {
+  padding-bottom: 14px;
+}
+
+.ss-try {
+  padding-bottom: 14px;
+  line-height: 2.4;
+}
+
+.ss-chip {
+  margin: 0 4px;
+  padding: 5px 12px;
+  border: 1px solid rgba(215, 188, 128, 0.4);
+  border-radius: 20px;
+  background: none;
+  color: var(--gold);
+  font: 500 0.78rem var(--sans);
+  cursor: pointer;
+}
+
+.ss-chip:hover {
+  background: rgba(215, 188, 128, 0.1);
+}
+
+html.az-ur .ss-kind {
+  letter-spacing: 0;
+}
+
+.ss-res[dir=rtl] {
+  text-align: right;
+}

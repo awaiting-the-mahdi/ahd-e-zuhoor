@@ -11,5 +11,7 @@ AZ_UR.add({
   "AHD-E-<span>ZUHOOR</span>": "عہدِ <span>ظہور</span>",
   "A journey through knowledge, towards recognition of the Imam of our time.": "علم کے سہارے، معرفتِ امامِ زمانہ (عج) کی طرف ایک سفر۔",
   "EXPLORE NOW <span>↗</span>": "سفر شروع کیجیے <span>↗</span>",
-  "Masjid al-Sahlah in Kufa, Iraq": "مسجدِ سہلہ، کوفہ، عراق"
+  "Masjid al-Sahlah in Kufa, Iraq": "مسجدِ سہلہ، کوفہ، عراق",
+  "Search duas, books, prophets…": "دعائیں، کتابیں، انبیاء تلاش کریں…",
+  "Search the site": "ویب سائٹ میں تلاش کریں"
 });
