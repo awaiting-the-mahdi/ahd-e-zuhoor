@@ -276,7 +276,16 @@
         muts.forEach(function (m) {
           if (m.type === "characterData") walk(m.target);
           else if (m.type === "attributes") doAttrs(m.target);
-          else m.addedNodes.forEach(function (n) { walk(n); if (n.nodeType === 1) keepLangInLinks(); });
+          else {
+            /* text the page rewrites later (e.g. a hint with a line break or a link): match the whole element first, as at load */
+            var t = m.target;
+            if (t.nodeType === 1 && m.addedNodes.length && !(t.closest && t.closest("[data-no-ur]"))) {
+              busy = true; var whole = false;
+              try { whole = doHTML(t); } finally { busy = false; }
+              if (whole) return;
+            }
+            m.addedNodes.forEach(function (n) { walk(n); if (n.nodeType === 1) keepLangInLinks(); });
+          }
         });
       }).observe(document.body, { childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ["placeholder", "aria-label", "title", "alt"] });
     });

@@ -66,8 +66,8 @@ AZ_UR.add({
     "قبلے کی سمت: آپ کا مقام صرف آپ کے آلے پر سمت معلوم کرنے کے لیے استعمال ہوتا ہے اور کہیں نہیں بھیجا جاتا۔",
   "Both ask for your permission first, and you can say no.": "دونوں پہلے آپ سے اجازت مانگتے ہیں، اور آپ انکار کر سکتے ہیں۔",
   "Other services your device contacts": "دوسری سروسز جن سے آپ کا آلہ رابطہ کرتا ہے",
-  "To show some pages, your device loads fonts from Google Fonts, the 3D library from cdnjs, and Qur'an text and audio from api.alquran.cloud, everyayah.com and Quran.com. Like any website, these services can see your IP address, under their own privacy policies.":
-    "کچھ صفحات دکھانے کے لیے آپ کا آلہ گوگل فونٹس سے فونٹ، cdnjs سے سہ جہتی لائبریری، اور api.alquran.cloud، everyayah.com اور Quran.com سے قرآن کا متن اور آڈیو لیتا ہے۔ کسی بھی ویب سائٹ کی طرح یہ سروسز آپ کا آئی پی ایڈریس دیکھ سکتی ہیں، اپنی رازداری کی پالیسی کے تحت۔",
+  "To show some pages, your device loads fonts from Google Fonts, and Qur'an text and audio from api.alquran.cloud, everyayah.com and Quran.com. Like any website, these services can see your IP address, under their own privacy policies.":
+    "کچھ صفحات دکھانے کے لیے آپ کا آلہ گوگل فونٹس سے فونٹ، اور api.alquran.cloud، everyayah.com اور Quran.com سے قرآن کا متن اور آڈیو لیتا ہے۔ کسی بھی ویب سائٹ کی طرح یہ سروسز آپ کا آئی پی ایڈریس دیکھ سکتی ہیں، اپنی رازداری کی پالیسی کے تحت۔",
   "Children": "بچے",
   "Much of the Academy is made for children. The site never asks for a child's name or any personal details. We suggest children use Ask Zahra with a parent.":
     "اکیڈمی کا بڑا حصہ بچوں کے لیے بنایا گیا ہے۔ یہ ویب سائٹ کبھی کسی بچے کا نام یا کوئی ذاتی تفصیل نہیں مانگتی۔ ہمارا مشورہ ہے کہ بچے ”زہرا سے پوچھیں“ والدین کے ساتھ استعمال کریں۔",

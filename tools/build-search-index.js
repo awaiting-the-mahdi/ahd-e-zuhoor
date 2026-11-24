@@ -88,10 +88,10 @@ Object.keys(R).forEach(function (k) {
 });
 
 /* ---- prophets' pages ---- */
-[["adam", "Adam (AS)"], ["nuh", "Nuh (AS)"], ["ibrahim", "Ibrahim (AS)"], ["musa", "Musa (AS)"], ["isa", "Isa (AS)"], ["yusuf", "Yusuf (AS)"]].forEach(function (p) {
+[["adam", "Adam (a.s.)"], ["idrees", "Idris (a.s.)"], ["nuh", "Nuh (a.s.)"], ["hud", "Hud (a.s.)"], ["salih", "Salih (a.s.)"], ["ibrahim", "Ibrahim (a.s.)"], ["yusuf", "Yusuf (a.s.)"], ["ayyub", "Ayyub (a.s.)"], ["musa", "Musa (a.s.)"], ["khizr", "Khizr (a.s.)", "Khizr (a.s.), the Righteous Servant"], ["dawood", "Dawood (a.s.)"], ["sulaiman", "Sulaiman (a.s.)"], ["uzair", "Uzair (a.s.)"], ["daniyal", "Daniyal (a.s.)"], ["isa", "Isa (a.s.)"]].forEach(function (p) {
   var src = fs.readFileSync(path.join(ROOT, "pages/prophet.html"), "utf8");
-  var m = new RegExp(p[0] + ":\\s*\\{\\s*name:\"[^\"]*\", subtitle:\"([^\"]*)\"").exec(src), sub = m ? m[1] : "";
-  add("prophet", "pages/prophet.html?name=" + p[0], "Prophet " + p[1], ur(p[1]).replace(/^(?!حضرت)/, "حضرت "), sub, ur(sub), "nabi hazrat " + p[0]);
+  var m = new RegExp(p[0] + ":\\s*\\{\\s*name:\"[^\"]*\",(?:\\s*ar:\"[^\"]*\",)?\\s*subtitle:\"([^\"]*)\"").exec(src), sub = m ? m[1] : "";
+  add("prophet", "pages/prophet.html?name=" + p[0], p[2] || "Prophet " + p[1], ur(p[1]).replace(/^(?!حضرت)/, "حضرت ") + (p[2] ? "، اللہ کے نیک بندے" : ""), sub, ur(sub), "nabi hazrat " + p[0]);
 });
 
 /* ---- Archive ---- */
