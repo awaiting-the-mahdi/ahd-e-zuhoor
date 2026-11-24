@@ -2,29 +2,42 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#081426">
   <title>Prophet | The Prophetic Blueprint</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root { color-scheme: dark; --navy:#081426; --deep:#050e1b; --gold:#d7bc80; --ivory:#f7f2e8; --muted:#b5bfcd; --line:rgba(215,188,128,.25); }
     * { box-sizing:border-box; }
-    body { margin:0; min-height:100vh; background:radial-gradient(ellipse at 50% 0%,#1a2c43 0%,var(--navy) 48%,var(--deep) 100%); color:var(--ivory); font-family:Arial,sans-serif; }
-    main { width:min(820px,88%); margin:0 auto; padding:34px 0 70px; }
-    .back { display:inline-block; margin:8px 0 54px; color:var(--gold); text-decoration:none; font-size:.85rem; letter-spacing:.04em; }
+    body { margin:0; min-height:100vh; background:radial-gradient(ellipse at 50% 0%,#1a2c43 0%,var(--navy) 48%,var(--deep) 100%); color:var(--ivory); font:16px/1.7 Inter,system-ui,sans-serif; }
+    main { width:min(820px,88%); margin:0 auto; padding:calc(34px + env(safe-area-inset-top,0px)) 0 calc(90px + env(safe-area-inset-bottom,0px)); }
+    .back { display:inline-block; margin:8px 0 46px; color:var(--gold); text-decoration:none; font-size:.85rem; letter-spacing:.04em; }
     .eyebrow { color:var(--gold); font-size:.68rem; letter-spacing:.2em; text-transform:uppercase; }
-    h1,h2 { font-family:Georgia,serif; font-weight:400; }
-    h1 { margin:16px 0; font-size:clamp(2.8rem,8vw,5rem); line-height:1.05; }
-    .subtitle { color:var(--muted); font-family:Georgia,serif; font-size:1.15rem; line-height:1.7; }
-    .rule { width:76px; height:1px; margin:34px 0; background:var(--gold); }
+    h1,h2 { font-family:"Cormorant Garamond",Georgia,serif; font-weight:600; }
+    h1 { margin:14px 0 0; font-size:clamp(2.6rem,8vw,4.4rem); line-height:1.05; }
+    .ar { margin:4px 0 10px; color:var(--gold); font:400 clamp(1.6rem,6vw,2.2rem)/1.6 Amiri,serif; text-align:left; }
+    html.az-ur .ar { text-align:right; }
+    .subtitle { color:var(--muted); font:500 1.2rem/1.6 "Cormorant Garamond",Georgia,serif; }
+    .rule { width:76px; height:1px; margin:30px 0; background:var(--gold); }
     section { padding:24px 0; border-top:1px solid var(--line); }
-    h2 { color:var(--gold); font-size:1.65rem; }
-    p { color:var(--muted); line-height:1.95; }
-    .refs { padding:18px 20px; border-left:2px solid var(--gold); background:rgba(215,188,128,.055); }
-    .refs p { margin:7px 0; font-size:.9rem; }
-    .note { margin-top:28px; padding:20px; border:1px solid var(--line); }
+    h2 { margin:.3em 0 .5em; color:var(--gold); font-size:1.75rem; }
+    p { color:var(--muted); line-height:1.9; }
+    a { color:var(--gold); }
+    .refs { margin:0; padding:14px 18px; list-style:none; border-left:2px solid var(--gold); background:rgba(215,188,128,.055); }
+    .refs li { margin:6px 0; font-size:.95rem; }
+    .refs a { text-decoration:none; border-bottom:1px solid rgba(215,188,128,.45); }
+    .refs .none { color:var(--muted); }
+    .note { margin-top:28px; padding:20px; border:1px solid var(--line); border-radius:14px; }
     .note strong { color:var(--ivory); }
-    @media(max-width:600px) { .back { margin-bottom:38px; } }
-   </style>
+    .more { display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+    .more a { padding:7px 13px; border:1px solid var(--line); border-radius:99px; color:var(--ivory); text-decoration:none; font-size:.86rem; }
+    .more a:hover, .more a:focus-visible { border-color:var(--gold); color:var(--gold); }
+    .more a[aria-current] { border-color:var(--gold); color:var(--gold); }
+    html.az-ur .refs { border-left:0; border-right:2px solid var(--gold); direction:rtl; text-align:right; }
+    @media(max-width:600px) { .back { margin-bottom:34px; } }
+  </style>
   <link rel="stylesheet" href="../assets/css/menu.css">
 <script src="../assets/js/i18n.js"></script>
 <link rel="manifest" href="../manifest.webmanifest">
@@ -39,6 +52,7 @@
   <a class="back" href="constellation.html">← Return to the Prophetic Blueprint</a>
   <div class="eyebrow">THE PROPHETIC LEGACY</div>
   <h1 id="name">Prophet</h1>
+  <div class="ar" id="ar" lang="ar" dir="rtl"></div>
   <div class="subtitle" id="subtitle"></div>
   <div class="rule"></div>
   <section>
@@ -49,56 +63,129 @@
   <section>
     <div class="eyebrow">QUR'ANIC STARTING POINTS</div>
     <h2>Explore the text</h2>
-    <div class="refs"><p id="quran"></p></div>
+    <ul class="refs" id="quran"></ul>
   </section>
   <section>
     <div class="eyebrow">RESEARCH PATH</div>
     <h2>Reading the sources carefully</h2>
-    <p>Hayat al-Qulub by Allama Majlisi is a key source for the lives and missions of the Prophets (AS), and you can read it in our Knowledge Library.</p>
-    <p>The resemblances between the Prophets and the Imam of our time (ATFS) are narrated in Kamal al-Din and Mikyal al-Makarim, both also in our Knowledge Library.</p>
+    <p><a href="knowledge-library.html#book=Hayat-al-Qulub">Hayat al-Qulub</a> by Allama Majlisi is a key source for the lives and missions of the Prophets (a.s.), and you can read it in our Knowledge Library.</p>
+    <p>The resemblances between the Prophets and the Imam of our time (a.t.f.s.) are narrated in <a href="knowledge-library.html#book=Kamaluddin">Kamal al-Din</a> and <a href="knowledge-library.html#book=Mikyal">Mikyal al-Makarim</a>, both also in our Knowledge Library.</p>
+  </section>
+  <section>
+    <div class="eyebrow">MORE PROPHETS</div>
+    <nav class="more" id="more" aria-label="More prophets"></nav>
   </section>
   <div class="note"><strong>Our approach</strong><p>This page begins with the Qur'an. Narrations and historical reports are always shown separately, with their sources.</p></div>
 </main>
 <script>
+/* One entry per prophet: pages/prophet.html?name=<key>.
+   quran: "Surah <name> <surah>:<verses>; …" — each reference opens that surah on the Qur'an page. */
 const profiles = {
   adam: {
-    name:"Adam (AS)", subtitle:"The beginning of humanity · Divine teaching, responsibility and repentance",
-    overview:"The Qur'an describes Adam (AS) as the first human, taught by Allah, and appointed in the earth. His account includes the angels' prostration by divine command, the test in the Garden, the lapse, and the acceptance of his repentance. His story introduces human responsibility, divine guidance and the door of return to Allah.",
+    name:"Adam (a.s.)", ar:"آدم", subtitle:"The beginning of humanity · Divine teaching, responsibility and repentance",
+    overview:"The Qur'an describes Adam (a.s.) as the first human, taught by Allah, and appointed in the earth. His account includes the angels' prostration by divine command, the test in the Garden, the lapse, and the acceptance of his repentance. His story introduces human responsibility, divine guidance and the door of return to Allah.",
     quran:"Surah al-Baqarah 2:30–39; Surah Aal Imran 3:33; Surah al-A'raf 7:11–27; Surah Ta-Ha 20:115–123; Surah Sad 38:71–75."
   },
+  idrees: {
+    name:"Idris (a.s.)", ar:"إدريس", subtitle:"Truthfulness and a high station · Among the patient",
+    overview:"The Qur'an calls Idris (a.s.) a man of truth and a prophet, whom Allah raised to a high station, and counts him among the patient and the righteous whom Allah admitted into His mercy. Narrations identify him with Akhnukh (Enoch), an ancestor of Nuh (a.s.).",
+    quran:"Surah Maryam 19:56–57; Surah al-Anbiya 21:85–86."
+  },
   nuh: {
-    name:"Nuh (AS)", subtitle:"A mission of perseverance · Calling his people towards Allah",
-    overview:"Nuh (AS) called his people to worship Allah alone over a long period, facing rejection and ridicule. The Qur'anic account describes the Ark, the flood and the deliverance of those who believed. His story is a study in steadfastness, warning, trust in Allah and the limits of worldly lineage when faith is rejected.",
+    name:"Nuh (a.s.)", ar:"نوح", subtitle:"A mission of perseverance · Calling his people towards Allah",
+    overview:"Nuh (a.s.) called his people to worship Allah alone over a long period, facing rejection and ridicule. The Qur'anic account describes the Ark, the flood and the deliverance of those who believed. His story is a study in steadfastness, warning, trust in Allah and the limits of worldly lineage when faith is rejected.",
     quran:"Surah Hud 11:25–49; Surah al-Mu'minun 23:23–30; Surah Nuh 71:1–28; Surah al-Qamar 54:9–15."
   },
+  hud: {
+    name:"Hud (a.s.)", ar:"هود", subtitle:"A messenger to the people of 'Ad · Calling the powerful to Allah",
+    overview:"Hud (a.s.) was sent to his own people, 'Ad, a powerful nation who built monuments on every height and seized others like tyrants. He called them to worship Allah alone, to seek His forgiveness and to give up their arrogance, telling them he asked no reward from them. They rejected him, and a destructive wind came upon them, while Allah, by His mercy, saved Hud (a.s.) and those who believed with him.",
+    quran:"Surah al-A'raf 7:65–72; Surah Hud 11:50–60; Surah ash-Shu'ara 26:123–140; Surah al-Ahqaf 46:21–26."
+  },
+  salih: {
+    name:"Salih (a.s.)", ar:"صالح", subtitle:"A messenger to Thamud · The she-camel of Allah",
+    overview:"Salih (a.s.) was sent to Thamud, who carved homes out of the mountains. He called them to worship Allah alone, and Allah gave them a she-camel as a clear sign, warning them not to harm her. They hamstrung her and defied the command, and the punishment overtook them, while Allah saved Salih (a.s.) and those who believed.",
+    quran:"Surah al-A'raf 7:73–79; Surah Hud 11:61–68; Surah ash-Shu'ara 26:141–159; Surah an-Naml 27:45–53; Surah ash-Shams 91:11–15."
+  },
   ibrahim: {
-    name:"Ibrahim (AS)", subtitle:"A model of devotion · Tawhid, trust and divine trials",
-    overview:"Ibrahim (AS) challenged idolatry and called his people to the worship of the One God. The Qur'an recounts his reasoning with his people, his deliverance from the fire, his trials, and his raising of the foundations of the Ka'bah with Isma'il (AS). He is presented as an exemplar of wholehearted submission to Allah.",
+    name:"Ibrahim (a.s.)", ar:"إبراهيم", subtitle:"A model of devotion · Tawhid, trust and divine trials",
+    overview:"Ibrahim (a.s.) challenged idolatry and called his people to the worship of the One God. The Qur'an recounts his reasoning with his people, his deliverance from the fire, his trials, and his raising of the foundations of the Ka'bah with Isma'il (a.s.). He is presented as an exemplar of wholehearted submission to Allah.",
     quran:"Surah al-Baqarah 2:124–129; Surah al-An'am 6:74–83; Surah al-Anbiya 21:51–73; Surah Ibrahim 14:35–41; Surah as-Saffat 37:99–113."
   },
+  yusuf: {
+    name:"Yusuf (a.s.)", ar:"يوسف", subtitle:"Trial, integrity and forgiveness · A story told in the Qur'an",
+    overview:"The Qur'an tells the story of Yusuf (a.s.) in a connected narrative: his childhood dream, the jealousy of his brothers, separation from his family, the trial in Egypt, imprisonment, the interpretation of dreams and eventual authority. When reunited with his family, he responds with forgiveness. The account highlights integrity, patience, wisdom and trust in Allah's plan.",
+    quran:"Surah Yusuf 12:1–101."
+  },
+  ayyub: {
+    name:"Ayyub (a.s.)", ar:"أيوب", subtitle:"Patience in affliction · Calling on Allah alone",
+    overview:"The Qur'an presents Ayyub (a.s.) as the model of patience. Struck by hardship, he called on his Lord: \"Adversity has touched me, and You are the Most Merciful of the merciful.\" Allah answered him, removed his affliction and gave him back his family, and the like of them with them, as a mercy and a reminder. Allah says of him: \"We found him patient. What an excellent servant! He was ever turning to Allah.\"",
+    quran:"Surah an-Nisa 4:163; Surah al-An'am 6:84; Surah al-Anbiya 21:83–84; Surah Sad 38:41–44."
+  },
   musa: {
-    name:"Musa (AS)", subtitle:"Deliverance and leadership · Confronting tyranny by Allah's command",
-    overview:"Musa (AS) was sent with clear signs to Pharaoh and called him to release the Children of Israel. The Qur'an describes his early life, his mission with Harun (AS), the confrontation with Pharaoh, the crossing of the sea and the guidance of his people. His account explores courage, reliance on Allah, leadership and covenant.",
+    name:"Musa (a.s.)", ar:"موسى", subtitle:"Deliverance and leadership · Confronting tyranny by Allah's command",
+    overview:"Musa (a.s.) was sent with clear signs to Pharaoh and called him to release the Children of Israel. The Qur'an describes his early life, his mission with Harun (a.s.), the confrontation with Pharaoh, the crossing of the sea and the guidance of his people. His account explores courage, reliance on Allah, leadership and covenant.",
     quran:"Surah al-Baqarah 2:49–61; Surah al-A'raf 7:103–160; Surah Ta-Ha 20:9–98; Surah al-Qasas 28:3–46."
   },
-  isa: {
-    name:"Isa (AS)", subtitle:"Divine signs and mercy · The son of Maryam (AS)",
-    overview:"Isa (AS), son of Maryam (AS), was born by Allah's command and supported with signs and miracles by His permission. The Qur'an recounts his speaking in the cradle, his call to worship Allah, and the signs granted to him. It also sets out the Qur'anic account of the plot against him and rejects the claim that his enemies killed or crucified him.",
-    quran:"Surah Aal Imran 3:42–59; Surah al-Ma'idah 5:110–120; Surah Maryam 19:16–36; Surah an-Nisa 4:157–159; Surah as-Saff 61:6."
+  khizr: {
+    name:"Khizr (a.s.)", ar:"الخضر", subtitle:"The righteous servant · Knowledge from Allah's presence",
+    overview:"The Qur'an does not name him; it calls him \"one of Our servants, to whom We had given mercy from Us and taught knowledge from Our presence.\" Narrations name him Khizr. Musa (a.s.) travelled to meet him at the junction of the two seas and asked to follow him to learn. Khizr damaged a boat, killed a boy and rebuilt a wall, and then explained the hidden wisdom of each. The narrations compare the occultation of the Imam (a.t.f.s.) to this account: its wisdom becomes clear only later.",
+    quran:"Surah al-Kahf 18:60–82."
   },
-  yusuf: {
-    name:"Yusuf (AS)", subtitle:"Trial, integrity and forgiveness · A story told in the Qur'an",
-    overview:"The Qur'an tells the story of Yusuf (AS) in a connected narrative: his childhood dream, the jealousy of his brothers, separation from his family, the trial in Egypt, imprisonment, the interpretation of dreams and eventual authority. When reunited with his family, he responds with forgiveness. The account highlights integrity, patience, wisdom and trust in Allah's plan.",
-    quran:"Surah Yusuf 12:1–101."
+  dawood: {
+    name:"Dawood (a.s.)", ar:"داود", subtitle:"Kingship, wisdom and the Psalms · Judging with justice",
+    overview:"Dawood (a.s.) killed Jalut (Goliath) in battle, and Allah gave him kingship and wisdom and taught him what He willed. Allah gave him the Zabur (the Psalms); the mountains and the birds glorified Allah with him, and iron was made soft for him to make coats of mail. Allah made him a vicegerent on the earth and told him to judge between people with truth and not to follow desire.",
+    quran:"Surah al-Baqarah 2:251; Surah an-Nisa 4:163; Surah al-Isra 17:55; Surah al-Anbiya 21:78–80; Surah Saba 34:10–11; Surah Sad 38:17–26."
+  },
+  sulaiman: {
+    name:"Sulaiman (a.s.)", ar:"سليمان", subtitle:"A kingdom given by Allah · Gratitude in power",
+    overview:"Sulaiman (a.s.) inherited from Dawood (a.s.) and was taught the speech of birds. Allah made the wind subservient to him and set the jinn to work for him. The Qur'an recounts the ant in the valley, the hoopoe's news of the Queen of Saba, and her coming to submit to Allah with him. Amid this power he prayed to be grateful: \"This is from the grace of my Lord, to test me whether I am grateful or ungrateful.\"",
+    quran:"Surah al-Anbiya 21:78–82; Surah an-Naml 27:15–44; Surah Saba 34:12–14; Surah Sad 38:30–40."
+  },
+  uzair: {
+    name:"Uzair (a.s.)", ar:"عزير", subtitle:"Death and return · A sign of the resurrection",
+    overview:"The Qur'an names Uzair once, rejecting the claim of some that he was the son of God. Many commentators, among them Shia narrations, identify him with the man who passed by a ruined town and wondered how Allah would bring it back to life: Allah caused him to die for a hundred years and then raised him, showing him his food unspoiled and his donkey brought back to life, and he said, \"I know that Allah has power over all things.\" Some commentators name that man as Armiya (Jeremiah) instead.",
+    quran:"Surah at-Tawbah 9:30; Surah al-Baqarah 2:259."
+  },
+  daniyal: {
+    name:"Daniyal (a.s.)", ar:"دانيال", subtitle:"A prophet known from the narrations",
+    overview:"Daniyal (a.s.) is not named in the Qur'an. He is known from narrations and history as a prophet of the Children of Israel who lived in captivity in Babylon. The narrations of what of his life is reflected in the Imam of our time (a.t.f.s.) are gathered in the Prophetic Blueprint.",
+    quran:""
+  },
+  isa: {
+    name:"Isa (a.s.)", ar:"عيسى", subtitle:"Divine signs and mercy · The son of Maryam (a.s.)",
+    overview:"Isa (a.s.), son of Maryam (a.s.), was born by Allah's command and supported with signs and miracles by His permission. The Qur'an recounts his speaking in the cradle, his call to worship Allah, and the signs granted to him. It also sets out the Qur'anic account of the plot against him and rejects the claim that his enemies killed or crucified him.",
+    quran:"Surah Aal Imran 3:42–59; Surah al-Ma'idah 5:110–120; Surah Maryam 19:16–36; Surah an-Nisa 4:157–159; Surah as-Saff 61:6."
   }
 };
 const key = new URLSearchParams(window.location.search).get("name") || "adam";
 const p = profiles[key] || profiles.adam;
 document.title = p.name + " | The Prophetic Blueprint";
 document.getElementById("name").textContent = p.name;
+document.getElementById("ar").textContent = p.ar;
 document.getElementById("subtitle").textContent = p.subtitle;
 document.getElementById("overview").textContent = p.overview;
-document.getElementById("quran").textContent = p.quran;
+const ul = document.getElementById("quran");
+const refs = p.quran.replace(/\.\s*$/, "").split(/;\s*/).filter(Boolean);
+if (!refs.length) {
+  const li = document.createElement("li"); li.className = "none"; li.textContent = "He is not named in the Qur'an."; ul.appendChild(li);
+}
+refs.forEach(function (r) {
+  const li = document.createElement("li"), m = /(\d+):/.exec(r);
+  if (m) {
+    /* "Surah al-A'raf" and "7:65–72" apart, so the numbers stay in order in Urdu */
+    const a = document.createElement("a"), nm = document.createElement("span"), v = document.createElement("bdi"), i = r.lastIndexOf(" ");
+    a.href = "academy-quran.html#surah-" + m[1]; nm.textContent = r.slice(0, i); v.dir = "ltr"; v.textContent = r.slice(i + 1);
+    a.append(nm, " ", v); li.appendChild(a);
+  }
+  else li.textContent = r;
+  ul.appendChild(li);
+});
+const more = document.getElementById("more");
+Object.keys(profiles).forEach(function (k) {
+  const a = document.createElement("a"); a.href = "prophet.html?name=" + k; a.textContent = profiles[k].name;
+  if (k === key) a.setAttribute("aria-current", "page");
+  more.appendChild(a);
+});
 </script>
 <script src="../assets/js/menu.js" defer></script>
 </body>

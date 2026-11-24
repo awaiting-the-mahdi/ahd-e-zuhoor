@@ -225,7 +225,7 @@ var T={
   cta:"The Hidden Sun",ctas:"Walk the full journey of Marefat: from the Messenger (s) to the Imam who is waiting for us. →",imam:"Imam"},
  ur:{title:"احادیث اور دعائیں",sub:"ان کے بارے میں فرمودات، ان کا اپنا کلام، اور وہ دعائیں جو ہم ان کے لیے پڑھتے ہیں: ہمارے زمانے کے امام (عج) کے لیے۔",home:"← گھر",
   duas:"دعائیں",hadiths:"احادیث",intro:"یہاں کی ہر دعا یا تو ہمارے زمانے کے امام (عج) کے لیے ہے، یا انہوں نے خود سکھائی ہے۔ عربی متن مفاتیح الجنان کے عین مطابق ہے؛ کسی دعا کو کھولیے اور اسے ٹھہر ٹھہر کر، ایک ایک حصہ کر کے پڑھیے۔",
-  read:"پڑھیں",when:"کب پڑھیں",source:"ماخذ",tr:"ترجمہ",listen:"سنیں",stop:"روکیں",share:"شیئر",copied:"لنک کاپی ہو گیا ✓",close:"بند کریں",
+  read:"پڑھیں",when:"کب پڑھیں",source:"ماخذ",tr:"ترجمہ",listen:"سنیں",stop:"روکیں",share:"شیئر",copied:"لنک کاپی ہو گیا ✓",close:"بند کریں",smaller:"عربی متن چھوٹا کریں",larger:"عربی متن بڑا کریں",
   prev:"پچھلی",next:"اگلی",closing:"اللّٰهُمَّ عَجِّلْ لِوَلِيِّكَ الْفَرَج",closingT:"اے اللہ! اپنے ولی کے ظہور میں جلدی فرما۔",
   sunni:"اہلِ سنت کی کتب میں بھی",paras:"پیراگراف",para:"پیراگراف",
   g1:"رسولِ خدا (ص) سے",g1i:"رسولِ خدا (ص) نے بتایا کہ ایمان اپنے زمانے کے امام کو پہچاننے سے جڑا ہوا ہے۔",
@@ -264,7 +264,7 @@ if(UR){document.documentElement.lang="ur";document.documentElement.classList.add
 $("h1").textContent=T.title;$("sub").textContent=T.sub;
 [$("h1"),$("sub"),$("dIntro")].forEach(function(e){if(UR)e.classList.add("u")});
 $("tDuas").textContent=T.duas;$("tHad").textContent=T.hadiths;$("dIntro").textContent=T.intro;
-$("rTr").textContent=T.tr;$("rShare").textContent=T.share;$("rClose").setAttribute("aria-label",T.close);
+$("rTr").textContent=T.tr;$("rShare").textContent=T.share;$("rClose").setAttribute("aria-label",T.close);$("rMinus").setAttribute("aria-label",T.smaller||"Smaller Arabic");$("rPlus").setAttribute("aria-label",T.larger||"Larger Arabic");
 $("rListen").querySelector(".lbl").textContent=T.listen;
 
 /* stars */

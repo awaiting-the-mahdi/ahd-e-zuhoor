@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Who is Imam al-Mahdi (atfs)?</title>
+<title>Who is Imam al-Mahdi (ATFS)?</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500&display=swap">
 <style>
 :root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
@@ -30,6 +30,7 @@ h1{font:600 clamp(1.8rem,6vw,3rem)/1.2 "Cormorant Garamond",serif;margin:.5rem 0
 @keyframes bob{50%{transform:translateY(8px)}}
 @keyframes up{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
 section{max-width:860px;margin:0 auto;padding:4.5rem 1.2rem}
+@media (max-width:600px){section{padding:3rem 1.2rem}.dua{padding:2.5rem 1.2rem 5rem}}
 h2{font:600 clamp(1.6rem,5vw,2.3rem) "Cormorant Garamond",serif;color:var(--gold);text-align:center;margin:0 0 2rem}
 h2::after{content:"";display:block;width:60px;height:2px;margin:.6rem auto 0;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
 .rv{opacity:0;transform:translateY(34px);transition:opacity .9s ease,transform .9s ease}
@@ -37,6 +38,8 @@ h2::after{content:"";display:block;width:60px;height:2px;margin:.6rem auto 0;bac
 .grid{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
 .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:1.2rem;backdrop-filter:blur(6px);transition:transform .35s,box-shadow .35s}
 .card:hover{transform:translateY(-6px);box-shadow:0 12px 30px var(--glow)}
+a.card{display:block;color:inherit;text-decoration:none}
+.card .go{display:block;margin-top:.5rem;color:var(--gold);font:normal 500 .82rem Inter,sans-serif}
 .card b{display:block;color:var(--gold);font-size:.8rem;letter-spacing:.12em;text-transform:uppercase}
 .card span{font-size:1.05rem}
 .tl{position:relative;margin-left:14px;padding-left:28px;border-left:2px solid var(--line)}
@@ -54,6 +57,7 @@ summary::-webkit-details-marker{display:none}
 summary::after{content:"+";color:var(--gold);font-size:1.4rem;line-height:1;transition:transform .3s}
 details[open] summary::after{transform:rotate(45deg)}
 details p{margin:0;padding:0 1.2rem 1rem;color:var(--muted);animation:up .5s}
+details a.more,.step a{color:var(--gold)}
 .dua{text-align:center;padding:4rem 1.2rem 5rem}
 .dua .ar{font:400 clamp(1.6rem,6vw,2.4rem)/1.9 Amiri,serif;color:var(--gold);animation:pulse 4s ease-in-out infinite}
 @keyframes pulse{50%{text-shadow:0 0 24px var(--gold)}}
@@ -84,7 +88,7 @@ button:hover{background:var(--gold);color:var(--bg);box-shadow:0 0 20px var(--gl
     <circle cx="100" cy="100" r="60"/><circle cx="100" cy="100" r="30"/><rect x="70" y="70" width="60" height="60" transform="rotate(22.5 100 100)"/>
   </svg>
   <svg class="cal" viewBox="0 0 520 150" role="img" aria-label="Al-Imam al-Mahdi"><text x="260" y="105" text-anchor="middle">الإمام المهدي</text></svg>
-  <h1>Who is Imam al-Mahdi (atfs)?</h1>
+  <h1>Who is Imam al-Mahdi (ATFS)?</h1>
   <p class="sub">The awaited hope of humanity, a sunrise of justice after the long night.</p>
   <div class="hint">↓</div>
 </header>
@@ -119,7 +123,7 @@ button:hover{background:var(--gold);color:var(--bg);box-shadow:0 0 20px var(--gl
   <div class="tl" id="tl"><div class="fill" id="fill"></div>
     <div class="step rv"><h3>255 AH · Birth</h3><p>Born in Samarra to Imam al-Askari (as).</p></div>
     <div class="step rv"><h3>260 AH · Imamate begins</h3><p>After his father’s martyrdom, he becomes the Imam at a young age.</p></div>
-    <div class="step rv"><h3>260–329 AH · Minor Occultation</h3><p>Guidance reaches the community through four special deputies.</p></div>
+    <div class="step rv"><h3>260–329 AH · Minor Occultation</h3><p>Guidance reaches the community through <a href="research-archive.html#deputies">four special deputies</a>.</p></div>
     <div class="step rv"><h3>329 AH – today · Major Occultation</h3><p>Direct contact ends; the community looks to scholars and to prayer.</p></div>
     <div class="step rv"><h3>The promised dawn</h3><p>He will emerge to establish justice and peace across the earth.</p></div>
   </div>
@@ -128,14 +132,15 @@ button:hover{background:var(--gold);color:var(--bg);box-shadow:0 0 20px var(--gl
 <section>
   <h2 class="rv">Why he is awaited</h2>
   <div class="quote rv">The Mahdi will fill the earth with justice and fairness, as it was filled with oppression and injustice.
-    <small>Imam Ali al-Hadi (as) · Kamal al-Din, ch. 37 · also recorded by Sunni scholars: Sunan Abi Dawud 4282</small></div>
+    <small>The Prophet Muhammad (s) · Kamal al-Din · also recorded by Sunni scholars: Sunan Abi Dawud 4282</small></div>
 </section>
 
 <section>
   <h2 class="rv">Our duties in this era</h2>
   <div class="grid">
-    <div class="card rv"><b>✦ Pray</b><span>Recite Dua al-Faraj and ask for his swift reappearance.</span></div>
-    <div class="card rv"><b>✦ Remember</b><span>Recite Dua Nudba, especially on Friday mornings.</span></div>
+    <a class="card rv" href="hadiths.html#ahd"><b>✦ Renew</b><span>Recite Dua al-'Ahd each morning to renew your covenant with him.</span><i class="go">Read the dua</i></a>
+    <a class="card rv" href="hadiths.html#faraj"><b>✦ Pray</b><span>Recite Dua al-Faraj and ask for his swift reappearance.</span><i class="go">Read the dua</i></a>
+    <a class="card rv" href="hadiths.html#nudba"><b>✦ Remember</b><span>Recite Dua Nudba, especially on Friday mornings.</span><i class="go">Read the dua</i></a>
     <div class="card rv"><b>✦ Give</b><span>Give charity on his behalf for his safety.</span></div>
     <div class="card rv"><b>✦ Prepare</b><span>Build character, knowledge and justice within yourself.</span></div>
   </div>
@@ -145,7 +150,7 @@ button:hover{background:var(--gold);color:var(--bg);box-shadow:0 0 20px var(--gl
   <h2 class="rv">Questions</h2>
   <details class="rv"><summary>Why is he in occultation?</summary><p>Imam al-Sadiq (as) said the full wisdom of the occultation will become clear only after his reappearance, just as the wisdom of Khidr's actions became clear to Prophet Musa only afterwards (Kamal al-Din, ch. 44). The Imams also named reasons we can understand: so that no tyrant's allegiance is on his neck when he rises (Imam al-Rida, Kamal al-Din, ch. 44); the protection of his life, as with Prophet Musa (Imam al-Sadiq, ch. 33); and a test that shows who remains steadfast (Imam al-Kazim, ch. 34).</p></details>
   <details class="rv"><summary>How can he benefit us while unseen?</summary><p>The Prophet (s) told Jabir ibn Abdullah al-Ansari that people would benefit from his light during his occultation "as people benefit from the sun when clouds hide it" (Kamal al-Din, ch. 23). The Imam himself wrote the same in his letter to Ishaq ibn Ya'qub: "As for how people benefit from me in my occultation, it is as they benefit from the sun when clouds conceal it" (Kamal al-Din, ch. 45).</p></details>
-  <details class="rv"><summary>Is this belief only Shia?</summary><p>Belief in a Mahdi at the end of time appears across Muslim traditions; they differ on details such as his lineage and whether he is already born.</p></details>
+  <details class="rv"><summary>Is this belief only Shia?</summary><p>Belief in a Mahdi at the end of time appears across Muslim traditions. Sunni hadith collections also record the Prophet's (s) promise of a Mahdi from his family, from the descendants of Fatima (sa) (Sunan Abi Dawud 4284), who will fill the earth with justice (Sunan Abi Dawud 4282). The schools differ on details, such as his father's name and whether he is already born.</p><p><a class="more" href="academy-marefat.html#q-everyone">Read more: Is the Mahdi only a Shia belief?</a></p></details>
 </section>
 
 <section>

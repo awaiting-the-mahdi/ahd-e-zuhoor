@@ -12,7 +12,10 @@ canvas{position:fixed;inset:0;width:100%;height:100%;display:block;touch-action:
 .top{position:fixed;top:0;left:0;right:0;text-align:center;padding:calc(12px + env(safe-area-inset-top,0px)) 16px 0;pointer-events:none}
 .cnt{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(2.2rem,9vw,3.4rem);font-weight:700;line-height:1;color:var(--gold);text-shadow:0 0 24px rgba(224,187,108,.5);font-variant-numeric:tabular-nums}
 .sub{font-size:.74rem;color:var(--mut);margin-top:4px}
-.bot{position:fixed;left:0;right:0;bottom:0;text-align:center;padding:0 16px calc(10px + env(safe-area-inset-bottom,0px));pointer-events:none}
+.bot{position:fixed;left:0;right:0;bottom:0;text-align:center;padding:34px 16px calc(10px + env(safe-area-inset-bottom,0px));pointer-events:none;
+background:linear-gradient(to top,rgba(5,8,22,.94) 0,rgba(5,8,22,.86) 62%,rgba(5,8,22,0) 100%)}
+body.no3d{background:radial-gradient(ellipse at 50% 30%,#1a1f4a,#050816 70%)}
+body.no3d .rc{top:auto}
 #cap{min-height:3.4em;font-size:.85rem;color:var(--mut)}
 #cap b{display:block;font-family:'Cormorant Garamond',Georgia,serif;font-size:1.25rem;color:var(--gold)}
 #cap i{display:block;font:normal 1.2rem Amiri,serif;color:var(--fg)}
@@ -70,10 +73,11 @@ html.az-ur .qn,html.az-ur .grp{letter-spacing:0}
 .q details p{margin-top:4px;font-size:.95rem!important;color:var(--mut)!important}
 .q footer{margin-top:6px;font-size:.72rem;color:var(--mut);line-height:1.4}
 .q a{color:var(--gold)}
+.pl{margin:14px 0 0}.pl a{display:inline-block;padding:7px 14px;border:1px solid var(--gold);border-radius:99px;color:var(--gold);text-decoration:none;font-size:.85rem}
 .src{margin:12px 0 0;font-size:.68rem;color:var(--mut);line-height:1.4}
 @media (prefers-reduced-motion:reduce){.rc{transition:none}.q{transition:none}.ring,.rcs{animation:none}}
 /* the language switch sits in the header, under the subtitle */
-html .top .az-lang{position:relative;display:inline-block;margin:8px auto 0;pointer-events:auto}
+html .top .az-lang{position:relative;display:inline-block;margin:14px auto 0;pointer-events:auto}
 html .top .az-lang .az-cur{padding:4px 11px;font-size:12px;box-shadow:none;background:rgba(5,13,25,.55)}
 html .top .az-lang .az-cur[lang=ur]{padding:1px 11px 4px}
 #err{display:none;position:fixed;inset:0;align-items:center;justify-content:center;text-align:center;padding:24px}
@@ -98,7 +102,7 @@ document.addEventListener('DOMContentLoaded',function(){if(!mv()){var n=0,iv=set
 <div id="rc" class="rc" role="dialog" aria-labelledby="rcT" hidden><button class="rcx" id="rcx" aria-label="Close">×</button><div class="rch"><span class="rcs" aria-hidden="true">✦</span><div><h2 id="rcT"></h2><span class="ar" lang="ar" dir="rtl" id="rcA"></span></div></div><p class="rcto" id="rcTo"></p><div class="tags" id="rcG"></div><p class="sum" id="rcS"></p><p class="qn" id="rcN">In the book’s own words</p><div class="qs" id="rcQ"></div><p class="src">Words quoted exactly from the English translations in the library: <i>Kamal al-Din</i> (Shaykh as-Saduq), <i>Mikyal al-Makarim</i> (Sayyid Muhammad Taqi Musavi Isfahani) and <i>Al-Ghayba</i> (Shaykh al-Tusi). Tap a page reference to open it.</p></div>
 <div id="err">Your browser could not start WebGL, which this page needs.</div>
 <script src="../assets/js/resemblance-data.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="../assets/js/vendor/three.min.js"></script>
 <script>
 (function(){
 var N=124013,R=26,R0=5,GA=2.39996323;
@@ -145,7 +149,10 @@ function ed(a,b,i,w){var o=6*c;L[o]=P[3*a];L[o+1]=P[3*a+1];L[o+2]=P[3*a+2];L[o+3
 for(k=1;k<14;k++){var nx=k%13+1;ed(0,k,k,10);ed(k,nx,Math.max(k,nx),10);}
 for(k=14;k<N;k++){var p1=k-21,p2=k-34;ed(k,p1>=14?p1:1+k%13,k,1);if(p2>=14)ed(k,p2,k,1);}
 var W,H,fit,zin,dist,tgt;
-var ren;try{ren=new THREE.WebGLRenderer({antialias:false});}catch(e){document.getElementById('err').style.display='flex';return;}
+/* the 3D sky needs WebGL; without it the resemblances still open, as text */
+var ren=null;try{if(window.THREE)ren=new THREE.WebGLRenderer({antialias:false});}catch(e){ren=null;}
+var cap=document.getElementById('cap'),cntEl=document.getElementById('cnt'),labs=[],U=null,sp=S.map(function(){return[innerWidth/2,innerHeight*.3,1];});
+if(ren){
 ren.setPixelRatio(Math.min(devicePixelRatio||1,2));ren.setClearColor(0x050816);document.body.prepend(ren.domElement);
 var sc=new THREE.Scene(),cam=new THREE.PerspectiveCamera(55,1,.1,400);
 var U={uT:{value:0},uCount:{value:0},uPx:{value:ren.getPixelRatio()},uSel:{value:-1}};
@@ -170,12 +177,14 @@ var pg=new THREE.PlaneGeometry(80,80);pg.rotateX(-Math.PI/2);
 sc.add(new THREE.Mesh(pg,new THREE.ShaderMaterial({transparent:true,blending:THREE.AdditiveBlending,depthWrite:false,depthTest:false,
 vertexShader:'varying vec2 u;void main(){u=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
 fragmentShader:'varying vec2 u;void main(){float d=length(u-.5)*2.;vec3 c=mix(vec3(.5,.35,.1),vec3(.1,.15,.5),smoothstep(0.,.6,d));gl_FragColor=vec4(c,exp(-d*3.5)*.4*(1.-smoothstep(.8,1.,d)));}'})));
-var cap=document.getElementById('cap'),cntEl=document.getElementById('cnt'),labs=[];
 S.forEach(function(s,i){var d=document.createElement('div');d.className='l'+(i?(i<14?'':' p'):' m');d.innerHTML=i?(LBL[s[3]]||s[3]):s[3]+'<i lang="ar" dir="rtl">'+s[2]+'</i>';document.body.appendChild(d);labs.push(d);});
+}
 var UR=window.AZ_LANG==='ur',vo=0,rc=document.getElementById('rc'),bl=document.getElementById('bl'),bl2=document.getElementById('bl2'),bd=document.getElementById('bd'),sel=-1,beamT=0;
 function esc(x){return String(x).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
 var BK={1:['Kamaluddin-Vol-1.pdf','Kamal al-Din, vol. 1'],2:['Kamaluddin-Vol-2.pdf','Kamal al-Din, vol. 2'],mk1:['Mikyal-al-Makarim-Vol-1.pdf','Mikyal al-Makarim, vol. 1'],gh:['Al-Ghayba.pdf','Al-Ghayba (Shaykh al-Tusi)']};
 function cite(q){var b=BK[q.v];return '<a href="../assets/books/'+b[0]+'#page='+q.p+'" target="_blank" rel="noopener">'+b[1]+', '+(q.bp?'p. '+q.bp:'PDF p. '+q.p)+' ↗</a>';}
+/* prophets with their own page (pages/prophet.html?name=…) */
+var PP={Adam:'adam',Idrees:'idrees',Nuh:'nuh',Hud:'hud',Salih:'salih',Ibrahim:'ibrahim',Yusuf:'yusuf',Ayyub:'ayyub',Musa:'musa',Khizr:'khizr',Dawood:'dawood',Sulaiman:'sulaiman',Uzair:'uzair',Daniyal:'daniyal',Isa:'isa'};
 function card(i){var s=S[i],X=sp[i][0],Y=sp[i][1],h='';
 document.getElementById('rcT').textContent=s[1];document.getElementById('rcA').textContent=s[2];
 var G=document.getElementById('rcG'),Q=document.getElementById('rcQ'),T=document.getElementById('rcTo'),Sm=document.getElementById('rcS');
@@ -185,7 +194,8 @@ S.forEach(function(t,j){if(!j||!RD[t[3]])return;var b='<button class="tag" data-
 G.innerHTML='<div class="grp">The Fourteen</div>'+h+'<div class="grp">The prophets (a.s.)</div>'+h2;}
 else{var r=RD[s[3]];T.innerHTML='and its reflection in <b>Imam al-Mahdi (a.t.f.s.)</b>';Sm.hidden=false;document.getElementById('rcN').hidden=false;var ro=window.AZ_RO&&r.sumRo;Sm.textContent=ro||r.sum;if(ro)Sm.setAttribute('data-no-ro','');else Sm.removeAttribute('data-no-ro');Sm.dir=ro?'ltr':'';Sm.classList.toggle('ro',!!window.AZ_RO);
 G.innerHTML=r.tags.map(function(t){return '<span class="tag">'+esc(t)+'</span>';}).join('');
-Q.innerHTML=r.q.map(function(q,k){return '<blockquote class="q" style="transition-delay:'+(.35+k*.12)+'s">'+(UR&&q.u?'<p class="uq" lang="ur" dir="rtl" data-ur>'+esc(q.u)+'</p><details data-no-ur><summary lang="ur" data-ur>انگریزی متن — کتاب کے الفاظ</summary><p lang="en" dir="ltr">'+esc(q.t)+'</p></details>':'<p lang="en" dir="ltr" data-no-ur>'+esc(q.t)+'</p>')+'<footer><span>'+esc(q.by)+'</span> · '+cite(q)+'</footer></blockquote>';}).join('');}
+Q.innerHTML=r.q.map(function(q,k){return '<blockquote class="q" style="transition-delay:'+(.35+k*.12)+'s">'+(UR&&q.u?'<p class="uq" lang="ur" dir="rtl" data-ur>'+esc(q.u)+'</p><details data-no-ur><summary lang="ur" data-ur>انگریزی متن — کتاب کے الفاظ</summary><p lang="en" dir="ltr">'+esc(q.t)+'</p></details>':'<p lang="en" dir="ltr" data-no-ur>'+esc(q.t)+'</p>')+'<footer><span>'+esc(q.by)+'</span> · '+cite(q)+'</footer></blockquote>';}).join('')+
+(PP[s[3]]?'<p class="pl"><a href="prophet.html?name='+PP[s[3]]+'">About '+esc(s[1].replace(/,.*$/,''))+' →</a></p>':'');}
 rc.classList.remove('on');rc.hidden=false;rc.scrollTop=0;var b=rc.getBoundingClientRect();
 rc.style.setProperty('--ox',(X-b.left)+'px');rc.style.setProperty('--oy',(Y-b.top)+'px');void rc.offsetWidth;rc.classList.remove('done');rc.classList.add('on');document.body.classList.add('rc-open');clearTimeout(rc._d);rc._d=setTimeout(function(){rc.classList.add('done');},800);document.getElementById('rcx').focus({preventScroll:true});
 var g=document.createElement('div');g.className='ring';g.style.transform='';g.style.left=X+'px';g.style.top=Y+'px';document.body.appendChild(g);setTimeout(function(){g.remove();},1200);}
@@ -193,9 +203,17 @@ document.getElementById('rcG').addEventListener('click',function(e){var b=e.targ
 function closeCard(){var f=rc.contains(document.activeElement);clearTimeout(rc._d);rc.classList.remove('on','done');document.body.classList.remove('rc-open');rc.hidden=true;if(f)document.getElementById('b3').focus({preventScroll:true});}
 document.getElementById('rcx').onclick=function(){setSel(-1);};
 addEventListener('keydown',function(e){if(e.key=='Escape'&&!rc.hidden)setSel(-1);});
-function setSel(i){sel=i;beamT=0;if(i<0){cap.innerHTML='Tap a bright star · drag to turn · pinch to zoom<br>Tap a <span style="color:var(--gold)">✦ prophet</span>, one of the Fourteen, or the Mahdi star, to see the resemblance';U.uSel.value=-1;closeCard();}
-else{cap.innerHTML='<b>'+S[i][1]+'</b><i lang="ar" dir="rtl">'+S[i][2]+'</i>';U.uSel.value=S[i][0];if(i==0||RD[S[i][3]])card(i);else closeCard();}}
+function capIdle(){cap.innerHTML=ren?'Tap a bright star · drag to turn · pinch to zoom<br>Tap a <span style="color:var(--gold)">✦ prophet</span>, one of the Fourteen, or the Mahdi star, to see the resemblance':'The 3D sky could not start on this device.<br>Tap Resemblances to read them.';}
+function setSel(i){sel=i;beamT=0;if(i<0){capIdle();if(U)U.uSel.value=-1;closeCard();}
+else{cap.innerHTML='<b>'+S[i][1]+'</b><i lang="ar" dir="rtl">'+S[i][2]+'</i>';if(U)U.uSel.value=S[i][0];if(i==0||RD[S[i][3]])card(i);else closeCard();}}
 setSel(-1);
+if(!ren){
+  /* no 3D: a still page with the count, the note and the Resemblances card */
+  document.body.classList.add('no3d');cntEl.textContent=N.toLocaleString('en-US');
+  document.getElementById('b1').hidden=document.getElementById('b2').hidden=true;
+  document.getElementById('b3').onclick=function(){setSel(0);};
+  setSel(0);
+}else{
 function size(){W=innerWidth;H=innerHeight;ren.setSize(W,H);cam.aspect=W/H;cam.updateProjectionMatrix();var f=.52*Math.min(1,W/H);fit=Math.min(130,27/f);zin=4.4/f;}
 size();addEventListener('resize',size);
 var th=.6,ph=.5,touched=false,drag=0,moved=0,lastD=0,ps={};dist=tgt=fit*1.5;
@@ -228,6 +246,7 @@ bl.setAttribute('opacity',1);bl2.setAttribute('opacity',.5);bd.setAttribute('cx'
 else{bl.setAttribute('opacity',0);bl2.setAttribute('opacity',0);bd.setAttribute('opacity',0);}
 ren.render(sc,cam);}
 requestAnimationFrame(frame);
+}
 })();
 </script>
 <script src="../assets/js/menu.js"></script>

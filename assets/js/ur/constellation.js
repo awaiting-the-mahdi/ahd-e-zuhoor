@@ -153,9 +153,11 @@ AZ_UR.add({
   "Words quoted exactly from the English translations in the library: <i>Kamal al-Din</i> (Shaykh as-Saduq), <i>Mikyal al-Makarim</i> (Sayyid Muhammad Taqi Musavi Isfahani) and <i>Al-Ghayba</i> (Shaykh al-Tusi). Tap a page reference to open it.":
     "اقتباسات ہماری لائبریری کی ان کتابوں سے لیے گئے ہیں: <i>کمال الدین</i> (شیخ صدوق)، <i>مکیال المکارم</i> (سید محمد تقی موسوی اصفہانی) اور <i>الغیبہ</i> (شیخ طوسی)۔ اردو عبارت ہمارا اپنا ترجمہ ہے؛ کتاب کے اصل الفاظ ہر اقتباس کے نیچے ”انگریزی متن“ میں دیکھے جا سکتے ہیں۔ کتاب کا صفحہ کھولنے کے لیے حوالے پر ٹیپ کریں۔",
   "The Fourteen and the prophets marked ✦ each have a resemblance in Imam al-Mahdi (a.t.f.s.) recorded in the books. 124,000 prophets (a.s.), among them the Holy Prophet (s.a.w.a.), together with Lady Fatima (s.a.) and the twelve Imams (a.s.), make 124,013, following the number narrated in tradition.":
-    "چودہ معصومین اور ✦ والے انبیاء میں سے ہر ایک کی کوئی نہ کوئی جھلک، کتابوں کے مطابق، امام مہدی (عج) میں موجود ہے۔ روایات کے مطابق ایک لاکھ چوبیس ہزار انبیاء (ع)، جن میں رسولِ اکرم (ص) بھی شامل ہیں، اور ان کے ساتھ بی بی فاطمہ (س) اور بارہ ائمہ (ع)؛ کل ملا کر 1,24,013۔"
+    "چودہ معصومین اور ✦ والے انبیاء میں سے ہر ایک کی کوئی نہ کوئی جھلک، کتابوں کے مطابق، امام مہدی (عج) میں موجود ہے۔ روایات کے مطابق ایک لاکھ چوبیس ہزار انبیاء (ع)، جن میں رسولِ اکرم (ص) بھی شامل ہیں، اور ان کے ساتھ بی بی فاطمہ (س) اور بارہ ائمہ (ع)؛ کل ملا کر 1,24,013۔",
+  "The 3D sky could not start on this device.<br>Tap Resemblances to read them.": "اس آلے پر سہ جہتی آسمان نہیں کھل سکا۔<br>مشابہتیں پڑھنے کے لیے ”مشابہتیں“ کو چھوئیں۔"
 });
 AZ_UR.patterns([
+  [/^About (.+) →$/, function (m, n) { return AZ_UR.t(n) + " کے بارے میں ←"; }],
   [/^Kamal al-Din, vol\. (\d), (p\.|PDF p\.) (\d+) ↗$/, function (m, v, k, n) { return "کمال الدین، جلد " + v + "، " + (k == "p." ? "صفحہ " : "PDF صفحہ ") + n + " ↗"; }],
   [/^Mikyal al-Makarim, vol\. 1, PDF p\. (\d+) ↗$/, "مکیال المکارم، جلد 1، PDF صفحہ $1 ↗"],
   [/^Al-Ghayba \(Shaykh al-Tusi\), PDF p\. (\d+) ↗$/, "الغیبہ (شیخ طوسی)، PDF صفحہ $1 ↗"]

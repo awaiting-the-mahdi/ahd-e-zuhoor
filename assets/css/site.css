@@ -1007,3 +1007,135 @@ html.az-ur .ss-kind {
 .ss-res[dir=rtl] {
   text-align: right;
 }
+
+/* =========================================
+   HOME — QUICK LINKS, ARABIC FONT, FOOTER
+========================================= */
+
+/* Arabic on the home page: a proper Naskh face (Georgia has no Arabic letters) */
+.arabic,
+.title-arabic,
+.title-dua,
+.wordmark span {
+  font-family: "Amiri", "Noto Naskh Arabic", "Traditional Arabic", serif;
+}
+
+/* the reordered title area: search and quick links come right after the mission line */
+.title-reveal > *:nth-child(7) { animation-delay: 1950ms; }
+.title-reveal > *:nth-child(8) { animation-delay: 2150ms; }
+.title-reveal > *:nth-child(9) { animation-delay: 2350ms; }
+
+.title-reveal .site-search {
+  margin-top: 8px;
+}
+
+.quick-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  width: min(560px, 100%);
+  margin: 16px auto 0;
+}
+
+.quick-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 15px 9px 12px;
+  border: 1px solid var(--border);
+  border-radius: 40px;
+  background: rgba(5, 13, 25, 0.45);
+  color: var(--ivory);
+  font: 500 0.84rem/1.2 var(--sans);
+  text-decoration: none;
+  transition:
+    border-color var(--motion-fast) var(--ease-refined),
+    background var(--motion-fast) var(--ease-refined),
+    color var(--motion-fast) var(--ease-refined);
+}
+
+.quick-links a:hover,
+.quick-links a:focus-visible {
+  border-color: rgba(215, 188, 128, 0.7);
+  background: rgba(215, 188, 128, 0.08);
+  color: var(--gold);
+}
+
+.quick-links svg {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.site-footer {
+  padding: 34px 22px calc(84px + env(safe-area-inset-bottom, 0px));
+  border-top: 1px solid var(--border);
+  background: var(--navy);
+  text-align: center;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px 22px;
+}
+
+.footer-links a {
+  color: var(--muted);
+  font: 500 0.82rem/1.6 var(--sans);
+  letter-spacing: 0.04em;
+  text-decoration: none;
+}
+
+.footer-links a:hover,
+.footer-links a:focus-visible {
+  color: var(--gold);
+}
+
+.site-footer .footer-note {
+  max-width: none;
+  margin: 14px 0 0;
+  color: rgba(215, 188, 128, 0.55);
+  font: 500 0.64rem/1.8 var(--sans);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+/* phones: the title on one line, and no empty screen between the opening and the title */
+@media (max-width: 760px) {
+  .revelation {
+    padding-top: 28px;
+    padding-bottom: 56px;
+  }
+
+  .title-reveal {
+    margin-top: 0;
+    padding-top: 40px;
+  }
+
+  .title-reveal h1 {
+    font-size: clamp(1.75rem, 9.6vw, 2.8rem);
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+  }
+
+  .quick-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .quick-links a {
+    justify-content: flex-start;
+    text-align: start;
+    padding: 11px 12px;
+    border-radius: 14px;
+    font-size: 0.82rem;
+  }
+}
