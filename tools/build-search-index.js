@@ -50,6 +50,10 @@ function add(k, u, ten, tur, sen, sur, extra) {
     "pages/genealogy.html": "پاکیزہ نسب", "pages/fiqh-assistant.html": "فقہی سوالات میں مددگار", "pages/academy.html": "آن لائن تعلیمی اکیڈمی" }[p[0]] || ur(p[1]);
   add("page", p[0], p[1], urT, p[2], ur(p[2]), p[3]);
 });
+add("page", "pages/about.html", "About, sources & privacy", "تعارف، ماخذ اور رازداری",
+  "What AHD-E-ZUHOOR is, its sources and credits, and what it keeps or sends.",
+  "عہدِ ظہور کیا ہے، اس کے ماخذ اور اعتراف، اور یہ کیا محفوظ کرتی یا بھیجتی ہے۔",
+  "about privacy policy credits sources contact raazdaari");
 
 /* ---- duas ---- */
 window.AZ_DUAS.list.forEach(function (d) {

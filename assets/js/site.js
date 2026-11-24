@@ -8,9 +8,22 @@ document.addEventListener("DOMContentLoaded", () => {
     "(prefers-reduced-motion: reduce)"
   ).matches;
 
+  /* Returning visitors: the opening has been seen, so open the home page at the title.
+     The opening stays above it, one scroll up. */
+  const SEEN = "az-seen-intro";
+  const markSeen = () => { try { localStorage.setItem(SEEN, "1"); } catch (e) {} };
+  let seenBefore = false;
+  try { seenBefore = localStorage.getItem(SEEN) === "1"; } catch (e) {}
+  if (seenBefore && opening && revelation && !location.hash) {
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+    if (header) header.classList.add("is-visible");
+    window.scrollTo(0, header ? header.offsetTop : revelation.offsetTop);   // the sticky bar, then the title below it
+  }
+
   // Continue button
   if (continueButton && header && revelation) {
     continueButton.addEventListener("click", () => {
+      markSeen();
       header.classList.add("is-visible");
 
       revelation.scrollIntoView({
@@ -30,6 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
               "is-visible",
               !entry.isIntersecting
             );
+            if (!entry.isIntersecting) markSeen();   // scrolled past the opening
           });
         },
         { threshold: 0.05 }

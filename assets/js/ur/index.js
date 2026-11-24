@@ -13,5 +13,16 @@ AZ_UR.add({
   "EXPLORE NOW <span>↗</span>": "سفر شروع کیجیے <span>↗</span>",
   "Masjid al-Sahlah in Kufa, Iraq": "مسجدِ سہلہ، کوفہ، عراق",
   "Search duas, books, prophets…": "دعائیں، کتابیں، انبیاء تلاش کریں…",
-  "Search the site": "ویب سائٹ میں تلاش کریں"
+  "Search the site": "ویب سائٹ میں تلاش کریں",
+  "Quick links": "فوری روابط",
+  "Qur'an": "قرآن",
+  "Duas & Hadiths": "احادیث اور دعائیں",
+  "Language Courses": "زبان کے کورس",
+  "Ask Zahra": "زہرا سے پوچھیں",
+  "About this site": "اس ویب سائٹ کے بارے میں",
+  "About": "تعارف",
+  "Sources & credits": "ماخذ اور اعتراف",
+  "Contact": "رابطہ",
+  "Privacy": "رازداری",
+  "AHD-E-ZUHOOR · A journey of recognition": "عہدِ ظہور · معرفت کا سفر"
 });
