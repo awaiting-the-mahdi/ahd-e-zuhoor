@@ -83,7 +83,7 @@ var AZ_FIQH_API_DEFAULT = "https://ahd-fiqh-assistant.fatimahussain2630.workers.
   @media (max-width:560px){
     .azb-panel:not(.azb-inline){right:0;left:0;bottom:0;width:100%;height:100%;border-radius:0}
     .azb-launch{width:64px;height:64px}
-    .azb-tip{right:90px}
+    .azb-tip{right:90px;max-width:calc(100vw - 210px)}
   }
   @media (prefers-reduced-motion:reduce){.azb-launch::after,.azb-msg{animation:none}}
   `;
