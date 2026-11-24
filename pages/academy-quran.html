@@ -17,6 +17,8 @@ html,body{margin:0;background:#050a1c;color:var(--fg);font-family:Nunito,system-
 body{background:radial-gradient(ellipse at 50% 60%,#0e3438 0%,#071330 38%,#040817 75%) fixed}
 a{color:inherit}
 .back{position:fixed;top:20px;left:16px;z-index:1000;padding:10px 14px;border-radius:99px;background:rgba(7,10,36,.75);border:1.5px solid var(--line);font-weight:800;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);text-decoration:none;backdrop-filter:blur(8px)}
+/* a soft band behind the fixed top buttons, so the surah card doesn't scroll underneath them */
+body::after{content:"";position:fixed;top:0;left:0;right:0;height:calc(78px + env(safe-area-inset-top,0px));z-index:40;pointer-events:none;background:linear-gradient(rgba(7,10,36,.92) 55%,rgba(7,10,36,0))}
 .back:hover{color:#fff}
 .sh{text-shadow:0 1px 2px #000,0 0 12px rgba(3,4,13,.9)}
 
@@ -138,7 +140,7 @@ select.pill{appearance:none;padding-right:30px;background:rgba(13,20,52,.85) url
 .memo .note{color:var(--mut);font-weight:700;font-size:.9rem}
 /* recite: words appear as they are recited correctly */
 .rec .modes{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
-.rec .modes .tchip[aria-pressed=true]{border-color:var(--gold);background:rgba(255,201,77,.18)}
+.rec .modes .tchip[aria-pressed=true]{border-color:var(--gold);background:rgba(255,201,77,.18);color:#ffe7a8}
 .rec .bar3{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 12px;padding:12px 14px;border-radius:16px;border:1.5px solid var(--line);background:rgba(13,20,52,.75);position:sticky;top:8px;z-index:5}
 .rec .mic{width:58px;height:58px;border-radius:50%;border:0;background:var(--em);color:#04261a;display:grid;place-items:center;cursor:pointer;flex:none;box-shadow:0 0 0 0 rgba(79,207,143,.6)}
 .rec .mic.on{background:#ff6b6b;animation:micpulse 1.4s infinite}
