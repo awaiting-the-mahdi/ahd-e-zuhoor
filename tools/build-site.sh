@@ -6,7 +6,6 @@
 set -e
 mkdir -p _site
 cp -R index.html manifest.webmanifest sw.js pages assets _site/
-mkdir -p _site/docs/play-store
-cp -R docs/play-store/screenshots _site/docs/play-store/
+if [ -d docs/play-store/screenshots ]; then mkdir -p _site/docs/play-store; cp -R docs/play-store/screenshots _site/docs/play-store/; fi
 if [ -d .well-known ]; then cp -R .well-known _site/; fi
 echo "Built _site: $(find _site -type f | wc -l) files"
