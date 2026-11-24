@@ -43,7 +43,7 @@ html.ur h1{font-family:"Noto Nastaliq Urdu",serif;font-size:clamp(1.5rem,6vw,2.5
 .sub{color:var(--muted);max-width:44ch;position:relative;opacity:0;animation:up 1.2s 2s forwards;margin:.4rem auto 0}
 @keyframes up{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
 
-.tabs{position:sticky;top:0;z-index:20;display:flex;justify-content:safe center;gap:.4rem;padding:.8rem 1rem;background:linear-gradient(var(--bg) 70%,transparent);overflow-x:auto;scrollbar-width:none}
+.tabs{position:sticky;top:0;z-index:20;display:flex;justify-content:safe center;gap:.4rem;padding:.8rem 1rem;margin-right:68px;background:linear-gradient(var(--bg) 70%,transparent);overflow-x:auto;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
 .tab{flex:0 0 auto}
 .tab{background:transparent;color:var(--muted);border:1px solid var(--line);border-radius:99px;padding:.55rem 1.3rem;font:500 .95rem Inter,sans-serif;cursor:pointer;transition:.3s}
@@ -573,7 +573,10 @@ drawR();
 var TABS={letters:"tL",deputies:"tD",signs:"tS",places:"tP",community:"tC"};
 function showTab(t){Object.keys(TABS).forEach(function(k){$(k).hidden=k!==t;$(TABS[k]).setAttribute("aria-selected",k===t)});
  [].forEach.call(document.querySelectorAll("#"+t+" .rv"),function(x){io.unobserve(x);io.observe(x)});if(t==="community")loadStats()}
-Object.keys(TABS).forEach(function(k){$(TABS[k]).onclick=function(){showTab(k);if(k==="letters"){if(location.hash)history.replaceState({},"",location.pathname+location.search)}else history.replaceState({},"","#"+k)}});
+/* a tapped tab: slide it into view in the tab row, and bring its section up to just under the tabs */
+function bringUp(k){var b=$(TABS[k]),bar=b.parentNode;bar.scrollTo({left:b.offsetLeft-(bar.clientWidth-b.offsetWidth)/2,behavior:"smooth"});
+  var y=bar.getBoundingClientRect().top+scrollY;if(scrollY<y-2)scrollTo({top:y,behavior:matchMedia("(prefers-reduced-motion:reduce)").matches?"auto":"smooth"})}
+Object.keys(TABS).forEach(function(k){$(TABS[k]).onclick=function(){showTab(k);bringUp(k);if(k==="letters"){if(location.hash)history.replaceState({},"",location.pathname+location.search)}else history.replaceState({},"","#"+k)}});
 addEventListener("popstate",function(){var h=location.hash.slice(1);if(h&&!TABS[h]&&LS.some(function(x){return x.id===h}))openLetter(h,false);else closeLetter(true)});
 var h0=location.hash.slice(1);
 if(TABS[h0])showTab(h0);else if(LS.some(function(x){return x.id===h0}))openLetter(h0,false);

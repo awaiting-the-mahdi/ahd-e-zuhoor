@@ -119,7 +119,7 @@
 
   /* Roman text for one Urdu string. capStart: capitalise the first word. */
   /* two Urdu words written as one Roman word */
-  var JOIN = { "آن لائن": "online", "ان شاء": "In sha", "بات چیت": "baat cheet", "کلاؤڈ فلیئر": "Cloudflare", "اپ لوڈ": "upload" };
+  var JOIN = { "آن لائن": "online", "ان شاء": "In sha", "بات چیت": "baat cheet", "کلاؤڈ فلیئر": "Cloudflare", "اپ لوڈ": "upload", "اے آئی": "AI", "آیت اللہ": "Ayatullah" };
   function sent0(all) { return !/[A-Za-z0-9]/.test(all) || /[.?!]["”’)]?\s+["“(]?$/.test(all); }
   /* کیا written joined to the next word (کیاہے, کیاجائے, کیااور): split it so the کیا rule sees both */
   var KYA_GLUED = /(^|[^\u0600-\u06FF])کیا(ہے|ہیں|تھا|تھی|تھے|گیا|گئی|گئے|گیے|جائے|جائیں|جائیگا|جائےگا|جاتا|جاتی|جاتے|جارہا|جارہی|جارہے|جاسکتا|جاسکتی|جاسکے|جانا|اور|تو|تم|ہم|ان|اس|یہ|وہ|اگر|جانیں|جانے|جہنم|جہّنم)(?![\u0600-\u06FF])/g;
