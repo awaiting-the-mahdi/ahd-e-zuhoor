@@ -71,5 +71,6 @@ AZ_UR.add({
   "Children": "بچے",
   "Much of the Academy is made for children. The site never asks for a child's name or any personal details. We suggest children use Ask Zahra with a parent.":
     "اکیڈمی کا بڑا حصہ بچوں کے لیے بنایا گیا ہے۔ یہ ویب سائٹ کبھی کسی بچے کا نام یا کوئی ذاتی تفصیل نہیں مانگتی۔ ہمارا مشورہ ہے کہ بچے ”زہرا سے پوچھیں“ والدین کے ساتھ استعمال کریں۔",
-  "Last updated: 24 November 2026.": "آخری تبدیلی: 24 نومبر 2026۔"
+  "Last updated: 24 November 2026.": "آخری تبدیلی: 24 نومبر 2026۔",
+  "© 2026 AHD-E-ZUHOOR. All rights reserved. The text, design, illustrations and code of this site may not be copied or republished without permission. The Qur'an translations, hadith collections and books in the library belong to their own authors and publishers, as credited above.": "© 2026 عہدِ ظہور۔ جملہ حقوق محفوظ ہیں۔ اس ویب سائٹ کا متن، ڈیزائن، خاکے اور کوڈ اجازت کے بغیر نقل یا دوبارہ شائع نہیں کیے جا سکتے۔ قرآن کے تراجم، حدیث کے مجموعے اور کتب خانے کی کتابیں اپنے مصنفین اور ناشرین کی ملکیت ہیں، جیسا کہ اوپر ذکر کیا گیا ہے۔"
 });

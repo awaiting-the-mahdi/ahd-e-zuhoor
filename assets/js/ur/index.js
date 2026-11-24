@@ -24,5 +24,6 @@ AZ_UR.add({
   "Sources & credits": "ماخذ اور اعتراف",
   "Contact": "رابطہ",
   "Privacy": "رازداری",
-  "AHD-E-ZUHOOR · A journey of recognition": "عہدِ ظہور · معرفت کا سفر"
+  "AHD-E-ZUHOOR · A journey of recognition": "عہدِ ظہور · معرفت کا سفر",
+  "© 2026 AHD-E-ZUHOOR. All rights reserved.": "© 2026 عہدِ ظہور۔ جملہ حقوق محفوظ ہیں۔"
 });
