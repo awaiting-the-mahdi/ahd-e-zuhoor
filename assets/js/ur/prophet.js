@@ -91,11 +91,11 @@ AZ_UR.add({
   "A prophet known from the narrations": "روایات سے پہچانے جانے والے نبی",
   "Daniyal (a.s.) is not named in the Qur'an. He is known from narrations and history as a prophet of the Children of Israel who lived in captivity in Babylon. The narrations of what of his life is reflected in the Imam of our time (a.t.f.s.) are gathered in the Prophetic Blueprint.": "حضرت دانیال (ع) کا نام قرآن میں نہیں آیا۔ انہیں روایات اور تاریخ سے بنی اسرائیل کے ایک نبی کے طور پر جانا جاتا ہے جو بابل میں اسیری کے زمانے میں رہے۔ ان کی زندگی کی جو جھلک ہمارے زمانے کے امام (عج) میں ہے، اس کی روایات ”انبیاء کا نقشِ راہ“ میں جمع ہیں۔"
 });
-/* a Qur'an reference on its own (each is a link): "Surah al-Baqarah 2:30–39" → "سورۂ بقرہ 2:30–39" */
+/* a surah's name in a Qur'an reference (the verse numbers sit in their own left-to-right element): "Surah al-Baqarah" → "سورۂ بقرہ" */
 (function () {
   var SU = { "al-Baqarah": "بقرہ", "Aal Imran": "آلِ عمران", "an-Nisa": "نساء", "al-Ma'idah": "مائدہ", "al-An'am": "انعام", "al-A'raf": "اعراف",
     "at-Tawbah": "توبہ", "Hud": "ہود", "Yusuf": "یوسف", "Ibrahim": "ابراہیم", "al-Isra": "اسراء", "al-Kahf": "کہف", "Maryam": "مریم", "Ta-Ha": "طٰہٰ",
     "al-Anbiya": "انبیاء", "al-Mu'minun": "مومنون", "ash-Shu'ara": "شعراء", "an-Naml": "نمل", "al-Qasas": "قصص", "Saba": "سبا", "as-Saffat": "صافات",
     "Sad": "ص", "al-Ahqaf": "احقاف", "al-Qamar": "قمر", "as-Saff": "صف", "Nuh": "نوح", "ash-Shams": "شمس" };
-  AZ_UR.patterns([[/^Surah (.+?) (\d+:[\d–-]+)$/, function (m, n, v) { return SU[n] ? "سورۂ " + SU[n] + " " + v : m; }]]);
+  AZ_UR.patterns([[/^Surah (.+)$/, function (m, n) { return SU[n] ? "سورۂ " + SU[n] : m; }]]);
 })();

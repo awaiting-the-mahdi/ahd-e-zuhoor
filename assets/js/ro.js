@@ -180,6 +180,8 @@
         r += word(parts[i + 2], words[wi], words[wi + 2] || null, false); i += 2; wi++;
       }
       if (r.charAt(0) === "(" && /\($/.test(out) && /^\)/.test(parts[i + 1] || "")) r = r.slice(1, -1);
+      /* a surah's name is a name: Surah-e Anbiya, Surah-e Kahf */
+      if (/^سور[ۂہ]$/.test(words[wi - 1] || "") && /^[a-z]/.test(r)) r = r.charAt(0).toUpperCase() + r.slice(1);
       /* the name: Ahd-e Zuhoor, also when ظہور is in its own element (the coloured half of the title) */
       if (words[wi] === "ظہور" && /Ahd-e\s*$/i.test(ctx + out)) r = "Zuhoor";
       if (sent) r = r.charAt(0).toUpperCase() + r.slice(1);
