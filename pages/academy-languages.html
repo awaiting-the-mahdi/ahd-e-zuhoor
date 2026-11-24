@@ -23,6 +23,8 @@
   display:flex;justify-content:flex-end;gap:12px;transition:transform .4s}
 .footer .btn{min-width:200px}
 .app[data-step="0"] .footer{transform:translateY(120%)}
+/* while the Continue bar is showing, the language button sits above it instead of over the button */
+body:has(.app:not([data-step="0"])) .az-lang{bottom:calc(98px + env(safe-area-inset-bottom,0px))}
 
 /* splash */
 .splash{justify-content:center;text-align:center;gap:6px}

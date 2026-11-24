@@ -212,6 +212,11 @@
 <script src="../assets/js/i18n.js"></script>
 <link rel="stylesheet" href="../assets/css/menu.css">
 <style>@media(max-width:1160px){header.topbar{padding-right:74px}}</style>
+<style>
+/* the language button: hidden while a quiz or video is open (it covered the Check bar), and the page ends clear of it */
+body:has(#quiz.on) .az-lang,body:has(#playerOv.on) .az-lang{display:none}
+main.wrap{padding-bottom:calc(76px + env(safe-area-inset-bottom,0px))}
+</style>
 <link rel="manifest" href="../manifest.webmanifest">
 <link rel="icon" type="image/png" sizes="32x32" href="../assets/icons/favicon-32.png">
 <link rel="apple-touch-icon" href="../assets/icons/apple-touch-icon.png">
