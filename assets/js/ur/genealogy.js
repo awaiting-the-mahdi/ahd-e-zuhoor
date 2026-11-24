@@ -17,7 +17,7 @@
     "Imam Muhammad al-Baqir (a.s.)": "امام محمد باقر (ع)", "The 5th Imam": "پانچویں امام",
     "Imam Ali Zayn al-Abidin (a.s.)": "امام علی زین العابدین (ع)", "The 4th Imam": "چوتھے امام",
     "Imam al-Husayn (a.s.)": "امام حسین (ع)",
-    "The 3rd Imam. Son of Imam Ali (a.s.) and Fatima al-Zahra (s.a.).": "تیسرے امام۔ امام علی (ع) اور فاطمہ زہرا (س) کے فرزند۔",
+    "The 3rd Imam. Son of Imam Ali (a.s.) and Fatima al-Zahra (s.a.); brother of Imam al-Hasan (a.s.), the 2nd Imam.": "تیسرے امام۔ امام علی (ع) اور فاطمہ زہرا (س) کے فرزند، اور دوسرے امام، امام حسن (ع) کے بھائی۔",
     "Two Lines, One Source": "دو شاخیں، ایک جڑ",
     "Two lines, one source": "دو شاخیں، ایک جڑ",
     "Imam Ali (a.s.) and Fatima (s.a.) both descend from Abd al-Muttalib": "امام علی (ع) اور بی بی فاطمہ (س) دونوں کا نسب جناب عبد المطلب سے جا ملتا ہے",

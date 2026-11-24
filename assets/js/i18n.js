@@ -22,6 +22,10 @@
 */
 (function () {
   "use strict";
+  /* The app is always dark (navy and gold, like the home page), whatever the phone's light/dark setting.
+     Pages with a light design only use it when <html data-theme="light">, which nothing sets. */
+  document.documentElement.setAttribute("data-theme", "dark");
+  document.documentElement.style.colorScheme = "dark";
   var KEY = "az-lang";
   function readLang() {
     var q = null;
