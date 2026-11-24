@@ -5,29 +5,14 @@
   "id": "./",
   "start_url": "./",
   "scope": "./",
-  "lang": "en",
-  "dir": "ltr",
   "display": "standalone",
   "orientation": "any",
   "background_color": "#081426",
   "theme_color": "#081426",
-  "categories": ["education", "books", "lifestyle"],
   "icons": [
     { "src": "assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
     { "src": "assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
     { "src": "assets/icons/maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
     { "src": "assets/icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
-  ],
-  "shortcuts": [
-    { "name": "Qur'an", "url": "pages/academy-quran.html", "icons": [{ "src": "assets/icons/icon-192.png", "sizes": "192x192" }] },
-    { "name": "Duas & Hadiths", "url": "pages/hadiths.html", "icons": [{ "src": "assets/icons/icon-192.png", "sizes": "192x192" }] },
-    { "name": "Language Courses", "url": "pages/academy-languages.html", "icons": [{ "src": "assets/icons/icon-192.png", "sizes": "192x192" }] },
-    { "name": "Ask Zahra", "url": "pages/fiqh-assistant.html", "icons": [{ "src": "assets/icons/icon-192.png", "sizes": "192x192" }] }
-  ],
-  "screenshots": [
-    { "src": "docs/play-store/screenshots/01-home.png", "sizes": "1080x1920", "type": "image/png", "form_factor": "narrow", "label": "Home: search and quick links" },
-    { "src": "docs/play-store/screenshots/03-quran.png", "sizes": "1080x1920", "type": "image/png", "form_factor": "narrow", "label": "The Qur'an with translations" },
-    { "src": "docs/play-store/screenshots/04-dua-ahd.png", "sizes": "1080x1920", "type": "image/png", "form_factor": "narrow", "label": "Dua al-'Ahd" },
-    { "src": "docs/play-store/screenshots/06-language-course.png", "sizes": "1080x1920", "type": "image/png", "form_factor": "narrow", "label": "Language courses with Zahra and Ali" }
   ]
 }
