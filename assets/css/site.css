@@ -1099,6 +1099,14 @@ html.az-ur .ss-kind {
   color: var(--gold);
 }
 
+.site-footer .footer-copy {
+  max-width: none;
+  margin: 6px 0 0;
+  color: var(--muted);
+  font: 400 0.72rem/1.6 var(--sans);
+  opacity: 0.8;
+}
+
 .site-footer .footer-note {
   max-width: none;
   margin: 14px 0 0;
