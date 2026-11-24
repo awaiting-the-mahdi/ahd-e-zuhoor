@@ -41,6 +41,9 @@ h1{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(2rem,8vw,3.4re
 .big .card{border-color:var(--gold);box-shadow:0 0 28px var(--glow);padding:20px 18px}
 .big .nm{font-size:1.6rem}
 .gap .card{border-style:dashed;text-align:center}
+/* Imam al-Hasan (a.s.): beside the line of descent, not a generation in it */
+.sib .card{border-style:dashed;border-color:var(--gold);text-align:start}
+.sibl{margin-bottom:4px;color:var(--gold);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase}
 @media (max-width:640px){.pill{bottom:calc(58px + env(safe-area-inset-bottom,0px))!important;max-width:calc(100% - 32px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
 .pill{position:fixed;z-index:5;left:50%;bottom:calc(12px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);padding:8px 16px;border-radius:99px;background:var(--bg);border:1px solid var(--gold);color:var(--gold);font-size:.8rem;box-shadow:0 4px 18px var(--glow);white-space:nowrap}
 .foot{position:relative;z-index:1;max-width:520px;margin:0 auto;padding:0 24px 120px;text-align:center;color:var(--mut);font-size:.8rem}
@@ -96,6 +99,7 @@ var D=[
 ['Imam Muhammad al-Baqir (a.s.)','The 5th Imam','imam'],
 ['Imam Ali Zayn al-Abidin (a.s.)','The 4th Imam','imam'],
 ['Imam al-Husayn (a.s.)','The 3rd Imam. Son of Imam Ali (a.s.) and Fatima al-Zahra (s.a.); brother of Imam al-Hasan (a.s.), the 2nd Imam.','imam'],
+['Imam al-Hasan al-Mujtaba (a.s.)','The 2nd Imam. Elder brother of Imam al-Husayn (a.s.); son of Imam Ali (a.s.) and Fatima al-Zahra (s.a.).','imam sib'],
 ['#','Two Lines, One Source','Imam Ali (a.s.) and Fatima (s.a.) both descend from Abd al-Muttalib'],
 ['@fork'],
 ['Abd al-Muttalib','Father of both Abdullah (the Prophet’s father) and Abu Talib (Imam Ali’s father). The two lines meet here.'],
@@ -115,17 +119,17 @@ var D=[
 ['Shith (a.s.)','Prophet; son of Adam','imam'],
 ['Adam (a.s.)','The first human and the first prophet','big']
 ];
-var AR={'Imam Muhammad al-Mahdi':'الإمام محمد المهدي','Imam al-Hasan al-Askari':'الإمام الحسن العسكري','Imam Ali al-Hadi':'الإمام علي الهادي','Imam Muhammad al-Jawad':'الإمام محمد الجواد','Imam Ali al-Ridha':'الإمام علي الرضا','Imam Musa al-Kadhim':'الإمام موسى الكاظم','Imam Ja’far al-Sadiq':'الإمام جعفر الصادق','Imam Muhammad al-Baqir':'الإمام محمد الباقر','Imam Ali Zayn al-Abidin':'الإمام علي زين العابدين','Imam al-Husayn':'الإمام الحسين','Imam Ali':'الإمام علي','Abu Talib':'أبو طالب','Fatima al-Zahra':'فاطمة الزهراء','Prophet Muhammad':'النبي محمد','Abdullah':'عبد الله','Abd al-Muttalib':'عبد المطلب','Hashim':'هاشم','Abd Manaf':'عبد مناف','Qusayy':'قصي','Kilab':'كلاب','Murrah':'مرة','Ka’b':'كعب','Lu’ayy':'لؤي','Ghalib':'غالب','Fihr':'فهر','Malik':'مالك','al-Nadr':'النضر','Kinanah':'كنانة','Khuzaymah':'خزيمة','Mudrikah':'مدركة','Ilyas':'إلياس','Mudar':'مضر','Nizar':'نزار','Ma’add':'معد','Adnan':'عدنان','Ismail':'إسماعيل','Ibrahim':'إبراهيم','Tarikh':'تارح','Nahor':'ناحور','Sarug':'ساروغ','Ra’u':'راعو','Falikh':'فالغ','Aybar':'عابر','Shalikh':'شالح','Arfakhshad':'أرفخشذ','Sam':'سام','Nuh':'نوح','Lamak':'لمك','Mattushalakh':'متوشلح','Idris':'إدريس','Yarid':'يارد','Mahlail':'مهلائيل','Qaynan':'قينان','Anush':'أنوش','Shith':'شيث','Adam':'آدم'};
+var AR={'Imam al-Hasan al-Mujtaba':'الإمام الحسن المجتبى','Imam Muhammad al-Mahdi':'الإمام محمد المهدي','Imam al-Hasan al-Askari':'الإمام الحسن العسكري','Imam Ali al-Hadi':'الإمام علي الهادي','Imam Muhammad al-Jawad':'الإمام محمد الجواد','Imam Ali al-Ridha':'الإمام علي الرضا','Imam Musa al-Kadhim':'الإمام موسى الكاظم','Imam Ja’far al-Sadiq':'الإمام جعفر الصادق','Imam Muhammad al-Baqir':'الإمام محمد الباقر','Imam Ali Zayn al-Abidin':'الإمام علي زين العابدين','Imam al-Husayn':'الإمام الحسين','Imam Ali':'الإمام علي','Abu Talib':'أبو طالب','Fatima al-Zahra':'فاطمة الزهراء','Prophet Muhammad':'النبي محمد','Abdullah':'عبد الله','Abd al-Muttalib':'عبد المطلب','Hashim':'هاشم','Abd Manaf':'عبد مناف','Qusayy':'قصي','Kilab':'كلاب','Murrah':'مرة','Ka’b':'كعب','Lu’ayy':'لؤي','Ghalib':'غالب','Fihr':'فهر','Malik':'مالك','al-Nadr':'النضر','Kinanah':'كنانة','Khuzaymah':'خزيمة','Mudrikah':'مدركة','Ilyas':'إلياس','Mudar':'مضر','Nizar':'نزار','Ma’add':'معد','Adnan':'عدنان','Ismail':'إسماعيل','Ibrahim':'إبراهيم','Tarikh':'تارح','Nahor':'ناحور','Sarug':'ساروغ','Ra’u':'راعو','Falikh':'فالغ','Aybar':'عابر','Shalikh':'شالح','Arfakhshad':'أرفخشذ','Sam':'سام','Nuh':'نوح','Lamak':'لمك','Mattushalakh':'متوشلح','Idris':'إدريس','Yarid':'يارد','Mahlail':'مهلائيل','Qaynan':'قينان','Anush':'أنوش','Shith':'شيث','Adam':'آدم'};
 var tl=document.getElementById('tl'),n=0,nodes=[];
 function mc(nm,nt,no,c){var k=nm.replace(/\s*\(.*\)/,'');return '<div class="card '+c+'">'+(no?'<div class="no">'+String(no).padStart(2,'0')+'</div>':'')+'<div class="nm">'+nm+'</div>'+(AR[k]?'<div class="ar" lang="ar" dir="rtl">'+AR[k]+'</div>':'')+'<div class="nt">'+nt+'</div></div>';}
 function forkHTML(){var a=++n,b=++n,c=++n;return '<div class="cols"><div class="col"><div class="lab">PATERNAL</div>'+mc('Imam Ali (a.s.)','Son of Abu Talib',0,'imam')+mc('Abu Talib','Son of Abd al-Muttalib',0,'')+'</div><div class="col"><div class="lab">MATERNAL</div>'+mc('Fatima al-Zahra (s.a.)','Daughter of the Prophet',a,'imam')+mc('Prophet Muhammad (s.a.w.a.)','Seal of the Prophets',b,'imam')+mc('Abdullah','Son of Abd al-Muttalib',c,'')+'</div></div><div class="merge"></div>';}
 D.forEach(function(d){
 var e=document.createElement('div');
 if(d[0]==='@fork'){e.className='node fork';e.innerHTML=forkHTML();nodes.push([e,'Two lines, one source']);}else if(d[0]==='#'){e.className='era';e.innerHTML='<h2>'+d[1]+'</h2><span>'+d[2]+'</span>';}
-else{var g=(d[2]||'').indexOf('gap')>-1;if(!g)n++;var k=d[0].replace(/\s*\(.*\)/,'');
+else{var g=/gap|sib/.test(d[2]||''),sib=/sib/.test(d[2]||'');if(!g)n++;var k=d[0].replace(/\s*\(.*\)/,'');
 e.className='node '+(d[2]||'');
-e.innerHTML='<div class="card">'+(g?'':'<div class="no">'+String(n).padStart(2,'0')+'</div>')+'<div class="nm">'+d[0]+'</div>'+(AR[k]?'<div class="ar" lang="ar" dir="rtl">'+AR[k]+'</div>':'')+(d[1]?'<div class="nt">'+d[1]+'</div>':'')+'</div>';
-if(!g)nodes.push([e,d[0]]);}
+e.innerHTML='<div class="card">'+(sib?'<div class="sibl">Brother · the 2nd Imam</div>':'')+(g?'':'<div class="no">'+String(n).padStart(2,'0')+'</div>')+'<div class="nm">'+d[0]+'</div>'+(AR[k]?'<div class="ar" lang="ar" dir="rtl">'+AR[k]+'</div>':'')+(d[1]?'<div class="nt">'+d[1]+'</div>':'')+'</div>';
+if(!g||sib)nodes.push([e,d[0]]);}
 tl.appendChild(e);});
 var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target);}});},{threshold:.2});
 tl.querySelectorAll('.node,.era').forEach(function(el){io.observe(el);});
