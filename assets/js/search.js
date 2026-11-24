@@ -13,7 +13,7 @@
   var input = form.querySelector("input"), out = document.getElementById("ssRes");
   var UR = window.AZ_LANG === "ur", L = UR ? 1 : 0;           // Roman mode shows the Urdu, which ro.js writes in Roman letters
   var CHOICE = UR ? (window.AZ_RO ? "ro" : "ur") : "en";
-  var VER = "1";
+  var VER = "2";
   if (UR && !window.AZ_RO) { out.dir = "rtl"; out.lang = "ur"; }
   var KIND = {
     page: ["Page", "صفحہ"], dua: ["Dua", "دعا"], hadith: ["Hadith", "حدیث"], question: ["Question", "سوال"], imam: ["Ahl al-Bayt", "اہلِ بیت"],

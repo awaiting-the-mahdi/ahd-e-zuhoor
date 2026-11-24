@@ -904,7 +904,7 @@ function onScroll(){ticking=false;var max=document.documentElement.scrollHeight-
 addEventListener("scroll",function(){if(!ticking){ticking=true;requestAnimationFrame(onScroll)}},{passive:true});
 
 /* returning visitors who came via a chapter link skip the threshold */
-if(location.hash&&location.hash!=="#threshold"&&document.querySelector(location.hash)){document.body.classList.add("begun");observeAll();setTimeout(function(){document.querySelector(location.hash).scrollIntoView()},50)}
+if(location.hash&&location.hash!=="#threshold"&&document.querySelector(location.hash)){document.body.classList.add("begun");observeAll();var tg=document.querySelector(location.hash),go=function(){tg.scrollIntoView({block:"start"})};setTimeout(go,50);setTimeout(go,700);setTimeout(go,1600)}
 if(store("az-marefat-begun")){$("beginBtn").querySelector("small").textContent=tt("welcome")}
 })();
 </script>
