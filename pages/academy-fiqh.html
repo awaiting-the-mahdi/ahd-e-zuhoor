@@ -18,6 +18,10 @@ main{position:relative;z-index:2;overflow-x:clip}
 .back{position:fixed;top:20px;left:16px;z-index:1000;display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:99px;background:rgba(7,10,36,.7);border:1.5px solid var(--line);font-weight:800;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);backdrop-filter:blur(8px)}
 .back:hover{color:#fff}
 .mute{position:fixed;top:20px;right:84px;z-index:1000}
+/* a soft band behind the fixed top buttons, so headings don't scroll underneath them */
+body::after{content:"";position:fixed;top:0;left:0;right:0;height:calc(78px + env(safe-area-inset-top,0px));z-index:40;pointer-events:none;background:linear-gradient(rgba(7,10,36,.92) 55%,rgba(7,10,36,0))}
+/* phones: every lesson tab visible (they scrolled out of sight) */
+@media (max-width:560px){.mtabs{flex-wrap:wrap;overflow-x:visible}.mtabs>*{flex:1 1 auto}}
 .shadow-text{text-shadow:0 1px 2px #000,0 0 12px rgba(3,4,13,.9)}
 
 /* hero */
@@ -112,7 +116,7 @@ h1 small{display:block;font-size:.5em;font-style:italic;font-weight:500;color:#f
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
 .mhero .kicker{font-size:.72rem;font-weight:900;letter-spacing:.24em;text-transform:uppercase;color:var(--c)}
 .mhero h2{font-family:var(--serif);font-weight:600;font-size:clamp(2.2rem,7vw,3.8rem);line-height:1;margin:.1em 0 .2em}
-.mhero h2 .mar{font-family:var(--ar);font-size:.6em;color:var(--gold);margin-left:12px}
+.mhero h2 .mar{font-family:var(--ar);font-size:.6em;color:var(--gold);margin-inline-start:12px}
 .mhero .sum{color:#e3e5f5;font-weight:700;line-height:1.55;margin:0}
 .mtabs{display:flex;gap:6px;padding:6px;border-radius:20px;background:rgba(22,28,74,.7);border:2px solid var(--line);margin-bottom:18px;overflow-x:auto}
 .mtab{flex:1;min-width:max-content;min-height:46px;padding:0 14px;border:0;border-radius:14px;background:transparent;font-weight:900;font-size:.9rem;color:var(--mut);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}
