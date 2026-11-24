@@ -45,6 +45,10 @@ main{overflow-x:clip}
 .back{position:fixed;top:18px;left:16px;z-index:1000;display:flex;align-items:center;gap:8px;padding:9px 14px;border-radius:99px;background:rgba(3,4,13,.6);border:1px solid var(--line);
   font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--mut);text-decoration:none;backdrop-filter:blur(8px)}
 .back:hover{color:var(--gold)}
+/* a linked question (#q-…) lands below the top buttons, not under them */
+[id^="q-"],section[id]{scroll-margin-top:84px}
+/* a soft band behind the fixed top buttons, so headings don't scroll underneath them */
+body::after{content:"";position:fixed;top:0;left:0;right:0;height:calc(76px + env(safe-area-inset-top,0px));z-index:40;pointer-events:none;background:linear-gradient(rgba(3,4,13,.9) 55%,rgba(3,4,13,0))}
 .rail{position:fixed;right:18px;top:50%;translate:0 -50%;z-index:900;display:flex;flex-direction:column;gap:14px;opacity:0;transition:opacity 1s}
 body.begun .rail{opacity:1}
 .rail a{position:relative;display:block;width:10px;height:10px;border-radius:50%;border:1px solid var(--gold);background:transparent;transition:.4s}
