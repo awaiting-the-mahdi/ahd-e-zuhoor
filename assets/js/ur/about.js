@@ -30,6 +30,7 @@ AZ_UR.add({
   "Voices, fonts and code": "آوازیں، فونٹ اور کوڈ",
   "The voices of Zahra and Ali in the language courses: Microsoft neural voices (Arabic, Persian, Urdu and English).":
     "زبان کے کورسز میں زہرا اور علی کی آوازیں: مائیکروسافٹ کی نیورل آوازیں (عربی، فارسی، اردو اور انگریزی)۔",
+  "The narration of the library's audiobooks: Microsoft neural voices (English and Urdu).": "کتب خانے کی آڈیو کتابوں کی آواز: مائیکروسافٹ کی نیورل آوازیں (انگریزی اور اردو)۔",
   "Fonts: Google Fonts. The 3D Prophetic Blueprint uses three.js.": "فونٹ: گوگل فونٹس۔ سہ جہتی ”انبیاء کا نقشِ راہ“ three.js سے بنا ہے۔",
   "Photos and illustrations are AHD-E-ZUHOOR's own.": "تصاویر اور خاکے عہدِ ظہور کے اپنے ہیں۔",
   "Ask Zahra explains what sistani.org says; it is not a fatwa. For your own situation, check with the office of your marja'.":
