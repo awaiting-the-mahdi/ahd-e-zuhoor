@@ -58,7 +58,7 @@
   <section>
     <div class="eyebrow">LIFE &amp; MISSION</div>
     <h2>An overview</h2>
-    <p id="overview"></p>
+    <div id="overview"></div>
   </section>
   <section>
     <div class="eyebrow">QUR'ANIC STARTING POINTS</div>
@@ -147,9 +147,10 @@ const profiles = {
     quran:"Surah at-Tawbah 9:30; Surah al-Baqarah 2:259."
   },
   daniyal: {
-    name:"Daniyal (a.s.)", ar:"دانيال", subtitle:"A prophet known from the narrations",
-    overview:"Daniyal (a.s.) is not named in the Qur'an. He is known from narrations and history as a prophet of the Children of Israel who lived in captivity in Babylon. The narrations of what of his life is reflected in the Imam of our time (a.t.f.s.) are gathered in the Prophetic Blueprint.",
-    quran:""
+    name:"Daniyal (a.s.)", ar:"دانيال", subtitle:"Ninety years a captive · Safe in the lions' pit",
+    overview:"Daniyal (a.s.) is not named in the Qur'an. The narrations know him as a prophet of the Children of Israel, from the family of Yahuda (Judah), and the Proof of Allah in his time. Shaykh as-Saduq tells his story in Kamal al-Din, in the chapter on the occultations of the prophets.\n\nWhen Nebuchadnezzar (Bukht Nassar) overran the Children of Israel, he killed whoever he could find and took captives from the family of Yahuda. Daniyal (a.s.) was among them, and he remained Nebuchadnezzar's prisoner for ninety years.\n\nThe king learned that the Children of Israel were waiting for Daniyal to rise, and hoped for deliverance at his hands. So he had him thrown into a great pit with a lion, to be its prey, but the lion did not even go near him. Then he ordered that he be left to starve, but Allah sent him food and water through one of His prophets. Daniyal (a.s.) fasted by day and broke his fast each evening with what was sent to him.\n\nAll this time, hardship grew on his followers and on those who awaited him, and because his absence lasted so long, most of them strayed from their religion.\n\nWhen the time of relief came, Nebuchadnezzar saw in a dream army after army of angels coming down from the sky into the pit, greeting Daniyal and giving him glad tidings of deliverance. In the morning, ashamed of what he had done, the king had him brought out, asked his forgiveness, and handed him the government of the land and the judging of disputes. The Children of Israel who had been in hiding came out and gathered around him, certain that the time of relief had come. Before he died, Daniyal (a.s.) entrusted the affairs to Prophet Uzair (a.s.).\n\nHis shrine is in the city of Shush (ancient Susa), in Iran, where believers visit him today.\n\nThe narrations place his story beside the occultation of the Imam of our time (a.t.f.s.): a long absence, a test so hard that many leave their faith, and relief that comes when Allah wills.",
+    quran:"",
+    narr:{ t:"Kamal al-Din (Shaykh as-Saduq), vol. 1, pp. 165–166", href:"../assets/books/Kamaluddin-Vol-1.pdf#page=163" }
   },
   isa: {
     name:"Isa (a.s.)", ar:"عيسى", subtitle:"Divine signs and mercy · The son of Maryam (a.s.)",
@@ -163,11 +164,17 @@ document.title = p.name + " | The Prophetic Blueprint";
 document.getElementById("name").textContent = p.name;
 document.getElementById("ar").textContent = p.ar;
 document.getElementById("subtitle").textContent = p.subtitle;
-document.getElementById("overview").textContent = p.overview;
+p.overview.split("\n\n").forEach(function (t) { const para = document.createElement("p"); para.textContent = t; document.getElementById("overview").appendChild(para); });
 const ul = document.getElementById("quran");
 const refs = p.quran.replace(/\.\s*$/, "").split(/;\s*/).filter(Boolean);
 if (!refs.length) {
   const li = document.createElement("li"); li.className = "none"; li.textContent = "He is not named in the Qur'an."; ul.appendChild(li);
+}
+/* a prophet known from the narrations: the source, opening at that page in the library's PDF */
+if (p.narr) {
+  const li = document.createElement("li"), lab = document.createElement("span"), a = document.createElement("a");
+  lab.textContent = "From the narrations: "; a.href = p.narr.href; a.target = "_blank"; a.rel = "noopener"; a.textContent = p.narr.t + " ↗";
+  li.append(lab, a); ul.appendChild(li);
 }
 refs.forEach(function (r) {
   const li = document.createElement("li"), m = /(\d+):/.exec(r);

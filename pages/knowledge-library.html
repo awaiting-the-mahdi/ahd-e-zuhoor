@@ -347,14 +347,14 @@ function wire(){var st=$('#stage'),sx=null,wl=0;build();
  st.addEventListener('mousemove',function(e){var x=(e.clientX/innerWidth-.5),y=(e.clientY/innerHeight-.5);$('#shelf').style.transform='rotateY('+x*8+'deg) rotateX('+(-y*5)+'deg)'});
  addEventListener('keydown',function(e){if(!rd.classList.contains('open')){if(e.key=='ArrowRight')go(ci+1);if(e.key=='ArrowLeft')go(ci-1);if(e.key=='Enter')open(ci)}});
  addEventListener('resize',layout)}
-function listen(){try{if(speechSynthesis.speaking){speechSynthesis.cancel();return}var b=BOOKS[cur],u=new SpeechSynthesisUtterance(b.t+'. '+b.ch.map(function(c){return c[0]+'. '+c[1].join(' ')}).join(' '));u.rate=.95;speechSynthesis.speak(u)}catch(e){}}
+function listen(){if(window.AZ_LIB_PLAYER&&window.AZ_LIB_PLAYER.toggle())return;try{if(speechSynthesis.speaking){speechSynthesis.cancel();return}var b=BOOKS[cur],u=new SpeechSynthesisUtterance(b.t+'. '+b.ch.map(function(c){return c[0]+'. '+c[1].join(' ')}).join(' '));u.rate=.95;speechSynthesis.speak(u)}catch(e){}}
 /* reader */
 var rd=$('#rd'),sc=$('#sc'),io,fs=21,saveT;
 function pdfBtn(b,n){return b.pdf?'<a class="pdfb" href="'+b.pdf+'#page='+b.pg[n]+'" target="_blank" rel="noopener" onclick="event.stopPropagation()">📄 Read full chapter (PDF · p. '+b.pg[n]+')</a>':''}
 function sp(p,k){var H='',t=p;if(p.charAt(0)=='§'){var j=p.indexOf('§',1);H=p.slice(1,j);t=p.slice(j+1)}return(H?'<h4 class="sb">'+H+'</h4>':'')+'<p'+(k?'':' class="f"')+'>'+t+'</p>'}
 function toc(b){return '<div class="toc2"><b>In this book</b>'+b.ch.map(function(c,n){return '<a href="#" onclick="jump('+n+');return false">'+(n+1)+'. '+c[0]+'</a>'}).join('')+'</div>'}
 function jump(n){var e=document.getElementById('ch'+n);if(e)e.scrollIntoView({behavior:'smooth',block:'start'})}
-function open(i,ev){cur=i;document.body.classList.add('reading');var b=BOOKS[i],h='<header class="hero" style="--h:'+b.h+'">'+cover(b,i,'r')+'<h2>'+b.t+'</h2><p>'+b.c+' · '+mins(b)+' min read · '+b.au+'</p><p style="margin-top:12px;font-size:14px;color:var(--rm)">A detailed chapter-by-chapter summary written for this library, not the book’s own text.</p>'+(b.pdf?'<a class="pdfb" href="'+b.pdf+'" target="_blank" rel="noopener">📄 Open the full book (PDF)</a>':'')+toc(b)+'</header>';
+function open(i,ev){if(window.AZ_LIB_PLAYER)AZ_LIB_PLAYER.opened(i);cur=i;document.body.classList.add('reading');var b=BOOKS[i],h='<header class="hero" style="--h:'+b.h+'">'+cover(b,i,'r')+'<h2>'+b.t+'</h2><p>'+b.c+' · '+mins(b)+' min read · '+b.au+'</p><p style="margin-top:12px;font-size:14px;color:var(--rm)">A detailed chapter-by-chapter summary written for this library, not the book’s own text.</p>'+(b.pdf?'<a class="pdfb" href="'+b.pdf+'" target="_blank" rel="noopener">📄 Open the full book (PDF)</a>':'')+toc(b)+'</header>';
  b.ch.forEach(function(c,n){h+='<div class="chn" id="ch'+n+'"><i>'+(n+1)+'</i><h3>'+c[0]+'</h3></div>';c[1].forEach(function(p,k){h+=sp(p,k)});h+=pdfBtn(b,n)});
  var nx=(i+1)%BOOKS.length;h+='<div class="fin"><h3>— Fin —</h3><button class="nx" id="nx">Next: '+BOOKS[nx].t+' →</button></div>';
  $('#tx').innerHTML=h;$('#rt').textContent=b.t;$('#nx').onclick=function(e){open(nx,e);sc.scrollTop=0};
@@ -365,7 +365,7 @@ function open(i,ev){cur=i;document.body.classList.add('reading');var b=BOOKS[i],
  var sv=0;try{sv=+localStorage.getItem('ath:'+i)||0}catch(e){}
  var rs=$('#res');rs.classList.remove('show');if(sv>.05&&sv<.97){rs.textContent='Resume where you left off · '+Math.round(sv*100)+'%';rs.onclick=function(){sc.scrollTop=sv*(sc.scrollHeight-sc.clientHeight);rs.classList.remove('show')};setTimeout(function(){rs.classList.add('show')},1100);setTimeout(function(){rs.classList.remove('show')},7000)}}
 sc.onscroll=function(){var m=sc.scrollHeight-sc.clientHeight,p=m>0?sc.scrollTop/m:0;$('#bar i').style.width=p*100+'%';clearTimeout(saveT);saveT=setTimeout(function(){try{localStorage.setItem('ath:'+cur,p)}catch(e){}},400)};
-function close(){rd.classList.remove('open');document.body.classList.remove('reading');try{speechSynthesis.cancel()}catch(e){}layout()}
+function close(){rd.classList.remove('open');document.body.classList.remove('reading');if(window.AZ_LIB_PLAYER)AZ_LIB_PLAYER.stop();try{speechSynthesis.cancel()}catch(e){}layout()}
 var mode='b',BL=0,bp=0,busy=0,leaves=[],snd=0,ac,mapB=0;
 try{mode=localStorage.getItem('ath:mode')||'b'}catch(e){}
 function sfx(){if(!snd)return;try{ac=ac||new(window.AudioContext||window.webkitAudioContext)();var n=ac.sampleRate*.5|0,bf=ac.createBuffer(1,n,ac.sampleRate),d=bf.getChannelData(0),i;for(i=0;i<n;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/n,2.5)*(i<n*.15?i/(n*.15):1);var s=ac.createBufferSource(),f=ac.createBiquadFilter(),g=ac.createGain();f.type='bandpass';f.frequency.value=2400;f.Q.value=.6;g.gain.value=.35;s.buffer=bf;s.connect(f);f.connect(g);g.connect(ac.destination);s.start()}catch(e){}}
@@ -428,6 +428,8 @@ $("#ls").onclick=listen;wire();layout();setTimeout(layout,300);
  BOOKS.forEach(function(b,j){if(i<0&&b.pdf&&b.pdf.toLowerCase().indexOf(k)>-1)i=j});
  if(i>-1){go(i);setTimeout(function(){open(i)},400)}})();
 </script>
+<script src="../assets/audio/library/clips.js"></script>
+<script src="../assets/js/library-player.js"></script>
 <script src="../assets/js/menu.js"></script>
 </body>
 </html>
