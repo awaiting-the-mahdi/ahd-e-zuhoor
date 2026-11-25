@@ -4,7 +4,7 @@ AZ_UR.add({
   "Swipe, scroll or tap to browse the shelf": "کتابیں دیکھنے کے لیے شیلف کو سرکائیں یا کسی کتاب پر ٹیپ کریں",
   "Hover or tap a book to see its threads · tap again to read": "کتاب پر ایک بار ٹیپ کریں تو اس کے موضوعات نظر آئیں گے · دوبارہ ٹیپ کریں تو کتاب کھل جائے گی",
   "📜 Scroll mode": "📜 لمبا صفحہ", "📖 Book style": "📖 کتاب کی طرح",
-  "‹ Back": "‹ واپس", "Next ›": "اگلا ›",
+  "‹ Back": "پچھلا", "Next ›": "اگلا",
   "Reading mode": "پڑھنے کا انداز", "Candlelight": "شمع کی روشنی", "Sound": "آواز",
   "Smaller": "چھوٹا حرف", "Larger": "بڑا حرف", "Theme": "رنگ",
   "In this book": "اس کتاب میں",

@@ -282,6 +282,10 @@ body.reading .az-home-button,body.reading .az-lang{display:none}
 .toc2 b{display:block;color:var(--acc);font:italic 600 18px var(--d);margin-bottom:6px}
 .toc2 a{display:block;color:var(--rink);text-decoration:none;padding:9px 0;border-top:1px solid rgba(128,128,128,.2);font-size:16px;line-height:1.3;opacity:.9}
 .sb2{font:700 calc(var(--pw)*.047)/1.2 'IM Fell English',serif;color:#7a2a1a;margin:.3em 0 .2em;text-align:left}
+/* text on a book page shrinks a little (--fs, set by fitPages) when it would run past the page's border */
+.fc.pa p,.fc.pa .ln{font-size:calc(var(--pw)*.052*var(--fs,1))}.fc.pa h4{font-size:calc(var(--pw)*.058*var(--fs,1))}
+.fc.pa .sb2{font-size:calc(var(--pw)*.047*var(--fs,1))}.fc.pa .rt{font-size:calc(var(--pw)*.045*var(--fs,1))}
+html.az-ur .fc.pa .ln{margin:.45em 0}
 
 .pdfb{display:block;max-width:340px;margin:14px auto 0;text-align:center;border:1px solid var(--acc);color:var(--acc);border-radius:30px;padding:12px 18px;text-decoration:none;font:600 15px var(--b);transition:.25s}
 .pdfb:hover{background:var(--acc);color:#1a1530}
@@ -378,7 +382,7 @@ function bf(b,i){var F=[],pn=0,st=1,lc=`<div class='fc lc b' style='--h:${b.h}'>
  F.push(b.img?`<div class='fc lc im' style='--h:${b.h}'><img class='fi' src='${b.img}'></div>`:`<div class='fc lc' style='--h:${b.h}'><div class='med'>${art(b,i,'k')}</div><div class='lt'><small>${b.c}</small><span class='arb'>${b.ar}</span><b>${b.t}</b></div></div>`,lc);
  F.push(pa(`<div class='ctr'><div class='dia'></div><h4>${b.t}</h4><i>${b.au}</i><i>Detailed summary edition</i><div class='dia'></div></div>`));
  var P=b.ch.map(pages),it=b.ch.map(function(c,n){var h=`<div class='ln' onclick='event.stopPropagation();goCh(${n})'><span>${c[0]}</span><u></u><em>${st}</em></div>`;st+=P[n].length;return h});
- for(var q=0;q<it.length;q+=6)F.push(pa('<h4>Contents</h4>'+it.slice(q,q+6).join('')));
+ var per=window.AZ_LANG==='ur'?4:6;for(var q=0;q<it.length;q+=per)F.push(pa('<h4>Contents</h4>'+it.slice(q,q+per).join('')));
  CHF=[];
  b.ch.forEach(function(c,n){CHF.push(F.length);F.push(pa(`<div class='ctr'><div class='kk'>Chapter</div><div class='bg'>${R[n%12]}</div><h4>${c[0]}</h4><div class='dia'></div>${pdfBtn(b,n)}</div>`));
   P[n].forEach(function(x){F.push(pa(`<div class='rt'>${c[0]}</div>${x.h?`<h5 class='sb2'>${x.h}</h5>`:''}<p${x.f?" class='f'":''}>${x.t}</p>`,++pn))})});
@@ -387,7 +391,13 @@ function bf(b,i){var F=[],pn=0,st=1,lc=`<div class='fc lc b' style='--h:${b.h}'>
  return F.map(function(x,k){return k%2&&x.indexOf('fc pa')>-1?x.replace('fc pa','fc pa b'):x})}
 function buildBook(b,i){var F=bf(b,i),bo=$('#bo');BL=F.length/2;bp=0;leaves=[];bo.innerHTML="<div class='sp'></div>";
  for(var k=0;k<BL;k++){var d=document.createElement('div');d.className='lf';d.style.zIndex=BL-k;d.innerHTML=F[2*k]+F[2*k+1];(function(k){d.onclick=function(){if(k==bp)flip(1);else if(k==bp-1)flip(-1)}})(k);bo.appendChild(d);leaves.push(d)}
- var nb=$('#nb');if(nb)nb.onclick=function(e){e.stopPropagation();open((i+1)%BOOKS.length,e)}}
+ var nb=$('#nb');if(nb)nb.onclick=function(e){e.stopPropagation();open((i+1)%BOOKS.length,e)};
+ [60,500,1500].forEach(function(t){setTimeout(fitPages,t)});if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitPages)}
+/* keep every page's text inside its border: shrink the text of a page that would overflow, a little at a time */
+function fitPages(){[].forEach.call(document.querySelectorAll('#bo .fc.pa'),function(el){if(el.querySelector('.ctr'))return;
+ el.style.removeProperty('--fs');var lim=el.clientHeight*(el.querySelector('.nm')?.86:.9),fs=1,k=0;
+ function bot(){var m=0;[].forEach.call(el.children,function(c){if(!c.classList.contains('nm'))m=Math.max(m,c.offsetTop+c.offsetHeight)});return m}
+ while(bot()>lim&&fs>.6&&k++<12){fs-=.05;el.style.setProperty('--fs',fs.toFixed(2))}})}
 function bplace(){var pw=$('#scn').offsetWidth/2;$('#bo').style.transform='translateX('+(bp==0?-pw/2:bp==BL?pw/2:0)+'px) rotateX('+(bp>0&&bp<BL?5:0)+'deg)';$('#pv').disabled=!bp;$('#nt').disabled=bp==BL;$('#bi').textContent=bp==0?'Cover':bp==BL?'Back cover':'Spread '+bp+' of '+(BL-1);if(mode=='b'){$('#bar i').style.width=bp/BL*100+'%';if(bp)try{localStorage.setItem('athb:'+cur,bp/BL)}catch(e){}}}
 function flip(d){if(busy)return;var k=d>0?bp:bp-1;if(k<0||k>=BL)return;busy=1;var l=leaves[k];l.style.zIndex=99;l.classList.add('tn');l.classList.toggle('f',d>0);bp+=d;bplace();sfx();setTimeout(function(){l.style.zIndex=d>0?k:BL-k},650);setTimeout(function(){l.classList.remove('tn');busy=0},1300)}
 function goCh(n){var fi=CHF[n];if(fi==null||busy)return;var t=fi%2?(fi+1)/2:fi/2;flipTo(t)}
@@ -404,7 +414,7 @@ $('#sn').onclick=function(){snd=!snd;this.textContent=snd?'🔊':'🔇';sfx()};
 $('#nt').onclick=function(){flip(1)};$('#pv').onclick=function(){flip(-1)};
 var tx0=null;$('#bkv').addEventListener('touchstart',function(e){tx0=e.touches[0].clientX},{passive:true});
 $('#bkv').addEventListener('touchend',function(e){var d=e.changedTouches[0].clientX-tx0;if(tx0!==null&&Math.abs(d)>40)flip(d<0?1:-1);tx0=null});
-addEventListener('resize',function(){if(mode=='b')bplace()});
+addEventListener('resize',function(){if(mode=='b'){bplace();clearTimeout(window._fp);window._fp=setTimeout(fitPages,200)}});
 /* constellations */
 var TG=[["history", "hope"], ["proof", "signs"], ["dua", "rights"], ["dua", "duties"], ["prophets", "proof"], ["proof", "epistles"], ["prophets", "history"], ["history", "prophet"], ["proof", "prophet"], ["beliefs", "proof"]];
 function buildMap(){var n=BOOKS.length,P=[],E='',N='',i,j;
