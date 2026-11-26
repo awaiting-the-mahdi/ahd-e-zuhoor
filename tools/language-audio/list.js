@@ -50,5 +50,11 @@ for (const [C, list] of all) {
     }
   }
 }
+/* the Theology and Fiqh academies (tools/language-audio/academies.js) */
+for (const u of require("./academies.js")()) {
+  if (!u.narr) { put(u, LV.voiceFor(u.lang, u.who), u.text, u.page); continue; }
+  put({ lang: "en-GB" }, LV.guideFor("en-GB", u.who), u.text, u.page);
+  if (u.ur !== u.text) put({ lang: "ur-PK" }, LV.guideFor("ur-PK", u.who), u.ur, u.page); else missing.add(u.text);
+}
 if (missing.size) process.stderr.write("no Urdu for " + missing.size + " lines:\n  " + [...missing].join("\n  ") + "\n");
 process.stdout.write(JSON.stringify([...seen.values()], null, 1));
