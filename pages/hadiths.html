@@ -340,19 +340,20 @@ function onRScroll(){var m=R.scrollHeight-R.clientHeight;$("rProg").style.width=
 R.addEventListener("scroll",onRScroll,{passive:true});
 
 /* listen: the recorded Arabic, paragraph by paragraph (the device's Arabic voice only where a recording is missing) */
-var speaking=false,aud=null,hBtn=null;
+var speaking=false,aud=null,hBtn=null,DA=null,DT=0;
 function arVoice(){try{return speechSynthesis.getVoices().filter(function(v){return /^ar(-|_|$)/i.test(v.lang)})[0]}catch(e){return null}}
 function hasClips(){return !!(window.AZ_DUA_CLIPS&&RD.querySelector(".para .ar[data-k]")&&[].some.call(RD.querySelectorAll(".para .ar[data-k]"),function(p){return clipUrl(p.dataset.k)}))}
 function checkV(){$("rListen").hidden=!(hasClips()||(window.speechSynthesis&&arVoice()))}
 if(window.speechSynthesis){try{speechSynthesis.addEventListener("voiceschanged",checkV)}catch(e){}}
 function setBtn(){$("rListen").firstChild.nodeValue=speaking&&!hBtn?"■ ":"▶ ";$("rListen").querySelector(".lbl").textContent=speaking&&!hBtn?T.stop:T.listen;$("rListen").classList.toggle("on",speaking&&!hBtn)}
-function stopSpeak(){speaking=false;if(aud){try{aud.pause()}catch(e){}aud=null}try{speechSynthesis.cancel()}catch(e){}
+function stopSpeak(){speaking=false;DT++;if(aud){try{aud.pause()}catch(e){}aud=null}try{speechSynthesis.cancel()}catch(e){}
  [].forEach.call(document.querySelectorAll(".speaking"),function(x){x.classList.remove("speaking")});
  if(hBtn){hBtn.firstChild.nodeValue="▶ ";hBtn.querySelector("span").textContent=T.listen;hBtn.classList.remove("on");hBtn=null}setBtn()}
 /* say one passage; then() when it ends */
 function sayAr(el,then){var url=clipUrl(el.dataset.k);
- if(url){var a=aud=new Audio(url),ok=true;a.onended=function(){if(aud===a){aud=null;then()}};a.onerror=function(){if(aud===a){aud=null;device()}};
-  var pr=a.play();if(pr&&pr.catch)pr.catch(function(){if(aud===a){aud=null;device()}});return}
+ /* one shared player, started by the Listen tap: phones let it go on from paragraph to paragraph */
+ if(url){var a=aud=DA||(DA=new Audio()),t=++DT;a.onended=function(){if(t===DT){aud=null;then()}};a.onerror=function(){if(t===DT){aud=null;device()}};
+  a.src=url;var pr=a.play();if(pr&&pr.catch)pr.catch(function(){if(t===DT){aud=null;device()}});return}
  device();
  function device(){var v=arVoice();if(!v){then();return}var u=new SpeechSynthesisUtterance(el.textContent);u.lang=v.lang;u.voice=v;u.rate=.8;u.onend=function(){if(speaking)then()};u.onerror=stopSpeak;speechSynthesis.speak(u)}}
 $("rListen").onclick=function(){if(speaking&&!hBtn){stopSpeak();return}stopSpeak();var ps=[].slice.call(RD.querySelectorAll(".para .ar")),i=0;if(!ps.length)return;speaking=true;setBtn();
