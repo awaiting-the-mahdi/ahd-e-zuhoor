@@ -343,19 +343,25 @@
       var kid = o.kid, lang = o.lang || "en-GB", who = o.who || (kid && kid.type) || "girl";
       /* language courses: a narration line written in Urdu is spoken by the Urdu voice */
       if (!o.lang && window.AZ_LANGVOICE) lang = window.AZ_LANGVOICE.narrLang(text);
-      /* site in Urdu: the guides speak their narration in Urdu when the device has an Urdu voice */
-      if (window.AZ_LANG === "ur" && lang === "en-GB" && window.AZ_UR && pick("ur-PK")) {
+      /* narration: Zahra and Ali speaking as themselves (no language given), in their own recorded voices */
+      var narr = !o.lang || !!o.narr;
+      /* site in Urdu or Roman Urdu: they say it in Urdu, never in English */
+      var hush = false;
+      if (window.AZ_LANG === "ur" && narr && lang === "en-GB" && window.AZ_UR) {
         var ut = window.AZ_UR.t(text);
         if (ut !== text) { text = ut; lang = "ur-PK"; }
       }
       var est = Math.max(900, text.length * 62 + 500);
       var natural = AZ.voice.natural;
-      var rec = window.AZ_LANGVOICE ? window.AZ_LANGVOICE.clip(text, lang, who) : null;
+      var LVc = window.AZ_LANGVOICE;
+      var rec = LVc ? ((narr && LVc.clip(text, lang, who, true)) || LVc.clip(text, lang, who)) : null;
+      /* an Urdu line with no recording and no Urdu voice on this device: they mime it (the bubble shows it) */
+      if (!rec && lang === "ur-PK" && !pick("ur-PK")) hush = true;
       return new Promise(function (res) {
         var done = false;
         function fin() { if (done) return; done = true; if (kid) kid.talk(false); res(); }
         if (kid) kid.talk(true);
-        if (muted) { setTimeout(fin, est * 0.8); return; }
+        if (muted || hush) { setTimeout(fin, est * 0.8); return; }
         /* a native speaker's recording, when there is one */
         if (rec && playClip(rec, o.slow, fin)) return;
         if (!synth) { setTimeout(fin, est); return; }

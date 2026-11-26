@@ -45,14 +45,13 @@
   var html = document.documentElement;
   var own = html.hasAttribute("data-own-i18n");
   /* Roman Urdu: the page is built in Urdu and then written in Roman letters by assets/js/ro.js.
-     The language courses stay in English in Roman mode. */
-  var COURSE = /^(language-course|academy-languages)$/.test(PAGE);
-  var RO = CHOICE === "ro" && !COURSE;
+     Arabic and other target-language lines (marked with lang or data-no-ro) stay as written. */
+  var RO = CHOICE === "ro";
   /* installable web app: the service worker (sw.js at the site root) only keeps copies of pages for offline use */
   if ("serviceWorker" in navigator && /^https?:/.test(location.protocol)) {
     addEventListener("load", function () { navigator.serviceWorker.register(BASE + "../../sw.js").catch(function () {}); });
   }
-  var LANG = CHOICE === "ro" ? (COURSE ? "en" : "ur") : CHOICE;
+  var LANG = CHOICE === "ro" ? "ur" : CHOICE;
   window.AZ_LANG = LANG;
   window.AZ_RO = RO;
 
@@ -169,7 +168,7 @@
   var reveal = function () { html.classList.remove("az-ur-wait"); };
   setTimeout(reveal, 2500);
   /* Roman: load the word list and the romanizer; roman() runs once the Urdu is in place */
-  var RO_V = "8"; /* raise when ro.js or ro/words.js change, so browsers fetch the new files */
+  var RO_V = "9"; /* raise when ro.js or ro/words.js change, so browsers fetch the new files */
   var roReady = RO ? load(BASE + "ro/words.js?v=" + RO_V).then(function () { return load(BASE + "ro.js?v=" + RO_V); }) : null;
   function roman() { if (!RO) return Promise.resolve(); return roReady.then(function () { if (window.AZ_ROMANIZE) window.AZ_ROMANIZE.start(); }); }
 

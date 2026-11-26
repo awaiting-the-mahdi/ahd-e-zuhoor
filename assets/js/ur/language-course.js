@@ -4,6 +4,8 @@ AZ_UR.add({
   "Language Course": "زبان کا کورس",
   "Welcome to Arabic! Watch an episode, take a quiz, or explore the vocabulary.": "عربی میں خوش آمدید! کوئی قسط دیکھیں، کوئز دیں یا الفاظ کا ذخیرہ دیکھیں۔",
   "Videos": "ویڈیوز", "Quiz": "کوئز", "Vocabulary": "الفاظ",
+  "Iraqi Arabic": "عراقی عربی", "Role-play with Zahra & Ali": "زہرا اور علی کے ساتھ کردار نگاری",
+  "You say it like this:": "اسے ایسے بولتے ہیں:",
   "Role-play videos": "کردار نگاری کی ویڈیوز",
   "Zahra and Ali act out real situations, speaking the language with subtitles and English translation.": "زہرا اور علی حقیقی صورتِ حال کو اداکاری سے دکھاتے ہیں، زبان بولتے ہوئے، ذیلی عبارت اور ترجمے کے ساتھ۔",
   "Word episodes": "الفاظ کی قسطیں",
@@ -59,6 +61,7 @@ AZ_UR.add({
   "No words match your search.": "آپ کی تلاش سے کوئی لفظ نہیں ملا۔"
 });
 AZ_UR.patterns([
+  [/^Role-play · (?:(.+?) · )?(\d+) lines$/, function (m, d, n) { return "کردار نگاری · " + (d ? AZ_UR.t(d) + " · " : "") + n + " جملے"; }],
   [/^(.+) · Language Course$/, function (m, c) { return AZ_UR.t(c) + " · زبان کا کورس"; }],
   [/^(.+) · (Read, speak and understand Arabic|Understand the words of the Qur'an|A language of poetry and scholarship|Spoken by millions across South Asia|Recite the Qur'an beautifully and correctly)$/, function (m, a, b) { return a + " · " + AZ_UR.t(b); }],
   [/^Welcome to (.+?)! Watch an episode, take a quiz, or explore the vocabulary\.$/, function (m, c) { return AZ_UR.t(c) + " میں خوش آمدید! کوئی قسط دیکھیں، کوئز دیں یا الفاظ کا ذخیرہ دیکھیں۔"; }],

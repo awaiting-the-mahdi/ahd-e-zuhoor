@@ -30,5 +30,7 @@ AZ_UR.add({
   "Start learning": "سیکھنا شروع کریں"
 });
 AZ_UR.patterns([
-  [/^Yay! (.+) it is!$/, function (m, c) { return "واہ! تو پھر " + AZ_UR.t(c) + "!"; }]
+  [/^Yay! (.+) it is!$/, function (m, c) { return "واہ! تو پھر " + AZ_UR.t(c) + "!"; }],
+  /* choosing a course: "Arabic! Read, speak and understand Arabic." */
+  [/^([^!]+)! (.+)\.$/, function (m, c, t) { var uc = AZ_UR.t(c), ut = AZ_UR.t(t); return uc !== c && ut !== t ? uc + "! " + ut + "۔" : m; }]
 ]);
