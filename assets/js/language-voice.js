@@ -81,10 +81,8 @@
       var q = i % 2 ? "b" : "g", a = i % 2 ? "g" : "b";
       L.push({ k: q, text: "Here's word number " + (i + 1) + ".", w: w, show: 1 });
       L.push({ k: q, pron: true, w: w, show: 1 });
-      L.push({ k: a, text: "Hmm... what does it mean?", state: "think", w: w, show: 1 });
-      /* the English lead-in, then the word itself slowly in the native voice */
-      L.push({ k: q, text: "You say it like this: “" + w.tr + "”.", say: "You say it like this:", slowPron: true, w: w, show: 2 });
-      L.push({ k: a, text: "Oh, I know! It means “" + w.m + "”!", state: "cheer", sfx: true, w: w, show: 3 });
+      L.push({ k: a, text: "Hmm... what does it mean?", state: "think", w: w, show: 2 });
+      L.push({ k: q, text: "It means “" + w.m + "”!", state: "cheer", sfx: true, w: w, show: 3 });
       if (w.tip) L.push({ k: q, text: w.tip, w: w, show: 3 });
       L.push({ k: q, text: "Let's say it together!", w: w, show: 3 });
       L.push({ k: "both", pron: true, w: w, show: 3 });
