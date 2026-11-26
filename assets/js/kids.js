@@ -289,29 +289,65 @@
   }
   AZ.hasVoice = function (lang) { return !!pick(lang); };
 
-  /* recorded clips (language courses) */
-  var audioEl = null, audioFin = null;
+  /* recorded clips (language courses, academies)
+     Phones (iPhone Safari above all) only let a page play sound from an audio element that a tap
+     has already started once. So there are two shared players, unlocked on the first tap or key
+     press, and every clip plays through them (a fresh Audio() per line would be blocked). */
+  var players = [], ptok = 0, audioEl = null, audioFin = null;
+  function silence() {
+    var n = 800, b = new Uint8Array(44 + n), v = new DataView(b.buffer), w = function (o, s) { for (var i = 0; i < s.length; i++) b[o + i] = s.charCodeAt(i); };
+    w(0, "RIFF"); v.setUint32(4, 36 + n, true); w(8, "WAVEfmt "); v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true);
+    v.setUint32(24, 8000, true); v.setUint32(28, 8000, true); v.setUint16(32, 1, true); v.setUint16(34, 8, true); w(36, "data"); v.setUint32(40, n, true);
+    for (var i = 44; i < b.length; i++) b[i] = 128;
+    var bin = ""; for (var j = 0; j < b.length; j++) bin += String.fromCharCode(b[j]);
+    return "data:audio/wav;base64," + btoa(bin);
+  }
+  function player(i) {
+    if (!players[i]) {
+      try { var a = new Audio(); a.preload = "auto"; a.preservesPitch = true; a.mozPreservesPitch = true; a.webkitPreservesPitch = true; players[i] = a; }
+      catch (e) { return null; }
+    }
+    return players[i];
+  }
+  var unlocked = false;
+  function unlock() {
+    if (unlocked) return; unlocked = true;
+    var quiet = silence();
+    [0, 1].forEach(function (i) {
+      var a = player(i); if (!a || (a.src && !/^data:/.test(a.src))) return;
+      try { a.muted = true; a.src = quiet; var pr = a.play(); var off = function () { try { a.pause(); } catch (e) {} a.muted = false; };
+        if (pr && pr.then) pr.then(off, off); else off(); } catch (e) {}
+    });
+    ["pointerdown", "touchend", "keydown", "click"].forEach(function (t) { removeEventListener(t, unlock, true); });
+  }
+  ["pointerdown", "touchend", "keydown", "click"].forEach(function (t) { addEventListener(t, unlock, true); });
+
   function stopAll() {
     if (synth) synth.cancel();
-    if (audioEl) { try { audioEl.pause(); } catch (e) {} audioEl = null; }
-    var g = group; group = null;
-    if (g) g.forEach(function (a) { try { a.pause(); } catch (e) {} });
+    ptok++;
+    players.forEach(function (a) { try { a.pause(); } catch (e) {} });
+    audioEl = null;
     if (audioFin) { var f = audioFin; audioFin = null; f(); }
   }
-  var group = null;
+  /* play url on player i; fin() once it ends (or fails, or is stopped) */
+  function start(i, url, slow, fin, tok) {
+    var a = player(i); if (!a) return false;
+    var done = false;
+    function end() { if (done) return; done = true; a.onended = a.onerror = null; fin(); }
+    a.onended = end; a.onerror = end;
+    a.muted = false; a.src = url;
+    a.defaultPlaybackRate = a.playbackRate = slow ? 0.72 : 1;
+    var pr = a.play();
+    if (pr && pr.catch) pr.catch(end);
+    setTimeout(function () { if (!done && (tok !== ptok || a.paused)) end(); }, 30000);
+    return true;
+  }
   function playClip(url, slow, fin) {
     try {
       stopAll();
-      var a = new Audio(url);
-      a.preservesPitch = true; a.mozPreservesPitch = true; a.webkitPreservesPitch = true;
-      a.playbackRate = slow ? 0.72 : 1;
-      audioEl = a; audioFin = fin;
-      function end() { if (audioEl === a) { audioEl = null; audioFin = null; } fin(); }
-      a.onended = end; a.onerror = end;
-      var pr = a.play();
-      if (pr && pr.catch) pr.catch(end);
-      setTimeout(end, 20000);
-      return true;
+      var tok = ptok;
+      audioFin = fin;
+      return start(0, url, slow, function () { if (tok !== ptok) return; audioFin = null; audioEl = null; fin(); }, tok) && (audioEl = players[0], true);
     } catch (e) { return false; }
   }
   AZ.hasRecording = function (text, lang, who) {
@@ -332,21 +368,15 @@
       return new Promise(function (res) {
         var left = parts.length, done = false;
         function fin() { if (done) return; done = true; parts.forEach(function (p) { if (p.kid) p.kid.talk(false); }); res(); }
-        if (muted || !left) { parts.forEach(function (p) { if (p.kid) p.kid.talk(true); }); setTimeout(fin, 1400); return; }
+        parts.forEach(function (p) { if (p.kid) p.kid.talk(true); });
+        if (muted || !left) { setTimeout(fin, 1400); return; }
         stopAll();
-        var els = [];
-        parts.forEach(function (p) {
-          var a = new Audio(p.url), ended = false;
-          a.preservesPitch = true; a.mozPreservesPitch = true; a.webkitPreservesPitch = true;
-          a.playbackRate = o.slow ? 0.72 : 1;
-          function end() { if (ended) return; ended = true; if (p.kid) p.kid.talk(false); if (--left <= 0) { if (group === els) group = null; if (audioFin === fin) audioFin = null; fin(); } }
-          a.onended = end; a.onerror = end;
-          if (p.kid) p.kid.talk(true);
-          els.push(a);
+        var tok = ptok;
+        audioFin = fin;
+        parts.slice(0, 2).forEach(function (p, i) {
+          start(i, p.url, o.slow, function () { if (p.kid) p.kid.talk(false); if (--left <= 0 && tok === ptok) { audioFin = null; fin(); } }, tok);
         });
-        group = els; audioFin = fin;
-        els.forEach(function (a) { var pr = a.play(); if (pr && pr.catch) pr.catch(function () { a.onerror(); }); });
-        setTimeout(fin, 20000);
+        if (parts.length > 2) left -= parts.length - 2;
       });
     },
     /* play(url, {kid, slow}) -> Promise: a recording (e.g. a Qur'an recitation), with the kid's mouth moving */
