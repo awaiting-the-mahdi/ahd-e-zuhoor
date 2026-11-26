@@ -30,6 +30,19 @@
     "en-GB": { girl: "en-GB-MaisieNeural", boy: "en-GB-RyanNeural" }
   };
 
+  /* Zahra and Ali's own voices: what they say as themselves (welcomes, explanations, praise), in
+     English or in Urdu (Urdu and Roman Urdu sites). Children's voices: "@n" raises a voice by n
+     semitones with its formants, so it sounds younger rather than squeaky (the generator does this).
+     Lines in the language being taught keep the native voices above. */
+  var GUIDES = {
+    "en-GB": { girl: "en-US-AnaNeural", boy: "en-US-BrianNeural@4.5" },
+    "ur-PK": { girl: "ur-PK-UzmaNeural@3.5", boy: "ur-PK-AsadNeural@5" }
+  };
+  function guideFor(lang, who) {
+    var g = GUIDES[/^ur/.test(lang || "") ? "ur-PK" : "en-GB"];
+    return g[who === "boy" ? "boy" : "girl"];
+  }
+
   function voiceFor(lang, who) {
     lang = lang || "en-GB";
     var v = VOICES[lang] || VOICES[lang.split("-")[0] === "en" ? "en-GB" : ""];
@@ -68,10 +81,8 @@
       var q = i % 2 ? "b" : "g", a = i % 2 ? "g" : "b";
       L.push({ k: q, text: "Here's word number " + (i + 1) + ".", w: w, show: 1 });
       L.push({ k: q, pron: true, w: w, show: 1 });
-      L.push({ k: a, text: "Hmm... what does it mean?", state: "think", w: w, show: 1 });
-      /* the English lead-in, then the word itself slowly in the native voice */
-      L.push({ k: q, text: "You say it like this: “" + w.tr + "”.", say: "You say it like this:", slowPron: true, w: w, show: 2 });
-      L.push({ k: a, text: "Oh, I know! It means “" + w.m + "”!", state: "cheer", sfx: true, w: w, show: 3 });
+      L.push({ k: a, text: "Hmm... what does it mean?", state: "think", w: w, show: 2 });
+      L.push({ k: q, text: "It means “" + w.m + "”!", state: "cheer", sfx: true, w: w, show: 3 });
       if (w.tip) L.push({ k: q, text: w.tip, w: w, show: 3 });
       L.push({ k: q, text: "Let's say it together!", w: w, show: 3 });
       L.push({ k: "both", pron: true, w: w, show: 3 });
@@ -88,7 +99,7 @@
   /* every { text, lang, who } a course can speak: used by the generator */
   function utterances(C) {
     var out = [], native = C.voice;
-    function add(text, lang, who) { if (text && clean(text)) out.push({ text: clean(text), lang: lang, who: who }); }
+    function add(text, lang, who, narr) { if (text && clean(text)) out.push({ text: clean(text), lang: lang, who: who, narr: !!narr }); }
     /* the language's own name (said on the language academy page) */
     if (native.indexOf("en") !== 0) { add(C.native, native, "girl"); add(C.native, native, "boy"); }
     C.lessons.forEach(function (l, li) {
@@ -96,7 +107,7 @@
       script(C, li).forEach(function (line) {
         var who = WHO[line.k] || "girl";
         if (line.t) add(line.t, native, who);
-        else if (!line.pron) { var nt = line.say || line.text; add(nt, narrLang(nt), who); }
+        else if (!line.pron) { var nt = line.say || line.text; add(nt, narrLang(nt), who, true); }
       });
     });
     (C.scenes || []).forEach(function (sc) {
@@ -107,9 +118,21 @@
      ["girl", "Watch us act out real situations, or pick a word episode."],
      ["boy", "Quiz time! Let's see what you remember."],
      ["girl", "Here are all your words. Tap a card to see its meaning."],
-     ["girl", "Mashallah! You finished the quiz!"], ["boy", "Let's review and try again!"]].forEach(function (h) { add(h[1], "en-GB", h[0]); });
+     ["girl", "Mashallah! You finished the quiz!"], ["boy", "Let's review and try again!"]].forEach(function (h) { add(h[1], "en-GB", h[0], true); });
     /* quiz feedback, said by either of them */
-    PRAISE.concat(["Not quite. You'll get it next time!"]).forEach(function (t) { add(t, "en-GB", "girl"); add(t, "en-GB", "boy"); });
+    PRAISE.concat(["Not quite. You'll get it next time!"]).forEach(function (t) { add(t, "en-GB", "girl", true); add(t, "en-GB", "boy", true); });
+    return out;
+  }
+
+  /* the welcome on the language academy page (pages/academy-languages.html), said by both guides */
+  var PACE_LINES = ["Nice and gentle. Every little step counts!", "A steady flight. Great choice!", "Rocket speed! Let's go!", "Warp drive! You're amazing!"];
+  function welcome(courses) {
+    var t = ["Assalamu alaykum! I'm Zahra.", "And I'm Ali! We'll be your guides on this language voyage.",
+      "Just a few quick questions, and we'll be on our way!", "Which course would you like to start?",
+      "How fast would you like to travel each day?", "Let's start learning!"].concat(PACE_LINES);
+    courses.forEach(function (C) { t.push(C.name + "! " + C.tagline + ".", "Yay! " + C.name + " it is!"); });
+    var out = [];
+    t.forEach(function (x) { out.push({ text: clean(x), lang: "en-GB", who: "girl", narr: true }, { text: clean(x), lang: "en-GB", who: "boy", narr: true }); });
     return out;
   }
 
@@ -121,10 +144,10 @@
   } catch (e) {}
 
   /* the recording for this text in this voice, or null */
-  function clip(text, lang, who) {
+  function clip(text, lang, who, narr) {
     var have = root.AZ_AUDIO_CLIPS;
     if (!have || !base) return null;
-    var v = voiceFor(lang, who);
+    var v = narr ? guideFor(lang, who) : voiceFor(lang, who);
     if (!v) return null;
     var k = key(v, text);
     return have[k] ? base + k + ".mp3" : null;
@@ -137,5 +160,5 @@
     return ref && have && have[ref] && qbase ? qbase + String(ref).replace(/:/g, "_") + ".mp3" : null;
   }
 
-  root.AZ_LANGVOICE = { VOICES: VOICES, quran: quran, narrLang: narrLang, PRAISE: PRAISE, voiceFor: voiceFor, key: key, clean: clean, greet: greet, script: script, utterances: utterances, clip: clip };
+  root.AZ_LANGVOICE = { VOICES: VOICES, quran: quran, narrLang: narrLang, PRAISE: PRAISE, voiceFor: voiceFor, key: key, clean: clean, greet: greet, script: script, utterances: utterances, clip: clip, GUIDES: GUIDES, guideFor: guideFor, welcome: welcome, PACE_LINES: PACE_LINES };
 })(typeof window !== "undefined" ? window : globalThis);

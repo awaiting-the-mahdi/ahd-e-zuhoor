@@ -10,7 +10,8 @@ and writes assets/audio/lang/clips.js, the list of recordings the site plays.
     python3 tools/language-audio/generate.py --redo     # record everything again
 
 Run it again after editing assets/js/language-data.js or the VOICES cast in
-assets/js/language-voice.js. Needs Node.js (to read the course data) and internet access.
+assets/js/language-voice.js. Needs Node.js (to read the course data), ffmpeg (for the
+children's voices of Zahra and Ali) and internet access.
 """
 import argparse, asyncio, json, os, subprocess, sys
 
@@ -36,7 +37,15 @@ async def record(item, sem):
     async with sem:
         for attempt in range(4):
             try:
-                await edge_tts.Communicate(item["text"], item["voice"], proxy=PROXY).save(dest + ".part")
+                # "voice@n": Zahra and Ali's children's voices, raised n semitones with the formants
+                voice, _, semis = item["voice"].partition("@")
+                await edge_tts.Communicate(item["text"], voice, proxy=PROXY).save(dest + ".part")
+                if semis:
+                    f = 2 ** (float(semis) / 12)
+                    subprocess.run(["ffmpeg", "-v", "error", "-y", "-f", "mp3", "-i", dest + ".part", "-af",
+                                    f"asetrate=24000*{f:.4f},aresample=24000,atempo={1 / f:.4f}",
+                                    "-ac", "1", "-b:a", "48k", "-f", "mp3", dest + ".kid"], check=True)
+                    os.replace(dest + ".kid", dest + ".part")
                 os.replace(dest + ".part", dest)
                 print("  ok ", item["key"], item["voice"], item["text"][:50])
                 return True

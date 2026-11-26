@@ -396,6 +396,13 @@ function sayNative(text,tr,o){o=o||{};var who=o.who||(o.kid&&o.kid.type)||"girl"
   if(l)return V.say(text,{kid:o.kid,lang:l,who:o.who,slow:o.slow});
   if(C.noTranslitVoice){noVoiceNote();if(o.kid)o.kid.talk(true);return AZ.sleep(Math.min(3500,600+String(tr||text).length*70)).then(function(){if(o.kid)o.kid.talk(false)})}
   return V.say(AZ.plain(tr||text),{kid:o.kid,lang:"en-GB",who:o.who,slow:o.slow})}
+/* "let's say it together": Zahra and Ali both say the word at once, each in their own native voice.
+   A Qur'anic word is the reciter's recitation, so it is played once with both of them mouthing along. */
+function sayTogether(w,slow){
+  var rq=LV.quran(w.q),g=LV.clip(w.w,C.voice,"girl"),b=LV.clip(w.w,C.voice,"boy");
+  if(rq){sB.talk(true);return V.play(rq,{kid:sG,slow:slow}).then(function(){sB.talk(false)})}
+  if(g&&b)return V.together([{url:g,kid:sG},{url:b,kid:sB}],{slow:slow});
+  sB.talk(true);return pron(w,{kid:sG,slow:slow}).then(function(){sB.talk(false)})}
 /* pronounce a word: a Qur'anic word in the reciter's own recitation, any other in the native voice */
 function pron(w,o){o=o||{};var rq=LV.quran(w.q);if(rq)return V.play(rq,{kid:o.kid,slow:o.slow});return sayNative(w.w,w.tr,o)}
 
@@ -590,7 +597,7 @@ function playFrom(i){
     if(line.sfx)AZ.sfx.good();
     var p;
     if(line.pron){
-      if(line.k==="both"){sB.talk(true);p=pron(line.w,{kid:sG,slow:P.slow}).then(function(){sB.talk(false)})}
+      if(line.k==="both")p=sayTogether(line.w,P.slow);
       else p=pron(line.w,{kid:k,slow:P.slow});
     }else if(line.t&&LV.quran(line.q)){
       p=V.play(LV.quran(line.q),{kid:k,slow:P.slow});
@@ -598,8 +605,6 @@ function playFrom(i){
       p=line.lang==="en"?V.say(line.t,{kid:k,lang:"en-GB",slow:P.slow}):sayNative(line.t,line.tr,{kid:k,slow:P.slow,lang:line.dl});
     }else{
       p=V.say(line.say||line.text,{kid:k,slow:P.slow});
-      /* "You say it like this:" is followed by the word itself, slowly, in the native voice */
-      if(line.slowPron)p=p.then(function(){return AZ.sleep(250)}).then(function(){if(tok===P.tok)return pron(line.w,{kid:k,slow:true})});
     }
     p.then(function(){return AZ.sleep(line.pron||(line.t&&line.lang!=="en")?900:350)}).then(function(){if(tok!==P.tok)return;if(k&&line.state)k.set("");step(i+1)});
   })(i);

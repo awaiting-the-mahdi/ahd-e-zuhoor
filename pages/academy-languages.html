@@ -211,10 +211,14 @@ function speak(bubble,lines){
     return p.then(function(){
       if(tok!==talkToken)return;
       bubble.innerHTML='<span class="who '+(l.k.type)+'">'+(l.k.type==="girl"?"Zahra":"Ali")+'</span><span class="t"></span>';
-      var t=bubble.querySelector(".t"),i=0,txt=l.text;
+      var t=bubble.querySelector(".t"),i=0,txt=l.text,lang=l.lang,spoken=l.say||txt;
+      /* Urdu and Roman: type and say the Urdu straight away (no English first); Roman shows it in Roman letters */
+      if(!lang&&window.AZ_LANG==="ur"&&window.AZ_UR){var u=AZ_UR.t(txt);if(u!==txt){spoken=u;lang="ur-PK";txt=u;
+        if(window.AZ_RO&&window.AZ_ROMANIZE)txt=AZ_ROMANIZE.text(u)}}
+      t.setAttribute("data-no-ur","");t.setAttribute("data-no-ro","");if(window.AZ_LANG==="ur"&&!window.AZ_RO){t.dir="rtl";t.lang="ur"}
       var iv=setInterval(function(){i+=2;t.textContent=txt.slice(0,i);if(i>=txt.length)clearInterval(iv)},22);
       if(l.state)l.k.set(l.state);
-      return V.say(l.say||txt,{kid:l.k,lang:l.lang}).then(function(){clearInterval(iv);t.textContent=txt;if(l.state)l.k.set("")});
+      return V.say(spoken,{kid:l.k,lang:lang,narr:!l.lang}).then(function(){clearInterval(iv);t.textContent=txt;if(l.state)l.k.set("")});
     });
   },Promise.resolve());
 }

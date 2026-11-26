@@ -294,8 +294,11 @@
   function stopAll() {
     if (synth) synth.cancel();
     if (audioEl) { try { audioEl.pause(); } catch (e) {} audioEl = null; }
+    var g = group; group = null;
+    if (g) g.forEach(function (a) { try { a.pause(); } catch (e) {} });
     if (audioFin) { var f = audioFin; audioFin = null; f(); }
   }
+  var group = null;
   function playClip(url, slow, fin) {
     try {
       stopAll();
@@ -322,6 +325,30 @@
       try { localStorage.setItem("az-muted", muted ? "1" : "0"); } catch (e) {}
       if (muted) stopAll();
     },
+    /* together([{url, kid}], {slow}) -> Promise: several recordings at the same moment ("let's say it together"),
+       each kid's mouth moving while their own voice plays */
+    together: function (parts, o) {
+      o = o || {};
+      return new Promise(function (res) {
+        var left = parts.length, done = false;
+        function fin() { if (done) return; done = true; parts.forEach(function (p) { if (p.kid) p.kid.talk(false); }); res(); }
+        if (muted || !left) { parts.forEach(function (p) { if (p.kid) p.kid.talk(true); }); setTimeout(fin, 1400); return; }
+        stopAll();
+        var els = [];
+        parts.forEach(function (p) {
+          var a = new Audio(p.url), ended = false;
+          a.preservesPitch = true; a.mozPreservesPitch = true; a.webkitPreservesPitch = true;
+          a.playbackRate = o.slow ? 0.72 : 1;
+          function end() { if (ended) return; ended = true; if (p.kid) p.kid.talk(false); if (--left <= 0) { if (group === els) group = null; if (audioFin === fin) audioFin = null; fin(); } }
+          a.onended = end; a.onerror = end;
+          if (p.kid) p.kid.talk(true);
+          els.push(a);
+        });
+        group = els; audioFin = fin;
+        els.forEach(function (a) { var pr = a.play(); if (pr && pr.catch) pr.catch(function () { a.onerror(); }); });
+        setTimeout(fin, 20000);
+      });
+    },
     /* play(url, {kid, slow}) -> Promise: a recording (e.g. a Qur'an recitation), with the kid's mouth moving */
     play: function (url, o) {
       o = o || {};
@@ -343,19 +370,25 @@
       var kid = o.kid, lang = o.lang || "en-GB", who = o.who || (kid && kid.type) || "girl";
       /* language courses: a narration line written in Urdu is spoken by the Urdu voice */
       if (!o.lang && window.AZ_LANGVOICE) lang = window.AZ_LANGVOICE.narrLang(text);
-      /* site in Urdu: the guides speak their narration in Urdu when the device has an Urdu voice */
-      if (window.AZ_LANG === "ur" && lang === "en-GB" && window.AZ_UR && pick("ur-PK")) {
+      /* narration: Zahra and Ali speaking as themselves (no language given), in their own recorded voices */
+      var narr = !o.lang || !!o.narr;
+      /* site in Urdu or Roman Urdu: they say it in Urdu, never in English */
+      var hush = false;
+      if (window.AZ_LANG === "ur" && narr && lang === "en-GB" && window.AZ_UR) {
         var ut = window.AZ_UR.t(text);
         if (ut !== text) { text = ut; lang = "ur-PK"; }
       }
       var est = Math.max(900, text.length * 62 + 500);
       var natural = AZ.voice.natural;
-      var rec = window.AZ_LANGVOICE ? window.AZ_LANGVOICE.clip(text, lang, who) : null;
+      var LVc = window.AZ_LANGVOICE;
+      var rec = LVc ? ((narr && LVc.clip(text, lang, who, true)) || LVc.clip(text, lang, who)) : null;
+      /* an Urdu line with no recording and no Urdu voice on this device: they mime it (the bubble shows it) */
+      if (!rec && lang === "ur-PK" && !pick("ur-PK")) hush = true;
       return new Promise(function (res) {
         var done = false;
         function fin() { if (done) return; done = true; if (kid) kid.talk(false); res(); }
         if (kid) kid.talk(true);
-        if (muted) { setTimeout(fin, est * 0.8); return; }
+        if (muted || hush) { setTimeout(fin, est * 0.8); return; }
         /* a native speaker's recording, when there is one */
         if (rec && playClip(rec, o.slow, fin)) return;
         if (!synth) { setTimeout(fin, est); return; }

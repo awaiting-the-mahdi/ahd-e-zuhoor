@@ -4,6 +4,7 @@ AZ_UR.add({
   "Language Course": "زبان کا کورس",
   "Welcome to Arabic! Watch an episode, take a quiz, or explore the vocabulary.": "عربی میں خوش آمدید! کوئی قسط دیکھیں، کوئز دیں یا الفاظ کا ذخیرہ دیکھیں۔",
   "Videos": "ویڈیوز", "Quiz": "کوئز", "Vocabulary": "الفاظ",
+  "Zahra & Ali": "زہرا اور علی", "Iraqi Arabic": "عراقی عربی", "Role-play with Zahra & Ali": "زہرا اور علی کے ساتھ کردار نگاری",
   "Role-play videos": "کردار نگاری کی ویڈیوز",
   "Zahra and Ali act out real situations, speaking the language with subtitles and English translation.": "زہرا اور علی حقیقی صورتِ حال کو اداکاری سے دکھاتے ہیں، زبان بولتے ہوئے، ذیلی عبارت اور ترجمے کے ساتھ۔",
   "Word episodes": "الفاظ کی قسطیں",
@@ -59,6 +60,7 @@ AZ_UR.add({
   "No words match your search.": "آپ کی تلاش سے کوئی لفظ نہیں ملا۔"
 });
 AZ_UR.patterns([
+  [/^Role-play · (?:(.+?) · )?(\d+) lines$/, function (m, d, n) { return "کردار نگاری · " + (d ? AZ_UR.t(d) + " · " : "") + n + " جملے"; }],
   [/^(.+) · Language Course$/, function (m, c) { return AZ_UR.t(c) + " · زبان کا کورس"; }],
   [/^(.+) · (Read, speak and understand Arabic|Understand the words of the Qur'an|A language of poetry and scholarship|Spoken by millions across South Asia|Recite the Qur'an beautifully and correctly)$/, function (m, a, b) { return a + " · " + AZ_UR.t(b); }],
   [/^Welcome to (.+?)! Watch an episode, take a quiz, or explore the vocabulary\.$/, function (m, c) { return AZ_UR.t(c) + " میں خوش آمدید! کوئی قسط دیکھیں، کوئز دیں یا الفاظ کا ذخیرہ دیکھیں۔"; }],
@@ -70,8 +72,7 @@ AZ_UR.patterns([
   [/^Role-play · (\d+) lines$/, "کردار نگاری · $1 سطریں"],
   [/^Today we'll learn (\d+) new words\. Are you ready\?$/, "آج ہم $1 نئے الفاظ سیکھیں گے۔ کیا آپ تیار ہیں؟"],
   [/^Here's word number (\d+)\.$/, "یہ لفظ نمبر $1 ہے۔"],
-  [/^You say it like this: “(.+)”\.$/, "اسے ایسے بولتے ہیں: ”$1“۔"],
-  [/^You say it like this: (.+)$/, "اسے ایسے بولتے ہیں: $1"],
+  [/^It means “(.+)”!$/, function (m, w) { return "اس کا مطلب ہے ”" + AZ_UR.t(w) + "“!"; }],
   [/^Oh, I know! It means “(.+)”!$/, function (m, w) { return "مجھے معلوم ہے! اس کا مطلب ہے ”" + AZ_UR.t(w) + "“!"; }],
   [/^Which word means “(.+)”\?$/, function (m, w) { return "کون سا لفظ ”" + AZ_UR.t(w) + "“ کا مطلب رکھتا ہے؟"; }],
   [/^(.+): tap to flip$/, "$1: پلٹنے کے لیے چھوئیں"]
