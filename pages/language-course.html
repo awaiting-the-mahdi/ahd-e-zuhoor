@@ -602,7 +602,7 @@ function playFrom(i){
     }else if(line.t&&LV.quran(line.q)){
       p=V.play(LV.quran(line.q),{kid:k,slow:P.slow});
     }else if(line.t){
-      p=line.lang==="en"?V.say(line.t,{kid:k,lang:"en-GB",slow:P.slow}):sayNative(line.t,line.tr,{kid:k,slow:P.slow,lang:line.dl});
+      p=line.lang==="en"?V.say(line.t,{kid:k,slow:P.slow}):sayNative(line.t,line.tr,{kid:k,slow:P.slow,lang:line.dl});
     }else{
       p=V.say(line.say||line.text,{kid:k,slow:P.slow});
     }

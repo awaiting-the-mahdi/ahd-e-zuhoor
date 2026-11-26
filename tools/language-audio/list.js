@@ -26,7 +26,8 @@ ctx.AZ_UR = W.AZ_UR = {
     return s;
   }
 };
-for (const f of ["common", "courses", "language-course", "academy-languages"]) {
+/* the order the pages load them in (a later file wins): common, the page, then the files it names in AZ_UR.also */
+for (const f of ["common", "academy-languages", "language-course", "courses"]) {
   vm.runInContext(fs.readFileSync(path.join(root, "assets/js/ur/" + f + ".js"), "utf8"), ctx, { filename: f });
 }
 const courses = W.AZ_COURSES.concat(W.AZ_COURSES.some(c => c.id === "english") ? [] : [W.AZ_COURSE_ENGLISH]);
