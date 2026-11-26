@@ -111,7 +111,11 @@
       });
     });
     (C.scenes || []).forEach(function (sc) {
-      sc.lines.forEach(function (l) { add(l.t, l.lang === "en" ? "en-GB" : (sc.voice || native), WHO[l.k] || "girl"); });
+      sc.lines.forEach(function (l) {
+        /* a line in English is Zahra or Ali talking as themselves (said in Urdu on the Urdu site) */
+        if (l.lang === "en") add(l.t, "en-GB", WHO[l.k] || "girl", true);
+        else add(l.t, sc.voice || native, WHO[l.k] || "girl");
+      });
     });
     /* hero and tab greetings on the course page */
     [["girl", "Welcome to " + C.name + "! Watch an episode, take a quiz, or explore the vocabulary."],

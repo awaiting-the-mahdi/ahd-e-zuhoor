@@ -26,7 +26,8 @@ ctx.AZ_UR = W.AZ_UR = {
     return s;
   }
 };
-for (const f of ["common", "courses", "language-course", "academy-languages"]) {
+/* the order the pages load them in (a later file wins): common, the page, then the files it names in AZ_UR.also */
+for (const f of ["common", "academy-languages", "language-course", "courses"]) {
   vm.runInContext(fs.readFileSync(path.join(root, "assets/js/ur/" + f + ".js"), "utf8"), ctx, { filename: f });
 }
 const courses = W.AZ_COURSES.concat(W.AZ_COURSES.some(c => c.id === "english") ? [] : [W.AZ_COURSE_ENGLISH]);
@@ -48,6 +49,12 @@ for (const [C, list] of all) {
       else missing.add(u.text);
     }
   }
+}
+/* the Theology and Fiqh academies (tools/language-audio/academies.js) */
+for (const u of require("./academies.js")()) {
+  if (!u.narr) { put(u, LV.voiceFor(u.lang, u.who), u.text, u.page); continue; }
+  put({ lang: "en-GB" }, LV.guideFor("en-GB", u.who), u.text, u.page);
+  if (u.ur !== u.text) put({ lang: "ur-PK" }, LV.guideFor("ur-PK", u.who), u.ur, u.page); else missing.add(u.text);
 }
 if (missing.size) process.stderr.write("no Urdu for " + missing.size + " lines:\n  " + [...missing].join("\n  ") + "\n");
 process.stdout.write(JSON.stringify([...seen.values()], null, 1));
