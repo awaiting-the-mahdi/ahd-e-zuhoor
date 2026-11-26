@@ -37,7 +37,7 @@ AZ_UR.add({
   "with Zahra & Ali": "زہرا اور علی کے ساتھ",
   "Peace be upon you!": "السلام علیکم!",
   "Ready!": "تیار!",
-  "Hmm... what does it mean?": "ہمم… اس کا مطلب کیا ہے؟",
+  "Hmm... what does it mean?": "اس کا مطلب کیا ہے؟",
   "Let's say it together!": "آئیں مل کر کہیں!",
   "Great job! Now try the quiz to remember these words.": "بہت خوب! اب یہ الفاظ یاد رکھنے کے لیے کوئز دیں۔",
   "See you in the next episode!": "اگلی قسط میں ملیں گے!",

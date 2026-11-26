@@ -139,6 +139,10 @@ html.ur .hq .who i>*{rotate:-45deg}
 .hq .who i{display:inline-grid;place-items:center;width:30px;height:30px;border:1px solid var(--gold);rotate:45deg;margin:0 .25rem;font:600 .75rem Inter,sans-serif;font-style:normal;letter-spacing:0}
 .hq .ar{font-size:1.75rem;line-height:2;color:var(--gold2);margin:.2rem 0 .9rem;text-align:center;text-shadow:0 0 22px var(--glow)}
 .hq .ar .al{color:var(--gold)}
+.hq .ar.speaking{color:#fff;text-shadow:0 0 26px var(--glow)}
+.hq .hl{display:flex;align-items:center;gap:.35rem;margin:-.4rem auto .9rem;padding:.35rem .95rem;border-radius:99px;border:1px solid var(--line);background:transparent;color:var(--gold);font:600 .8rem Inter,system-ui,sans-serif;cursor:pointer}
+.hq .hl:hover,.hq .hl.on{border-color:var(--gold);background:color-mix(in srgb,var(--gold) 12%,transparent)}
+html.ur .hq .hl span{font-family:"Noto Nastaliq Urdu",serif;font-size:.85rem}
 .hq::before{content:"";position:absolute;top:-1px;left:12%;right:12%;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
 .hq::after{content:"\201D";position:absolute;right:1rem;bottom:-1.6rem;font:600 7rem/1 "Cormorant Garamond",serif;color:var(--gold);opacity:.1;pointer-events:none}
 html.ur .hq::after{right:auto;left:1rem}
@@ -207,6 +211,7 @@ html.ur .cta b{font:600 1.4rem/2 "Noto Nastaliq Urdu",serif}
 
 <script src="../assets/js/duas-data.js"></script>
 <script src="../assets/js/marefat-data.js"></script>
+<script src="../assets/audio/duas/clips.js"></script>
 <script>if(window.AZ_LANG==="ur")document.write('<script src="../assets/js/marefat-data-ur.js"><\/script>')</script>
 <script>
 (function(){
@@ -254,6 +259,9 @@ function arLines(s){var ws=s.split(/\s+/).filter(Boolean),out=[],cur=[],depth=0;
  /* fold tiny trailing pieces back */
  var res=[];fin.forEach(function(l){if(res.length&&l.length<3)res[res.length-1]=res[res.length-1].concat(l);else res.push(l)});
  return res.map(function(l){return '<span class="ln">'+l.map(wordHtml).join(" ")+'<i class="rz" aria-hidden="true"></i></span>'}).join("")}
+/* recordings of the Arabic (tools/dua-audio/make.py): a native Arabic voice, one file per passage */
+function duaKey(s){s=String(s).normalize("NFC").replace(/\s+/g," ").trim();var h=0x811c9dc5;for(var i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,0x01000193)>>>0}return("0000000"+h.toString(16)).slice(-8)}
+function clipUrl(k){return window.AZ_DUA_CLIPS&&AZ_DUA_CLIPS[k]?"../assets/audio/duas/"+k+".mp3":null}
 function arInline(s){return s.split(/\s+/).map(wordHtml).join(" ")}
 function indic(n){return String(n).replace(/\d/g,function(d){return "٠١٢٣٤٥٦٧٨٩"[d]})}
 function get(o,p){return p.split(".").reduce(function(a,k){return a==null?a:a[k]},o)}
@@ -303,13 +311,13 @@ function openDua(id,push){var i=-1;D.list.forEach(function(d,k){if(d.id===id)i=k
   '<div class="when'+u+'"><b>'+esc(T.when)+':</b> '+esc(d.when[L])+'</div></div>';
  var n=0;d.parts.forEach(function(p,k){
   if(p.note){h+='<p class="note'+u+'">'+esc(p.note[L])+'</p>';return}
-  n++;h+='<div class="para"><span class="med" aria-hidden="true"><b>'+indic(n)+'</b></span><p class="ar" lang="ar">'+arLines(p.ar)+'</p><p class="tr">'+esc(p[L])+'</p></div>'});
+  n++;h+='<div class="para"><span class="med" aria-hidden="true"><b>'+indic(n)+'</b></span><p class="ar" lang="ar" data-k="'+duaKey(p.ar)+'">'+arLines(p.ar)+'</p><p class="tr">'+esc(p[L])+'</p></div>'});
  h+='<div class="src'+u+'"><b>'+esc(T.source)+'</b>'+esc(d.src[L])+'</div>';
  if(id!=="faraj")h+='<div class="closing"><div class="ar" lang="ar">'+T.closing+'</div><p class="'+(UR?"u":"")+'" style="color:var(--muted)">'+esc(T.closingT)+'</p></div>';
  var pv=D.list[i-1],nx=D.list[i+1];
  h+='<div class="nav2">'+(pv?'<button class="ib" type="button" data-go="'+pv.id+'"><span><small>'+esc(T.prev)+'</small><span class="'+(UR?"u":"")+'">'+esc(pv.t[L])+'</span></span></button>':'<span></span>')+
   (nx?'<button class="ib" type="button" data-go="'+nx.id+'"><span><small>'+esc(T.next)+'</small><span class="'+(UR?"u":"")+'">'+esc(nx.t[L])+'</span></span></button>':'')+'</div>';
- RD.innerHTML=h;
+ RD.innerHTML=h;checkV();
  [].forEach.call(RD.querySelectorAll("[data-go]"),function(b){b.onclick=function(){openDua(b.dataset.go,true)}});
  var pio=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");pio.unobserve(e.target)}})},{root:R,threshold:.05});
  [].forEach.call(RD.querySelectorAll(".para"),function(x){pio.observe(x)});
@@ -331,17 +339,26 @@ $("rShare").onclick=function(){var u=location.href,b=this;try{if(navigator.share
 function onRScroll(){var m=R.scrollHeight-R.clientHeight;$("rProg").style.width=(m>0?R.scrollTop/m*100:0)+"%"}
 R.addEventListener("scroll",onRScroll,{passive:true});
 
-/* listen: the device's Arabic voice, paragraph by paragraph */
-var speaking=false;
+/* listen: the recorded Arabic, paragraph by paragraph (the device's Arabic voice only where a recording is missing) */
+var speaking=false,aud=null,hBtn=null;
 function arVoice(){try{return speechSynthesis.getVoices().filter(function(v){return /^ar(-|_|$)/i.test(v.lang)})[0]}catch(e){return null}}
-function checkV(){$("rListen").hidden=!(window.speechSynthesis&&arVoice())}
-if(window.speechSynthesis){checkV();try{speechSynthesis.addEventListener("voiceschanged",checkV)}catch(e){}}
-function setBtn(){$("rListen").firstChild.nodeValue=speaking?"■ ":"▶ ";$("rListen").querySelector(".lbl").textContent=speaking?T.stop:T.listen;$("rListen").classList.toggle("on",speaking)}
-function stopSpeak(){speaking=false;try{speechSynthesis.cancel()}catch(e){}[].forEach.call(document.querySelectorAll(".speaking"),function(x){x.classList.remove("speaking")});setBtn()}
-$("rListen").onclick=function(){if(speaking){stopSpeak();return}var ps=[].slice.call(RD.querySelectorAll(".para .ar")),v=arVoice(),i=0;if(!v||!ps.length)return;speaking=true;setBtn();
+function hasClips(){return !!(window.AZ_DUA_CLIPS&&RD.querySelector(".para .ar[data-k]")&&[].some.call(RD.querySelectorAll(".para .ar[data-k]"),function(p){return clipUrl(p.dataset.k)}))}
+function checkV(){$("rListen").hidden=!(hasClips()||(window.speechSynthesis&&arVoice()))}
+if(window.speechSynthesis){try{speechSynthesis.addEventListener("voiceschanged",checkV)}catch(e){}}
+function setBtn(){$("rListen").firstChild.nodeValue=speaking&&!hBtn?"■ ":"▶ ";$("rListen").querySelector(".lbl").textContent=speaking&&!hBtn?T.stop:T.listen;$("rListen").classList.toggle("on",speaking&&!hBtn)}
+function stopSpeak(){speaking=false;if(aud){try{aud.pause()}catch(e){}aud=null}try{speechSynthesis.cancel()}catch(e){}
+ [].forEach.call(document.querySelectorAll(".speaking"),function(x){x.classList.remove("speaking")});
+ if(hBtn){hBtn.firstChild.nodeValue="▶ ";hBtn.querySelector("span").textContent=T.listen;hBtn.classList.remove("on");hBtn=null}setBtn()}
+/* say one passage; then() when it ends */
+function sayAr(el,then){var url=clipUrl(el.dataset.k);
+ if(url){var a=aud=new Audio(url),ok=true;a.onended=function(){if(aud===a){aud=null;then()}};a.onerror=function(){if(aud===a){aud=null;device()}};
+  var pr=a.play();if(pr&&pr.catch)pr.catch(function(){if(aud===a){aud=null;device()}});return}
+ device();
+ function device(){var v=arVoice();if(!v){then();return}var u=new SpeechSynthesisUtterance(el.textContent);u.lang=v.lang;u.voice=v;u.rate=.8;u.onend=function(){if(speaking)then()};u.onerror=stopSpeak;speechSynthesis.speak(u)}}
+$("rListen").onclick=function(){if(speaking&&!hBtn){stopSpeak();return}stopSpeak();var ps=[].slice.call(RD.querySelectorAll(".para .ar")),i=0;if(!ps.length)return;speaking=true;setBtn();
  (function next(){[].forEach.call(document.querySelectorAll(".speaking"),function(x){x.classList.remove("speaking")});if(!speaking||i>=ps.length){stopSpeak();return}
   var el=ps[i++];el.classList.add("speaking");el.scrollIntoView({behavior:"smooth",block:"center"});
-  var u=new SpeechSynthesisUtterance(el.textContent);u.lang=v.lang;u.voice=v;u.rate=.8;u.onend=next;u.onerror=stopSpeak;speechSynthesis.speak(u)})()};
+  sayAr(el,function(){if(speaking)next()})})()};
 
 /* ---------- hadiths ---------- */
 var HG=[
@@ -360,12 +377,15 @@ HG.forEach(function(g){var u=UR?" u":"";hh+='<div class="hg"><h2 class="'+(UR?"u
    else if(typeof it.who==="number"){who=imamName(it.who);badge=it.who+1}
    }
   var txt=UR&&ur?ur:en;if(!txt)return;
-  hh+='<figure class="hq">'+(who?'<div class="who'+u+'"><i>'+esc(badge)+'</i><span>'+esc(who)+'</span></div>':'')+(ar?'<p class="ar" lang="ar">'+arInline(ar)+'</p>':'')+
+  hh+='<figure class="hq">'+(who?'<div class="who'+u+'"><i>'+esc(badge)+'</i><span>'+esc(who)+'</span></div>':'')+(ar?'<p class="ar" lang="ar" data-k="'+duaKey(ar)+'">'+arInline(ar)+'</p>'+(clipUrl(duaKey(ar))?'<button class="hl" type="button" aria-label="'+esc(T.listen)+'">▶ <span>'+esc(T.listen)+'</span></button>':''):'')+
    '<blockquote class="'+(UR&&ur?"u":"")+'">'+esc(txt)+'</blockquote><cite class="'+(UR&&ur?"u":"")+'">'+esc(ref||"")+(sn?'<span class="sn">'+esc(T.sunni)+': '+esc(sn)+'</span>':'')+'</cite></figure>'});
  hh+='</div>'});
 hh+='<a class="cta" href="academy-marefat.html'+(UR?"?lang=ur":"")+'"><b class="'+(UR?"u":"")+'">'+esc(T.cta)+'</b><span class="'+(UR?"u":"")+'">'+esc(T.ctas)+'</span></a>';
 $("hadiths").innerHTML=hh;
 [].forEach.call(document.querySelectorAll(".hq"),function(x){io.observe(x)});
+[].forEach.call(document.querySelectorAll(".hq .hl"),function(b){b.onclick=function(){var was=hBtn===b;stopSpeak();if(was)return;
+ var el=b.previousElementSibling;hBtn=b;speaking=true;b.classList.add("on");b.firstChild.nodeValue="■ ";b.querySelector("span").textContent=T.stop;el.classList.add("speaking");
+ sayAr(el,function(){if(hBtn===b)stopSpeak()})}});
 
 /* tabs */
 function showTab(h){var had=h==="hadiths";$("duas").hidden=had;$("hadiths").hidden=!had;$("tDuas").setAttribute("aria-selected",!had);$("tHad").setAttribute("aria-selected",had)}
