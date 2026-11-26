@@ -15,7 +15,7 @@ import argparse, asyncio, json, os, subprocess, sys
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 OUT = os.path.join(ROOT, "assets", "audio", "duas")
-VOICE, RATE, PITCH = "ar-SA-HamedNeural", "-12%", "-2Hz"   # calm, clear classical Arabic
+VOICE, RATE, PITCH = "ar-IQ-BasselNeural", "-10%", "-2Hz"   # an Iraqi voice, calm and clear (after changing it, run with --redo)
 
 PROXY = os.environ.get("HTTPS_PROXY") or os.environ.get("https_proxy") or None
 if os.environ.get("SSL_CERT_FILE"):
